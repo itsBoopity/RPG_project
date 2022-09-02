@@ -1,0 +1,17 @@
+public enum PlayerHair
+{
+    NONE,
+    BUZZCUT,
+    HIGHUP,
+    BASIC,
+    HAWK,
+    FRINGYMID, FRINGYSIDE, SLICKSIDE,
+    MINI_MOHAWK,
+    TOPWAVE,
+    FLOOPY_CURLY, FLOOPY,
+    SWEEP,
+    DREADLOCKS, SWIRLSIDE,
+    CORNTAIL, PONYTAIL,
+    LONG,
+    CURLY,
+}

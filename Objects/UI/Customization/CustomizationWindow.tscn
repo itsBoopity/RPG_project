@@ -1,0 +1,837 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/UI/Selector.cs" type="Script" id=1]
+[ext_resource path="res://src/UI/Customization/CustomizationWindow.cs" type="Script" id=2]
+[ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=3]
+[ext_resource path="res://Images/UI/battle_skillbox_select.png" type="Texture" id=4]
+[ext_resource path="res://Images/UI/window.png" type="Texture" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "SelectorAnimate"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1.1 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Big"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 820 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 125 ), Vector2( 805, 150 ), Vector2( 805, 125 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 703 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -15 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ScrollContainer:rect_position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 26, 65 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "BottomHalf"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 450 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 515 ), Vector2( 805, 540 ), Vector2( 805, 515 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 345 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "BottomLess"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 334 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 650 ), Vector2( 805, 675 ), Vector2( 805, 650 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 238 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -30 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "BottomThird"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 280 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 660 ), Vector2( 805, 685 ), Vector2( 805, 660 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 205 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -35 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ScrollContainer:rect_position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 26, 40 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "MiddleThird"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 280 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 350 ), Vector2( 805, 375 ), Vector2( 805, 350 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 205 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -35 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ScrollContainer:rect_position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 26, 40 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 803, 820 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 805, 136 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.001 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 707 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -21 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ScrollContainer:rect_position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 26, 64 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "TopHalf"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 450 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 40 ), Vector2( 805, 65 ), Vector2( 805, 40 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 343 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -25 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "TopMore"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 600 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 20 ), Vector2( 805, 45 ), Vector2( 805, 20 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 486 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -15 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "TopThird"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 803, 578 ), Vector2( 803, 280 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 805, 40 ), Vector2( 805, 65 ), Vector2( 805, 40 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TabName:percent_visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ScrollContainer:rect_size")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 733, 205 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("TabName:rect_position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 99, -35 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ScrollContainer:rect_position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 26, 40 ) ]
+}
+
+[node name="Window" type="NinePatchRect"]
+margin_left = 805.0
+margin_top = 136.0
+margin_right = 1608.0
+margin_bottom = 956.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 3 )
+texture = ExtResource( 5 )
+patch_margin_left = 40
+patch_margin_top = 90
+patch_margin_right = 40
+patch_margin_bottom = 64
+script = ExtResource( 2 )
+
+[node name="TabName" type="RichTextLabel" parent="."]
+margin_left = 99.0
+margin_top = -21.0
+margin_right = 440.0
+margin_bottom = 34.0
+theme = ExtResource( 3 )
+custom_constants/shadow_offset_x = -5
+custom_constants/shadow_offset_y = 5
+visible_characters = 0
+percent_visible = 0.0
+text = "Text"
+scroll_active = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 26.0
+margin_top = 64.0
+margin_right = 759.0
+margin_bottom = 771.0
+follow_focus = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+margin_right = 733.0
+margin_bottom = 707.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_top = 20
+custom_constants/margin_left = 30
+custom_constants/margin_bottom = 20
+
+[node name="Selector" type="Node2D" parent="ScrollContainer/MarginContainer"]
+position = Vector2( 154, -312 )
+scale = Vector2( 1.15, 1.15 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="ScrollContainer/MarginContainer/Selector"]
+position = Vector2( 62.6087, 61.7391 )
+scale = Vector2( 1.1, 1.1 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScrollContainer/MarginContainer/Selector"]
+autoplay = "SelectorAnimate"
+anims/SelectorAnimate = SubResource( 1 )
+
+[node name="Grid" type="GridContainer" parent="ScrollContainer/MarginContainer"]
+margin_left = 30.0
+margin_top = 20.0
+margin_right = 733.0
+margin_bottom = 687.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
+custom_constants/vseparation = 30
+custom_constants/hseparation = 30
+columns = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Big = SubResource( 10 )
+anims/BottomHalf = SubResource( 12 )
+anims/BottomLess = SubResource( 11 )
+anims/BottomThird = SubResource( 18 )
+anims/MiddleThird = SubResource( 17 )
+anims/RESET = SubResource( 15 )
+anims/TopHalf = SubResource( 13 )
+anims/TopMore = SubResource( 14 )
+anims/TopThird = SubResource( 16 )

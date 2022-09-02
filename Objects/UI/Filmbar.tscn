@@ -1,0 +1,78 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Images/UI/filmbarTop.png" type="Texture" id=1]
+[ext_resource path="res://Images/UI/filmbarBottom.png" type="Texture" id=2]
+
+[sub_resource type="Animation" id=8]
+resource_name = "BarEnter"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("FilmbarTop:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -202 ), Vector2( 0, -120 ), Vector2( 0, -130 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FilmbarBottom:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 1295 ), Vector2( 0, 1150 ), Vector2( 0, 1170 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("FilmbarBottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 1295 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FilmbarTop:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -202 ) ]
+}
+
+[node name="Filmbar" type="Node2D"]
+
+[node name="FilmbarTop" type="Sprite" parent="."]
+position = Vector2( 0, -202 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="FilmbarBottom" type="Sprite" parent="."]
+position = Vector2( 0, 1295 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( 0, -200 )
+
+[node name="EnterAnimation" type="AnimationPlayer" parent="."]
+autoplay = "BarEnter"
+playback_speed = 0.8
+anims/BarEnter = SubResource( 8 )
+anims/RESET = SubResource( 9 )

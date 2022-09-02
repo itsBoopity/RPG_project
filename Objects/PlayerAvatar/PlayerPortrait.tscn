@@ -1,0 +1,101 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://src/PlayerAvatar/PlayerPortrait.cs" type="Script" id=1]
+[ext_resource path="res://Images/PlayerAvatar/Body/OBESE.png" type="Texture" id=2]
+[ext_resource path="res://Images/PlayerAvatar/Eye/BLINK.png" type="Texture" id=3]
+[ext_resource path="res://Images/PlayerAvatar/Beard/BIG_CHOP.png" type="Texture" id=4]
+[ext_resource path="res://Images/PlayerAvatar/BodyHair/OBESE.png" type="Texture" id=5]
+[ext_resource path="res://Images/PlayerAvatar/Brow/BUSHY.png" type="Texture" id=6]
+[ext_resource path="res://Images/PlayerAvatar/Head/SHARP.png" type="Texture" id=7]
+[ext_resource path="res://Images/PlayerAvatar/Clothing/BASIC_TSHIRT/OBESE.png" type="Texture" id=8]
+[ext_resource path="res://Images/PlayerAvatar/Eye/ANGRY.png" type="Texture" id=9]
+[ext_resource path="res://Images/PlayerAvatar/Head/NORMAL.png" type="Texture" id=10]
+[ext_resource path="res://Images/PlayerAvatar/Hair/SLICKSIDE.png" type="Texture" id=12]
+[ext_resource path="res://Images/PlayerAvatar/Moustache/HANDLEBAR.png" type="Texture" id=13]
+[ext_resource path="res://Images/PlayerAvatar/Sideburn/FLOOF.png" type="Texture" id=14]
+[ext_resource path="res://Images/PlayerAvatar/Nose/ROUND.png" type="Texture" id=15]
+[ext_resource path="res://Images/PlayerAvatar/Mouth/NEUTRAL.png" type="Texture" id=16]
+[ext_resource path="res://Images/PlayerAvatar/Sclera/DEFAULT_LIGHT.png" type="Texture" id=17]
+[ext_resource path="res://Images/PlayerAvatar/Iris/BASIC.png" type="Texture" id=18]
+[ext_resource path="res://Images/PlayerAvatar/Scruff/ALL_SHARP.png" type="Texture" id=19]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="PlayerPortrait" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Shadow" type="Sprite" parent="."]
+self_modulate = Color( 0.0745098, 0.0313726, 0.192157, 0.596078 )
+position = Vector2( -36, -844 )
+texture = ExtResource( 10 )
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( 0.3, 60 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, -568 )
+
+[node name="HairBack" type="Sprite" parent="Body"]
+show_behind_parent = true
+position = Vector2( -8.6, -918.8 )
+
+[node name="BodyHair" type="Sprite" parent="Body"]
+position = Vector2( -1.20401e-05, -568 )
+texture = ExtResource( 5 )
+
+[node name="Clothing" type="Sprite" parent="Body"]
+position = Vector2( -1.19805e-05, -568 )
+texture = ExtResource( 8 )
+
+[node name="Head" type="Sprite" parent="Body"]
+position = Vector2( -15.3, -916.25 )
+texture = ExtResource( 7 )
+
+[node name="Scruff" type="Sprite" parent="Body/Head"]
+position = Vector2( -2.9, 60 )
+texture = ExtResource( 19 )
+
+[node name="Mouth" type="Sprite" parent="Body/Head"]
+position = Vector2( -19.4, 87.9 )
+texture = ExtResource( 16 )
+
+[node name="Nose" type="Sprite" parent="Body/Head"]
+position = Vector2( -38.5, 14 )
+texture = ExtResource( 15 )
+
+[node name="Sclera" type="Sprite" parent="Body/Head"]
+position = Vector2( -34, -11 )
+texture = ExtResource( 17 )
+
+[node name="Iris" type="Sprite" parent="Body/Head"]
+position = Vector2( -31, -12.5 )
+texture = ExtResource( 18 )
+
+[node name="Eye" type="AnimatedSprite" parent="Body/Head"]
+position = Vector2( -35.5, -13 )
+frames = SubResource( 1 )
+
+[node name="Brow" type="Sprite" parent="Body/Head"]
+position = Vector2( -32, -39 )
+texture = ExtResource( 6 )
+
+[node name="SideBurn" type="Sprite" parent="Body"]
+position = Vector2( -26.6, -890.5 )
+texture = ExtResource( 14 )
+
+[node name="Moustache" type="Sprite" parent="Body"]
+position = Vector2( -28.6, -805.5 )
+texture = ExtResource( 13 )
+
+[node name="Beard" type="Sprite" parent="Body"]
+position = Vector2( -27.6, -731.5 )
+texture = ExtResource( 4 )
+
+[node name="Hair" type="Sprite" parent="Body"]
+position = Vector2( -8.59999, -918 )
+texture = ExtResource( 12 )

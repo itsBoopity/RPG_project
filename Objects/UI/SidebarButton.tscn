@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/UI/SidebarButton.cs" type="Script" id=1]
+[ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=2]
+
+[node name="Button" type="Button"]
+margin_left = 39.0
+margin_top = 528.0
+margin_right = 364.0
+margin_bottom = 601.0
+theme = ExtResource( 2 )
+shortcut_in_tooltip = false
+text = "Continue"
+flat = true
+align = 0
+script = ExtResource( 1 )
+
+[connection signal="button_down" from="." to="." method="ScaleDown"]
+[connection signal="button_up" from="." to="." method="ScaleBack"]
+[connection signal="focus_entered" from="." to="." method="OnFocus"]
+[connection signal="mouse_entered" from="." to="." method="OnHover"]

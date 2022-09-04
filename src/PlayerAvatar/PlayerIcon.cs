@@ -3,7 +3,6 @@ using System;
 
 public class PlayerIcon : Node2D
 {
-    AvatarData data;
     private Sprite hair;
     private Sprite hairBorder;
     private Sprite sideburn;
@@ -16,7 +15,6 @@ public class PlayerIcon : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        data = GetNode<MainEngine>("/root/MainEngine").gameData.avaData;
         hair = GetNode<Sprite>("Hair");
         hairBorder = GetNode<Sprite>("HairBorder");
         sideburn = GetNode<Sprite>("Sideburn");
@@ -25,12 +23,13 @@ public class PlayerIcon : Node2D
         moustacheBorder = GetNode<Sprite>("MoustacheBorder");
         beard = GetNode<Sprite>("Beard");
         beardBorder = GetNode<Sprite>("BeardBorder");
+
+        UpdateIcon();
     }
-
-
+    
     public void UpdateIcon()
     {
-        // FreeTextures();
+        AvatarData data = GetNode<MainEngine>("/root/MainEngine").gameData.avaData;
 
         if (data.hair == PlayerHair.NONE)
         {

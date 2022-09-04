@@ -1,5 +1,6 @@
 using Godot;
 
+[System.Serializable]
 public class BasicAttack: BattleSkill
 {
     public BasicAttack()
@@ -13,8 +14,9 @@ public class BasicAttack: BattleSkill
     }
     public override void Execute(BattleFigure user, BattleFigure target)
     {
-        int damage = target.ATK - target.DEF;
-        target.HP -= (damage < 0)? 0 : damage;
+        int damage = (target.ATK - target.DEF < 1) ? 1 : target.ATK - target.DEF;
+        target.HP -= damage;
+
         //Play animation
     }
 

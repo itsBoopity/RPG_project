@@ -2,14 +2,10 @@ using System;
 
 public class MonsterFactory
 {
-    public static Monster Create(string monsterID)
+    public static Monster Create(int monsterID)
     {
-        switch(monsterID)
-        {
-            case "slime":
-                return new Slime();
-            default:
-                throw new ArgumentException("MonsterFactory monsterID not valid or not implemented.");
-        }
+        if (monsterID == Slime.GetID()) return new Slime();
+
+        throw new ArgumentException("MonsterID " + monsterID + "wasn't added to the MonsterFactory.");
     }
 }

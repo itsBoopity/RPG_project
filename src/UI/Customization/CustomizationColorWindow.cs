@@ -44,7 +44,7 @@ public class CustomizationColorWindow : Node2D
     public void ShowAnimate()
     {
         animationPlayer.Stop();
-        this.Visible = true;
+        this.Show();
         animationPlayer.Play("FadeIn");
     }
 }

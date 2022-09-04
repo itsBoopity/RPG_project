@@ -16,7 +16,7 @@ public class CustomizationWindow : Control
 
         PackedScene buttonScene = GD.Load<PackedScene>("res://Objects/UI/Customization/CustomizationButton.tscn");
 
-        for (int i=0; i < Utility.PlayerEnumSize(type); i++) //
+        for (int i=0; i < Utility.PlayerEnumSize(type); i++)
         {
             CustomizationButton toAdd = buttonScene.Instance<CustomizationButton>();
             GetNode("ScrollContainer/MarginContainer/Grid").AddChild(toAdd);
@@ -28,9 +28,8 @@ public class CustomizationWindow : Control
 
     public void ShowAnimate()
     {
-        this.Visible = true;
+        this.Show();
         animationPlayer.Stop();
-        //GetNode<RichTextLabel>("TabName").PercentVisible = 0;
         animationPlayer.Play(layout.ToString());
     }
 }

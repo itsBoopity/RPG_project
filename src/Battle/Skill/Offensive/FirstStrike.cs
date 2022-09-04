@@ -1,5 +1,6 @@
 using Godot;
 
+[System.Serializable]
 public class FirstStrike: BattleSkill
 {
     private bool first;
@@ -30,5 +31,11 @@ public class FirstStrike: BattleSkill
     public override string Description()
     {
         return "- Deal [atk]2 * ATK[/atk] the first time it's used\n- Otherwise deal [atk]1.5 * ATK[/atk]";
+    }
+
+    public new void Reset()
+    {
+        base.Reset();
+        first = true;
     }
 }

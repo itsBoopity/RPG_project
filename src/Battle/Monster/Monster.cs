@@ -3,24 +3,26 @@ using Godot;
 public abstract class Monster: BattleFigure
 { 
     public string name;
-    protected string monsterID;
     protected MonsterModel model = null;
+
+    // The default damage modifier that gets used when 
+    protected float defaultDamage = 0.5f;
     
     //Position of party member and skill index that is going to be used, decided when player turn starts
-    protected int targetCharacter;
-    protected int targetSkill;
+    protected int targetCharacter = 0;
+    protected int targetSkill = 0;
 
     public MonsterModel GetModel()
     {
         if (model == null)
-            model = GD.Load<PackedScene>("res://Objects/Monster/" + monsterID).Instance<MonsterModel>();
+            model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instance<MonsterModel>();
         return model;
     }
 
-    public abstract void LoadUpcomingTurn(ref BattleEngine battleEngine);
+    public abstract void LoadUpcomingTurn(BattleEngine battleEngine);
 
-    public void ExecuteTurn(ref BattleEngine battleEngine)
+    public void ExecuteTurn(BattleEngine battleEngine)
     {
-        skills[targetSkill].Execute(battleEngine.party[targetCharacter], this);
+        skills[targetSkill].Execute(this, battleEngine.party[targetCharacter]);
     }
 }

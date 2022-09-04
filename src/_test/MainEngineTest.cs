@@ -22,15 +22,14 @@ public class MainEngineTest : MainEngine
         gameData.newSave();
         BattleEngine battleEngine = GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instance<BattleEngine>();
         AddChild(battleEngine);
-        battleEngine.Initiate(this, new BattleSetup());
+        BattleSetup testSetup = new BattleSetup();
+        testSetup.monsterID.Add(0);
+        battleEngine.Initiate(this, testSetup);
     }
 
     public void SaveLoadTest()
     {
         gameData.newSave();
-        gameData.avaData.hair = PlayerHair.FRINGYMID;
-        gameData.playerCharacter.who = CharacterEnum.NULL;
-        gameData.playerCharacter.HP = 69;
         gameData.Save("testSave.dat");
         gameData.Load("testSave.dat");
     }

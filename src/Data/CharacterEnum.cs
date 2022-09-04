@@ -1,6 +1,6 @@
 public enum CharacterEnum
 {
-    NULL,
-    PLAYER,
-    CLAUS
+    Null,
+    Player,
+    Claus
 }

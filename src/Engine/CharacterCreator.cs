@@ -15,7 +15,7 @@ public class CharacterCreator : Node2D
 		nameEntry = GetNode<CanvasItem>("UI/NameEntry");
 		playerIcon = GetNode<PlayerIcon>("UI/NameEntry/PlayerIcon");
 
-		nameEntry.Visible = false;
+		nameEntry.Hide();
 		playerModel.UpdateModel();
 	}
 

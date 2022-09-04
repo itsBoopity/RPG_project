@@ -54,6 +54,8 @@ public class PlayerModel : CharacterModelBackup
         moustache = GetNode<Sprite>("Body/Moustache");
         scruff = GetNode<Sprite>("Body/Head/Scruff");
         clothing = GetNode<Sprite>("Body/Clothing");
+
+        UpdateModel();
     }
 
     //Loads the images into the children nodes

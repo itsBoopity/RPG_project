@@ -6,8 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class BattleSetup
 {
-    List<string> monsterID;
-    List<Vector2> monsterPositions; //their position on the monster field
+    public List<int> monsterID = new List<int>();
 
     //BattleCondition[] battleConditions;
     // public void ExecuteConditions(BattleEngine battleEngine)

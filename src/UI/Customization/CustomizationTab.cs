@@ -20,7 +20,7 @@ public class CustomizationTab : Tab
         HideAll();
         windows.GetNode<CustomizationWindow>("Body").ShowAnimate();
         windows.GetNode<CustomizationWindow>("Head").ShowAnimate();
-        colors.Visible = true;
+        colors.Show();
         colors.SetTab(PlayerEnum.Skin);
     }
 
@@ -31,7 +31,7 @@ public class CustomizationTab : Tab
         windows.GetNode<CustomizationWindow>("Brow").ShowAnimate();
         windows.GetNode<CustomizationWindow>("Eye").ShowAnimate();
         windows.GetNode<CustomizationWindow>("Nose").ShowAnimate();
-        colors.Visible = true;
+        colors.Show();
         colors.SetTab(PlayerEnum.Face);
     }
 
@@ -41,7 +41,7 @@ public class CustomizationTab : Tab
         HideAll();
         windows.GetNode<CustomizationWindow>("Hair").ShowAnimate();
         windows.GetNode<CustomizationWindow>("Sideburn").ShowAnimate();
-        colors.Visible = true;
+        colors.Show();
         colors.SetTab(PlayerEnum.HairColor);
     }
 
@@ -51,7 +51,7 @@ public class CustomizationTab : Tab
         HideAll();
         windows.GetNode<CustomizationWindow>("Beard").ShowAnimate();
         windows.GetNode<CustomizationWindow>("Moustache").ShowAnimate();
-        colors.Visible = true;
+        colors.Show();
         colors.SetTab(PlayerEnum.BeardColor);
     }
 
@@ -60,7 +60,7 @@ public class CustomizationTab : Tab
         if (windows.GetNode<CustomizationWindow>("Scruff").Visible) return;
         HideAll();
         windows.GetNode<CustomizationWindow>("Scruff").ShowAnimate();
-        colors.Visible = true;
+        colors.Show();
         colors.SetTab(PlayerEnum.Scruff);
     }
 
@@ -75,9 +75,9 @@ public class CustomizationTab : Tab
     {
         foreach (Node i in windows.GetChildren())
         {
-            ((CanvasItem) i).Visible = false;
+            ((CanvasItem) i).Hide();
         }
-        colors.Visible = false;
+        colors.Hide();
         GetParent<TabCollection>().ClickTab(this);
     }
 }

@@ -12,7 +12,7 @@ public class MainEngine : Node
 	public override void _Ready()
 	{
 		blackFade = GetNode<AnimationPlayer>("BlackFade/Fade");
-		GetNode<CanvasItem>("BlackFade").Visible = false;
+		GetNode<CanvasItem>("BlackFade").Hide();
 	}
 
 	public async void ChangeScene(string toLoad)

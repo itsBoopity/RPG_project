@@ -1,7 +1,7 @@
 [gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/Engine/CharacterCreator.cs" type="Script" id=1]
-[ext_resource path="res://Objects/PlayerAvatar/PlayerModel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/CharacterModel/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Objects/UI/Customization/CustomizationWindow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Objects/UI/Customization/CustomizationTab.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Font/Shadower.otf" type="DynamicFontData" id=5]
@@ -510,6 +510,18 @@ tracks/8/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/9/type = "value"
+tracks/9/path = NodePath("Label:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=21]
 resource_name = "FadeOut"
@@ -727,7 +739,6 @@ anims/Undulate = SubResource( 2 )
 
 [node name="PlayerModel" parent="." instance=ExtResource( 2 )]
 position = Vector2( 392, 1080 )
-scale = Vector2( 0.9, 0.9 )
 
 [node name="Texture" type="Sprite" parent="."]
 modulate = Color( 0.934902, 0.739608, 0.694118, 1 )
@@ -846,9 +857,13 @@ type = 1
 layout = 1
 
 [node name="TabName" parent="UI/Windows/Body" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Body"
+
+[node name="MarginContainer" parent="UI/Windows/Body/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Body/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="AnimationPlayer" parent="UI/Windows/Body" index="2"]
 autoplay = "OpenWindowTopHalf"
@@ -858,12 +873,13 @@ type = 8
 layout = 2
 
 [node name="TabName" parent="UI/Windows/Head" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Head"
 
-[node name="Sprite" parent="UI/Windows/Head/ScrollContainer/MarginContainer/Selector" index="0"]
-scale = Vector2( 1, 1 )
+[node name="MarginContainer" parent="UI/Windows/Head/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Head/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Brow" parent="UI/Windows" instance=ExtResource( 3 )]
 visible = false
@@ -871,9 +887,13 @@ type = 2
 layout = 5
 
 [node name="TabName" parent="UI/Windows/Brow" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Eyebrows"
+
+[node name="MarginContainer" parent="UI/Windows/Brow/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Brow/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Eye" parent="UI/Windows" instance=ExtResource( 3 )]
 visible = false
@@ -881,9 +901,13 @@ type = 5
 layout = 6
 
 [node name="TabName" parent="UI/Windows/Eye" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Eyes"
+
+[node name="MarginContainer" parent="UI/Windows/Eye/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Eye/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Nose" parent="UI/Windows" instance=ExtResource( 3 )]
 visible = false
@@ -891,24 +915,29 @@ type = 10
 layout = 7
 
 [node name="TabName" parent="UI/Windows/Nose" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Nose"
 
-[node name="Sprite" parent="UI/Windows/Nose/ScrollContainer/MarginContainer/Selector" index="0"]
-scale = Vector2( 1, 1 )
+[node name="MarginContainer" parent="UI/Windows/Nose/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Nose/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Hair" parent="UI/Windows" instance=ExtResource( 3 )]
 visible = false
 layout = 3
 
 [node name="TabName" parent="UI/Windows/Hair" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Hair"
+
+[node name="MarginContainer" parent="UI/Windows/Hair/ScrollContainer" index="0"]
+margin_bottom = 707.0
 
 [node name="Sprite" parent="UI/Windows/Hair/ScrollContainer/MarginContainer/Selector" index="0"]
 scale = Vector2( 1.06667, 1.06667 )
+
+[node name="Grid" parent="UI/Windows/Hair/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="AnimationPlayer" parent="UI/Windows/Hair" index="2"]
 autoplay = "OpenWindowHair"
@@ -920,13 +949,17 @@ type = 12
 layout = 4
 
 [node name="TabName" parent="UI/Windows/Sideburn" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Sideburn
 "
 
+[node name="MarginContainer" parent="UI/Windows/Sideburn/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
 [node name="Sprite" parent="UI/Windows/Sideburn/ScrollContainer/MarginContainer/Selector" index="0"]
 scale = Vector2( 1.06667, 1.06667 )
+
+[node name="Grid" parent="UI/Windows/Sideburn/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="AnimationPlayer" parent="UI/Windows/Sideburn" index="2"]
 autoplay = "OpenWindowSideburn"
@@ -938,9 +971,13 @@ type = 9
 layout = 1
 
 [node name="TabName" parent="UI/Windows/Moustache" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Moustache"
+
+[node name="MarginContainer" parent="UI/Windows/Moustache/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Moustache/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Beard" parent="UI/Windows" instance=ExtResource( 3 )]
 visible = false
@@ -948,18 +985,26 @@ type = 0
 layout = 2
 
 [node name="TabName" parent="UI/Windows/Beard" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Beard"
+
+[node name="MarginContainer" parent="UI/Windows/Beard/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Beard/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Scruff" parent="UI/Windows" instance=ExtResource( 3 )]
 visible = false
 type = 11
 
 [node name="TabName" parent="UI/Windows/Scruff" index="0"]
-visible_characters = 0
-percent_visible = 0.0
 text = "Stubble"
+
+[node name="MarginContainer" parent="UI/Windows/Scruff/ScrollContainer" index="0"]
+margin_bottom = 707.0
+
+[node name="Grid" parent="UI/Windows/Scruff/ScrollContainer/MarginContainer" index="1"]
+margin_bottom = 687.0
 
 [node name="Colors" type="Node2D" parent="UI/Windows"]
 visible = false
@@ -1111,6 +1156,7 @@ margin_bottom = 1080.0
 color = Color( 0.0627451, 0.0588235, 0.0705882, 0.882353 )
 
 [node name="Label" type="Label" parent="UI/NameEntry"]
+visible = false
 margin_left = 684.0
 margin_top = 248.0
 margin_right = 1196.0

@@ -33,7 +33,7 @@ public class DialogueEngine : Node2D
         tween = GetTree().CreateTween();
         tween.Stop();
 
-        playerPortrait.Visible = false;
+        playerPortrait.Hide();
     }
 
     public void LoadDialogue(string path)
@@ -115,7 +115,7 @@ public class DialogueEngine : Node2D
         if (toParse[0] == "Player")
         {
             nameTag.BbcodeText = GetNode<MainEngine>("/root/MainEngine").gameData.avaData.name;
-            playerPortrait.Visible = true;
+            playerPortrait.Show();
             portrait.Texture = null;
             shadow.Texture = portrait.Texture;
         }
@@ -124,7 +124,7 @@ public class DialogueEngine : Node2D
             DialogueActor actor = actors[toParse[0]];
 
             nameTag.BbcodeText = actor.tagName;
-            playerPortrait.Visible = false;
+            playerPortrait.Hide();
             portrait.Texture = actor.LoadPortrait();
             shadow.Texture = portrait.Texture;
 

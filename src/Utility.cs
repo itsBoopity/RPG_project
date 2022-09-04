@@ -14,6 +14,19 @@ public class Utility : Node
     public static Vector2 MiddleBottomCoord() {return new Vector2(960, 1080);}
 
 
+    public static string CharacterBBName(CharacterEnum who)
+    {
+        switch (who)
+        {
+            case CharacterEnum.Player:
+                return "[b]Y[/b]ou";
+            case CharacterEnum.Claus:
+                return "[color=#c0694b][b]C[/b][/color]laus";
+            default:
+                return "Utility.CharacterBBName is not fully implemented or given an incorrect argument.";
+        }
+    }
+
     /// <summary>
     /// Takes PlayerEnum and returns its size
     /// </summary>

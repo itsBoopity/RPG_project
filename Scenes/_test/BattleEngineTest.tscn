@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/_test/MainEngineTest.cs" type="Script" id=1]
 [ext_resource path="res://src/Engine/AudioEngine.cs" type="Script" id=2]
 [ext_resource path="res://Audio/Music/SometimesWeGetToSeeTheSunRise_Calm.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Images/_test/bg_village.png" type="Texture" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "FadeIn"
@@ -108,6 +109,10 @@ anims/FadeOut = SubResource( 2 )
 bus = "SFX"
 
 [node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Background"]
+texture = ExtResource( 4 )
+centered = false
 
 [node name="BlackFade" type="ColorRect" parent="."]
 visible = false

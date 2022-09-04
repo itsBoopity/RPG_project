@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Images/UI/Battle/characterBar.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/Battle/CharacterBar.cs" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Font/Merriweather-Black.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Images/CharacterIcon/Claus.png" type="Texture" id=8]
 [ext_resource path="res://Font/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://Objects/PlayerAvatar/PlayerIcon.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFont" id=6]
 size = 60
@@ -41,69 +42,45 @@ font_data = ExtResource( 9 )
 [sub_resource type="Animation" id=11]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath(".:position:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:offset")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 99 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:position:y")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ -12.0 ]
 }
-
-[sub_resource type="Animation" id=10]
-resource_name = "Select"
-length = 0.15
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 99 ) ]
-}
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:position:y")
+tracks/1/path = NodePath(".:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.15 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ -12.0, 6.0 ]
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Select"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -12.0, 8.0, 3.0 ]
 }
 
 [node name="CharacterBar" type="Sprite"]
@@ -118,6 +95,11 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
 offset = Vector2( -292, 174 )
 
+[node name="PlayerIcon" parent="." instance=ExtResource( 10 )]
+visible = false
+position = Vector2( -139, 176 )
+scale = Vector2( 0.25, 0.25 )
+
 [node name="Name" type="RichTextLabel" parent="."]
 margin_left = -137.0
 margin_top = 139.0
@@ -127,8 +109,8 @@ theme = ExtResource( 5 )
 custom_fonts/bold_font = SubResource( 6 )
 custom_fonts/normal_font = SubResource( 8 )
 bbcode_enabled = true
-bbcode_text = "[color=#c0694b][b]C[/b][/color]laus"
-text = "Claus"
+bbcode_text = "[color=#c0694b][b]Y[/b][/color]ou"
+text = "You"
 scroll_active = false
 
 [node name="StatusRack" type="VBoxContainer" parent="."]
@@ -235,6 +217,5 @@ align = 1
 valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Select"
 anims/RESET = SubResource( 11 )
 anims/Select = SubResource( 10 )

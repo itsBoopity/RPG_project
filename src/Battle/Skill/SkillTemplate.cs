@@ -1,5 +1,6 @@
 using Godot;
 
+[System.Serializable]
 public class SkillTemplate: BattleSkill
 {
     public SkillTemplate()
@@ -19,4 +20,10 @@ public class SkillTemplate: BattleSkill
     {
         return "";
     }
+
+    // Overwrite if the skill needs to reset internal parameters
+    // public new void Reset()
+    // {
+    //     base.Reset();
+    // }
 }

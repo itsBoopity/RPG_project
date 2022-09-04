@@ -27,9 +27,9 @@ public class GameData
     {
         switch (characterEnum)
         {
-            case CharacterEnum.PLAYER:
+            case CharacterEnum.Player:
                 return playerCharacter;
-            case CharacterEnum.CLAUS:
+            case CharacterEnum.Claus:
                 return clausCharacter;
             default:
                 return null;
@@ -69,9 +69,9 @@ public class GameData
     public void newSave() // Create New Save
     {
         avaData = new AvatarData();
-        playerCharacter = new Character(CharacterEnum.PLAYER);
-        clausCharacter = new Character(CharacterEnum.CLAUS);
-        party = new CharacterEnum[3] {CharacterEnum.PLAYER, CharacterEnum.CLAUS, CharacterEnum.NULL};
+        playerCharacter = new Character(CharacterEnum.Player);
+        clausCharacter = new Character(CharacterEnum.Claus);
+        party = new CharacterEnum[3] {CharacterEnum.Player, CharacterEnum.Claus, CharacterEnum.Null};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
     }

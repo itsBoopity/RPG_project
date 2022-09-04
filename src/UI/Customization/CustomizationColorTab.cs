@@ -38,22 +38,22 @@ public class CustomizationColorTab : Node2D
         currentColorTab = type;
         foreach (Node i in GetChildren())
         {
-            ((CanvasItem)i).Visible = false;
+            ((CanvasItem)i).Hide();
         }
         if (type != PlayerEnum.Scruff)
-            GetNode<CanvasItem>("TopLabel").Visible = true;
+            GetNode<CanvasItem>("TopLabel").Show();
 
         GetNode<Label>("TopLabel").Text = "Color";
         if (type == PlayerEnum.BeardColor || type == PlayerEnum.HairColor)
-            GetNode<CanvasItem>("PlayerColor").Visible = true;
+            GetNode<CanvasItem>("PlayerColor").Show();
         else if (type == PlayerEnum.Skin)
-            GetNode<CanvasItem>("PlayerSkin").Visible = true;
+            GetNode<CanvasItem>("PlayerSkin").Show();
 
         if (type == PlayerEnum.Face)
         {
-            GetNode<CanvasItem>("BottomLabel").Visible = true;
-            GetNode<CanvasItem>("PlayerColor").Visible = true;
-            GetNode<CanvasItem>("PlayerEyeColor").Visible = true;
+            GetNode<CanvasItem>("BottomLabel").Show();
+            GetNode<CanvasItem>("PlayerColor").Show();
+            GetNode<CanvasItem>("PlayerEyeColor").Show();
             GetNode<Label>("TopLabel").Text = "Eyebrow Color";
             GetNode<Label>("BottomLabel").Text = "Eye Color";
         }

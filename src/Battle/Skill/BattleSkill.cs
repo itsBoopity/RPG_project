@@ -9,13 +9,14 @@ public abstract class BattleSkill
     public int cost;
     public int cooldown;
     public int currentCooldown = 0;
+    public bool snap = false;
     public abstract void Execute(BattleFigure user, BattleFigure target);
     public abstract string Description();
 
     protected int textureX = 0, textureY = 0;
-    public void SetIcon(Sprite sprite)
+    public Texture GetIcon()
     {
-        sprite.RegionRect = new Rect2(textureX * 128, textureY * 128, 128, 128);
+        return GD.Load<Texture>("res://Images/UI/Battle/SkillIcon/" + this.GetType().Name + ".tres");
     }
 
     //Called when battle ends, resets cooldowns, can be overriden for skills with special parameters

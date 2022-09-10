@@ -15,8 +15,5 @@ public class CharacterModelRack : Node2D
         if (GetChildCount() != 0)
             RemoveChild(GetChild(0));
         AddChild(models[name]);
-
-        // if (who == CharacterEnum.Player)
-        //         ((PlayerModel)models[name]).UpdateModel();
     }
 }

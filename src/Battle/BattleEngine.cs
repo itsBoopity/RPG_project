@@ -47,8 +47,8 @@ public class BattleEngine : Node2D
 
         // Tick down cooldowns, statusi etc.
 
-        if (GlobalData.timerEnabled)
-            timer.StartTimer(5);
+        if (Global.settings.timerEnabled)
+            timer.StartTimer(20);
     }
 
     private void EnemyTurn()
@@ -76,24 +76,25 @@ public class BattleEngine : Node2D
     }
 
     //Loads all the data and calls UpdateUI() at the end
-    public void Initiate(MainEngine mainEngine, BattleSetup battleSetup)
+    public void Initiate(BattleSetup battleSetup)
     {
+        GameData data = Global.data;
         selectedCharacter = -1;
 
         party = new List<Character>();
 
-        foreach (CharacterEnum i in mainEngine.gameData.party)
+        foreach (CharacterEnum i in data.party)
         {
-            if (mainEngine.gameData.GetCharacter(i) != null)
+            if (data.GetCharacter(i) != null)
             {
-                Character toAdd = mainEngine.gameData.GetCharacter(i).Clone();
+                Character toAdd = data.GetCharacter(i).Clone();
                 party.Add(toAdd);
             }
         }
 
-        foreach (CharacterEnum i in mainEngine.gameData.bench)
+        foreach (CharacterEnum i in data.bench)
         {
-            Character toAdd = mainEngine.gameData.GetCharacter(i).Clone();
+            Character toAdd = data.GetCharacter(i).Clone();
                 bench.Add(toAdd);
         }
         
@@ -112,15 +113,15 @@ public class BattleEngine : Node2D
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
     private void Finish()
     {
-        MainEngine mainEngine = GetNode<MainEngine>("root/MainEngine");
+        GameData data = Global.data;
         foreach (Character i in party)
         {
-            Character character = mainEngine.gameData.GetCharacter(i.who);
+            Character character = data.GetCharacter(i.who);
             character = i.Reset();
         }
         foreach (Character i in bench)
         {
-            Character character = mainEngine.gameData.GetCharacter(i.who);
+            Character character = data.GetCharacter(i.who);
             character = i.Reset();
         }
     }

@@ -14,9 +14,7 @@ public class DialogueEngine : Node2D
     private Sprite shadow;
     private VoiceBleeper bleep;
     private SceneTreeTween tween;
-
-    // 0.02f slow, 0.01f normal, 0.005f fast
-    private float dialogueSpeed = 0.005f;
+    private float dialogueSpeed;
 
     public override void _Ready()
     {
@@ -25,7 +23,7 @@ public class DialogueEngine : Node2D
 
         models = GetNode<Node>("Models");
         dialogueBox = GetNode<RichTextLabel>("Dialogue/Text");
-        nameTag = GetNode<RichTextLabel>("Name/Text");
+        nameTag = GetNode<RichTextLabel>("Dialogue/NameText");
         playerPortrait = GetNode<Node2D>("Portrait/PlayerPortrait");
         portrait = GetNode<Sprite>("Portrait");
         shadow = GetNode<Sprite>("Portrait/Shadow");
@@ -34,18 +32,22 @@ public class DialogueEngine : Node2D
         tween.Stop();
 
         playerPortrait.Hide();
+        SetProcessInput(false);
     }
 
     public void LoadDialogue(string path)
     {
+        dialogueSpeed = Global.settings.dialogueSpeed;
         file.Open(path, File.ModeFlags.Read);
+        SetProcessInput(true);
         AdvanceDialogue();
     }
 
     private void Finish()
     {
-        //Play a fancy animation swooshing away the dialogue box. At the end of the animation, call a method that actually frees this.
-        this.QueueFree();
+        //Play a fancy animation swooshing away the dialogue box.
+
+        SetProcessInput(false);
     }
 
     public override void _Input(InputEvent @event)
@@ -114,7 +116,7 @@ public class DialogueEngine : Node2D
 
         if (toParse[0] == "Player")
         {
-            nameTag.BbcodeText = GetNode<MainEngine>("/root/MainEngine").gameData.avaData.name;
+            nameTag.BbcodeText = Global.data.avaData.name;
             playerPortrait.Show();
             portrait.Texture = null;
             shadow.Texture = portrait.Texture;
@@ -143,13 +145,14 @@ public class DialogueEngine : Node2D
     private void PrintDialogue(ref string line)
     {
         string processed = 
-            line.Replace("%Player%", nameTag.BbcodeText = GetNode<MainEngine>("/root/MainEngine").gameData.avaData.name);
+            line.Replace("%Player%", Global.data.avaData.name);
             //.Replace("%he%", "")
-        
-        string[] separateGaps = processed.Split('`');
-        
-        dialogueBox.BbcodeText = separateGaps[0];
+
         dialogueBox.VisibleCharacters = 0;
+        dialogueBox.BbcodeText = processed;
+        string[] separateGaps = dialogueBox.Text.Split('`');
+        dialogueBox.BbcodeText = processed.Replace("`", "");
+        
         int characterLength = separateGaps[0].Length;
 
         tween.Kill(); tween = GetTree().CreateTween();
@@ -157,7 +160,6 @@ public class DialogueEngine : Node2D
         for (int i=1; i<separateGaps.Length; i++)
         {
             characterLength += separateGaps[i].Length;
-            dialogueBox.BbcodeText += separateGaps[i];
             tween.TweenInterval(dialogueSpeed * 90);
             tween.TweenProperty(dialogueBox, "visible_characters", characterLength, separateGaps[i].Length * dialogueSpeed);
         }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Images/UI/Battle/characterBar.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/Battle/CharacterBar.cs" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Images/CharacterIcon/Claus.png" type="Texture" id=8]
 [ext_resource path="res://Font/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Objects/PlayerAvatar/PlayerIcon.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Images/UI/battle_skillbox_select.png" type="Texture" id=11]
 
 [sub_resource type="DynamicFont" id=6]
 size = 60
@@ -51,7 +52,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ -12.0 ]
+"values": [ -10.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:scale")
@@ -83,21 +84,52 @@ tracks/0/keys = {
 "values": [ -12.0, 8.0, 3.0 ]
 }
 
+[sub_resource type="Animation" id=12]
+resource_name = "Blink"
+length = 0.8
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
 [node name="CharacterBar" type="Sprite"]
-position = Vector2( 244, -12 )
+position = Vector2( 244, -10 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, 99 )
 script = ExtResource( 2 )
 
 [node name="Icon" type="Sprite" parent="."]
-position = Vector2( 5, 91 )
+position = Vector2( -157, 178 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 8 )
-offset = Vector2( -292, 174 )
 
 [node name="PlayerIcon" parent="." instance=ExtResource( 10 )]
-visible = false
-position = Vector2( -139, 176 )
+position = Vector2( -158, 176 )
 scale = Vector2( 0.25, 0.25 )
 
 [node name="Name" type="RichTextLabel" parent="."]
@@ -122,9 +154,9 @@ custom_constants/separation = 5
 
 [node name="HPLabel" type="Label" parent="."]
 margin_left = -148.0
-margin_top = 14.0
+margin_top = 18.0
 margin_right = -53.0
-margin_bottom = 75.0
+margin_bottom = 79.0
 theme = ExtResource( 5 )
 custom_colors/font_color = Color( 0.776471, 0.258824, 0.258824, 1 )
 custom_colors/font_outline_modulate = Color( 0.0745098, 0.00392157, 0.0431373, 1 )
@@ -134,24 +166,10 @@ custom_constants/shadow_offset_y = 2
 custom_fonts/font = SubResource( 2 )
 text = "HP:"
 
-[node name="HPSlash" type="Label" parent="."]
-margin_left = 14.0
-margin_top = 13.0
-margin_right = 120.0
-margin_bottom = 86.0
-theme = ExtResource( 5 )
-custom_colors/font_color = Color( 0.933333, 0.784314, 0.67451, 1 )
-custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
-custom_colors/font_color_shadow = Color( 0.670588, 0.4, 0.25098, 1 )
-custom_constants/shadow_offset_x = 2
-custom_constants/shadow_offset_y = 1
-custom_fonts/font = ExtResource( 3 )
-text = "/"
-
 [node name="HPCurrent" type="Label" parent="."]
 margin_left = -77.0
 margin_top = 3.0
-margin_right = 20.0
+margin_right = 21.0
 margin_bottom = 102.0
 theme = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 0.941176, 0.898039, 1 )
@@ -163,11 +181,25 @@ custom_fonts/font = ExtResource( 3 )
 text = "999"
 align = 2
 
+[node name="HPSlash" type="Label" parent="."]
+margin_left = 14.0
+margin_top = 12.0
+margin_right = 120.0
+margin_bottom = 92.0
+theme = ExtResource( 5 )
+custom_colors/font_color = Color( 0.933333, 0.784314, 0.67451, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.670588, 0.4, 0.25098, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = ExtResource( 3 )
+text = "/"
+
 [node name="HPMax" type="Label" parent="."]
 margin_left = 37.0
-margin_top = 26.0
+margin_top = 25.0
 margin_right = 143.0
-margin_bottom = 91.0
+margin_bottom = 90.0
 theme = ExtResource( 5 )
 custom_colors/font_color = Color( 0.960784, 0.756863, 0.603922, 1 )
 custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
@@ -179,9 +211,9 @@ text = "999"
 
 [node name="StackLabel" type="Label" parent="."]
 margin_left = -108.0
-margin_top = 77.0
+margin_top = 81.0
 margin_right = 31.0
-margin_bottom = 138.0
+margin_bottom = 142.0
 theme = ExtResource( 5 )
 custom_colors/font_color = Color( 0.764706, 0.564706, 1, 1 )
 custom_colors/font_outline_modulate = Color( 0.0509804, 0.0117647, 0.121569, 1 )
@@ -192,10 +224,10 @@ custom_fonts/font = SubResource( 2 )
 text = "Stack:"
 
 [node name="StackCurrent" type="Label" parent="."]
-margin_left = 6.0
+margin_left = -1.0
 margin_top = 69.0
-margin_right = 103.0
-margin_bottom = 142.0
+margin_right = 96.0
+margin_bottom = 149.0
 theme = ExtResource( 5 )
 custom_colors/font_color = Color( 0.968627, 0.819608, 0.968627, 1 )
 custom_colors/font_outline_modulate = Color( 0.0745098, 0.0117647, 0.0941176, 1 )
@@ -203,7 +235,7 @@ custom_colors/font_color_shadow = Color( 0.545098, 0.235294, 0.392157, 1 )
 custom_constants/shadow_offset_x = 3
 custom_constants/shadow_offset_y = 3
 custom_fonts/font = ExtResource( 3 )
-text = "999"
+text = "99"
 align = 1
 
 [node name="Hotkey" type="Label" parent="."]
@@ -219,3 +251,23 @@ valign = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 11 )
 anims/Select = SubResource( 10 )
+
+[node name="Selector" type="NinePatchRect" parent="."]
+visible = false
+show_behind_parent = true
+margin_left = -221.0
+margin_top = -24.0
+margin_right = 219.0
+margin_bottom = 186.0
+rect_pivot_offset = Vector2( 220, 0 )
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 136, 136 )
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
+autoplay = "Blink"
+anims/Blink = SubResource( 12 )
+anims/RESET = SubResource( 13 )

@@ -29,7 +29,7 @@ public class PlayerPortrait: Node2D
 
     public override void _Ready()
     {
-        data = GetNode<MainEngine>("/root/MainEngine").gameData.avaData;
+        data = Global.data.avaData;
     
         body = GetNode<Sprite>("Body");
         head = GetNode<Sprite>("Body/Head");

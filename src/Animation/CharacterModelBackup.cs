@@ -31,6 +31,14 @@ public class CharacterModelBackup : Node2D
             blinkNext -= delta;
     }
 
+    public void StopAnimations()
+    {
+        SetProcess(false);
+        GetNode<AnimationPlayer>("BreatheAnimator").Stop();
+        GetNode<Sprite>("Body").Scale = Vector2.One;
+        GetNode<AnimatedSprite>("Body/Head/Eye").Frame = 0;
+    }
+
     // public void ChangeExpression(string expression)
     // {
         

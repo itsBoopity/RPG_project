@@ -44,8 +44,8 @@ public abstract class SidebarButton : Button
 
     public void NewGame()
     {
-        GetNode<MainEngine>("/root/MainEngine").gameData.newSave();
-        GetNode<MainEngine>("/root/MainEngine").ChangeScene("res://Scenes/CharacterCreator.tscn");
+        Global.data.newSave();
+        GetNode<Global>("/root/Global").ChangeScene("res://Scenes/CharacterCreator.tscn");
     }
 
     public void LoadGame()

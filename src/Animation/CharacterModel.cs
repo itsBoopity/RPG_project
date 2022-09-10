@@ -16,6 +16,8 @@ public class CharacterModel : Node2D
     private float talkNext;
     public bool blink = true;
 
+    private float dialogueSpeed;
+
     public override void _Ready()
     {
         mouth = GetNode<AnimatedSprite>(mouthPath);
@@ -23,6 +25,16 @@ public class CharacterModel : Node2D
         bleep = GetNode<AudioStreamPlayer2D>("Bleep");
         blinkAnimator = GetNode<AnimationPlayer>("BlinkAnimator");
         blinkNext = (GD.Randf() + 0.2f) * blinkSpeed;
+
+        dialogueSpeed = Global.settings.dialogueSpeed;
+    }
+
+    /// <summary>
+    /// pathToImage is the full path to the outfit
+    /// </summary>
+    public void SetOutfit(string pathToImage)
+    {
+        GetNode<Sprite>("Body/Outfit").Texture = GD.Load<ImageTexture>(pathToImage);
     }
 
     public override void _Process(float delta)
@@ -49,7 +61,7 @@ public class CharacterModel : Node2D
 
     public void Talk(int length) //Character length of the sentence to be said
     {
-        talkLength = length * 0.01f;
+        talkLength = length * dialogueSpeed;
         talkNext = -2f;
     }
 

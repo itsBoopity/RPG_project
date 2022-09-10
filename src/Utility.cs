@@ -13,7 +13,27 @@ public class Utility : Node
     /// </summary>
     public static Vector2 MiddleBottomCoord() {return new Vector2(960, 1080);}
 
+    public static int CountChar(ref string text, char character)
+    {
+        int output = 0;
+        foreach(char c in text)
+            if (c == character)
+                output++;
+        return output;
+    }
 
+    //Just a shorthand for loading dialogue, so I don't have to do all the casting
+    public static DialogueEngine InstanceDialogue()
+    {
+        return GD.Load<PackedScene>("res://Scenes/DialogueEngine.tscn").Instance<DialogueEngine>();
+    }
+
+    public static BattleEngine InstanceBattle()
+    {
+        return GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instance<BattleEngine>();
+    }
+
+    // BBCode formatted names of the characters used in CharacterBar
     public static string CharacterBBName(CharacterEnum who)
     {
         switch (who)

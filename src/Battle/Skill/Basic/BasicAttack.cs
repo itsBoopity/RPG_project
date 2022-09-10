@@ -15,9 +15,10 @@ public class BasicAttack: BattleSkill
     public override void Execute(BattleFigure user, BattleFigure target)
     {
         int damage = (target.ATK - target.DEF < 1) ? 1 : target.ATK - target.DEF;
+        
+        // No way to connect passives. Should instead call BattleEngine.CauseDamage(user, target, damage) of some sorts 
+        // This will also allow BattleEngine to handle the animation playing
         target.HP -= damage;
-
-        //Play animation
     }
 
     public override string Description()

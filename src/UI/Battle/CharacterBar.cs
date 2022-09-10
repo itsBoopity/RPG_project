@@ -9,7 +9,9 @@ public class CharacterBar : Sprite
     private Label hp;
     private Label maxHp;
     private Label stack;
-    
+
+
+    private CanvasItem selector;
     private AnimationPlayer animationPlayer;
 
     // Called when the node enters the scene tree for the first time.
@@ -24,6 +26,7 @@ public class CharacterBar : Sprite
         maxHp = GetNode<Label>("HPMax");
         stack = GetNode<Label>("StackCurrent");
 
+        selector = GetNode<CanvasItem>("Selector");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
         GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("battle_character" + Name)[0]).AsText();
@@ -31,12 +34,14 @@ public class CharacterBar : Sprite
 
     public void Select()
     {
+        selector.Show();
         animationPlayer.Stop();
         animationPlayer.Play("Select");
     }
 
     public void Unselect()
     {
+        selector.Hide();
         animationPlayer.Stop();
         animationPlayer.Play("RESET");
     }

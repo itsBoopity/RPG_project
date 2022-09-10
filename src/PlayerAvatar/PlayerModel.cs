@@ -3,6 +3,7 @@ using System;
 
 public class PlayerModel : CharacterModelBackup
 {
+    [Export] bool isPortrait = false;
     AvatarData data;
     private Sprite body;
     private Sprite arm;
@@ -24,6 +25,8 @@ public class PlayerModel : CharacterModelBackup
     private Sprite scruff;
     private Sprite clothing;
 
+    // Disables model animations such as blinking and breathing.
+
     public void CustomFree()
     {
         FreeTextures();
@@ -32,7 +35,11 @@ public class PlayerModel : CharacterModelBackup
 
     public override void _Ready()
     {
-        data = GetNode<MainEngine>("/root/MainEngine").gameData.avaData;
+        if (isPortrait)
+            base.StopAnimations();
+            
+        data = Global.data.avaData;
+        if (data == null) throw new Exception("PlayerModel instanced when Global.data.avaData is not initialized.");
         
         base._Ready();
         body = GetNode<Sprite>("Body");

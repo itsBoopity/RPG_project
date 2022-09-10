@@ -29,7 +29,7 @@ public class PlayerIcon : Node2D
     
     public void UpdateIcon()
     {
-        AvatarData data = GetNode<MainEngine>("/root/MainEngine").gameData.avaData;
+        AvatarData data = Global.data.avaData;
 
         if (data.hair == PlayerHair.NONE)
         {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/Animation/CharacterModel.cs" type="Script" id=1]
 [ext_resource path="res://Images/CharacterModel/Claus/body.png" type="Texture" id=2]
@@ -37,6 +37,56 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( 39.1, -41.5 ), Vector2( 39.1, -40 ), Vector2( 39.1, -41.5 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Head/Mouth:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Talk"
+length = 0.3
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Head/Mouth:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Bleep")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+} ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -89,6 +139,10 @@ mouthPath = NodePath("Body/Head/Mouth")
 [node name="BlinkAnimator" type="AnimationPlayer" parent="."]
 anims/Blink = SubResource( 1 )
 
+[node name="TalkAnimator" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 8 )
+anims/Talk = SubResource( 9 )
+
 [node name="BreatheAnimator" type="AnimationPlayer" parent="."]
 autoplay = "Breathe"
 anims/Breathe = SubResource( 2 )
@@ -96,7 +150,6 @@ anims/Breathe = SubResource( 2 )
 [node name="Body" type="Sprite" parent="."]
 use_parent_material = true
 position = Vector2( 0, 4 )
-scale = Vector2( 1, 1.00427 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( -400, -1024 )
@@ -127,5 +180,3 @@ frames = SubResource( 4 )
 [node name="Bleep" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 bus = "VoiceBleep"
-
-[node name="TalkAnimator" type="AnimationPlayer" parent="."]

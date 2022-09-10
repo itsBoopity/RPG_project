@@ -7,13 +7,12 @@ public class CharacterModel : Node2D
     [Export] NodePath mouthPath = null;
     private float blinkSpeed = 5;
     private float talkSpeed = 1;
-    private AudioStreamPlayer2D bleep;
+    protected AudioStreamPlayer2D bleep;
     private AnimationPlayer blinkAnimator;
+    protected AnimationPlayer talkAnimator;
     private AnimatedSprite head;
     private AnimatedSprite mouth;
     private float blinkNext;
-    private float talkLength;
-    private float talkNext;
     public bool blink = true;
 
     private float dialogueSpeed;
@@ -24,6 +23,7 @@ public class CharacterModel : Node2D
         head = GetNode<AnimatedSprite>(headPath);
         bleep = GetNode<AudioStreamPlayer2D>("Bleep");
         blinkAnimator = GetNode<AnimationPlayer>("BlinkAnimator");
+        talkAnimator = GetNode<AnimationPlayer>("TalkAnimator");
         blinkNext = (GD.Randf() + 0.2f) * blinkSpeed;
 
         dialogueSpeed = Global.settings.dialogueSpeed;
@@ -40,7 +40,6 @@ public class CharacterModel : Node2D
     public override void _Process(float delta)
     {
         if (blink) Blink(delta);
-        TalkInternal(delta);
     }
 
     public void Blink(float delta)
@@ -54,42 +53,15 @@ public class CharacterModel : Node2D
             blinkNext -= delta;
     }
 
-    public void StopTalk()
+    virtual public void Talk() 
     {
-        talkLength = 0;
+        talkAnimator.GetAnimation("Talk").Loop = true;
+        talkAnimator.Stop();
+        talkAnimator.Play("Talk");
     }
-
-    public void Talk(int length) //Character length of the sentence to be said
+    virtual public void StopTalk()
     {
-        talkLength = length * dialogueSpeed;
-        talkNext = -2f;
-    }
-
-    private void TalkInternal(float delta)
-    {
-        if (talkLength > 0)
-        {
-            if (talkNext < 0)
-            {
-                head.Frame = 0;
-                mouth.Frame = 0;
-            }
-            if (talkNext < - talkSpeed * 0.1f)
-            {
-                bleep.Play();
-                talkNext = GD.Randf() * talkSpeed * 0.05f + 0.05f;
-                head.Frame = 1;
-                mouth.Frame = 1;
-            }
-
-            talkNext -= delta;
-            talkLength -= delta;
-        }
-        else
-        {
-            head.Frame = 0;
-            mouth.Frame = 0;
-        }
+        talkAnimator.GetAnimation("Talk").Loop = false;
     }
 
     public void ChangeExpression(string expression)

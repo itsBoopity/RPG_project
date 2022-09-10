@@ -7,12 +7,12 @@ public class DialogueEngine : Node2D
     private Godot.Collections.Dictionary<string, DialogueActor> actors;
 
     private Node models;
+    private InvisibleActor invisibleActor;
     private RichTextLabel dialogueBox;
     private RichTextLabel nameTag;
     private Node2D playerPortrait;
     private Sprite portrait;
     private Sprite shadow;
-    private VoiceBleeper bleep;
     private SceneTreeTween tween;
     private float dialogueSpeed;
 
@@ -22,12 +22,12 @@ public class DialogueEngine : Node2D
         file = new File();
 
         models = GetNode<Node>("Models");
+        invisibleActor = GetNode<InvisibleActor>("Models/Invisible");
         dialogueBox = GetNode<RichTextLabel>("Dialogue/Text");
         nameTag = GetNode<RichTextLabel>("Dialogue/NameText");
         playerPortrait = GetNode<Node2D>("Portrait/PlayerPortrait");
         portrait = GetNode<Sprite>("Portrait");
         shadow = GetNode<Sprite>("Portrait/Shadow");
-        bleep = GetNode<VoiceBleeper>("Bleep");
         tween = GetTree().CreateTween();
         tween.Stop();
 
@@ -114,12 +114,16 @@ public class DialogueEngine : Node2D
     {
         string[] toParse = text.Split(new char[] {' '}, 2);
 
+        CharacterModel speaker;
+
         if (toParse[0] == "Player")
         {
             nameTag.BbcodeText = Global.data.avaData.name;
             playerPortrait.Show();
             portrait.Texture = null;
             shadow.Texture = portrait.Texture;
+
+            speaker = invisibleActor.SetVoice(null);
         }
         else
         {
@@ -131,21 +135,14 @@ public class DialogueEngine : Node2D
             shadow.Texture = portrait.Texture;
 
             // If model exists, play talk animation. Otherwise play bleeps independently using voicebleeper
-            CharacterModel speaker = GetNodeOrNull<CharacterModel>("Models/" + toParse[0]);
-            if (speaker != null)
-                speaker.Talk(toParse[1].Length);
-            else
-                bleep.Talk(actor.LoadBleep(),toParse[1].Length);
 
+            speaker = GetNodeOrNull<CharacterModel>("Models/" + toParse[0]);
+            if (speaker == null)
+                speaker = invisibleActor.SetVoice(actors[toParse[0]].LoadBleep());
         }
     
-        PrintDialogue(ref toParse[1]);
-    }
-
-    private void PrintDialogue(ref string line)
-    {
         string processed = 
-            line.Replace("%Player%", Global.data.avaData.name);
+            toParse[1].Replace("%Player%", Global.data.avaData.name);
             //.Replace("%he%", "")
 
         dialogueBox.VisibleCharacters = 0;
@@ -156,13 +153,19 @@ public class DialogueEngine : Node2D
         int characterLength = separateGaps[0].Length;
 
         tween.Kill(); tween = GetTree().CreateTween();
+        tween.TweenCallback(speaker, "Talk");
         tween.TweenProperty(dialogueBox, "visible_characters", characterLength, separateGaps[0].Length * dialogueSpeed);
         for (int i=1; i<separateGaps.Length; i++)
         {
             characterLength += separateGaps[i].Length;
+            
+            tween.TweenCallback(speaker, "StopTalk");
             tween.TweenInterval(dialogueSpeed * 90);
+            tween.TweenCallback(speaker, "Talk");
+
             tween.TweenProperty(dialogueBox, "visible_characters", characterLength, separateGaps[i].Length * dialogueSpeed);
         }
+        tween.TweenCallback(speaker, "StopTalk");
     }
 
     private void ShowActor(ref string text)
@@ -203,7 +206,6 @@ public class DialogueEngine : Node2D
 
     private void StopBleeps()
     {
-        bleep.StopTalk();
         foreach (Node i in models.GetChildren())
         {
             ((CharacterModel)i).StopTalk();

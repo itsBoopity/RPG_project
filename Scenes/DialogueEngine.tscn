@@ -2,6 +2,7 @@
 
 [ext_resource path="res://src/Engine/DialogueEngine.cs" type="Script" id=1]
 [ext_resource path="res://Images/PlayerAvatar/DropShadow.png" type="Texture" id=2]
+[ext_resource path="res://Objects/CharacterModel/InvisibleActor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Images/UI/dialogueBox.png" type="Texture" id=4]
 [ext_resource path="res://Images/CharacterPortrait/Claus/default.png" type="Texture" id=5]
 [ext_resource path="res://Font/RichTextEffect/RichTextStackColor.gd" type="Script" id=6]
@@ -9,7 +10,6 @@
 [ext_resource path="res://Font/PTSerif-BoldItalic.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Font/PTSerif-Bold.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Font/PTSerif-Regular.ttf" type="DynamicFontData" id=10]
-[ext_resource path="res://src/Dialogue/VoiceBleeper.cs" type="Script" id=11]
 [ext_resource path="res://Objects/CharacterModel/Player.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Font/Theme/Dialogue.tres" type="Theme" id=13]
 
@@ -162,8 +162,10 @@ script = ExtResource( 1 )
 position = Vector2( 960, 1267 )
 scale = Vector2( 1.2, 1.2 )
 
+[node name="Invisible" parent="Models" instance=ExtResource( 3 )]
+
 [node name="Dialogue" type="Sprite" parent="."]
-position = Vector2( 954, 899 )
+position = Vector2( 954, 1350 )
 texture = ExtResource( 4 )
 
 [node name="Text" type="RichTextLabel" parent="Dialogue"]
@@ -227,11 +229,6 @@ position = Vector2( -159.444, -65.9259 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( 0, -1024 )
-
-[node name="Bleep" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 960, 0 )
-bus = "VoiceBleep"
-script = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "PopIn"

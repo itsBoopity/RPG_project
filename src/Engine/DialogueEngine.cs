@@ -13,12 +13,13 @@ public class DialogueEngine : Node2D
     private Node2D playerPortrait;
     private Sprite portrait;
     private Sprite shadow;
+    private AdvanceIcon advanceIcon;
     private SceneTreeTween tween;
+    private Timer timer;
     private float dialogueSpeed;
 
     public override void _Ready()
     {
-        actors = new Godot.Collections.Dictionary<string, DialogueActor>();
         file = new File();
 
         models = GetNode<Node>("Models");
@@ -28,15 +29,31 @@ public class DialogueEngine : Node2D
         playerPortrait = GetNode<Node2D>("Portrait/PlayerPortrait");
         portrait = GetNode<Sprite>("Portrait");
         shadow = GetNode<Sprite>("Portrait/Shadow");
+        advanceIcon = GetNode<AdvanceIcon>("Dialogue/AdvanceIcon");
         tween = GetTree().CreateTween();
         tween.Stop();
+        timer = GetNode<Timer>("Timer");
 
         playerPortrait.Hide();
         SetProcessInput(false);
     }
 
+    public override void _ExitTree()
+    {
+        foreach (DialogueActor actor in actors.Values)
+            actor.Free();
+    }
+    // Can't put tween.Kill() in ExitTree because it's not in the SceneTree at that point???
+    public override void _Notification(int what)
+    {
+        if (what == MainLoop.NotificationWmQuitRequest)
+            tween.Kill();
+    }
+
     public void LoadDialogue(string path)
     {
+        actors = new Godot.Collections.Dictionary<string, DialogueActor>();
+        
         dialogueSpeed = Global.settings.dialogueSpeed;
         file.Open(path, File.ModeFlags.Read);
         SetProcessInput(true);
@@ -46,7 +63,9 @@ public class DialogueEngine : Node2D
     private void Finish()
     {
         //Play a fancy animation swooshing away the dialogue box.
-
+        foreach (DialogueActor actor in actors.Values)
+            actor.Free();
+        actors.Clear();
         SetProcessInput(false);
     }
 
@@ -60,12 +79,13 @@ public class DialogueEngine : Node2D
     {
         if (!file.IsOpen()) return;
 
+        advanceIcon.HideMe();
         StopBleeps();
-
+        
         // Finish Text scroll
         if (tween.IsRunning())
         {
-            dialogueBox.VisibleCharacters = -1;
+            while (tween.CustomStep(64)) continue;
             tween.Kill();
             return;
         }
@@ -81,10 +101,19 @@ public class DialogueEngine : Node2D
                 Line(ref toParse[1]);
             else if (toParse[0] == "show")
                 ShowActor(ref toParse[1]);
+            else if (toParse[0] == "play")
+                PlayAudio(ref toParse[1]);
+            else if (toParse[0] == "stop")
+                StopAudio(ref toParse[1]);
+            else if (toParse[0] == "wait")
+                WaitDialogue(ref toParse[1]);
             else
                 GD.Print("Reading: " + toParse[0]);
 
-        } while (toParse[0] != "line" && toParse[0] != "pause" && !file.EofReached());
+        } while (toParse[0] != "line" && toParse[0] != "pause" && toParse[0] != "wait" && !file.EofReached());
+        
+        if (toParse[0] == "pause")
+            advanceIcon.ShowMe();
 
         if (toParse[0] != "line" && file.EofReached())
             Finish();
@@ -142,12 +171,13 @@ public class DialogueEngine : Node2D
         }
     
         string processed = 
-            toParse[1].Replace("%Player%", Global.data.avaData.name);
-            //.Replace("%he%", "")
+            toParse[1].Replace("%Player%", Global.data.avaData.name)
+            .Replace("\\n", "\n");
+            //.Replace("%he%", global)
 
         dialogueBox.VisibleCharacters = 0;
         dialogueBox.BbcodeText = processed;
-        string[] separateGaps = dialogueBox.Text.Split('`');
+        string[] separateGaps = dialogueBox.Text.Replace("\n", "").Split('`');
         dialogueBox.BbcodeText = processed.Replace("`", "");
         
         int characterLength = separateGaps[0].Length;
@@ -166,6 +196,7 @@ public class DialogueEngine : Node2D
             tween.TweenProperty(dialogueBox, "visible_characters", characterLength, separateGaps[i].Length * dialogueSpeed);
         }
         tween.TweenCallback(speaker, "StopTalk");
+        tween.TweenCallback(advanceIcon, "ShowMe");
     }
 
     private void ShowActor(ref string text)
@@ -203,6 +234,59 @@ public class DialogueEngine : Node2D
         CharacterModel model = GetNodeOrNull<CharacterModel>(toParse[0]);
         if (model != null) model.ChangeExpression(toParse[1]);
     }
+
+    private void PlayAudio(ref string text)
+    {
+        string[] toParse = text.Split(' ');
+        if (toParse[0] == "music")
+        {
+            if (toParse.Length > 2)
+                GetNode<AudioEngine>("/root/AudioEngine").PlayMusic(toParse[1], toParse[2].ToFloat());
+            else
+                GetNode<AudioEngine>("/root/AudioEngine").PlayMusic(toParse[1]);
+        }
+        else if (toParse[0] == "ambient")
+        {
+            if (toParse.Length > 2)
+                GetNode<AudioEngine>("/root/AudioEngine").PlayAmbient(toParse[1], toParse[2].ToFloat());
+            else
+                GetNode<AudioEngine>("/root/AudioEngine").PlayAmbient(toParse[1]);
+        }
+        else
+            throw new Exception("Play Audio does not have sfx implemented yet");
+    }
+
+    private void StopAudio(ref string text)
+    {
+        string[] toParse = text.Split(' ');
+        if (toParse[0] == "music")
+        {
+            if (toParse.Length > 1)
+                GetNode<AudioEngine>("/root/AudioEngine").StopMusic(toParse[1].ToFloat());
+            else
+                GetNode<AudioEngine>("/root/AudioEngine").StopMusic();
+        }
+        else if (toParse[0] == "ambient")
+        {
+            if (toParse.Length > 1)
+                GetNode<AudioEngine>("/root/AudioEngine").StopAmbient(toParse[1].ToFloat());
+            else
+                GetNode<AudioEngine>("/root/AudioEngine").StopAmbient();
+        }
+    }
+
+    private void WaitDialogue(ref string text)
+    {
+        timer.Start(text.ToFloat());
+        SetProcessInput(false);
+    }
+
+    private void OnWaitFinish()
+    {
+        SetProcessInput(true);
+        AdvanceDialogue();
+    }
+
 
     private void StopBleeps()
     {

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class PlayerModel : CharacterModelBackup
+public class PlayerModel : CharacterModel
 {
     [Export] bool isPortrait = false;
     AvatarData data;
@@ -36,7 +36,7 @@ public class PlayerModel : CharacterModelBackup
     public override void _Ready()
     {
         if (isPortrait)
-            base.StopAnimations();
+            StopAnimations();
             
         data = Global.data.avaData;
         if (data == null) throw new Exception("PlayerModel instanced when Global.data.avaData is not initialized.");
@@ -155,6 +155,14 @@ public class PlayerModel : CharacterModelBackup
         Utility.SetShaderColor(beard, data.beardColor);
         Utility.SetShaderColor(moustache, data.moustacheColor);
         Utility.SetShaderColor(scruff, data.beardColor); 
+    }
+
+    public void StopAnimations()
+    {
+        SetProcess(false);
+        GetNode<AnimationPlayer>("BreatheAnimator").Stop();
+        GetNode<Sprite>("Body").Scale = Vector2.One;
+        GetNode<AnimatedSprite>("Body/Head/Eye").Frame = 0;
     }
 
     private void FreeTextures()

@@ -3,13 +3,14 @@ using System;
 
 public class MonsterTarget : Sprite
 {
-    public override void _UnhandledInput(InputEvent @event)
+    [Signal] delegate void Hit(MonsterTarget target);
+    public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("battle_clickTarget"))
         {
             if (this.IsPixelOpaque(GetLocalMousePosition()))
             {
-                //THIS IS WHERE THE HIT SIGNAL IS EMITTED
+                EmitSignal("Hit", this);
                 GetTree().SetInputAsHandled();
             }
         }

@@ -3,15 +3,10 @@ using System;
 
 public class CharacterModel : Node2D
 {
-    [Export] NodePath headPath = null;
-    [Export] NodePath mouthPath = null;
     private float blinkSpeed = 5;
-    private float talkSpeed = 1;
     protected AudioStreamPlayer2D bleep;
     private AnimationPlayer blinkAnimator;
     protected AnimationPlayer talkAnimator;
-    private AnimatedSprite head;
-    private AnimatedSprite mouth;
     private float blinkNext;
     public bool blink = true;
 
@@ -19,8 +14,6 @@ public class CharacterModel : Node2D
 
     public override void _Ready()
     {
-        mouth = GetNode<AnimatedSprite>(mouthPath);
-        head = GetNode<AnimatedSprite>(headPath);
         bleep = GetNode<AudioStreamPlayer2D>("Bleep");
         blinkAnimator = GetNode<AnimationPlayer>("BlinkAnimator");
         talkAnimator = GetNode<AnimationPlayer>("TalkAnimator");

@@ -12,10 +12,15 @@ public class SkillBoxUI : Sprite
     private CanvasItem snap;
     private Label cooldownCountdown;
 
+    private Vector2 originalScale;
+    [Signal] delegate void HoverSkill();
+    [Signal] delegate void ExitHoverSkill();
+    [Signal] delegate void SelectSkill();
     private Color fadeColor = new Color(0.4f, 0.4f, 0.4f, 1);
     
     public override void _Ready()
     {
+        originalScale = this.Scale;
         fill = GetNode<Sprite>("Fill");
         icon = GetNode<Sprite>("Fill/Icon");
         stackCost = GetNode<Label>("Cost");
@@ -25,7 +30,22 @@ public class SkillBoxUI : Sprite
 
         GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("battle_skill" + Name)[0]).AsText();
     }
-    
+
+    public void OnHover()
+    {
+        this.Scale = originalScale * 1.1f;
+        //EmitSignal("HoverSkill");
+    }
+    public void ExitHover()
+    {
+        this.Scale = originalScale;
+        //EmitSignal("ExitHoverSkill");
+    }
+    public void Grow() { this.Scale = originalScale * 1.1f; }
+    public void Shrink() { this.Scale = originalScale; }
+    public void OnPress() { //EmitSignal("SelectSkill"); 
+    }
+
     public void Initiate(BattleSkill skill)
     {
         if (skill == null)

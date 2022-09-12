@@ -12,6 +12,7 @@ public class Utility : Node
     /// Middle bottom of the screen
     /// </summary>
     public static Vector2 MiddleBottomCoord() {return new Vector2(960, 1080);}
+    public static float MiddleX() {return 960;}
 
     public static int CountChar(ref string text, char character)
     {
@@ -45,6 +46,63 @@ public class Utility : Node
             default:
                 return "Utility.CharacterBBName is not fully implemented or given an incorrect argument.";
         }
+    }
+
+    // BBCode formatted skill type
+    public static string SkillBBName(SkillType type)
+    {
+        switch (type)
+        {
+            case SkillType.BASIC:
+                return "[color=#94705D]Basic[/color]";
+            case SkillType.OFFENSIVE:
+                return "[color=#DC5750]Offensive[/color]";
+            default:
+                return "Utility.SkillBBName does not contain " + type.ToString();
+        }
+    }
+    
+    public static string SkillBBName(SkillElement type)
+    {
+        switch (type)
+        {
+            case SkillElement.BLUNT:
+                return "[color=#979EDF]Blunt[/color]";
+            case SkillElement.SLASH:
+                return "[color=#C86B36]Slash[/color]";
+            case SkillElement.PIERCE:
+                return "[color=#B868A3]Pierce[/color]";
+            case SkillElement.FIRE:
+                return "[color=#FF4849]Fire[/color]";
+            case SkillElement.ICE:
+                return "[color=#3AB7F9]Ice[/color]";
+            case SkillElement.LIGHTNING:
+                return "[color=#FFF936]Lightning[/color]";
+            default:
+                return "Utility.SkillBBName does not contain " + type.ToString();
+        }
+    }
+
+    public static string ATK(string text)
+    {
+        return "[atk][b]" + text + "[/b][/atk]";
+    }
+    public static string STA(string text)
+    {
+        return "[st][b]" + text + "[/b][/st]";
+    }
+
+    public static bool IsPhysical(SkillElement type)
+    {
+        if (type == SkillElement.SLASH || type == SkillElement.BLUNT || type == SkillElement.PIERCE)
+            return true;
+        return false;
+    }
+    public static bool IsMagical(SkillElement type)
+    {
+        if (type == SkillElement.FIRE || type == SkillElement.ICE || type == SkillElement.LIGHTNING)
+            return true;
+        return false;
     }
 
     /// <summary>

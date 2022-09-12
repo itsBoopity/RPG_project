@@ -23,6 +23,6 @@ public class BasicAttack: BattleSkill
 
     public override string Description()
     {
-        return "- Deal ATK damage\n- Generates [st]+1 STA[/st]";
+        return "- Do " + Utility.ATK("ATK") + " damage\n- Generates " + Utility.STA("+1STA");
     }
 }

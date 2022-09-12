@@ -17,6 +17,7 @@ public class Character: BattleFigure
                 HP = 10; maxHP = 10;
                 ATK = 2;
                 DEF = 2;
+                SPD = 5;
                 skills.Add(new FirstStrike());
                 break;
             case CharacterEnum.Claus:
@@ -24,9 +25,11 @@ public class Character: BattleFigure
                 HP = 11; maxHP = 11;
                 ATK = 3;
                 DEF = 1;
-                skills.Add(new FirstStrike());
+                SPD = 8;
+                skills.Add(new BasicAttack());
                 break;
         }
+        Reset();
     }
     public Character Clone()
     {
@@ -41,7 +44,7 @@ public class Character: BattleFigure
     public Character Reset()
     {
         turnActive = true;
-        stack = 0;
+        stack = Lvl;
         foreach (BattleSkill skill in skills)
             skill.Reset();
         return this;

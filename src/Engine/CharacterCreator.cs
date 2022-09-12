@@ -9,7 +9,7 @@ public class CharacterCreator : Node2D
 
 	public override void _Ready()
 	{
-		GetNode<AudioEngine>("/root/AudioEngine").FadeMusic("Music/SometimesWeGetToSeeTheSunRise_Calm.ogg");
+		GetNode<AudioEngine>("/root/AudioEngine").PlayMusic("Music/SometimesWeGetToSeeTheSunRise_Calm.ogg");
 		gameData = Global.data;
 		playerModel = GetNode<PlayerModel>("PlayerModel");
 		nameEntry = GetNode<CanvasItem>("UI/NameEntry");

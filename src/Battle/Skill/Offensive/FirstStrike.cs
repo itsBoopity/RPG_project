@@ -8,6 +8,7 @@ public class FirstStrike: BattleSkill
     {
         name = "First Strike";
         type = SkillType.OFFENSIVE;
+        element = SkillElement.BLUNT;
         cost = 3;
         cooldown = 1;
         textureX = 0;
@@ -30,7 +31,7 @@ public class FirstStrike: BattleSkill
 
     public override string Description()
     {
-        return "- Deal [atk]2 * ATK[/atk] the first time it's used\n- Otherwise deal [atk]1.5 * ATK[/atk]";
+        return "- Do " + Utility.ATK("2*ATK") + " damage on first use\n- Do " + Utility.ATK("1.5*ATK") + " the rest of the combat";
     }
 
     public new void Reset()

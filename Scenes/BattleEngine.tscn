@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Objects/UI/Battle/CharacterBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Battle/BattleEngine.cs" type="Script" id=2]
@@ -7,9 +7,15 @@
 [ext_resource path="res://Font/Shadower.otf" type="DynamicFontData" id=5]
 [ext_resource path="res://Objects/UI/Battle/SkillBox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/UI/Battle/BattleTimer.cs" type="Script" id=7]
+[ext_resource path="res://Images/UI/Battle/skillWindow.png" type="Texture" id=8]
 [ext_resource path="res://src/UI/Battle/CharacterModelRack.cs" type="Script" id=9]
+[ext_resource path="res://src/UI/Battle/SkillDescription.cs" type="Script" id=10]
 [ext_resource path="res://Images/UI/Battle/timer.png" type="Texture" id=11]
 [ext_resource path="res://Font/NumberDisplay.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Font/Theme/PrintedSmaller.tres" type="Theme" id=13]
+[ext_resource path="res://Font/RichTextEffect/RichTextAtkColor.gd" type="Script" id=14]
+[ext_resource path="res://Font/RichTextEffect/RichTextStackColor.gd" type="Script" id=15]
+[ext_resource path="res://src/UI/Battle/MonsterRack.cs" type="Script" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -33,6 +39,48 @@ border_color = Color( 1, 1, 1, 1 )
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 
+[sub_resource type="DynamicFont" id=6]
+size = 38
+font_data = ExtResource( 5 )
+
+[sub_resource type="RichTextEffect" id=5]
+script = ExtResource( 15 )
+
+[sub_resource type="RichTextEffect" id=7]
+script = ExtResource( 14 )
+
+[sub_resource type="RichTextEffect" id=8]
+script = ExtResource( 15 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "PopIn"
+length = 0.15
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.01, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1369, 599 ), Vector2( 1369, 604 ), Vector2( 1369, 599 ) ]
+}
+
 [node name="BattleEngine" type="Node2D"]
 script = ExtResource( 2 )
 
@@ -41,10 +89,16 @@ unique_name_in_owner = true
 margin_right = 1920.0
 margin_bottom = 1080.0
 color = Color( 0.0784314, 0.0666667, 0.0862745, 0.392157 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Monsters" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2( 916, 519 )
+position = Vector2( 960, 600 )
+script = ExtResource( 16 )
+
+[node name="Tween" type="Tween" parent="Monsters"]
 
 [node name="Filmbar" parent="." instance=ExtResource( 3 )]
 
@@ -150,6 +204,90 @@ position = Vector2( 309.96, -27.5999 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="SkillDescription" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+margin_left = 1369.0
+margin_top = 599.0
+margin_right = 1920.0
+margin_bottom = 1216.0
+texture = ExtResource( 8 )
+patch_margin_left = 25
+patch_margin_top = 12
+patch_margin_right = 38
+script = ExtResource( 10 )
+
+[node name="Name" type="RichTextLabel" parent="SkillDescription"]
+margin_left = 29.0
+margin_top = 19.0
+margin_right = 504.0
+margin_bottom = 65.0
+theme = ExtResource( 4 )
+custom_fonts/normal_font = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "Eating Ass is Nice"
+text = "Eating Ass is Nice"
+scroll_active = false
+
+[node name="PropertyType" type="RichTextLabel" parent="SkillDescription"]
+margin_left = 31.0
+margin_top = 54.0
+margin_right = 174.0
+margin_bottom = 102.0
+theme = ExtResource( 13 )
+bbcode_enabled = true
+bbcode_text = "Offensive"
+text = "Offensive"
+scroll_active = false
+custom_effects = [ SubResource( 5 ) ]
+
+[node name="PropertyCost" type="RichTextLabel" parent="SkillDescription"]
+margin_left = 160.0
+margin_top = 54.0
+margin_right = 285.0
+margin_bottom = 102.0
+theme = ExtResource( 13 )
+bbcode_enabled = true
+bbcode_text = "| Cost 99
+"
+text = "| Cost 99
+"
+scroll_active = false
+custom_effects = [ SubResource( 5 ) ]
+
+[node name="PropertyCD" type="RichTextLabel" parent="SkillDescription"]
+margin_left = 275.0
+margin_top = 54.0
+margin_right = 434.0
+margin_bottom = 102.0
+theme = ExtResource( 13 )
+bbcode_enabled = true
+bbcode_text = "| CD 5"
+text = "| CD 5"
+scroll_active = false
+custom_effects = [ SubResource( 5 ) ]
+
+[node name="Description" type="RichTextLabel" parent="SkillDescription"]
+margin_left = 29.0
+margin_top = 102.0
+margin_right = 504.0
+margin_bottom = 625.0
+theme = ExtResource( 13 )
+custom_constants/line_separation = -2
+bbcode_enabled = true
+bbcode_text = "- Type: Lightning/Magical
+- Target: Single
+
+- It's pretty Cool"
+text = "- Type: Lightning/Magical
+- Target: Single
+
+- It's pretty Cool"
+scroll_active = false
+custom_effects = [ SubResource( 7 ), SubResource( 8 ) ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SkillDescription"]
+anims/PopIn = SubResource( 9 )
 
 [connection signal="timeout" from="Timer/Timer" to="." method="EnemyTurn"]
 

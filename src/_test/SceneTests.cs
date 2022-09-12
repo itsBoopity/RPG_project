@@ -24,6 +24,7 @@ public class SceneTests: Node
         AddChild(battleEngine);
         BattleSetup testSetup = new BattleSetup();
         testSetup.monsterID.Add(0);
+        testSetup.monsterID.Add(0);
         battleEngine.Initiate(testSetup);
     }
 

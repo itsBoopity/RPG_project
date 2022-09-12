@@ -23,6 +23,7 @@ public class GameData
     public List<CharacterEnum> bench;
     //public byte[] flags;
 
+    //returns the corresponding character based on enum
     public Character GetCharacter(CharacterEnum characterEnum)
     {
         switch (characterEnum)
@@ -34,6 +35,23 @@ public class GameData
             default:
                 return null;
         }
+    }
+    //<summary>
+    // Takes in character and sets the corresponding character to it. Uses .who to decide who is
+    //</summary>
+    public void UpdateCharacter(Character newValue)
+    {
+        if (newValue.who == CharacterEnum.Player)
+        {
+            playerCharacter.Free();
+            playerCharacter = newValue;
+        }
+        else if (newValue.who == CharacterEnum.Claus)
+        {
+            clausCharacter = newValue;
+        }
+        else
+            throw new System.ArgumentException("GameData.UpdateCharacter does not have " + newValue.who + " enum implemented.");
     }
 
     // All these functions handle the file writing itself. The UI should ask for confirmation/warn overwrite before calling these.

@@ -108,11 +108,14 @@ tracks/4/keys = {
 [node name="UI" type="Node2D" parent="."]
 
 [node name="SideBar" type="Sprite" parent="UI"]
+position = Vector2( -40, 0 )
+scale = Vector2( 0.9625, 1 )
 texture = ExtResource( 1 )
 centered = false
 script = ExtResource( 6 )
 
 [node name="SidebarHighlight" type="Sprite" parent="UI/SideBar"]
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 0, 1126 )
 texture = ExtResource( 4 )
 centered = false
@@ -165,6 +168,7 @@ margin_bottom = 370.0
 text = "Exit"
 
 [node name="Logo" type="Sprite" parent="UI/SideBar"]
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 186, 184 )
 scale = Vector2( 3.76379, 3.73934 )
 texture = ExtResource( 7 )

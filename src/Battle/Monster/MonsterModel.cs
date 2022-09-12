@@ -3,17 +3,27 @@ using System;
 
 public class MonsterModel : Node2D
 {
-    AnimationPlayer animationPlayer;
+    private AnimationPlayer animationPlayer;
+    private Control boundary;
+
+    [Signal] delegate void Hit(MonsterTarget appendage);
+    [Signal] delegate void Miss();
 
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        boundary = GetNode<Control>("BoundaryBox");
     }
-    public void targetHit(MonsterTarget target)
+
+    public Vector2 GetBoundary()
     {
-        //Send signal to battle engine of target value// or check for if playerTurn/TargettingUI is enabled here.
-        GD.Print(Name + " got hit at " + target.GetParent().Name + " = " + target.Name);
+        if (boundary == null) throw new Exception("MonsterModel.GetBoundary called before model got added to the scenetree");
+        return boundary.RectSize;
     }
+
+    public void TargetMiss() { EmitSignal("Miss"); }
+
+    public void TargetHit(MonsterTarget target) { EmitSignal("Hit", target);  }
 
     public void Animate(string name)
     {

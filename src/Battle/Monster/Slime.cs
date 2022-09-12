@@ -9,9 +9,11 @@ public class Slime: Monster
     {
         name = "Slime";
         maxHP = 10;
+        stack = 2;
         HP = 10;
         ATK = 2;
         DEF = 1;
+        SPD = 2;
 
         skills.Add(new BasicAttack());
     }
@@ -21,4 +23,10 @@ public class Slime: Monster
         targetCharacter = 0;
         targetSkill = 0;
     }
+
+    public override void TargetHit(MonsterTarget target)
+    {
+        GD.Print(name + " | Hit at " + target.GetParent().Name + "/" + target.Name);
+    }
+    
 }

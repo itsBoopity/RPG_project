@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://src/PlayerAvatar/PlayerModel.cs" type="Script" id=1]
 [ext_resource path="res://Images/PlayerAvatar/Body/OBESE.png" type="Texture" id=2]
@@ -21,6 +21,24 @@
 [ext_resource path="res://Images/PlayerAvatar/Scruff/ALL_SHARP.png" type="Texture" id=19]
 [ext_resource path="res://src/Shaders/ColorShader.gdshader" type="Shader" id=20]
 [ext_resource path="res://Images/PlayerAvatar/FrontArm/OBESE_PALM.png" type="Texture" id=21]
+[ext_resource path="res://Audio/VoiceBleep/Claus.wav" type="AudioStream" id=22]
+
+[sub_resource type="Animation" id=3]
+resource_name = "Breathe"
+length = 6.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1.01 ), Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "Blink"
@@ -50,21 +68,30 @@ tracks/1/keys = {
 "values": [ Vector2( -32, -39 ), Vector2( -32, -36.6471 ), Vector2( -32, -39 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Breathe"
-length = 6.0
+[sub_resource type="Animation" id=15]
+length = 0.001
+
+[sub_resource type="Animation" id=16]
+resource_name = "Talk"
+length = 0.3
 loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Body:scale")
+step = 0.05
+tracks/0/type = "method"
+tracks/0/path = NodePath("Bleep")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 3, 6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1.01 ), Vector2( 1, 1 ) ]
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [ 0.0 ],
+"method": "play"
+} ]
 }
 
 [sub_resource type="ShaderMaterial" id=13]
@@ -156,17 +183,24 @@ shader_param/saturation = 1.0
 scale = Vector2( 0.9, 0.9 )
 script = ExtResource( 1 )
 
-[node name="BlinkAnimator" type="AnimationPlayer" parent="."]
-anims/Blink = SubResource( 2 )
-
 [node name="BreatheAnimator" type="AnimationPlayer" parent="."]
 autoplay = "Breathe"
 anims/Breathe = SubResource( 3 )
 
+[node name="BlinkAnimator" type="AnimationPlayer" parent="."]
+anims/Blink = SubResource( 2 )
+
+[node name="TalkAnimator" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 15 )
+anims/Talk = SubResource( 16 )
+
+[node name="Bleep" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 22 )
+bus = "VoiceBleep"
+
 [node name="Body" type="Sprite" parent="."]
 material = SubResource( 13 )
 position = Vector2( 0.3, 60 )
-scale = Vector2( 1, 1.006 )
 texture = ExtResource( 2 )
 offset = Vector2( 0, -568 )
 

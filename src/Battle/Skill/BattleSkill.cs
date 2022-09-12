@@ -6,6 +6,8 @@ public abstract class BattleSkill
 {
     public string name;
     public SkillType type;
+    public SkillElement element = SkillElement.NONE;
+    public bool isAoE = false;
     public int cost;
     public int cooldown;
     public int currentCooldown = 0;

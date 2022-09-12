@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/Engine/DialogueEngine.cs" type="Script" id=1]
 [ext_resource path="res://Images/PlayerAvatar/DropShadow.png" type="Texture" id=2]
@@ -6,43 +6,71 @@
 [ext_resource path="res://Images/UI/dialogueBox.png" type="Texture" id=4]
 [ext_resource path="res://Images/CharacterPortrait/Claus/default.png" type="Texture" id=5]
 [ext_resource path="res://Font/RichTextEffect/RichTextStackColor.gd" type="Script" id=6]
-[ext_resource path="res://Font/PTSerif-Italic.ttf" type="DynamicFontData" id=7]
-[ext_resource path="res://Font/PTSerif-BoldItalic.ttf" type="DynamicFontData" id=8]
-[ext_resource path="res://Font/PTSerif-Bold.ttf" type="DynamicFontData" id=9]
-[ext_resource path="res://Font/PTSerif-Regular.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Font/Theme/PrintedText.tres" type="Theme" id=7]
+[ext_resource path="res://icon.png" type="Texture" id=11]
 [ext_resource path="res://Objects/CharacterModel/Player.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Font/Theme/Dialogue.tres" type="Theme" id=13]
-
-[sub_resource type="DynamicFont" id=8]
-size = 42
-outline_size = 3
-outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
-use_filter = true
-font_data = ExtResource( 8 )
-
-[sub_resource type="DynamicFont" id=9]
-size = 40
-outline_size = 3
-outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
-use_filter = true
-font_data = ExtResource( 7 )
-
-[sub_resource type="DynamicFont" id=10]
-size = 42
-outline_size = 3
-outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
-use_filter = true
-font_data = ExtResource( 9 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 40
-outline_size = 3
-outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
-use_filter = true
-font_data = ExtResource( 10 )
+[ext_resource path="res://Font/Theme/TitleTag.tres" type="Theme" id=13]
+[ext_resource path="res://src/Dialogue/AdvanceIcon.cs" type="Script" id=14]
 
 [sub_resource type="RichTextEffect" id=6]
 script = ExtResource( 6 )
+
+[sub_resource type="Animation" id=12]
+resource_name = "Hide"
+length = 0.02
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.02 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Show"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1.1 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "PopIn"
@@ -125,7 +153,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0.05, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ -640.0, -594.0 ]
+"values": [ -640.0, -570.0 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -165,20 +193,16 @@ scale = Vector2( 1.2, 1.2 )
 [node name="Invisible" parent="Models" instance=ExtResource( 3 )]
 
 [node name="Dialogue" type="Sprite" parent="."]
-position = Vector2( 954, 1350 )
+position = Vector2( 954, 899 )
 texture = ExtResource( 4 )
 
 [node name="Text" type="RichTextLabel" parent="Dialogue"]
-margin_left = -606.0
+margin_left = -593.0
 margin_top = -75.0
 margin_right = 725.0
 margin_bottom = 102.0
-theme = ExtResource( 13 )
+theme = ExtResource( 7 )
 custom_constants/line_separation = -2
-custom_fonts/bold_italics_font = SubResource( 8 )
-custom_fonts/italics_font = SubResource( 9 )
-custom_fonts/bold_font = SubResource( 10 )
-custom_fonts/normal_font = SubResource( 7 )
 bbcode_enabled = true
 bbcode_text = "There was once a tree. And on that tree, there lived a tiny little leaf. A wee floral baby. One day, the wee little leaf fell from its branch and landed directly into puddle. Wee leafy was sad that it got wet."
 text = "There was once a tree. And on that tree, there lived a tiny little leaf. A wee floral baby. One day, the wee little leaf fell from its branch and landed directly into puddle. Wee leafy was sad that it got wet."
@@ -188,7 +212,7 @@ custom_effects = [ SubResource( 6 ) ]
 [node name="NameText" type="RichTextLabel" parent="Dialogue"]
 margin_left = -594.0
 margin_top = -140.0
-margin_right = 42.0
+margin_right = 20.0
 margin_bottom = -66.0
 theme = ExtResource( 13 )
 bbcode_enabled = true
@@ -196,6 +220,16 @@ bbcode_text = "This is the name tag"
 text = "This is the name tag"
 fit_content_height = true
 scroll_active = false
+
+[node name="AdvanceIcon" type="Sprite" parent="Dialogue"]
+visible = false
+position = Vector2( 680, 62 )
+texture = ExtResource( 11 )
+script = ExtResource( 14 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Dialogue/AdvanceIcon"]
+anims/Hide = SubResource( 12 )
+anims/Show = SubResource( 11 )
 
 [node name="Portrait" type="Sprite" parent="."]
 position = Vector2( -434, 1080 )
@@ -236,5 +270,10 @@ anims/PopIn = SubResource( 1 )
 anims/RESET = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="OnWaitFinish"]
 
 [editable path="Portrait/PlayerPortrait"]

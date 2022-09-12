@@ -12,17 +12,21 @@ public abstract class Monster: BattleFigure
     protected int targetCharacter = 0;
     protected int targetSkill = 0;
 
+    ~Monster() { model.Free(); }
     public MonsterModel GetModel()
     {
         if (model == null)
             model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instance<MonsterModel>();
+        model.Connect("Hit", this, "TargetHit");
+        model.Connect("Miss", this, "TargetMiss");
         return model;
     }
-
-    public abstract void LoadUpcomingTurn(BattleEngine battleEngine);
-
     public void ExecuteTurn(BattleEngine battleEngine)
     {
         skills[targetSkill].Execute(this, battleEngine.party[targetCharacter]);
     }
+
+    public void TargetMiss() { GD.Print("Monster.cs got missed, but it's not implemented yet."); }
+    public abstract void LoadUpcomingTurn(BattleEngine battleEngine);
+    public abstract void TargetHit(MonsterTarget target);
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/Animation/CharacterModel.cs" type="Script" id=1]
 [ext_resource path="res://Images/CharacterModel/Claus/body.png" type="Texture" id=2]
@@ -10,10 +10,29 @@
 [ext_resource path="res://Images/CharacterModel/Claus/eye_blink.png" type="Texture" id=8]
 [ext_resource path="res://Images/CharacterModel/Claus/mouth_open.png" type="Texture" id=9]
 [ext_resource path="res://Images/CharacterModel/Claus/mouth_normal.png" type="Texture" id=10]
+[ext_resource path="res://src/Dialogue/TalkAnimator.cs" type="Script" id=11]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Breathe"
+length = 6.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1.008 ), Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "Blink"
 length = 0.3
+step = 0.025
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body/Head/Eye:frame")
 tracks/0/interp = 1
@@ -21,22 +40,37 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.1, 0.225 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Body/Head/Brow:position")
+tracks/1/path = NodePath("Body/Head/BrowPosition:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.1, 0.225 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 39.1, -41.5 ), Vector2( 39.1, -40 ), Vector2( 39.1, -41.5 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 0, 2 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Head/BrowPosition:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -48,6 +82,42 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/Head:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Head:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 34.7, -1040.5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/Head:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -88,25 +158,34 @@ tracks/1/keys = {
 "method": "play"
 } ]
 }
-
-[sub_resource type="Animation" id=2]
-resource_name = "Breathe"
-length = 6.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Body:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 3, 6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1.008 ), Vector2( 1, 1 ) ]
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Head:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 0 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("TalkAnimator")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "RandomSpeed"
+} ]
 }
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=11]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": true,
@@ -133,19 +212,23 @@ animations = [ {
 [node name="Claus" type="Node2D"]
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 1 )
-headPath = NodePath("Body/Head")
-mouthPath = NodePath("Body/Head/Mouth")
-
-[node name="BlinkAnimator" type="AnimationPlayer" parent="."]
-anims/Blink = SubResource( 1 )
-
-[node name="TalkAnimator" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 8 )
-anims/Talk = SubResource( 9 )
 
 [node name="BreatheAnimator" type="AnimationPlayer" parent="."]
 autoplay = "Breathe"
 anims/Breathe = SubResource( 2 )
+
+[node name="BlinkAnimator" type="AnimationPlayer" parent="."]
+anims/Blink = SubResource( 1 )
+anims/RESET = SubResource( 10 )
+
+[node name="TalkAnimator" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 8 )
+anims/Talk = SubResource( 9 )
+script = ExtResource( 11 )
+
+[node name="Bleep" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+bus = "VoiceBleep"
 
 [node name="Body" type="Sprite" parent="."]
 use_parent_material = true
@@ -157,26 +240,27 @@ offset = Vector2( -400, -1024 )
 [node name="Head" type="AnimatedSprite" parent="Body"]
 use_parent_material = true
 position = Vector2( 34.7, -1040.5 )
-frames = SubResource( 7 )
+frames = SubResource( 11 )
 offset = Vector2( 0.8, 0.5 )
 
 [node name="Eye" type="AnimatedSprite" parent="Body/Head"]
 use_parent_material = true
-position = Vector2( 43.4999, -18.0998 )
+position = Vector2( 43.4999, -18.7621 )
+scale = Vector2( 1, 0.998004 )
 frames = SubResource( 3 )
 
-[node name="Brow" type="Sprite" parent="Body/Head"]
+[node name="BrowPosition" type="Node2D" parent="Body/Head"]
 use_parent_material = true
-position = Vector2( 39.1, -41.5 )
+
+[node name="Brow" type="Sprite" parent="Body/Head/BrowPosition"]
+use_parent_material = true
+position = Vector2( 37.8, -42.0004 )
 texture = ExtResource( 6 )
 
 [node name="Mouth" type="AnimatedSprite" parent="Body/Head"]
 use_parent_material = true
-position = Vector2( 39.0999, 106.7 )
+position = Vector2( 39.0999, 105.789 )
+scale = Vector2( 1, 0.998004 )
 frames = SubResource( 4 )
 
 [node name="Outfit" type="Sprite" parent="Body"]
-
-[node name="Bleep" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 5 )
-bus = "VoiceBleep"

@@ -10,9 +10,13 @@ public class CharacterBar : Sprite
     private Label maxHp;
     private Label stack;
 
+    private bool turnActive = false;
+
 
     private CanvasItem selector;
     private AnimationPlayer animationPlayer;
+    private AnimationPlayer shakePlayer;
+
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -28,6 +32,7 @@ public class CharacterBar : Sprite
 
         selector = GetNode<CanvasItem>("Selector");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        shakePlayer = GetNode<AnimationPlayer>("ShakePlayer");
 
         GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("battle_character" + Name)[0]).AsText();
     }
@@ -63,5 +68,30 @@ public class CharacterBar : Sprite
         hp.Text = character.HP.ToString();
         maxHp.Text = character.maxHP.ToString();
         stack.Text = character.stack.ToString();
+
+        if (character.turnActive && !this.turnActive)
+        {
+            animationPlayer.Stop();
+            animationPlayer.Play("RestoreTurn");
+        }
+        else if (!character.turnActive && this.turnActive)
+        {
+            animationPlayer.Stop();
+            animationPlayer.Play("UsedTurn");
+        }
+
+        this.turnActive = character.turnActive;
+    }
+
+    public void ShakeStack()
+    {
+        shakePlayer.Stop();
+        shakePlayer.Play("ShakeStack");
+    }
+
+    public void ShakeHP()
+    {
+        shakePlayer.Stop();
+        shakePlayer.Play("ShakeHP");
     }
 }

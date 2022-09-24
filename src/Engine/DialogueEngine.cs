@@ -16,6 +16,7 @@ public class DialogueEngine : Node2D
     private AdvanceIcon advanceIcon;
     private SceneTreeTween tween;
     private Timer timer;
+    private Sprite overlay;
     private float dialogueSpeed;
 
     public override void _Ready()
@@ -33,6 +34,7 @@ public class DialogueEngine : Node2D
         tween = GetTree().CreateTween();
         tween.Stop();
         timer = GetNode<Timer>("Timer");
+        overlay = GetNode<Sprite>("Overlay");
 
         playerPortrait.Hide();
         SetProcessInput(false);
@@ -107,6 +109,8 @@ public class DialogueEngine : Node2D
                 StopAudio(ref toParse[1]);
             else if (toParse[0] == "wait")
                 WaitDialogue(ref toParse[1]);
+            else if (toParse[0] == "overlay")
+                ShowOverlay(ref toParse[1]);
             else
                 GD.Print("Reading: " + toParse[0]);
 
@@ -279,6 +283,21 @@ public class DialogueEngine : Node2D
     {
         timer.Start(text.ToFloat());
         SetProcessInput(false);
+    }
+
+    private void ShowOverlay(ref string text)
+    {
+        string[] toParse = text.Split(' ');
+        if (toParse[0] == "hide")
+        {
+            //if (toParse.Length > 1) Swooshy fancy fade
+            //else { overlay.Texture.Dispose(); overlay.Texture = null;}
+        }
+        else 
+        {
+            overlay.Texture = GD.Load<Texture>(toParse[0]);
+            //if (toParse.Length > 1) fade it in gurl;
+        } 
     }
 
     private void OnWaitFinish()

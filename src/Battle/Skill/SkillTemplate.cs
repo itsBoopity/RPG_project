@@ -5,16 +5,20 @@ public class SkillTemplate: BattleSkill
 {
     public SkillTemplate()
     {
-        name = "SkillTemplate";
+        name = "First Strike";
         type = SkillType.BASIC;
+        element = SkillElement.NONE;
+        targetting = TargettingType.NONE;
         cost = 0;
         cooldown = 0;
-        textureX = 0;
-        textureY = 0;
     }
-    public override void Execute(BattleFigure user, BattleFigure target)
+    protected override void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency)
     {
-
+    
+    }
+    public override int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target)
+    {
+        return Utility.BasicDamageFormula(user.GetATK(), target.GetDEF());
     }
     public override string Description()
     {
@@ -22,8 +26,9 @@ public class SkillTemplate: BattleSkill
     }
 
     // Overwrite if the skill needs to reset internal parameters
-    // public new void Reset()
+    // public override void Reset()
     // {
     //     base.Reset();
+    //     // Rest of the code
     // }
 }

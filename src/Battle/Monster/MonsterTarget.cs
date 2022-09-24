@@ -3,15 +3,21 @@ using System;
 
 public class MonsterTarget : Sprite
 {
-    [Signal] delegate void Hit(MonsterTarget target);
+    [Export] private NodePath rootPath = null;
+    private MonsterModel root;
+
+    public override void _Ready()
+    {
+        root = GetNode<MonsterModel>(rootPath);
+    }
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("battle_clickTarget"))
         {
             if (this.IsPixelOpaque(GetLocalMousePosition()))
             {
-                EmitSignal("Hit", this);
                 GetTree().SetInputAsHandled();
+                root.TargetHit(this);
             }
         }
     }

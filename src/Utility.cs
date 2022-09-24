@@ -13,7 +13,6 @@ public class Utility : Node
     /// </summary>
     public static Vector2 MiddleBottomCoord() {return new Vector2(960, 1080);}
     public static float MiddleX() {return 960;}
-
     public static int CountChar(ref string text, char character)
     {
         int output = 0;
@@ -90,6 +89,12 @@ public class Utility : Node
     public static string STA(string text)
     {
         return "[st][b]" + text + "[/b][/st]";
+    }
+
+    public static int BasicDamageFormula(int userATK, int targetDEF, float targetEfficiency = 1, float coefATK = 1)
+    {
+        int damage = Mathf.RoundToInt((userATK * coefATK - targetDEF) * targetEfficiency);
+        return (damage < 1) ? 1 : damage;
     }
 
     public static bool IsPhysical(SkillElement type)

@@ -23,7 +23,7 @@ Button/styles/hover = SubResource( 3 )
 Button/styles/normal = SubResource( 4 )
 Button/styles/pressed = SubResource( 5 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=12]
 size = 60
 outline_size = 6
 outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
@@ -31,7 +31,7 @@ use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=11]
-default_font = SubResource( 10 )
+default_font = SubResource( 12 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 35

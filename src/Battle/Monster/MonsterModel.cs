@@ -3,17 +3,25 @@ using System;
 
 public class MonsterModel : Node2D
 {
+    private DamageCounter counter;
+    private Monster owner = null;
     private AnimationPlayer animationPlayer;
     private Control boundary;
 
-    [Signal] delegate void Hit(MonsterTarget appendage);
-    [Signal] delegate void Miss();
+    private Label hpCurrent;
+    private Label hpMax;
 
     public override void _Ready()
     {
+        counter = GetNode<DamageCounter>("DamageCounter");
+        hpCurrent = GetNode<Label>("HP/HPCurrent");
+        hpMax = GetNode<Label>("HP/HPMax");
+
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         boundary = GetNode<Control>("BoundaryBox");
     }
+
+    public void SetOwner(Monster owner) { this.owner = owner; }
 
     public Vector2 GetBoundary()
     {
@@ -21,9 +29,23 @@ public class MonsterModel : Node2D
         return boundary.RectSize;
     }
 
-    public void TargetMiss() { EmitSignal("Miss"); }
+    public void UpdateHP()
+    {
+        if (owner != null)
+        {
+            hpCurrent.Text = owner.HP.ToString();
+            hpMax.Text = owner.maxHP.ToString();
+        }
+    }
 
-    public void TargetHit(MonsterTarget target) { EmitSignal("Hit", target);  }
+    public void ShowEstimate(int damage) { counter.ShowEstimate(damage); }
+    public void HideEstimate() { counter.HideEstimate(); }
+    public void PlayDamage(int damage) { counter.Play(damage); }
+    public void PlayDamage(string text) { counter.Play(text); }
+
+    public void TargetMiss() { if (owner != null) owner.TargetMiss(); }
+
+    public void TargetHit(MonsterTarget target) { if (owner != null) owner.Hit(target);  }
 
     public void Animate(string name)
     {

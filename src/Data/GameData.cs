@@ -42,14 +42,9 @@ public class GameData
     public void UpdateCharacter(Character newValue)
     {
         if (newValue.who == CharacterEnum.Player)
-        {
-            playerCharacter.Free();
             playerCharacter = newValue;
-        }
         else if (newValue.who == CharacterEnum.Claus)
-        {
             clausCharacter = newValue;
-        }
         else
             throw new System.ArgumentException("GameData.UpdateCharacter does not have " + newValue.who + " enum implemented.");
     }

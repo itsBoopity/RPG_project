@@ -2,8 +2,8 @@ using Godot;
 
 public class Slime: Monster
 {
-    public readonly string[] analyzeInfo = {"Just a wee lil' slimo. Their weak spot is their face.",
-    "Always targets the 1st party member."};
+    public readonly string[] analyzeInfo = {"Just a wee lil' slimo. Its weak spot is its face.\n",
+    "Always targets the 1st party member.", " *BLORB*"};
     public static int GetID() { return 0; }
     public Slime()
     {
@@ -24,9 +24,12 @@ public class Slime: Monster
         targetSkill = 0;
     }
 
-    public override void TargetHit(MonsterTarget target)
+    protected override void TargetHit(MonsterTarget target)
     {
-        GD.Print(name + " | Hit at " + target.GetParent().Name + "/" + target.Name);
+        if (target.Name == "Weak")
+            NotifyBattleEngine(1f);
+        else
+            NotifyBattleEngine(0.5f);
     }
     
 }

@@ -3,12 +3,18 @@ using System;
 
 public class CharacterModelRack : Node2D
 {
-    private Godot.Collections.Dictionary<string, Node> models = new Godot.Collections.Dictionary<string, Node>();
+    private Godot.Collections.Dictionary<string, Node> models;
 
     public override void _ExitTree()
     {
         foreach(Node model in models.Values)
-            model.Free();
+            model.QueueFree();
+        models = null;
+    }
+
+    public void Initiate()
+    {
+        models = new Godot.Collections.Dictionary<string, Node>();
     }
     
     public void ShowCharacter(CharacterEnum who)
@@ -21,5 +27,11 @@ public class CharacterModelRack : Node2D
         if (GetChildCount() != 0)
             RemoveChild(GetChild(0));
         AddChild(models[name]);
+    }
+
+    public void FadeCharacter()
+    {
+        if (GetChildCount() != 0) 
+            RemoveChild(GetChild(0));
     }
 }

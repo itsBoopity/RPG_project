@@ -4,5 +4,6 @@
 
 [node name="SceneTests" type="Node2D"]
 script = ExtResource( 1 )
+dialogueToLoad = "res://Dialogue/tut1_1.txt"
 
 [connection signal="ready" from="." to="." method="DialogueTest"]

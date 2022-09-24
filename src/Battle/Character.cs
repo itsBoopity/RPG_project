@@ -6,7 +6,6 @@ using System;
 public class Character: BattleFigure
 {
     public CharacterEnum who;
-    public bool turnActive = true;
     public Character() {}
     public Character(CharacterEnum character)
     {
@@ -19,6 +18,7 @@ public class Character: BattleFigure
                 DEF = 2;
                 SPD = 5;
                 skills.Add(new FirstStrike());
+                skills.Add(new PrecisionNeedle());
                 break;
             case CharacterEnum.Claus:
                 who = CharacterEnum.Claus;

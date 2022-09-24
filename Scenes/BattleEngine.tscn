@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Objects/UI/Battle/CharacterBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Battle/BattleEngine.cs" type="Script" id=2]
@@ -16,6 +16,16 @@
 [ext_resource path="res://Font/RichTextEffect/RichTextAtkColor.gd" type="Script" id=14]
 [ext_resource path="res://Font/RichTextEffect/RichTextStackColor.gd" type="Script" id=15]
 [ext_resource path="res://src/UI/Battle/MonsterRack.cs" type="Script" id=16]
+[ext_resource path="res://src/UI/Battle/InfoLabel.cs" type="Script" id=17]
+[ext_resource path="res://Images/UI/Battle/InfoLabel/enemy.png" type="Texture" id=18]
+[ext_resource path="res://src/UI/Battle/Reticle.cs" type="Script" id=19]
+[ext_resource path="res://Images/UI/Battle/reticle.png" type="Texture" id=20]
+[ext_resource path="res://src/Battle/BattleNarration.cs" type="Script" id=21]
+[ext_resource path="res://Images/UI/Battle/skillBoxSimple.png" type="Texture" id=22]
+[ext_resource path="res://Font/Theme/FancyHeader.tres" type="Theme" id=23]
+[ext_resource path="res://src/Battle/TurnAnnouncement.cs" type="Script" id=24]
+[ext_resource path="res://Font/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=25]
+[ext_resource path="res://src/Battle/DamageCounter.cs" type="Script" id=26]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -23,6 +33,94 @@ outline_size = 5
 outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
 use_filter = true
 font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 80
+outline_size = 7
+outline_color = Color( 0.180392, 0.00784314, 0.00784314, 1 )
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 25 )
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Number:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Number:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Number:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "Shake"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Number:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Number:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.75, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Number:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -18, 0 ), Vector2( 5, 0 ), Vector2( -10, 0 ), Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 1, 1, 1 )
@@ -81,6 +179,145 @@ tracks/1/keys = {
 "values": [ Vector2( 1369, 599 ), Vector2( 1369, 604 ), Vector2( 1369, 599 ) ]
 }
 
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "ShowText"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -35 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "ShowText"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -35 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "OnEnter"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Backdrop:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Backdrop:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
 [node name="BattleEngine" type="Node2D"]
 script = ExtResource( 2 )
 
@@ -95,25 +332,41 @@ __meta__ = {
 
 [node name="Monsters" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2( 960, 600 )
+position = Vector2( 960, 734 )
 script = ExtResource( 16 )
 
 [node name="Tween" type="Tween" parent="Monsters"]
+
+[node name="Reticle" type="Sprite" parent="."]
+unique_name_in_owner = true
+process_priority = 10
+position = Vector2( -216, 0 )
+texture = ExtResource( 20 )
+script = ExtResource( 19 )
 
 [node name="Filmbar" parent="." instance=ExtResource( 3 )]
 
 [node name="InfoLabel" type="RichTextLabel" parent="Filmbar/FilmbarTop" index="0"]
 unique_name_in_owner = true
 margin_left = 1504.0
-margin_top = 135.0
+margin_top = 146.0
 margin_right = 1914.0
-margin_bottom = 199.0
+margin_bottom = 206.0
+rect_clip_content = false
 theme = ExtResource( 4 )
 custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 bbcode_text = "Enemy Targetting"
+meta_underlined = false
 text = "Enemy Targetting"
 scroll_active = false
+script = ExtResource( 17 )
+
+[node name="Icon" type="Sprite" parent="Filmbar/FilmbarTop/InfoLabel"]
+show_behind_parent = true
+position = Vector2( -36, 29 )
+scale = Vector2( 0.671875, 0.671875 )
+texture = ExtResource( 18 )
 
 [node name="EnterAnimation" parent="Filmbar" index="2"]
 playback_speed = 1.0
@@ -123,6 +376,29 @@ unique_name_in_owner = true
 position = Vector2( 235, 1105 )
 scale = Vector2( 0.9, 0.9 )
 script = ExtResource( 9 )
+
+[node name="CharacterDamageCounter" type="Node2D" parent="."]
+position = Vector2( 150, 600 )
+scale = Vector2( 0.9, 0.9 )
+z_index = 1
+script = ExtResource( 26 )
+
+[node name="Number" type="Label" parent="CharacterDamageCounter"]
+visible = false
+margin_right = 152.0
+margin_bottom = 124.0
+theme = ExtResource( 4 )
+custom_colors/font_color = Color( 0.972549, 0.898039, 0.898039, 1 )
+custom_colors/font_color_shadow = Color( 0.678431, 0.227451, 0.227451, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 14 )
+text = "999"
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterDamageCounter"]
+anims/RESET = SubResource( 15 )
+anims/Shake = SubResource( 16 )
 
 [node name="Timer" type="Sprite" parent="."]
 unique_name_in_owner = true
@@ -173,37 +449,60 @@ position = Vector2( 1154, -10 )
 
 [node name="Skills" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2( 960, 814 )
+position = Vector2( 960, 788 )
 
 [node name="1" parent="Skills" instance=ExtResource( 6 )]
 position = Vector2( -330.04, -27.5999 )
 __meta__ = {
 "_edit_lock_": true
 }
+root = NodePath("../..")
 
 [node name="2" parent="Skills" instance=ExtResource( 6 )]
 position = Vector2( -170.04, -27.5999 )
 __meta__ = {
 "_edit_lock_": true
 }
+index = 1
+root = NodePath("../..")
 
 [node name="3" parent="Skills" instance=ExtResource( 6 )]
 position = Vector2( -10.0399, -27.5999 )
 __meta__ = {
 "_edit_lock_": true
 }
+index = 2
+root = NodePath("../..")
 
 [node name="4" parent="Skills" instance=ExtResource( 6 )]
 position = Vector2( 149.96, -27.5999 )
 __meta__ = {
 "_edit_lock_": true
 }
+index = 3
+root = NodePath("../..")
 
 [node name="5" parent="Skills" instance=ExtResource( 6 )]
 position = Vector2( 309.96, -27.5999 )
 __meta__ = {
 "_edit_lock_": true
 }
+index = 4
+root = NodePath("../..")
+
+[node name="BasicSkills" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2( 1002, 971 )
+scale = Vector2( 0.9, 0.9 )
+
+[node name="1" parent="BasicSkills" instance=ExtResource( 6 )]
+position = Vector2( -330.04, -27.5999 )
+texture = ExtResource( 22 )
+__meta__ = {
+"_edit_lock_": true
+}
+index = 10
+root = NodePath("../..")
 
 [node name="SkillDescription" type="NinePatchRect" parent="."]
 unique_name_in_owner = true
@@ -289,6 +588,67 @@ custom_effects = [ SubResource( 7 ), SubResource( 8 ) ]
 [node name="AnimationPlayer" type="AnimationPlayer" parent="SkillDescription"]
 anims/PopIn = SubResource( 9 )
 
+[node name="BattleNarration" type="Node2D" parent="."]
+position = Vector2( 0, 793 )
+script = ExtResource( 21 )
+
+[node name="Label" type="Label" parent="BattleNarration"]
+margin_right = 527.0
+margin_bottom = 189.0
+theme = ExtResource( 4 )
+align = 1
+valign = 2
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BattleNarration"]
+root_node = NodePath("../Label")
+anims/RESET = SubResource( 10 )
+anims/ShowText = SubResource( 11 )
+
+[node name="CenterNarration" type="Node2D" parent="."]
+position = Vector2( 0, 600 )
+script = ExtResource( 21 )
+
+[node name="Label" type="Label" parent="CenterNarration"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 1812.0
+margin_bottom = 189.0
+theme = ExtResource( 4 )
+align = 1
+valign = 2
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterNarration"]
+root_node = NodePath("../Label")
+anims/RESET = SubResource( 12 )
+anims/ShowText = SubResource( 13 )
+
+[node name="InternalTimer" type="Timer" parent="."]
+
+[node name="TurnAnnouncement" type="Node2D" parent="."]
+position = Vector2( 778, 285 )
+z_index = 2
+script = ExtResource( 24 )
+
+[node name="Label" type="Label" parent="TurnAnnouncement"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_right = 371.0
+margin_bottom = 90.0
+theme = ExtResource( 23 )
+custom_colors/font_color = Color( 0.945098, 0.552941, 0.431373, 1 )
+custom_colors/font_outline_modulate = Color( 0.113725, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.533333, 0.0705882, 0.0352941, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_constants/shadow_as_outline = 0
+text = "ENEMY Turn"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "OnEnter"
+anims/OnEnter = SubResource( 17 )
+anims/RESET = SubResource( 18 )
+
 [connection signal="timeout" from="Timer/Timer" to="." method="EnemyTurn"]
+[connection signal="timeout" from="Timer/Timer" to="CenterNarration" method="TimeOut"]
 
 [editable path="Filmbar"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Images/UI/Battle/characterBar.png" type="Texture" id=1]
 [ext_resource path="res://src/UI/Battle/CharacterBar.cs" type="Script" id=2]
@@ -66,6 +66,94 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("StackCurrent:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1, 69 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HPCurrent:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -76, 3 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "RestoreTurn"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.513726, 0.47451, 0.54902, 0.929412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Name:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.513726, 0.47451, 0.54902, 0.929412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hotkey:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.513726, 0.47451, 0.54902, 0.929412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerIcon:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.513726, 0.47451, 0.54902, 0.929412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Icon:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.513726, 0.47451, 0.54902, 0.929412 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "Select"
@@ -82,6 +170,116 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ -12.0, 8.0, 3.0 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "UsedTurn"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.513726, 0.47451, 0.54902, 0.929412 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Name:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.784314 ), Color( 0.513726, 0.47451, 0.54902, 0.929412 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hotkey:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.513726, 0.47451, 0.54902, 0.929412 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PlayerIcon:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.513726, 0.47451, 0.54902, 0.929412 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Icon:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.513726, 0.47451, 0.54902, 0.929412 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:position:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -12.0 ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "ShakeHP"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("HPCurrent:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.001, 0.002, 0.05, 0.1, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -76.0, -81.0, -71.0, -81.0, -76.0 ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "ShakeStack"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("StackCurrent:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -10.0, 5.0, -7.0, 0.0 ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -167,9 +365,9 @@ custom_fonts/font = SubResource( 2 )
 text = "HP:"
 
 [node name="HPCurrent" type="Label" parent="."]
-margin_left = -77.0
+margin_left = -76.0
 margin_top = 3.0
-margin_right = 21.0
+margin_right = 22.0
 margin_bottom = 102.0
 theme = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 0.941176, 0.898039, 1 )
@@ -250,7 +448,13 @@ valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 11 )
+anims/RestoreTurn = SubResource( 15 )
 anims/Select = SubResource( 10 )
+anims/UsedTurn = SubResource( 14 )
+
+[node name="ShakePlayer" type="AnimationPlayer" parent="."]
+anims/ShakeHP = SubResource( 16 )
+anims/ShakeStack = SubResource( 17 )
 
 [node name="Selector" type="NinePatchRect" parent="."]
 visible = false

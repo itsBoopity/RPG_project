@@ -3,6 +3,8 @@ using System;
 
 public class SceneTests: Node
 {
+
+    [Export] private string dialogueToLoad = "res://Dialogue/test.txt";
     public void CharacterCreatorTest()
     {
         Global.data.newSave();
@@ -14,7 +16,7 @@ public class SceneTests: Node
         Global.data.newSave();
         DialogueEngine dialogue = Utility.InstanceDialogue();
         AddChild(dialogue);
-        dialogue.LoadDialogue("res://Dialogue/test.txt");
+        dialogue.LoadDialogue(dialogueToLoad);
     }
 
     public void BattleEngineTest()

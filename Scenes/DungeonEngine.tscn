@@ -1,0 +1,323 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://src/Dungeon/DungeonEngine.cs" type="Script" id=1]
+[ext_resource path="res://Images/UI/topTab.png" type="Texture" id=2]
+[ext_resource path="res://Images/UI/resource_Energy.png" type="Texture" id=3]
+[ext_resource path="res://Images/UI/resource_Food.png" type="Texture" id=4]
+[ext_resource path="res://Font/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=6]
+[ext_resource path="res://Font/PTSerif-Bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Images/UI/progressBarFill.png" type="Texture" id=8]
+[ext_resource path="res://Images/UI/progressBarFrame.png" type="Texture" id=9]
+[ext_resource path="res://Images/UI/bottomTab.png" type="Texture" id=10]
+[ext_resource path="res://Images/UI/bottomTabButton.png" type="Texture" id=11]
+[ext_resource path="res://Font/Theme/Number.tres" type="Theme" id=12]
+[ext_resource path="res://Images/UI/resource_Key.png" type="Texture" id=13]
+[ext_resource path="res://Objects/UI/Dungeon/DungeonCard.tscn" type="PackedScene" id=15]
+
+[sub_resource type="DynamicFont" id=1]
+size = 70
+outline_size = 6
+outline_color = Color( 0.0862745, 0.0745098, 0.101961, 1 )
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 70
+outline_size = 6
+outline_color = Color( 0.0862745, 0.0745098, 0.101961, 1 )
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 60
+outline_size = 6
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 35
+outline_size = 3
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 45
+outline_size = 3
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 7 )
+
+[node name="DungeonEngine" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="TopTab" type="Sprite" parent="."]
+position = Vector2( 965, 30 )
+texture = ExtResource( 2 )
+
+[node name="Energy" type="Sprite" parent="TopTab"]
+position = Vector2( -755, 25.2 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 3 )
+
+[node name="Current" type="Label" parent="TopTab/Energy"]
+margin_left = 32.2499
+margin_top = -58.25
+margin_right = 143.25
+margin_bottom = 51.75
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 0.898039, 0.968627, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.219608, 0.164706, 0.607843, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 1 )
+text = "99"
+align = 2
+
+[node name="Slash" type="Label" parent="TopTab/Energy"]
+margin_left = 129.25
+margin_top = -48.9643
+margin_right = 235.25
+margin_bottom = 61.0357
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 0.898039, 0.968627, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.219608, 0.164706, 0.607843, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = SubResource( 2 )
+text = "/"
+
+[node name="Max" type="Label" parent="TopTab/Energy"]
+margin_left = 160.083
+margin_top = -29.7976
+margin_right = 266.083
+margin_bottom = 65.2024
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 0.294118, 0.643137, 0.831373, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.196078, 0.121569, 0.556863, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 3 )
+text = "99"
+
+[node name="Food" type="Sprite" parent="TopTab"]
+position = Vector2( -487, 25.2 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 4 )
+
+[node name="Current" type="Label" parent="TopTab/Food"]
+margin_left = 43.6781
+margin_top = -58.25
+margin_right = 154.678
+margin_bottom = 51.75
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 0.972549, 0.898039, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.607843, 0.321569, 0.164706, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 1 )
+text = "99"
+align = 2
+
+[node name="Slash" type="Label" parent="TopTab/Food"]
+margin_left = 140.678
+margin_top = -48.9643
+margin_right = 246.678
+margin_bottom = 61.0357
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 0.972549, 0.898039, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.607843, 0.321569, 0.164706, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = SubResource( 2 )
+text = "/"
+
+[node name="Max" type="Label" parent="TopTab/Food"]
+margin_left = 171.511
+margin_top = -29.7976
+margin_right = 277.511
+margin_bottom = 65.2024
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 0.866667, 0.709804, 0.454902, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.505882, 0.219608, 0.137255, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 3 )
+text = "99"
+
+[node name="Key" type="Sprite" parent="TopTab"]
+position = Vector2( -212, 25 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 13 )
+
+[node name="Current" type="Label" parent="TopTab/Key"]
+margin_left = 76.0
+margin_top = -58.0
+margin_right = 186.0
+margin_bottom = 61.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 0.972549, 0.898039, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.607843, 0.321569, 0.164706, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 1 )
+text = "5"
+
+[node name="HandSize" type="Label" parent="TopTab"]
+margin_left = 195.0
+margin_top = -4.0
+margin_right = 382.0
+margin_bottom = 57.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0745098, 0.00392157, 0.0431373, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.286275, 0.2, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = SubResource( 4 )
+text = "Hand Size:"
+
+[node name="Current" type="Label" parent="TopTab/HandSize"]
+margin_left = 191.0
+margin_top = -29.0
+margin_right = 302.0
+margin_bottom = 81.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 0.972549, 0.898039, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.607843, 0.321569, 0.164706, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 1 )
+text = "5"
+
+[node name="CardsLeft" type="Label" parent="TopTab"]
+margin_left = 483.0
+margin_top = -4.0
+margin_right = 671.0
+margin_bottom = 57.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0745098, 0.00392157, 0.0431373, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.286275, 0.2, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = SubResource( 4 )
+text = "Cards Left:"
+
+[node name="Current" type="Label" parent="TopTab/CardsLeft"]
+margin_left = 195.0
+margin_top = -29.0
+margin_right = 352.0
+margin_bottom = 81.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 0.972549, 0.898039, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.607843, 0.321569, 0.164706, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 1 )
+text = "99"
+
+[node name="BottomTab" type="Sprite" parent="."]
+position = Vector2( 960, 1029 )
+texture = ExtResource( 10 )
+
+[node name="SpecialLabel" type="Label" parent="BottomTab"]
+margin_left = -884.0
+margin_top = -22.0
+margin_right = -672.0
+margin_bottom = 50.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0745098, 0.00392157, 0.0431373, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.286275, 0.2, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = SubResource( 5 )
+text = "SPECIAL"
+
+[node name="Progress" type="TextureProgress" parent="BottomTab"]
+margin_left = -884.0
+margin_top = -52.0
+margin_right = 498.0
+margin_bottom = -16.0
+texture_over = ExtResource( 9 )
+texture_progress = ExtResource( 8 )
+
+[node name="Count" type="Label" parent="BottomTab"]
+margin_left = -254.0
+margin_top = -43.0
+margin_right = -129.0
+margin_bottom = 62.0
+theme = ExtResource( 12 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.627451, 0.215686, 0.215686, 1 )
+text = "0%"
+align = 1
+
+[node name="Use" type="TextureButton" parent="BottomTab"]
+margin_left = 525.0
+margin_top = -72.0
+margin_right = 915.0
+margin_bottom = 77.0
+texture_normal = ExtResource( 11 )
+
+[node name="HandSize" type="Label" parent="BottomTab/Use"]
+margin_left = 67.0
+margin_top = 32.0
+margin_right = 314.0
+margin_bottom = 104.0
+theme = ExtResource( 6 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0.0745098, 0.00392157, 0.0431373, 1 )
+custom_colors/font_color_shadow = Color( 0.403922, 0.286275, 0.2, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = SubResource( 5 )
+text = "Use Special"
+
+[node name="Hand" type="HBoxContainer" parent="."]
+margin_top = 232.0
+margin_right = 1920.0
+margin_bottom = 834.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="Card0" parent="Hand" instance=ExtResource( 15 )]
+root = NodePath("../..")
+
+[node name="Card1" parent="Hand" instance=ExtResource( 15 )]
+margin_left = 395.0
+margin_right = 765.0
+root = NodePath("../..")
+index = 1
+
+[node name="Card2" parent="Hand" instance=ExtResource( 15 )]
+margin_left = 775.0
+margin_right = 1145.0
+root = NodePath("../..")
+index = 2
+
+[node name="Card3" parent="Hand" instance=ExtResource( 15 )]
+margin_left = 1155.0
+margin_right = 1525.0
+root = NodePath("../..")
+index = 3
+
+[node name="Card4" parent="Hand" instance=ExtResource( 15 )]
+margin_left = 1535.0
+margin_right = 1905.0
+root = NodePath("../..")
+index = 4

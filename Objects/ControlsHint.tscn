@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=1]
+[ext_resource path="res://Images/UI/window.png" type="Texture" id=2]
+[ext_resource path="res://Font/Shadower.otf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+outline_size = 5
+outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
+extra_spacing_space = 1
+font_data = ExtResource( 3 )
+
+[node name="Control" type="NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 150.0
+margin_top = 42.0
+margin_right = -136.0
+margin_bottom = -36.0
+texture = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="."]
+margin_left = 218.0
+margin_top = 10.0
+margin_right = 493.0
+margin_bottom = 78.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Controls"
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 102.0
+margin_top = 170.0
+margin_right = 610.0
+margin_bottom = 238.0
+theme = ExtResource( 1 )
+text = "Activate Special"

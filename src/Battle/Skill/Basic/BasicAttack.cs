@@ -7,18 +7,20 @@ public class BasicAttack: BattleSkill
     {
         name = "Basic Attack";
         type = SkillType.BASIC;
+        element = SkillElement.VARIABLE;
+        targetting = TargettingType.ENEMY_TARGET;
         cost = 0;
         cooldown = 0;
-        textureX = 0;
-        textureY = 0;
     }
-    public override void Execute(BattleFigure user, BattleFigure target)
+    protected override void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency)
     {
-        int damage = (target.ATK - target.DEF < 1) ? 1 : target.ATK - target.DEF;
-        
-        // No way to connect passives. Should instead call BattleEngine.CauseDamage(user, target, damage) of some sorts 
-        // This will also allow BattleEngine to handle the animation playing
-        target.HP -= damage;
+        user.stack += 1;
+        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetATK(), target.GetDEF(), targetEfficiency), user, target);
+    }
+
+    public override int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target)
+    {
+        return Utility.BasicDamageFormula(user.GetATK(), target.GetDEF());
     }
 
     public override string Description()

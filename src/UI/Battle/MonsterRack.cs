@@ -72,4 +72,10 @@ public class MonsterRack : Node2D
         center = this.Position.x;
         targetX = center;
     }
+
+    public void Remove(MonsterModel model)
+    {
+        foreach(Node i in GetChildren())
+        if (i == model) { RemoveChild(i); return;}
+    }
 }

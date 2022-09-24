@@ -12,13 +12,18 @@ public class BattleTimer : Sprite
         label = GetNode<Label>("Label");
         timer = GetNode<Timer>("Timer");
 
-        StartTimer(20);
+        SetProcess(false);
     }
-
+    
+    public void Stop()
+    {
+        SetProcess(false);
+    }
     public void StartTimer(int length)
     {
         timer.Start(length);
         bar.MaxValue = length;
+        SetProcess(true);
     }
 
     public override void _Process(float delta)

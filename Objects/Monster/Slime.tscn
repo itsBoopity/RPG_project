@@ -1,23 +1,52 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=33 format=2]
 
-[ext_resource path="res://Images/_test/SlimeModel/WeakPoint/HeadWeak.png" type="Texture" id=1]
-[ext_resource path="res://Images/_test/SlimeModel/WeakPoint/Tendril1Weak.png" type="Texture" id=2]
+[ext_resource path="res://Images/Monster/Slime/BottomStrong.png" type="Texture" id=1]
+[ext_resource path="res://Images/Monster/Slime/Sploosh2.png" type="Texture" id=2]
 [ext_resource path="res://src/Battle/Monster/MonsterModel.cs" type="Script" id=3]
-[ext_resource path="res://Images/_test/SlimeModel/WeakPoint/Tendril2Weak.png" type="Texture" id=4]
-[ext_resource path="res://Images/_test/SlimeModel/Tendril1.png" type="Texture" id=5]
-[ext_resource path="res://Images/_test/SlimeModel/Tendril2.png" type="Texture" id=6]
+[ext_resource path="res://Images/Monster/Slime/Bottom.png" type="Texture" id=4]
+[ext_resource path="res://Images/Monster/Slime/TendrilRight.png" type="Texture" id=5]
+[ext_resource path="res://Images/Monster/Slime/Sploosh1.png" type="Texture" id=6]
 [ext_resource path="res://src/Battle/Monster/MonsterTarget.cs" type="Script" id=7]
-[ext_resource path="res://Images/_test/SlimeModel/Bottom.png" type="Texture" id=8]
-[ext_resource path="res://Images/_test/SlimeModel/WeakPoint/BottomWeak.png" type="Texture" id=9]
-[ext_resource path="res://Images/_test/SlimeModel/Head.png" type="Texture" id=10]
-[ext_resource path="res://Images/_test/SlimeModel/StrongPoint/HeadStrong.png" type="Texture" id=11]
-[ext_resource path="res://Images/_test/SlimeModel/sploosh.png" type="Texture" id=12]
+[ext_resource path="res://Images/Monster/Slime/HeadStrong.png" type="Texture" id=8]
+[ext_resource path="res://Images/Monster/Slime/HeadWeak.png" type="Texture" id=9]
+[ext_resource path="res://Images/Monster/Slime/TendrilLeftWeak.png" type="Texture" id=10]
+[ext_resource path="res://Images/Monster/Slime/Drip.png" type="Texture" id=11]
+[ext_resource path="res://Images/Monster/Slime/TendrilLeft.png" type="Texture" id=12]
 [ext_resource path="res://Font/Theme/InvisibleButton.tres" type="Theme" id=13]
+[ext_resource path="res://Font/PTSerif-Bold.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=15]
+[ext_resource path="res://Font/NumberDisplay.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Font/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=17]
+[ext_resource path="res://src/Battle/DamageCounter.cs" type="Script" id=18]
+[ext_resource path="res://Images/Monster/Slime/TendrilRightStrong.png" type="Texture" id=19]
+[ext_resource path="res://Images/Monster/Slime/Head.png" type="Texture" id=20]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="DynamicFont" id=6]
+size = 35
+outline_size = 3
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 40
+outline_size = 6
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 17 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 80
+outline_size = 7
+outline_color = Color( 0.180392, 0.00784314, 0.00784314, 1 )
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 17 )
+
+[sub_resource type="Animation" id=9]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Splash:scale")
+tracks/0/path = NodePath("Number:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -26,10 +55,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Vector2( 10, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Splash:position")
+tracks/1/path = NodePath("Number:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -38,10 +67,122 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3, -1 ) ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Splash:modulate")
+tracks/2/path = NodePath("Number:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Estimate:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Shake"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Number:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.25, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 10, 0 ), Vector2( -8, 0 ), Vector2( 15, 0 ), Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 10, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Number:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.75, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Number:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.75 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Estimate:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="DynamicFont" id=11]
+size = 40
+outline_size = 3
+outline_color = Color( 0.180392, 0.00784314, 0.00784314, 1 )
+use_filter = true
+extra_spacing_space = 1
+font_data = ExtResource( 17 )
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 169, -130 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -55,48 +196,128 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "Splash"
-length = 2.0
+length = 4.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Splash:scale")
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1.1, 1.4, 1.6, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 180, -150 ), Vector2( 318.033, -200 ), Vector2( 341.843, -180 ), Vector2( 380.96, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.1, 1.4, 1.6, 1.9, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 74.9999, 94.0077, 112.977 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.1, 2, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.587989, 0.587989 ), Vector2( 1.2, 1.2 ) ]
+"values": [ Vector2( 154.545, -52.7273 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Splash:position")
+tracks/1/path = NodePath(".:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 180, 0 ), Vector2( 180, 0 ), Vector2( 180, 100 ) ]
+"values": [ 0.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Splash:modulate")
+tracks/2/path = NodePath(".:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.4, 0.5, 2 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "Splash"
+length = 4.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 140, -150 ), Vector2( 54.545, -150 ), Vector2( 20, -150 ), Vector2( -25.455, -20 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9, 1.2, 2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 1.2, 2.02775 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -69.706, -89.9999, -89.9999 ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "Idle"
-length = 2.0
+length = 2.5
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Head:position")
@@ -105,10 +326,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 183, -5 ), Vector2( 181.5, -11.5 ), Vector2( 176.5, -11.5 ), Vector2( 176.5, -11.5 ) ]
+"values": [ Vector2( 159.486, -69.5493 ), Vector2( 159.486, -69.5493 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Head:rotation_degrees")
@@ -117,10 +338,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.6, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 6.90671, 0.0, -6.73008, 0.0 ]
+"values": [ 0.0, -3.51143, -7.02286 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Head:scale")
@@ -129,46 +350,46 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1.1 ), Vector2( 1, 1 ), Vector2( 1, 1.1 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1.1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Tendril1:rotation_degrees")
+tracks/3/path = NodePath("Bottom:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.3, 0.5, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0, 22.0359, 0.0 ]
+"values": [ Vector2( 167, -78 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Tendril1:scale")
+tracks/4/path = NodePath("Bottom:rotation_degrees")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.3, 0.5, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1.1 ), Vector2( 1, 1 ) ]
+"values": [ 0.0 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Tendril1:position")
+tracks/5/path = NodePath("Bottom:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.3, 0.5, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 114.5, 85.5 ), Vector2( 116.5, 90 ), Vector2( 114.5, 85.5 ) ]
+"values": [ Vector2( 1, 1 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("Tendril2:position")
@@ -177,10 +398,10 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0.9, 1.2 ),
+"times": PoolRealArray( 0, 1.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 233, 83 ), Vector2( 230, 78 ) ]
+"values": [ Vector2( 253, -61 ), Vector2( 253, -61 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Tendril2:rotation_degrees")
@@ -189,10 +410,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0.9, 1.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.6, 1.3, 2, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, -15.0 ]
+"values": [ 0.0, -15.6346, 0.0, 0.0, 15.0 ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("Tendril2:scale")
@@ -201,16 +422,64 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0.9 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.8, 1.3, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1.1 ), Vector2( 1, 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Tendril1:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.6, 0.8, 1, 1.6, 1.8, 2, 2.2, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ), Vector2( 107, -36 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Tendril1:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.6, 0.8, 1, 1.1, 1.8, 2, 2.2, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 15.0, -5.82712, 0.0, 0.0, 15.0, -5.82712, 0.0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Tendril1:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.6, 0.8, 1.4, 1.8, 2, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1.1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1.1 ), Vector2( 1, 1 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Head/Drip:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.5, 0.973508, 1.2, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -13.9226, 6.86331, 16.8058, -13.4867 ]
 }
 
 [sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Head:position")
+tracks/0/path = NodePath("Bottom:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -219,10 +488,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ Vector2( 167, -78 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Head:rotation_degrees")
+tracks/1/path = NodePath("Tendril1:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -231,10 +500,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ Vector2( 107, -36 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Head:scale")
+tracks/2/path = NodePath("Head:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -243,10 +512,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Vector2( 159.486, -69.5493 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Tendril1:rotation_degrees")
+tracks/3/path = NodePath("Tendril2:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -255,10 +524,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ Vector2( 253, -61 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Tendril1:scale")
+tracks/4/path = NodePath("Head/Drip:rotation_degrees")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -267,138 +536,206 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Tendril1:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -62, 97 ) ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Tendril2:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 58, 100 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Tendril2:rotation_degrees")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
 "values": [ 0.0 ]
 }
-tracks/8/type = "value"
-tracks/8/path = NodePath("Tendril2:scale")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "Test"
 
 [node name="Slime" type="Node2D"]
 script = ExtResource( 3 )
 
+[node name="HP" type="Node2D" parent="."]
+position = Vector2( 206, -365 )
+z_index = 1
+
+[node name="HPLabel" type="Label" parent="HP"]
+margin_left = -150.0
+margin_top = -27.0
+margin_right = -55.0
+margin_bottom = 34.0
+theme = ExtResource( 15 )
+custom_colors/font_color = Color( 0.776471, 0.258824, 0.258824, 1 )
+custom_colors/font_outline_modulate = Color( 0.0745098, 0.00392157, 0.0431373, 1 )
+custom_colors/font_color_shadow = Color( 0.545098, 0, 0.172549, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = SubResource( 6 )
+text = "HP:"
+
+[node name="HPCurrent" type="Label" parent="HP"]
+margin_left = -100.0
+margin_top = -42.0
+margin_right = -2.0
+margin_bottom = 57.0
+theme = ExtResource( 15 )
+custom_colors/font_color = Color( 1, 0.941176, 0.898039, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.607843, 0.298039, 0.164706, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = ExtResource( 16 )
+text = "10"
+align = 2
+
+[node name="HPSlash" type="Label" parent="HP"]
+margin_left = -9.0
+margin_top = -33.0
+margin_right = 97.0
+margin_bottom = 47.0
+theme = ExtResource( 15 )
+custom_colors/font_color = Color( 0.933333, 0.784314, 0.67451, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.670588, 0.4, 0.25098, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = ExtResource( 16 )
+text = "/"
+
+[node name="HPMax" type="Label" parent="HP"]
+margin_left = 14.0
+margin_top = -20.0
+margin_right = 120.0
+margin_bottom = 45.0
+theme = ExtResource( 15 )
+custom_colors/font_color = Color( 0.960784, 0.756863, 0.603922, 1 )
+custom_colors/font_outline_modulate = Color( 0.0823529, 0.0352941, 0.0156863, 1 )
+custom_colors/font_color_shadow = Color( 0.533333, 0.219608, 0.176471, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 7 )
+text = "10"
+
+[node name="DamageCounter" type="Node2D" parent="."]
+position = Vector2( 160, -502 )
+z_index = 1
+script = ExtResource( 18 )
+
+[node name="Number" type="Label" parent="DamageCounter"]
+visible = false
+margin_left = 10.0
+margin_right = 257.0
+margin_bottom = 124.0
+theme = ExtResource( 15 )
+custom_colors/font_color = Color( 0.972549, 0.898039, 0.898039, 1 )
+custom_colors/font_color_shadow = Color( 0.678431, 0.227451, 0.227451, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 8 )
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageCounter"]
+anims/RESET = SubResource( 9 )
+anims/Shake = SubResource( 10 )
+
+[node name="Estimate" type="Label" parent="DamageCounter"]
+visible = false
+margin_left = -120.0
+margin_top = 32.0
+margin_right = -10.0
+margin_bottom = 97.0
+theme = ExtResource( 15 )
+custom_colors/font_color = Color( 0.972549, 0.898039, 0.898039, 1 )
+custom_colors/font_color_shadow = Color( 0.678431, 0.227451, 0.227451, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+custom_fonts/font = SubResource( 11 )
+text = "Est:"
+align = 1
+
 [node name="BoundaryBox" type="Button" parent="."]
-margin_top = -200.0
+margin_top = -356.0
 margin_right = 353.0
-margin_bottom = 204.0
+margin_bottom = 48.0
 theme = ExtResource( 13 )
 
 [node name="Splash" type="Sprite" parent="."]
-position = Vector2( 3, -1 )
-texture = ExtResource( 12 )
+position = Vector2( 169, -130 )
+texture = ExtResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Splash"]
-root_node = NodePath("../..")
 autoplay = "Splash"
 playback_speed = 1.5
 anims/RESET = SubResource( 1 )
 anims/Splash = SubResource( 2 )
 
-[node name="Tendril2" type="Sprite" parent="."]
-position = Vector2( 58, 100 )
-texture = ExtResource( 6 )
-offset = Vector2( -58, -100 )
+[node name="Splash2" type="Sprite" parent="."]
+position = Vector2( 154.545, -52.7273 )
+scale = Vector2( 0.832793, 0.832793 )
+texture = ExtResource( 2 )
 
-[node name="Tendril2" type="Sprite" parent="Tendril2"]
-visible = false
-modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( -58, -100 )
-texture = ExtResource( 4 )
-script = ExtResource( 7 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Splash2"]
+autoplay = "Splash"
+playback_speed = 1.5
+anims/RESET = SubResource( 12 )
+anims/Splash = SubResource( 13 )
 
 [node name="Bottom" type="Sprite" parent="."]
-position = Vector2( 176.5, -11.5 )
-texture = ExtResource( 8 )
+position = Vector2( 167, -78 )
+texture = ExtResource( 4 )
 
-[node name="Bottom" type="Sprite" parent="Bottom"]
-visible = false
-modulate = Color( 1, 1, 1, 0.392157 )
-texture = ExtResource( 9 )
-script = ExtResource( 7 )
-
-[node name="Tendril1" type="Sprite" parent="."]
-position = Vector2( -62, 97 )
-texture = ExtResource( 5 )
-offset = Vector2( 62, -97 )
-
-[node name="Tendril1" type="Sprite" parent="Tendril1"]
-visible = false
-modulate = Color( 1, 1, 1, 0.392157 )
-texture = ExtResource( 2 )
-offset = Vector2( 62, -97 )
-script = ExtResource( 7 )
-
-[node name="Head" type="Sprite" parent="."]
-texture = ExtResource( 10 )
-
-[node name="Head" type="Sprite" parent="Head"]
+[node name="Strong" type="Sprite" parent="Bottom"]
 visible = false
 modulate = Color( 1, 1, 1, 0.392157 )
 texture = ExtResource( 1 )
 script = ExtResource( 7 )
+rootPath = NodePath("../..")
 
-[node name="HeadWeak" type="Sprite" parent="Head"]
+[node name="Tendril2" type="Sprite" parent="."]
+position = Vector2( 253, -61 )
+texture = ExtResource( 5 )
+offset = Vector2( 11, 13 )
+
+[node name="Strong" type="Sprite" parent="Tendril2"]
 visible = false
 modulate = Color( 1, 1, 1, 0.392157 )
-texture = ExtResource( 11 )
+texture = ExtResource( 19 )
+offset = Vector2( 11, 13 )
 script = ExtResource( 7 )
+rootPath = NodePath("../..")
+
+[node name="Tendril1" type="Sprite" parent="."]
+position = Vector2( 107, -36 )
+texture = ExtResource( 12 )
+offset = Vector2( -12, 6.5 )
+
+[node name="Strong" type="Sprite" parent="Tendril1"]
+visible = false
+modulate = Color( 1, 1, 1, 0.392157 )
+texture = ExtResource( 10 )
+offset = Vector2( -12, 6.5 )
+script = ExtResource( 7 )
+rootPath = NodePath("../..")
+
+[node name="Head" type="Sprite" parent="."]
+position = Vector2( 159.486, -69.5493 )
+texture = ExtResource( 20 )
+offset = Vector2( 12.3457, -85.1042 )
+
+[node name="Strong" type="Sprite" parent="Head"]
+visible = false
+modulate = Color( 1, 1, 1, 0.392157 )
+texture = ExtResource( 8 )
+offset = Vector2( 12.3457, -85.1042 )
+script = ExtResource( 7 )
+rootPath = NodePath("../..")
+
+[node name="Weak" type="Sprite" parent="Head"]
+visible = false
+modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( 5.42355, -18.1592 )
+texture = ExtResource( 9 )
+offset = Vector2( 12.3457, -85.1042 )
+script = ExtResource( 7 )
+rootPath = NodePath("../..")
+
+[node name="Drip" type="Sprite" parent="Head"]
+position = Vector2( 45.1711, -57.234 )
+texture = ExtResource( 11 )
+offset = Vector2( -3.62823, 10.4377 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
 anims/Idle = SubResource( 3 )
 anims/RESET = SubResource( 4 )
-anims/Test = SubResource( 5 )
+
+[node name="SFXPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="button_down" from="BoundaryBox" to="." method="TargetMiss"]
-[connection signal="Hit" from="Tendril2/Tendril2" to="." method="TargetHit"]
-[connection signal="Hit" from="Bottom/Bottom" to="." method="TargetHit"]
-[connection signal="Hit" from="Tendril1/Tendril1" to="." method="TargetHit"]
-[connection signal="Hit" from="Head/Head" to="." method="TargetHit"]
-[connection signal="Hit" from="Head/HeadWeak" to="." method="TargetHit"]

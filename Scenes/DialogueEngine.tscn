@@ -192,6 +192,9 @@ scale = Vector2( 1.2, 1.2 )
 
 [node name="Invisible" parent="Models" instance=ExtResource( 3 )]
 
+[node name="Overlay" type="Sprite" parent="."]
+centered = false
+
 [node name="Dialogue" type="Sprite" parent="."]
 position = Vector2( 954, 899 )
 texture = ExtResource( 4 )

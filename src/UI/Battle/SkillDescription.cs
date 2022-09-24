@@ -9,7 +9,7 @@ public class SkillDescription : NinePatchRect
     private RichTextLabel cooldown;   
     private RichTextLabel description;
 
-    public int currentFocus = 0;
+    public int currentFocus = -1; // -1 means no focus
     private AnimationPlayer animationPlayer;
     public override void _Ready()
     {
@@ -54,5 +54,11 @@ public class SkillDescription : NinePatchRect
         
         animationPlayer.Stop();
         animationPlayer.Play("PopIn");
+    }
+
+    public void HideSkill()
+    {
+        currentFocus = -1;
+        this.Hide();
     }
 }

@@ -11,5 +11,5 @@ public abstract class DungeonCard
 
     public string GetDescription() { return description + '\n' + GetDescriptionCustom(); }
     public virtual string GetDescriptionCustom() { return ""; }
-    public abstract void UseCard();
+    public abstract void UseCard(DungeonEngine dungeonEngine);
 }

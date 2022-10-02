@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/Dungeon/DungeonEngine.cs" type="Script" id=1]
 [ext_resource path="res://Images/UI/topTab.png" type="Texture" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Images/UI/bottomTabButton.png" type="Texture" id=11]
 [ext_resource path="res://Font/Theme/Number.tres" type="Theme" id=12]
 [ext_resource path="res://Images/UI/resource_Key.png" type="Texture" id=13]
+[ext_resource path="res://src/Dungeon/DungeonHandUI.cs" type="Script" id=14]
 [ext_resource path="res://Objects/UI/Dungeon/DungeonCard.tscn" type="PackedScene" id=15]
 
 [sub_resource type="DynamicFont" id=1]
@@ -294,6 +295,7 @@ margin_right = 1920.0
 margin_bottom = 834.0
 custom_constants/separation = 10
 alignment = 1
+script = ExtResource( 14 )
 
 [node name="Card0" parent="Hand" instance=ExtResource( 15 )]
 root = NodePath("../..")

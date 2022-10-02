@@ -7,6 +7,7 @@ public class CharacterModelRack : Node2D
 
     public override void _ExitTree()
     {
+        if (models == null) return;
         foreach(Node model in models.Values)
             model.QueueFree();
         models = null;

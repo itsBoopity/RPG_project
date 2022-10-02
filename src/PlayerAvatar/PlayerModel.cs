@@ -68,8 +68,6 @@ public class PlayerModel : CharacterModel
     //Loads the images into the children nodes
     public void UpdateModel()
     {
-        // FreeTextures();
-
         body.Texture = GD.Load<Texture>("res://Images/PlayerAvatar/Body/" + data.body + ".png");
         arm.Texture = GD.Load<Texture>("res://Images/PlayerAvatar/FrontArm/" + data.body + ".png");
         palm.Texture = GD.Load<Texture>("res://Images/PlayerAvatar/FrontArm/" + data.body + "_PALM.png");
@@ -138,13 +136,6 @@ public class PlayerModel : CharacterModel
         clothing.Texture = GD.Load<Texture>("res://Images/PlayerAvatar/Clothing/" + data.clothing + "/" + data.body + ".png");
 
         Utility.SetShaderColor(body, data.skin);
-        // All skin shares the same material, so it should change it for the rest automatically
-        // Utility.SetShaderColor(arm, data.skin);
-        // Utility.SetShaderColor(head, data.skin);
-        // Utility.SetShaderColor(eye, data.skin);
-        // Utility.SetShaderColor(mouth, data.skin);
-        // Utility.SetShaderColor(nose, data.skin);
-
         Utility.SetShaderColor(iris, data.eyeColor);
         Utility.SetShaderColor(bodyhair, data.bodyhairColor);
         Utility.SetShaderColor(bodyhairFront, data.bodyhairColor);

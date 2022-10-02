@@ -5,15 +5,29 @@ public class DungeonCardUI : TextureRect
 {
     [Export] NodePath root;
     [Export] int index;
+
+    
+    private Label title;
+    private Label desc;
+
     private DungeonEngine dungeonEngine;
     private Control button;
     private AnimationPlayer animationPlayer;
     public override void _Ready()
     {
+        title = GetNode<Label>("Title");
+        desc = GetNode<Label>("Description");
+        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("dungeon_card" + index)[0]).AsText();
+
         dungeonEngine = GetNode<DungeonEngine>(root);
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         button = GetNode<Control>("Button");
+    }
 
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("dungeon_card" + index) && this.Visible)
+            OnButtonPressed();
     }
 
     public void OnHover()
@@ -41,13 +55,20 @@ public class DungeonCardUI : TextureRect
     public void OnButtonPressed()
     {
         animationPlayer.Play("Activate");
-        //After disappearing notify dungeonEngine, which activates its effects, and then places in a new card.
-        
+        dungeonEngine.UseCard(index, animationPlayer);
     }
 
+    public void Draw()
+    {
+        animationPlayer.Play("Draw");
+    }
     public void SetCard(DungeonCard card)
     {
+        animationPlayer.Play("RESET");
+        title.Text = card.name;
+        desc.Text = card.GetDescription();
 
+        GD.Print("[Unfinished] DungeonCardUI.SetCard doesn't have all UI implemented yet");
     }
 
 

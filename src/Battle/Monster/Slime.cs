@@ -7,6 +7,7 @@ public class Slime: Monster
     public static int GetID() { return 0; }
     public Slime()
     {
+        
         name = "Slime";
         maxHP = 10;
         stack = 2;

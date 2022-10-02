@@ -1,8 +1,8 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Objects/UI/Battle/CharacterBar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Battle/BattleEngine.cs" type="Script" id=2]
-[ext_resource path="res://Objects/UI/Filmbar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Images/UI/filmbarBottom.png" type="Texture" id=3]
 [ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=4]
 [ext_resource path="res://Font/Shadower.otf" type="DynamicFontData" id=5]
 [ext_resource path="res://Objects/UI/Battle/SkillBox.tscn" type="PackedScene" id=6]
@@ -26,6 +26,7 @@
 [ext_resource path="res://src/Battle/TurnAnnouncement.cs" type="Script" id=24]
 [ext_resource path="res://Font/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=25]
 [ext_resource path="res://src/Battle/DamageCounter.cs" type="Script" id=26]
+[ext_resource path="res://Images/UI/filmbarTop.png" type="Texture" id=27]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -287,6 +288,34 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
+[sub_resource type="Animation" id=19]
+resource_name = "BarEnter"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Filmbar/FilmbarTop:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1.07177 ),
+"update": 0,
+"values": [ Vector2( 0, -202 ), Vector2( 0, -120 ), Vector2( 0, -130 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Filmbar/FilmbarBottom:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 1295 ), Vector2( 0, 1150 ), Vector2( 0, 1170 ) ]
+}
+
 [sub_resource type="Animation" id=17]
 resource_name = "OnEnter"
 length = 0.3
@@ -302,6 +331,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Filmbar/FilmbarTop:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -202.0, -120.0, -130.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Filmbar/FilmbarBottom:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 1295.0, 1150.0, 1170.0 ]
+}
 
 [sub_resource type="Animation" id=18]
 length = 0.001
@@ -316,6 +369,30 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Filmbar/FilmbarTop:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -202 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Filmbar/FilmbarBottom:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 1295 ) ]
 }
 
 [node name="BattleEngine" type="Node2D"]
@@ -344,9 +421,14 @@ position = Vector2( -216, 0 )
 texture = ExtResource( 20 )
 script = ExtResource( 19 )
 
-[node name="Filmbar" parent="." instance=ExtResource( 3 )]
+[node name="Filmbar" type="Node2D" parent="."]
 
-[node name="InfoLabel" type="RichTextLabel" parent="Filmbar/FilmbarTop" index="0"]
+[node name="FilmbarTop" type="Sprite" parent="Filmbar"]
+position = Vector2( 0, -202 )
+texture = ExtResource( 27 )
+centered = false
+
+[node name="InfoLabel" type="RichTextLabel" parent="Filmbar/FilmbarTop"]
 unique_name_in_owner = true
 margin_left = 1504.0
 margin_top = 146.0
@@ -368,8 +450,11 @@ position = Vector2( -36, 29 )
 scale = Vector2( 0.671875, 0.671875 )
 texture = ExtResource( 18 )
 
-[node name="EnterAnimation" parent="Filmbar" index="2"]
-playback_speed = 1.0
+[node name="FilmbarBottom" type="Sprite" parent="Filmbar"]
+position = Vector2( 0, 1295 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -200 )
 
 [node name="CharacterModels" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -644,11 +729,9 @@ custom_constants/shadow_as_outline = 0
 text = "ENEMY Turn"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "OnEnter"
+anims/BarEnter = SubResource( 19 )
 anims/OnEnter = SubResource( 17 )
 anims/RESET = SubResource( 18 )
 
 [connection signal="timeout" from="Timer/Timer" to="." method="EnemyTurn"]
 [connection signal="timeout" from="Timer/Timer" to="CenterNarration" method="TimeOut"]
-
-[editable path="Filmbar"]

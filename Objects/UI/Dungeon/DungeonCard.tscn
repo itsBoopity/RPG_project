@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Images/UI/card.png" type="Texture" id=1]
 [ext_resource path="res://Font/Shadower.otf" type="DynamicFontData" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://Images/UI/template.png" type="Texture" id=7]
 [ext_resource path="res://Images/UI/cardButton.png" type="Texture" id=8]
 [ext_resource path="res://Images/UI/cardFrame.png" type="Texture" id=9]
+[ext_resource path="res://Font/PTSerif-Italic.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Font/PTSerif-BoldItalic.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://Font/PTSerif-Regular.ttf" type="DynamicFontData" id=12]
 
 [sub_resource type="DynamicFont" id=10]
 size = 60
@@ -20,9 +23,47 @@ font_data = ExtResource( 2 )
 [sub_resource type="Theme" id=11]
 default_font = SubResource( 10 )
 
-[sub_resource type="Animation" id=12]
-resource_name = "Activate"
-length = 0.3
+[sub_resource type="DynamicFont" id=8]
+size = 25
+outline_size = 2
+outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
+font_data = ExtResource( 12 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 30
+outline_size = 3
+outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 28
+outline_size = 3
+outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 28
+outline_size = 3
+outline_color = Color( 0.105882, 0.0901961, 0.164706, 1 )
+font_data = ExtResource( 12 )
+
+[sub_resource type="StyleBoxEmpty" id=12]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="Theme" id=17]
+default_font = SubResource( 8 )
+RichTextLabel/fonts/bold_font = SubResource( 8 )
+RichTextLabel/fonts/bold_italics_font = SubResource( 14 )
+RichTextLabel/fonts/italics_font = SubResource( 15 )
+RichTextLabel/fonts/normal_font = SubResource( 16 )
+RichTextLabel/styles/normal = SubResource( 12 )
+
+[sub_resource type="Animation" id=18]
+length = 0.2
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position:y")
 tracks/0/interp = 1
@@ -30,7 +71,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, -50.0 ]
@@ -42,10 +83,74 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3 ),
+"times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1.1 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.25, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -50.0, 10.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rect_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.1, 1.1 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -74,9 +179,44 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rect_size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 370, 602 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:rect_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
 
-[sub_resource type="Animation" id=14]
-resource_name = "Select"
+[sub_resource type="Animation" id=20]
 
 [node name="Card" type="TextureRect"]
 margin_left = 15.0
@@ -103,6 +243,17 @@ margin_bottom = 160.0
 theme = ExtResource( 5 )
 text = "Card Name"
 align = 1
+autowrap = true
+
+[node name="Description" type="Label" parent="."]
+margin_left = 27.0
+margin_top = 348.0
+margin_right = 348.0
+margin_bottom = 495.0
+theme = SubResource( 17 )
+text = "- it's time
+- line two
+- line three"
 autowrap = true
 
 [node name="Illustration" type="Sprite" parent="."]
@@ -147,9 +298,10 @@ scale = Vector2( 0.4372, 0.4372 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Activate = SubResource( 12 )
+anims/Activate = SubResource( 18 )
+anims/Draw = SubResource( 19 )
 anims/RESET = SubResource( 13 )
-anims/Select = SubResource( 14 )
+anims/Select = SubResource( 20 )
 
 [connection signal="button_down" from="Button" to="." method="OnButtonDown"]
 [connection signal="button_up" from="Button" to="." method="OnButtonUp"]

@@ -21,9 +21,19 @@ public class Global : Node
 
     public override void _Ready()
     {
-        if (debugMode) data.newSave();
-
         GD.Randomize();
+        
+        if (debugMode) 
+        {
+            data.newSave();
+
+            Node preLoadModel = GD.Load<PackedScene>("res://Objects/CharacterModel/Player.tscn").Instance();
+            Node preLoadIcon = GD.Load<PackedScene>("res://Objects/PlayerAvatar/PlayerIcon.tscn").Instance();
+            AddChild(preLoadModel);
+            AddChild(preLoadIcon);
+            // RemoveChild(preLoadModel);
+            // RemoveChild(preLoadIcon);
+        }
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
 
         battleEngine = GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instance<BattleEngine>();
@@ -32,6 +42,18 @@ public class Global : Node
         currentScene = root.GetChild(root.GetChildCount() - 1);
 
         blackFade = GetNode<AnimationPlayer>("/root/BlackFade/AnimationPlayer");
+    }
+
+    public void LoadSave(string path)
+    {
+        data.Load(path);
+        
+        Node preLoadModel = GD.Load<PackedScene>("res://Objects/CharacterModel/Player.tscn").Instance();
+        Node preLoadIcon = GD.Load<PackedScene>("res://Objects/PlayerAvatar/PlayerIcon.tscn").Instance();
+        AddChild(preLoadModel);
+        AddChild(preLoadIcon);
+        RemoveChild(preLoadModel);
+        RemoveChild(preLoadIcon);
     }
 
     public void ChangeScene(string toLoad)

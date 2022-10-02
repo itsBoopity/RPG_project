@@ -17,6 +17,7 @@ public class BattleTimer : Sprite
     
     public void Stop()
     {
+        timer.Stop();
         SetProcess(false);
     }
     public void StartTimer(int length)

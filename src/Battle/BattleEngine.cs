@@ -29,10 +29,20 @@ public class BattleEngine : Node2D
     private TurnAnnouncement turnAnnouncement;
     private DamageCounter characterDamageCounter;
 
+
+    private AnimationPlayer animationPlayer;
     private float enemyTurnSpeed;
 
 
     private BattleSkill[] basicSkills = { new BasicAttack() };
+
+    public override void _EnterTree()
+    {
+        if (animationPlayer == null) animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        
+        animationPlayer.Stop();
+        animationPlayer.Play("OnEnter");
+    }
 
 
     public override void _Ready()
@@ -101,10 +111,7 @@ public class BattleEngine : Node2D
             monster.UpdateUIModel();
         }
 
-        foreach(Character i in party) i.stack = 2;
-
         SelectCharacter(0);
-        UpdateUI();
         PlayerTurn();
     }
 
@@ -112,6 +119,8 @@ public class BattleEngine : Node2D
     private void Finish()
     {
         GD.Print("[UNFINISHED] Ayo dude, don't forget to code in adding of rewards. - BattleEngine.Finish()");
+
+        timer.Stop();
 
         monsterNode.Clear();
 
@@ -122,7 +131,6 @@ public class BattleEngine : Node2D
             data.UpdateCharacter(i.Reset());
 
         GetNode<Global>("/root/Global").EndBattle();
-        
     }
     private void SetTimer()
     {
@@ -234,9 +242,7 @@ public class BattleEngine : Node2D
                 if (skill.currentCooldown > 0) skill.currentCooldown -= 1;
         }
 
-        UpdateUICharacterBar();
-        UpdateUIModel();
-        UpdateUISkill();
+        UpdateUI();
 
         // Tick down cooldowns, statusi etc.
 
@@ -297,7 +303,8 @@ public class BattleEngine : Node2D
                 narration.ShowText(((Monster)target).name + " defeated!");
                 monsterNode.Remove((target as Monster).GetModel());
                 monsters.Remove((Monster)target);
-                if (monsters.Count == 0){} CallDeferred(nameof(Finish));
+                if (monsters.Count == 0)
+                    CallDeferred(nameof(Finish));
             }
             else if (target is Character)
             {
@@ -417,7 +424,9 @@ public class BattleEngine : Node2D
     {
         foreach (Character i in party)
             if (i.turnActive) return;
-        EnemyTurn();
+
+        if (monsters.Count != 0)
+            EnemyTurn();
     }
 
     // ------------------------- UI UPDATES -------------------------------------------------------------
@@ -440,12 +449,13 @@ public class BattleEngine : Node2D
                 partyNode.GetChild<CharacterBar>(i).Hide();
         }
     }
-    private void UpdateUIModel() { 
+    private void UpdateUIModel()
+    { 
         if (!party[selectedCharacter].turnActive)
             characterModels.FadeCharacter();
         else
             characterModels.ShowCharacter(party[selectedCharacter].who); 
-        }
+    }
     private void UpdateUISkill()
     {
         for (int i=0; i<5; i++)

@@ -87,6 +87,8 @@ public class GameData
         party = new CharacterEnum[3] {CharacterEnum.Player, CharacterEnum.Claus, CharacterEnum.Null};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
+
+        
     }
 
 }

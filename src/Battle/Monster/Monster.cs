@@ -15,6 +15,12 @@ public abstract class Monster: BattleFigure
     protected int targetCharacter = 0;
     protected int targetSkill = 0;
 
+    public Monster()
+    {
+        model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instance<MonsterModel>();
+        model.SetOwner(this);
+    }
+
     ~Monster() { if (model != null) model.QueueFree(); }
 
     public void Initiate(BattleEngine battleEngine) { this.battleEngine = battleEngine; }

@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class DamageCounter : Node2D
+public partial class DamageCounter : Node
 {
     private AnimationPlayer animationPlayer;
     private Label estimate;
@@ -10,7 +10,7 @@ public partial class DamageCounter : Node2D
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        estimate = GetNodeOrNull<Label>("Estimate");
+        estimate = GetNodeOrNull<Label>("Label");
         number = GetNode<Label>("Number");
     }
 
@@ -38,14 +38,10 @@ public partial class DamageCounter : Node2D
 
     public void ShowEstimate(int damage)
     {
-        animationPlayer.Stop();
         if (damage == -1)
             number.Text = "?";
         else    
             number.Text = damage.ToString();
-        
-        estimate.Show();
-        number.Show();
-        number.Modulate = new Color(1,1,1,1);
+        animationPlayer.Play("ViewEstimate");
     }
 }

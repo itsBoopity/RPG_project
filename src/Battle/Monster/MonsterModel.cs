@@ -1,13 +1,14 @@
 using Godot;
 using System;
 
-public partial class MonsterModel : Node2D
+public partial class MonsterModel : CanvasGroup
 {
     private Monster owner = null;
     private DamageCounter counter;
     private AnimationPlayer animationPlayer;
     private Control boundary;
 
+    private TextureProgressBar hpBar;
     private Label hpCurrent;
     private Label hpMax;
 
@@ -15,9 +16,10 @@ public partial class MonsterModel : Node2D
 
     public override void _Ready()
     {
-        counter = GetNode<DamageCounter>("DamageCounter");
-        hpCurrent = GetNode<Label>("HP/HPCurrent");
-        hpMax = GetNode<Label>("HP/HPMax");
+        counter = GetNode<DamageCounter>("OverheadUI/DamageCounter");
+        hpCurrent = GetNode<Label>("OverheadUI/HP/Current");
+        hpMax = GetNode<Label>("OverheadUI/HP/Max");
+        hpBar = GetNode<TextureProgressBar>("OverheadUI/HP/Bar");
 
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         boundary = GetNode<Control>("BoundaryBox");
@@ -40,6 +42,14 @@ public partial class MonsterModel : Node2D
         {
             hpCurrent.Text = owner.hp.ToString();
             hpMax.Text = owner.maxHp.ToString();
+            hpBar.MaxValue = owner.maxHp;
+            if (hpBar.Value != owner.hp)
+            {
+                Tween tween = CreateTween();
+                tween.TweenProperty(hpBar, "value", owner.hp, 0.2f).
+                    SetEase(Tween.EaseType.InOut).
+                    SetTrans(Tween.TransitionType.Elastic);
+            }
         }
     }
 

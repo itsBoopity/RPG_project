@@ -4,6 +4,7 @@ public partial class GameSettings
     public bool noTimerForAnalysis = false;
     public bool redoOnGameOver = false;
 
+    public int monsterScrollSpeed = 1200;
     public int monsterScrollSensitivity = 100;
     public float monsterScrollSmoothness= 0.05f;
 

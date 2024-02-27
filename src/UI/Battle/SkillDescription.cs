@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class SkillDescription : NinePatchRect
+public partial class SkillDescription : NinePatchRect
 {
     private RichTextLabel name;
     private RichTextLabel type;
@@ -27,29 +27,29 @@ public class SkillDescription : NinePatchRect
     {
         currentFocus = index;
 
-        name.BbcodeText = skill.name;
-        type.BbcodeText = Utility.SkillBBName(skill.type);
+        name.Text = skill.name;
+        type.Text = Utility.SkillBBName(skill.type);
         if (skill.type != SkillType.BASIC)
         {
-            cost.BbcodeText = "| [st]Cost[/st] " + skill.cost;
-            cooldown.BbcodeText = "| CD " + skill.cooldown;
+            cost.Text = "| [st]Cost[/st] " + skill.cost;
+            cooldown.Text = "| CD " + skill.cooldown;
         }
         else
         {
-            cost.BbcodeText = "";
-            cooldown.BbcodeText = "";
+            cost.Text = "";
+            cooldown.Text = "";
         }
 
-        description.BbcodeText = "";
+        description.Text = "";
         if (Utility.IsPhysical(skill.element))
-            description.BbcodeText += "- Type: "  + Utility.SkillBBName(skill.element) + "/Physical\n";
+            description.Text += "- Type: "  + Utility.SkillBBName(skill.element) + "/Physical\n";
         else if (Utility.IsMagical(skill.element))
-            description.BbcodeText += "- Type: "  + Utility.SkillBBName(skill.element) + "/Magical\n";
+            description.Text += "- Type: "  + Utility.SkillBBName(skill.element) + "/Magical\n";
         
-        if (!skill.isAoE) description.BbcodeText += "- Target: Single\n\n";
-        else description.BbcodeText += "- Target: Multiple\n\n";
+        if (!skill.isAoE) description.Text += "- Target: Single\n\n";
+        else description.Text += "- Target: Multiple\n\n";
 
-        description.BbcodeText += skill.Description();
+        description.Text += skill.Description();
 
         
         animationPlayer.Stop();

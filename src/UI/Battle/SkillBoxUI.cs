@@ -1,12 +1,12 @@
 using Godot;
 using System;
 
-public class SkillBoxUI : Sprite
+public partial class SkillBoxUI : Sprite2D
 {
     // The index of the skill that this skillbox represents;
     [Export] public int index;
-    private Sprite fill;
-    private Sprite icon;
+    private Sprite2D fill;
+    private Sprite2D icon;
     private Label stackCost;
     private Label cooldown;
     private CanvasItem snap;
@@ -16,26 +16,28 @@ public class SkillBoxUI : Sprite
     [Export] private NodePath root = null;
     private BattleEngine battleEngine;
     private Color fadeColor = new Color(0.4f, 0.4f, 0.4f, 1);
+    private AudioStreamPlayer sfx;
     
     public override void _Ready()
     {
-        fill = GetNode<Sprite>("Fill");
-        icon = GetNode<Sprite>("Fill/Icon");
+        fill = GetNode<Sprite2D>("Fill");
+        icon = GetNode<Sprite2D>("Fill/Icon");
         stackCost = GetNode<Label>("Cost");
         cooldown = GetNode<Label>("Cooldown");
         snap = GetNode<CanvasItem>("SnapIcon");
         cooldownCountdown = GetNode<Label>("Countdown");
-
+        sfx = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 
         originalScale = this.Scale;
         if (root == null) throw new Exception("SkillBoxUI does not have [Exoirt] root set");
         battleEngine = GetNode<BattleEngine>(root);
 
-        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("battle_skill" + index)[0]).AsText();
+        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents("battle_skill" + index)[0]).AsText();
     }
 
     public void OnHover()
     {
+        sfx.Play();
         this.Scale = originalScale * 1.1f;
         battleEngine.ShowSkillDetail(index);
     }
@@ -46,7 +48,10 @@ public class SkillBoxUI : Sprite
     }
     public void Grow() { this.Scale = originalScale * 1.1f; }
     public void Shrink() { this.Scale = originalScale; }
-    public void OnPress() { battleEngine.SelectSkill(index); }
+    public void OnPress() {
+        sfx.Play();
+        battleEngine.SelectSkill(index); 
+    }
 
     public void Initiate(BattleSkill skill)
     {
@@ -65,7 +70,7 @@ public class SkillBoxUI : Sprite
         
         icon.Texture = skill.GetIcon();
 
-        fill.Texture = GD.Load<Texture>("res://Images/UI/Battle/Fill" + skill.type.ToString() + ".png");
+        fill.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/Fill" + skill.type.ToString() + ".png");
         
         if (skill.type == SkillType.BASIC)
         {
@@ -84,7 +89,7 @@ public class SkillBoxUI : Sprite
         }
     }
 
-    public void Update(Character owner, BattleSkill skill)
+    public void Update(BattleCharacter owner, BattleSkill skill)
     {
         Initiate(skill); // Only necessary if you plan to use the same skillbox for multiple characters/swapping out skillsZ
 

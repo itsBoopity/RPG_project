@@ -1,10 +1,10 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 
 // Class that holds info about a battle, such as monsters, extra conditions, win conditions etc.
+// Inherits from GodotObject so it can be passed in native Godot functions.
 [Serializable]
-public class BattleSetup: Godot.Object
+public partial class BattleSetup: Godot.GodotObject
 {
     public List<int> monsterID = new List<int>();
     public BattleWinCondition winCondition = BattleWinCondition.DEFEAT_ALL;

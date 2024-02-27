@@ -1,7 +1,7 @@
 using Godot;
 
 [System.Serializable]
-public class SkillTemplate: BattleSkill
+public partial class SkillTemplate: BattleSkill
 {
     public SkillTemplate()
     {
@@ -12,13 +12,13 @@ public class SkillTemplate: BattleSkill
         cost = 0;
         cooldown = 0;
     }
-    protected override void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
     
     }
-    public override int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target)
+    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetATK(), target.GetDEF());
+        return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef());
     }
     public override string Description()
     {

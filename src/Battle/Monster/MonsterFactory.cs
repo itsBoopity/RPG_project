@@ -1,6 +1,6 @@
 using System;
 
-public class MonsterFactory
+public partial class MonsterFactory
 {
     public static Monster Create(int monsterID)
     {

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class SidebarHighlight : Sprite
+public partial class SidebarHighlight : Sprite2D
 {
     Vector2 originalScale;
     Control following;
@@ -15,15 +15,15 @@ public class SidebarHighlight : Sprite
     }
 
     // Called when the node enters the scene tree for the first time.
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (following != null)
-            GlobalPosition = new Vector2 (0,following.RectGlobalPosition.y);
+            GlobalPosition = new Vector2 (0,following.GlobalPosition.Y);
     }
 
     public void ScaleDown()
     {
-        this.Scale = new Vector2(originalScale.x * 0.95f , originalScale.y);
+        this.Scale = new Vector2(originalScale.X * 0.95f , originalScale.Y);
     }
 
     public void ScaleBack()

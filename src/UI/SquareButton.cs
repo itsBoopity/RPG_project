@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract class SquareButton : TextureButton
+public partial class SquareButton : TextureButton
 {
     private Vector2 originalSize;
     private float expandFactor = 1.15f;
@@ -9,23 +9,23 @@ public abstract class SquareButton : TextureButton
     public override void _Ready()
     {
         //selector = GetNode<Selector>("../../Selector");
-        originalSize = RectScale;
+        originalSize = Scale;
     }
 
     public void ScaleBack()
     {
-        RectScale = originalSize;
+        Scale = originalSize;
     }
 
     public void ScaleMid()
     {
-        RectScale = originalSize * midExpandFactor;
+        Scale = originalSize * midExpandFactor;
     }
 
     public void ScaleUp()
     {
-        RectScale = originalSize * expandFactor;
+        Scale = originalSize * expandFactor;
     }
 
-    abstract public void OnPress();
+    public virtual void OnPress() {}
 }

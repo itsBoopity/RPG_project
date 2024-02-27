@@ -1,113 +1,99 @@
 using Godot;
 
-public class Global : Node
+public partial class Global : Node
 {
-    public static GameData data = new GameData();
-    public static GameSettings settings = new GameSettings();
+    private static Global _instance;
+    private static GameData data = new GameData();
+    private static GameSettings settings = new GameSettings();
 
-    private BattleEngine battleEngine = null;
+    private BattleEngine battleEngine = GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instantiate<BattleEngine>();
+
+    public static bool debugMode = OS.IsDebugBuild();
+    private Node currentScene = null;
     private Node sceneHold = null;
 
-    private AnimationPlayer blackFade;
-    public static bool debugMode = true; //Show a menu with various tools and settings
+    public static Global Instance => _instance;
+    public static GameSettings Settings { get => settings; set => settings = value; }
+    public static GameData Data { get => data; set => data = value; }
 
-    public Node currentScene { get; set; }
+    public override void _EnterTree()
+    {
+        if (_instance != null) this.QueueFree();
+        _instance = this;
+    }
 
     public override void _ExitTree()
     {
-        if (battleEngine != null) battleEngine.QueueFree();
-        if (sceneHold != null) sceneHold.QueueFree();
+        battleEngine?.QueueFree();
+        sceneHold?.QueueFree();
     }
 
     public override void _Ready()
     {
         GD.Randomize();
-        
-        if (debugMode) 
-        {
-            data.newSave();
-
-            Node preLoadModel = GD.Load<PackedScene>("res://Objects/CharacterModel/Player.tscn").Instance();
-            Node preLoadIcon = GD.Load<PackedScene>("res://Objects/PlayerAvatar/PlayerIcon.tscn").Instance();
-            AddChild(preLoadModel);
-            AddChild(preLoadIcon);
-            // RemoveChild(preLoadModel);
-            // RemoveChild(preLoadIcon);
-        }
+        Data.newSave();
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
+        currentScene = GetTree().CurrentScene;
+    }
 
-        battleEngine = GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instance<BattleEngine>();
-
-        Viewport root = GetTree().Root;
-        currentScene = root.GetChild(root.GetChildCount() - 1);
-
-        blackFade = GetNode<AnimationPlayer>("/root/BlackFade/AnimationPlayer");
+    public override void _UnhandledKeyInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("fullscreen"))
+            if (GetWindow().Mode == Window.ModeEnum.Fullscreen)
+                GetWindow().Mode = Window.ModeEnum.Windowed;
+            else
+                GetWindow().Mode = Window.ModeEnum.Fullscreen;
     }
 
     public void LoadSave(string path)
     {
-        data.Load(path);
-        
-        Node preLoadModel = GD.Load<PackedScene>("res://Objects/CharacterModel/Player.tscn").Instance();
-        Node preLoadIcon = GD.Load<PackedScene>("res://Objects/PlayerAvatar/PlayerIcon.tscn").Instance();
-        AddChild(preLoadModel);
-        AddChild(preLoadIcon);
-        RemoveChild(preLoadModel);
-        RemoveChild(preLoadIcon);
+        Data.Load(path);
     }
 
-    public void ChangeScene(string toLoad)
-	{
-		// Only load next scene once all code is finished and executed.
-        GetTree().Root.GuiDisableInput = true;
-		CallDeferred(nameof(DeferredChangeScene), toLoad);
+    /// <summary>
+    /// Custom version of SceneTree.ChangeSceneToFile() that includes animated transition.
+    /// </summary>
+    /// <param name="path">Path to the new scene.</param>
+    public void ChangeSceneToFile(string path)
+    {
+		CallDeferred(MethodName.DeferredChangeScene, path);
 	}
 
-	public async void DeferredChangeScene(string toLoad)
-	{
-        blackFade.Stop();
-		blackFade.Play("FadeIn");
-		await ToSignal(blackFade, "animation_finished");
-
+	private void DeferredChangeScene(string path)
+    {
 		currentScene.QueueFree();
-        currentScene = GD.Load<PackedScene>(toLoad).Instance();
-
+        currentScene = GD.Load<PackedScene>(path).Instantiate();
         GetTree().Root.AddChild(currentScene);
-        GetTree().CurrentScene = currentScene;
-		blackFade.Play("FadeOut");
-        
-        GetTree().Root.GuiDisableInput = false;
 	}
 
     public void StartBattle(BattleSetup setup)
     {
-        CallDeferred(nameof(DeferredStartBattle), setup);
+        CallDeferred(MethodName.DeferredStartBattle, setup);
     }
 
-    public void DeferredStartBattle(BattleSetup setup)
+    private void DeferredStartBattle(BattleSetup setup)
     {
-        GetTree().Root.AddChild(battleEngine);
-        battleEngine.Initiate(setup);
-
-        if (sceneHold != null) sceneHold.QueueFree();
-        
-        sceneHold = currentScene;
         GetTree().Root.RemoveChild(currentScene);
+        GetTree().Root.AddChild(battleEngine);
+        sceneHold?.QueueFree();
+        sceneHold = currentScene;
         currentScene = battleEngine;
+        battleEngine.Initiate(setup);
     }
 
     public void EndBattle()
     {
-        CallDeferred(nameof(DeferredEndBattle));
+        CallDeferred(MethodName.DeferredEndBattle);
     }
 
-    public void DeferredEndBattle()
+    private void DeferredEndBattle()
     {
+        GetTree().Root.RemoveChild(battleEngine);
         GetTree().Root.AddChild(sceneHold);
         currentScene = sceneHold;
         sceneHold = null;
-
-        GetTree().Root.RemoveChild(battleEngine);
+        if (currentScene is DungeonEngine engine)
+            engine.AfterBattle();
     }
 
 

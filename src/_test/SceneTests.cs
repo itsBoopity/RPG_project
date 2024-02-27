@@ -1,27 +1,10 @@
 using Godot;
-using System;
 
-public class SceneTests: Node
+public partial class SceneTests : Node
 {
-
-    [Export] private string dialogueToLoad = "res://Dialogue/test.txt";
-    public void CharacterCreatorTest()
-    {
-        Global.data.newSave();
-        GetNode<Global>("/root/Global").ChangeScene("res://Scenes/CharacterCreator.tscn");
-    }
-
-    public void DialogueTest()
-    {
-        Global.data.newSave();
-        DialogueEngine dialogue = Utility.InstanceDialogue();
-        AddChild(dialogue);
-        dialogue.LoadDialogue(dialogueToLoad);
-    }
-
     public void BattleEngineTest()
     {
-        Global.data.newSave();
+        Global.Data.newSave();
         BattleEngine battleEngine = Utility.InstanceBattle();
         AddChild(battleEngine);
         BattleSetup testSetup = new BattleSetup();
@@ -32,8 +15,8 @@ public class SceneTests: Node
 
     public void SaveLoadTest()
     {
-        Global.data.newSave();
-        Global.data.Save("testSave.dat");
-        Global.data.Load("testSave.dat");
+        Global.Data.newSave();
+        Global.Data.Save("testSave.dat");
+        Global.Data.Load("testSave.dat");
     }
 }

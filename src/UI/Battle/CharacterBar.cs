@@ -1,11 +1,12 @@
 using Godot;
 using System;
 
-public class CharacterBar : Sprite
+public partial class CharacterBar : Control
 {
+    private CharacterEnum who = 0;
+
     private RichTextLabel name;
-    private Sprite icon;
-    private PlayerIcon playerIcon = null;
+    private Sprite2D icon;
     private Label hp;
     private Label maxHp;
     private Label stack;
@@ -14,7 +15,8 @@ public class CharacterBar : Sprite
 
 
     private CanvasItem selector;
-    private AnimationPlayer animationPlayer;
+    private AnimationPlayer selectPlayer;
+    private AnimationPlayer fadePlayer;
     private AnimationPlayer shakePlayer;
 
 
@@ -22,63 +24,49 @@ public class CharacterBar : Sprite
     public override void _Ready()
     {
         name = GetNode<RichTextLabel>("Name");
-        icon = GetNode<Sprite>("Icon");
-        playerIcon = GetNode<PlayerIcon>("PlayerIcon");
-        playerIcon.Hide();
+        icon = GetNode<Sprite2D>("Icon");
 
         hp = GetNode<Label>("HPCurrent");
         maxHp = GetNode<Label>("HPMax");
         stack = GetNode<Label>("StackCurrent");
 
         selector = GetNode<CanvasItem>("Selector");
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        selectPlayer = GetNode<AnimationPlayer>("SelectPlayer");
+        fadePlayer = GetNode<AnimationPlayer>("FadePlayer");
         shakePlayer = GetNode<AnimationPlayer>("ShakePlayer");
 
-        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("battle_character" + Name)[0]).AsText();
+        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents("battle_character" + Name)[0]).AsText();
     }
 
     public void Select()
     {
         selector.Show();
-        animationPlayer.Stop();
-        animationPlayer.Play("Select");
+        selectPlayer.Stop();
+        selectPlayer.Play("Select");
     }
 
-    public void Unselect()
+    public void Deselect()
     {
         selector.Hide();
-        animationPlayer.Stop();
-        animationPlayer.Play("RESET");
+        selectPlayer.Stop();
+        selectPlayer.Play("RESET");
     }
 
-    public void Update(Character character)
+    public void Update(BattleCharacter character)
     {
-        name.BbcodeText = Utility.CharacterBBName(character.who);
-        if (character.who == CharacterEnum.Player)
-        {
-            icon.Hide();
-            playerIcon.Show();
-        }
-        else
-        {
-            icon.Show();
-            playerIcon.Hide();
+        if (who != character.who) {
+            who = character.who;
+            name.Text = Utility.CharacterBBName(character.who);
         }
 
-        hp.Text = character.HP.ToString();
-        maxHp.Text = character.maxHP.ToString();
+        hp.Text = character.hp.ToString();
+        maxHp.Text = character.maxHp.ToString();
         stack.Text = character.stack.ToString();
 
         if (character.turnActive && !this.turnActive)
-        {
-            animationPlayer.Stop();
-            animationPlayer.Play("RestoreTurn");
-        }
+            fadePlayer.Play("RestoreTurn");
         else if (!character.turnActive && this.turnActive)
-        {
-            animationPlayer.Stop();
-            animationPlayer.Play("UsedTurn");
-        }
+            fadePlayer.Play("UsedTurn");
 
         this.turnActive = character.turnActive;
     }

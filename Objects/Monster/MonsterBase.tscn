@@ -1,0 +1,326 @@
+[gd_scene load_steps=19 format=3 uid="uid://cn011iuuvxhat"]
+
+[ext_resource type="Script" path="res://src/Battle/Monster/MonsterModel.cs" id="1_qs2kr"]
+[ext_resource type="AudioStream" uid="uid://dwr0orejnp60b" path="res://Audio/SFX/cymbal.wav" id="2_2v4mg"]
+[ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="3_gj4c7"]
+[ext_resource type="LabelSettings" uid="uid://gryk6lcwmns0" path="res://Font/LabelSettings/FancyText.tres" id="4_rxe4v"]
+[ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="5_u0mw5"]
+[ext_resource type="Script" path="res://src/Battle/DamageCounter.cs" id="6_4lp2t"]
+[ext_resource type="Theme" path="res://Font/Theme/InvisibleButton.tres" id="7_6eyv2"]
+
+[sub_resource type="Animation" id="14"]
+resource_name = "Death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.47451, 0.47451, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Audio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xq0vq"]
+_data = {
+"Death": SubResource("14"),
+"RESET": SubResource("4")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_bvmbb"]
+font = ExtResource("5_u0mw5")
+font_size = 50
+font_color = Color(1, 0.937255, 0.862745, 1)
+outline_size = 24
+outline_color = Color(0.168627, 0.0470588, 0.0470588, 1)
+shadow_size = 8
+shadow_color = Color(0.65098, 0.333333, 0.25098, 1)
+shadow_offset = Vector2(6, 6)
+
+[sub_resource type="LabelSettings" id="LabelSettings_442cb"]
+font = ExtResource("5_u0mw5")
+font_size = 50
+font_color = Color(0.960784, 0.756863, 0.603922, 1)
+outline_size = 24
+outline_color = Color(0.121569, 0.0313726, 0.0313726, 1)
+shadow_size = 8
+shadow_color = Color(0.60183, 0.235793, 0.21384, 1)
+shadow_offset = Vector2(6, 6)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wpdll"]
+font = ExtResource("5_u0mw5")
+font_size = 50
+font_color = Color(0.960784, 0.756863, 0.603922, 1)
+outline_size = 24
+outline_color = Color(0.121569, 0.0313726, 0.0313726, 1)
+shadow_size = 8
+shadow_color = Color(0.60183, 0.235793, 0.21384, 1)
+shadow_offset = Vector2(6, 6)
+
+[sub_resource type="LabelSettings" id="LabelSettings_a1u8d"]
+font = ExtResource("5_u0mw5")
+font_size = 80
+font_color = Color(0.996078, 0.792157, 0.792157, 1)
+outline_size = 24
+outline_color = Color(0.113725, 0.027451, 0.027451, 1)
+shadow_size = 8
+shadow_color = Color(0.678431, 0.227451, 0.227451, 1)
+shadow_offset = Vector2(8, 8)
+
+[sub_resource type="Animation" id="9"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Number:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Number:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Number:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Estimate:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="10"]
+resource_name = "Shake"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Number:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(10, 0), Vector2(-8, 0), Vector2(15, 0), Vector2(0, 0), Vector2(10, 0), Vector2(10, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Number:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.75, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Number:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Estimate:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0aoxr"]
+_data = {
+"RESET": SubResource("9"),
+"Shake": SubResource("10")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_v4mow"]
+font = ExtResource("5_u0mw5")
+font_size = 40
+font_color = Color(0.996078, 0.792157, 0.792157, 1)
+outline_size = 16
+outline_color = Color(0.180392, 0.0627451, 0.0627451, 1)
+shadow_size = 8
+shadow_color = Color(0.678431, 0.227451, 0.227451, 1)
+shadow_offset = Vector2(4, 4)
+
+[node name="MonsterBase" type="Node2D"]
+script = ExtResource("1_qs2kr")
+
+[node name="BaseAnimations" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xq0vq")
+}
+
+[node name="SFXPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2v4mg")
+volume_db = -10.0
+pitch_scale = 0.65
+
+[node name="HP" type="Node2D" parent="."]
+z_index = 1
+
+[node name="HPLabel" type="Label" parent="HP"]
+offset_left = -150.0
+offset_top = -27.0
+offset_right = -55.0
+offset_bottom = 34.0
+theme = ExtResource("3_gj4c7")
+text = "HP:"
+label_settings = ExtResource("4_rxe4v")
+
+[node name="HPCurrent" type="Label" parent="HP"]
+offset_left = -100.0
+offset_top = -42.0
+offset_right = -2.0
+offset_bottom = 57.0
+theme = ExtResource("3_gj4c7")
+text = "10"
+label_settings = SubResource("LabelSettings_bvmbb")
+horizontal_alignment = 2
+
+[node name="HPSlash" type="Label" parent="HP"]
+offset_left = -9.0
+offset_top = -33.0
+offset_right = 97.0
+offset_bottom = 47.0
+theme = ExtResource("3_gj4c7")
+text = "/"
+label_settings = SubResource("LabelSettings_442cb")
+
+[node name="HPMax" type="Label" parent="HP"]
+offset_left = 14.0
+offset_top = -20.0
+offset_right = 120.0
+offset_bottom = 45.0
+theme = ExtResource("3_gj4c7")
+text = "10"
+label_settings = SubResource("LabelSettings_wpdll")
+
+[node name="DamageCounter" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(-49, -138)
+script = ExtResource("6_4lp2t")
+
+[node name="Number" type="Label" parent="DamageCounter"]
+visible = false
+offset_left = 10.0
+offset_right = 227.0
+offset_bottom = 127.0
+theme = ExtResource("3_gj4c7")
+text = "2"
+label_settings = SubResource("LabelSettings_a1u8d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageCounter"]
+libraries = {
+"": SubResource("AnimationLibrary_0aoxr")
+}
+
+[node name="Estimate" type="Label" parent="DamageCounter"]
+visible = false
+offset_left = -97.0
+offset_top = 32.0
+offset_right = 13.0
+offset_bottom = 100.0
+theme = ExtResource("3_gj4c7")
+text = "Est:"
+label_settings = SubResource("LabelSettings_v4mow")
+
+[node name="BoundaryBox" type="Button" parent="."]
+offset_top = -356.0
+offset_right = 353.0
+offset_bottom = 48.0
+theme = ExtResource("7_6eyv2")
+
+[connection signal="button_down" from="BoundaryBox" to="." method="TargetMiss"]

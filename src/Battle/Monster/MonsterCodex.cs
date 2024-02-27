@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class MonsterCodex
+public partial class MonsterCodex
 {
     private static Dictionary<int,int> codex = new Dictionary<int,int>();
 

@@ -17,7 +17,7 @@ public abstract class BattleSkill
     private string animationPath = "res://Objects/VFX/Hit.tscn";
     
     // Encapsulates Execute. Actual skill effects are implemented in Execute.
-    public bool Use(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency = 1f)
+    public bool Use(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency = 1f)
     {
         if (IsUsable(user) == 0)
         {
@@ -31,7 +31,7 @@ public abstract class BattleSkill
     // <summary>
     // 0, not usable. 1 not usable because in cooldown, 2 not usable because not enough stacks, 3 user is not active
     // </summary>
-    public int IsUsable(BattleFigure user)
+    public int IsUsable(BattleActor user)
     {
         if (currentCooldown > 0)
             return 1;
@@ -41,17 +41,17 @@ public abstract class BattleSkill
             return 3;
         return 0;
     }
-    protected abstract void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency);
-    public abstract int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target);
+    protected abstract void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency);
+    public abstract int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target);
     public abstract string Description();
-    public Texture GetIcon()
+    public Texture2D GetIcon()
     {
-        return GD.Load<Texture>("res://Images/UI/Battle/SkillIcon/" + this.GetType().Name + ".tres");
+        return GD.Load<Texture2D>("res://Images/UI/Battle/SkillIcon/" + this.GetType().Name + ".tres");
     }
 
     public Node2D GetAnimation()
     {
-        return GD.Load<PackedScene>(animationPath).Instance<Node2D>();
+        return GD.Load<PackedScene>(animationPath).Instantiate<Node2D>();
     }
 
     //Called when battle ends, resets cooldowns, can be overriden for skills with special parameters

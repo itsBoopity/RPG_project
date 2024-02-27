@@ -1,18 +1,18 @@
 using Godot;
 using System.Collections.Generic;
 
-public class BattleEngine : Node2D
+public partial class BattleEngine : Control
 {
-    private ControlState state;
     private int selectedCharacter = -1;
-    public List<Character> party;
-    public List<Character> bench;
+    public List<BattleCharacter> party;
+    public List<BattleCharacter> bench;
     public List<Monster> monsters;
     public BattleTimer timer;
     private Timer internalTimer;
 
+    // Separate the UI into another class you maniac
+    private ControlState state;
     private Reticle reticle;
-
     private Node partyNode;
     private MonsterRack monsterNode;
     private CanvasItem skillNode;
@@ -33,17 +33,16 @@ public class BattleEngine : Node2D
     private AnimationPlayer animationPlayer;
     private float enemyTurnSpeed;
 
+    private Node sfx;
 
-    private BattleSkill[] basicSkills = { new BasicAttack() };
+    private readonly BattleSkill[] basicSkills = { new BasicAttack() };
 
     public override void _EnterTree()
     {
-        if (animationPlayer == null) animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        
+        animationPlayer ??= GetNode<AnimationPlayer>("AnimationPlayer");
         animationPlayer.Stop();
         animationPlayer.Play("OnEnter");
     }
-
 
     public override void _Ready()
     {
@@ -61,8 +60,9 @@ public class BattleEngine : Node2D
         centerNarration = GetNode<BattleNarration>("CenterNarration");
         turnAnnouncement = GetNode<TurnAnnouncement>("TurnAnnouncement");
         characterDamageCounter = GetNode<DamageCounter>("CharacterDamageCounter");
+        sfx = GetNode<Node>("Sfx");
 
-        enemyTurnSpeed = Global.settings.enemyTurnSpeed;
+        enemyTurnSpeed = Global.Settings.enemyTurnSpeed;
     }
     public override void _Input(InputEvent @event)
     {
@@ -83,27 +83,33 @@ public class BattleEngine : Node2D
             else if (@event.IsActionPressed("battle_skill10")) SelectSkill(10);
         }
         if (state != ControlState.ENEMY_TURN)
+        {
             if (@event.IsActionPressed("ui_cancel")) ExitCurrentMode();
+        }
     }
     //Loads all the data and calls UpdateUI() at the end
     public void Initiate(BattleSetup battleSetup)
     {
-        GameData data = Global.data;
-        characterModels.Initiate();
+        GameData data = Global.Data;
 
         selectedCharacter = -1;
 
-        party = new List<Character>();
-        bench = new List<Character>();
+        party = new List<BattleCharacter>();
+        bench = new List<BattleCharacter>();
         foreach (CharacterEnum i in data.party)
+        {
             if (data.GetCharacter(i) != null)
                 party.Add(data.GetCharacter(i).Clone());
+        }
         foreach (CharacterEnum i in data.bench)
-                bench.Add(data.GetCharacter(i).Clone());
-        
+        {
+            bench.Add(data.GetCharacter(i).Clone());
+        }
         monsters = new List<Monster>();
         foreach (int i in battleSetup.monsterID)
+        {
             monsters.Add(MonsterFactory.Create(i));
+        }
         foreach (Monster monster in monsters)
         {
             monster.Initiate(this);
@@ -118,42 +124,52 @@ public class BattleEngine : Node2D
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
     private void Finish()
     {
-        GD.Print("[UNFINISHED] Ayo dude, don't forget to code in adding of rewards. - BattleEngine.Finish()");
-
+        GD.Print("[UNFINISHED] Don't forget to code in adding of rewards. - BattleEngine.Finish()");
         timer.Stop();
-
         monsterNode.Clear();
-
-        GameData data = Global.data;
-        foreach (Character i in party)
+        GameData data = Global.Data;
+        foreach (BattleCharacter i in party)
+        {
             data.UpdateCharacter(i.Reset());
-        foreach (Character i in bench)
+        }
+        foreach (BattleCharacter i in bench)
+        {
             data.UpdateCharacter(i.Reset());
-
+        }
         GetNode<Global>("/root/Global").EndBattle();
     }
     private void SetTimer()
     {
-        if (Global.settings.timerEnabled)
+        if (Global.Settings.timerEnabled)
         {
             float partySpeed = 0, enemySpeed = 1;
-            foreach (BattleFigure i in party)
-                partySpeed += i.SPD;
-            foreach (BattleFigure i in monsters)
-                enemySpeed += i.SPD;
-
+            foreach (BattleActor i in party)
+            {
+                partySpeed += i.GetSpd();
+            }
+            foreach (BattleActor i in monsters)
+            {
+                enemySpeed += i.GetSpd();
+            }
             float ratio = partySpeed/enemySpeed;
             int coefficient = 0;
 
             if (ratio < 0.5)
+            {
                 coefficient = -5;
+            }
             else if (ratio < 1)
+            {
                 coefficient = Godot.Mathf.RoundToInt(ratio * 10) - 10;
+            }
             else if (ratio > 2)
+            {
                 coefficient = 10;
+            }
             else if (ratio > 1)
+            {
                 coefficient = Godot.Mathf.RoundToInt((ratio - 1) * 10);
-            
+            }
             timer.StartTimer(10 + coefficient);
         }
     }
@@ -161,7 +177,7 @@ public class BattleEngine : Node2D
     // ---------------------- STATE LOGIC ----------------------------------------------
     // --------------------------------------------------------------------------------
 
-    //Sets the state and updates the infolabel to show the appropriate state
+    // Sets the state and updates the infolabel to show the appropriate state
     private void SetState(ControlState state)
     {
         this.state = state;
@@ -178,18 +194,19 @@ public class BattleEngine : Node2D
         reticle.ShowReticle();
 
         foreach (Monster i in monsters)
+        {
             i.targettingEnabled = true;
-
+        }
         foreach (Monster i in monsters)
+        {
             i.ShowEstimate(selectedSkill.EstimateDamage(this, party[selectedCharacter], i));
-
+        }
         HideMostUI();
     }
     private void EnterTargetAllyMode()
     {
         SetState(ControlState.PLAYER_TARGETTING_ALLY);
-        
-        // Hide party, model,skill, skillDesc UI and show estimated damage on enemies;
+        // TODO: Hide party, model,skill, skillDesc UI and show estimated damage on enemies;
     }
     private void EnterEnemyTurn()
     {
@@ -206,8 +223,7 @@ public class BattleEngine : Node2D
         if (state == ControlState.PLAYER_TARGETTING_ALLY)
         {
             SetState(ControlState.PLAYER_DEFAULT);
-            
-            //Show the skill UI again, hide the bar blob areas;
+            // TODO: Show the skill UI again, hide the bar blob areas;
         }
         else if (state == ControlState.PLAYER_TARGETTING_ENEMY)
         {
@@ -221,7 +237,7 @@ public class BattleEngine : Node2D
 
             HideSkillDetail();
             ShowMostUI();
-            //Show the party, model,skill, skillDesc UI again. Hide the enemy estimates;
+            // TODO: Show the party, model,skill, skillDesc UI again. Hide the enemy estimates;
         }
     }
     // ---------------------- END OF STATE LOGIC ------------------------------------------
@@ -235,7 +251,7 @@ public class BattleEngine : Node2D
         foreach (Monster monster in monsters)
             monster.LoadUpcomingTurn(this);
         
-        foreach (Character character in party)
+        foreach (BattleCharacter character in party)
         {
             character.turnActive = true;
             foreach (BattleSkill skill in character.skills)
@@ -261,18 +277,17 @@ public class BattleEngine : Node2D
         
         foreach (Monster monster in monsters)
         {
-            internalTimer.Start(0.6f / enemyTurnSpeed);
+            internalTimer.Start(0.85f / enemyTurnSpeed);
             await ToSignal(internalTimer, "timeout");
-
             await ToSignal(monster.ExecuteTurn(this), "animation_finished");
         }
 
         turnAnnouncement.Stop();
 
-        internalTimer.Start(0.6f/ enemyTurnSpeed);
+        internalTimer.Start(0.85f/ enemyTurnSpeed);
         await ToSignal(internalTimer, "timeout");
 
-        UpdateUI(); // This should instead be animated and updated by each skill
+        UpdateUI(); // TODO: This should instead be animated and updated by each skill
         PlayerTurn();
     }
 
@@ -281,13 +296,13 @@ public class BattleEngine : Node2D
         UseUpTurn(party[selectedCharacter]);
         ExitCurrentMode();
         target.PlayDamage("Miss");
-        // Play miss animation    
+        // TODO: Play miss animation and sfx   
     }
 
-    public void DoDamage(int damage, BattleFigure user, BattleFigure target) // damage is FINALIZED, this is just the engine doing the exact amount stated
+    public void DoDamage(int damage, BattleActor user, BattleActor target) // damage is FINALIZED, this is just the engine doing the exact amount stated
     {
         if (damage < 0) damage = 0;
-        target.HP -= damage;
+        target.hp -= damage;
 
         if (target is Monster)
         {
@@ -296,33 +311,46 @@ public class BattleEngine : Node2D
         }
         else
         { characterDamageCounter.Play(damage); }
-        if (target.HP <= 0)
+        if (target.hp <= 0)
         {
-            if (target is Monster)
-            {
-                narration.ShowText(((Monster)target).name + " defeated!");
-                monsterNode.Remove((target as Monster).GetModel());
-                monsters.Remove((Monster)target);
-                if (monsters.Count == 0)
-                    CallDeferred(nameof(Finish));
-            }
-            else if (target is Character)
-            {
-                narration.ShowText("You deaded :(\n But I forgot to implement this so you're just immortal now igues.");
-                GD.Print("Game over you deaded :(");
-            }
+            BattleActorDefeated(target);
         }
-        // if target is Character, player ded
+    }
+
+    private void BattleActorDefeated(BattleActor actor)
+    {
+        if (actor is Monster monster)
+        {
+            centerNarration.ShowText(monster.name + " defeated!");
+            monsters.Remove(monster);
+            monster.Free();
+            
+            if (monsters.Count == 0)
+                CallDeferred(MethodName.Finish);
+        }
+        else if (actor is BattleCharacter)
+        {
+            narration.ShowText("You deaded.");
+            GD.Print("Game over you deaded :(");
+            // TODO: if target is Character, player ded, game over
+        }
     }
 
     public void SelectSkill(int index)
     {
-        if ( (index >= party[selectedCharacter].skills.Count && index < 10)
-            || !party[selectedCharacter].turnActive) return;
+        if ( (index >= party[selectedCharacter].skills.Count && index < 10) ||
+             !party[selectedCharacter].turnActive)
+        {
+            return;
+        }
+
+        sfx.GetNode<AudioStreamPlayer>("SkillClick").Play();
 
         BattleSkill skill;
         if (index > 9)
+        {
             skill = basicSkills[index - 10];
+        }
         else
             skill = party[selectedCharacter].skills[index];
 
@@ -330,6 +358,7 @@ public class BattleEngine : Node2D
         int isUsable = skill.IsUsable(party[selectedCharacter]);
         if (isUsable > 0)
         {
+            sfx.GetNode<AudioStreamPlayer>("Error").Play();
             if (isUsable == 1) narration.ShowText("Skill is in cooldown!");
             else if (isUsable == 2)
             {
@@ -361,40 +390,31 @@ public class BattleEngine : Node2D
         temp.GlobalPosition = GetGlobalMousePosition();
 
         if (!selectedSkill.snap)
+        {
             UseUpTurn(party[selectedCharacter]);
-
+        }
+        
         UpdateUISkill();
         ExitCurrentMode();
     }
 
-    // Why did I make this wtf??????
-    // public void ExecuteSkill(BattleSkill skill, Monster monster, float targetEfficiency)
-    // {
-    //     skill.Use(this, party[selectedCharacter], monster, targetEfficiency);
-        
-    //     monster.GetModel().AddChild((skill.GetAnimation()));
-        
-    //     if (!skill.snap)
-    //         UseUpTurn(party[selectedCharacter]);
-
-    //     UpdateUISkill();
-    //     ExitCurrentMode();
-    // }
-
-    private void SelectCharacter(int index)
+    public void SelectCharacter(int index)
     {
         if (index >= party.Count) return;
-
         ExitCurrentMode();
-        if (!party[index].turnActive && state != ControlState.ENEMY_TURN) narration.ShowText("Character's turn already over.");
-
-        
-        
+        if (!party[index].turnActive && state != ControlState.ENEMY_TURN)
+        {
+            narration.ShowText("Character's turn already over.");
+        }
         if (index == selectedCharacter) return;
+
+        sfx.GetNode<AudioStreamPlayer>("PartyBar").Play();
 
         selectedCharacter = index;
         foreach (CharacterBar bar in partyNode.GetChildren())
-            bar.Unselect();
+        {
+            bar.Deselect();
+        }
         partyNode.GetChild<CharacterBar>(index).Select();
 
         ShowSkillDetail(skillDesc.currentFocus);
@@ -403,13 +423,13 @@ public class BattleEngine : Node2D
         UpdateUISkill();
     }
 
-    private void RefreshTurn(Character character)
+    private void RefreshTurn(BattleCharacter character)
     {
         character.turnActive = true;
         UpdateUICharacterBar();
         UpdateUISkill();
     }
-    private void UseUpTurn(Character character)
+    private void UseUpTurn(BattleCharacter character)
     {
         character.turnActive = false;
         UpdateUICharacterBar();
@@ -422,11 +442,14 @@ public class BattleEngine : Node2D
     // Checks if player still has turns, if not enemy turn time
     private void CheckForTurns()
     {
-        foreach (Character i in party)
+        foreach (BattleCharacter i in party)
+        {
             if (i.turnActive) return;
-
+        }
         if (monsters.Count != 0)
+        {
             EnemyTurn();
+        }
     }
 
     // ------------------------- UI UPDATES -------------------------------------------------------------
@@ -435,7 +458,7 @@ public class BattleEngine : Node2D
     //Updates all UI using each of the standalone UpdateUI
     private void UpdateUI()
     {
-        UpdateUICharacterBar();    
+        UpdateUICharacterBar();
         UpdateUIModel();
         UpdateUISkill();
     }
@@ -444,17 +467,25 @@ public class BattleEngine : Node2D
         for (int i=0; i<3; i++)
         {
             if (i < party.Count)
+            {
                 partyNode.GetChild<CharacterBar>(i).Update(party[i]);
+            }
             else
+            {
                 partyNode.GetChild<CharacterBar>(i).Hide();
+            }
         }
     }
     private void UpdateUIModel()
     { 
         if (!party[selectedCharacter].turnActive)
+        {
             characterModels.FadeCharacter();
+        }
         else
-            characterModels.ShowCharacter(party[selectedCharacter].who); 
+        {
+            characterModels.ShowCharacter(party[selectedCharacter].who);
+        }
     }
     private void UpdateUISkill()
     {
@@ -465,7 +496,9 @@ public class BattleEngine : Node2D
                 skillNode.GetChild<SkillBoxUI>(i).Update(party[selectedCharacter], party[selectedCharacter].skills[i]);
             }
             else
+            {
                 skillNode.GetChild<SkillBoxUI>(i).Empty();
+            }
         }
 
         for (int i=10; i<11; i++)
@@ -483,13 +516,18 @@ public class BattleEngine : Node2D
         }
         BattleSkill skill;
         if (index > 9)
+        {
             skill = basicSkills[index - 10];
+        }
         else
+        {
             skill = party[selectedCharacter].skills[index];
-
+        }
         skillDesc.ShowSkill(skill, index);
         foreach (Monster i in monsters)
+        {
             i.ShowEstimate(skill.EstimateDamage(this, party[selectedCharacter], i));
+        }
     }
 
     private void HideMostUI()
@@ -509,9 +547,10 @@ public class BattleEngine : Node2D
     public void HideSkillDetail()
     {
         skillDesc.HideSkill();
-
         foreach (Monster i in monsters)
+        {
             i.HideEstimate();
+        }
     }
 
     // Is handed an animation that wants to be played, and the party member's bar it should play on

@@ -1,7 +1,7 @@
 using Godot;
 
 [System.Serializable]
-public class FirstStrike: BattleSkill
+public partial class FirstStrike: BattleSkill
 {
     private bool first;
     public FirstStrike()
@@ -15,25 +15,25 @@ public class FirstStrike: BattleSkill
 
         first = true;
     }
-    protected override void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
         int damage;
         if (first) {
-            damage = Utility.BasicDamageFormula(user.GetATK(), target.GetDEF(), targetEfficiency, 2);
+            damage = Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), targetEfficiency, 2);
             first = false;
         }
         else
-            damage = Utility.BasicDamageFormula(user.GetATK(), target.GetDEF(), targetEfficiency, 1.5f);
+            damage = Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), targetEfficiency, 1.5f);
 
         battleEngine.DoDamage(damage, user, target);
     }
 
-    public override int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target)
+    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
     {
         if (first)
-            return Utility.BasicDamageFormula(user.GetATK(), target.GetDEF(), 1, 2);
+            return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), 1, 2);
         else
-            return Utility.BasicDamageFormula(user.GetATK(), target.GetDEF(), 1, 1.5f);
+            return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), 1, 1.5f);
     }
 
     public override string Description()

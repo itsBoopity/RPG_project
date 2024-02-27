@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Selector : Node2D
+public partial class Selector : Node2D
 {
     private BaseButton following;
     private Vector2 originalScale;
@@ -11,12 +11,12 @@ public class Selector : Node2D
         originalScale = Scale;
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (following != null)
         {
-            this.GlobalPosition = following.RectGlobalPosition;
-            this.Scale = originalScale * following.RectScale.x;
+            this.GlobalPosition = following.GlobalPosition;
+            this.Scale = originalScale * following.Scale.X;
         }
     }
 

@@ -1,7 +1,7 @@
 using Godot;
 
 [System.Serializable]
-public class BasicAttack: BattleSkill
+public partial class BasicAttack: BattleSkill
 {
     public BasicAttack()
     {
@@ -12,15 +12,15 @@ public class BasicAttack: BattleSkill
         cost = 0;
         cooldown = 0;
     }
-    protected override void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
         user.stack += 1;
-        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetATK(), target.GetDEF(), targetEfficiency), user, target);
+        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), targetEfficiency), user, target);
     }
 
-    public override int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target)
+    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetATK(), target.GetDEF());
+        return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef());
     }
 
     public override string Description()

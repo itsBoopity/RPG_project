@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class DungeonHandUI : HBoxContainer
+public partial class DungeonHandUI : HBoxContainer
 {
     // Declare member variables here. Examples:
     // private int a = 2;

@@ -1,35 +1,33 @@
 using Godot;
 using System;
 
-public class Tab : TextureButton
+public partial class Tab : TextureButton
 {
-    Vector2 originalPosition;
-    Vector2 originalScale;
+    private Vector2 originalScale;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        originalPosition = this.RectPosition;
-        originalScale = this.RectScale;
+        originalScale = this.Scale;
     }
 
     public void PushUp()
     {
-        this.RectPosition = originalPosition - new Vector2(0,10).Rotated(GetRotation());
+        this.Position -= new Vector2(0,10).Rotated(this.Rotation);
     }
 
     public void PushBack()
     {
-        this.RectPosition = originalPosition;
+        this.Position += new Vector2(0,10).Rotated(this.Rotation);
     }
 
     public void ScaleDown()
     {
-        this.RectScale = originalScale * 0.98f;
+        this.Scale = originalScale * 0.98f;
     }
 
     public void ScaleBack()
     {
-        this.RectScale = originalScale;
+        this.Scale = originalScale;
     }
 }

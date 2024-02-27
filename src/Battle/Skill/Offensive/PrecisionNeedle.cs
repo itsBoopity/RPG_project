@@ -1,7 +1,7 @@
 using Godot;
 
 [System.Serializable]
-public class PrecisionNeedle: BattleSkill
+public partial class PrecisionNeedle: BattleSkill
 {
     public PrecisionNeedle()
     {
@@ -12,7 +12,7 @@ public class PrecisionNeedle: BattleSkill
         cost = 2;
         cooldown = 2;
     }
-    protected override void Execute(BattleEngine battleEngine, BattleFigure user, BattleFigure target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
         int damage = 1;
         
@@ -23,7 +23,7 @@ public class PrecisionNeedle: BattleSkill
         battleEngine.DoDamage(damage, user, target);
     }
 
-    public override int EstimateDamage(BattleEngine battleEngine, BattleFigure user, BattleFigure target)
+    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
     {
         return -1;
     }

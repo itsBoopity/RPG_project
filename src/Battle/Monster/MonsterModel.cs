@@ -1,15 +1,17 @@
 using Godot;
 using System;
 
-public class MonsterModel : Node2D
+public partial class MonsterModel : Node2D
 {
-    private DamageCounter counter;
     private Monster owner = null;
+    private DamageCounter counter;
     private AnimationPlayer animationPlayer;
     private Control boundary;
 
     private Label hpCurrent;
     private Label hpMax;
+
+    public Node GetAnimator() { return animationPlayer; }
 
     public override void _Ready()
     {
@@ -25,31 +27,57 @@ public class MonsterModel : Node2D
 
     public Vector2 GetBoundary()
     {
-        if (boundary == null) throw new Exception("MonsterModel.GetBoundary called before model got added to the scenetree");
-        return boundary.RectSize;
+        if (boundary == null)
+        {
+            throw new Exception("MonsterModel.GetBoundary called before model got added to the scenetree");
+        }
+        return boundary.Size;
     }
 
     public void UpdateHP()
     {
         if (owner != null)
         {
-            hpCurrent.Text = owner.HP.ToString();
-            hpMax.Text = owner.maxHP.ToString();
+            hpCurrent.Text = owner.hp.ToString();
+            hpMax.Text = owner.maxHp.ToString();
         }
     }
 
-    public void ShowEstimate(int damage) { counter.ShowEstimate(damage); }
-    public void HideEstimate() { counter.HideEstimate(); }
-    public void PlayDamage(int damage) { counter.Play(damage); }
-    public void PlayDamage(string text) { counter.Play(text); }
+    public void ShowEstimate(int damage)
+    {
+        counter.ShowEstimate(damage);
+    }
+    public void HideEstimate()
+    {
+        counter.HideEstimate();
+    }
+    public void PlayDamage(int damage)
+    {
+        counter.Play(damage);
+    }
+    public void PlayDamage(string text)
+    {
+        counter.Play(text);
+    }
 
-    public void TargetMiss() { if (owner != null) owner.TargetMiss(); }
+    public void TargetMiss()
+    {
+        owner?.TargetMiss(); 
+    }
 
-    public void TargetHit(MonsterTarget target) { if (owner != null) owner.Hit(target);  }
+    public void TargetHit(MonsterTarget target)
+    {
+        owner?.Hit(target);
+    }
 
     public void Animate(string name)
     {
         animationPlayer.Stop();
         animationPlayer.Play(name);
+    }
+
+    public void AnimateDefeat()
+    {
+        GetNode<AnimationPlayer>("BaseAnimations").Play("Death");
     }
 }

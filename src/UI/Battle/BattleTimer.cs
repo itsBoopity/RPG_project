@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class BattleTimer : Sprite
+public partial class BattleTimer : Sprite2D
 {
     private ProgressBar bar;
     private Label label;
@@ -27,7 +27,7 @@ public class BattleTimer : Sprite
         SetProcess(true);
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         label.Text = timer.TimeLeft.ToString("F1");
         bar.Value = timer.TimeLeft;

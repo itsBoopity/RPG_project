@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class MonsterCard: DungeonCard
+public partial class MonsterCard: DungeonCard
 {
     private BattleSetup setup;
     public MonsterCard(BattleSetup setup, bool isBossBattle = false) {
@@ -15,10 +15,10 @@ public class MonsterCard: DungeonCard
         {
             name = "Monster Battle";
             description = "Enemies block the way!\n-";
-            foreach(int monsterID in setup.monsterID)
-            {
-                description += " " + MonsterFactory.GetName(monsterID);
-            }
+        }
+        foreach(int monsterID in setup.monsterID)
+        {
+            description += " " + MonsterFactory.GetName(monsterID);
         }
     }
 

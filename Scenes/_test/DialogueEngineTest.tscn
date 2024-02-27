@@ -1,9 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bdrabgqkkd564"]
 
-[ext_resource path="res://src/_test/SceneTests.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://src/_test/SceneTests.cs" id="1"]
 
 [node name="SceneTests" type="Node2D"]
-script = ExtResource( 1 )
-dialogueToLoad = "res://Dialogue/tut1_1.txt"
+script = ExtResource("1")
 
 [connection signal="ready" from="." to="." method="DialogueTest"]

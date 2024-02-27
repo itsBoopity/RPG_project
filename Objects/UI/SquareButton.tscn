@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://d2k6tcdeqxud2"]
 
-[ext_resource path="res://src/UI/SquareButton.cs" type="Script" id=1]
+[ext_resource type="Script" path="res://src/UI/SquareButton.cs" id="1"]
 
 [node name="Button" type="TextureButton"]
 shortcut_in_tooltip = false
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [connection signal="button_down" from="." to="." method="ScaleMid"]
 [connection signal="button_up" from="." to="." method="ScaleUp"]

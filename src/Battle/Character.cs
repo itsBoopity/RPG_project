@@ -3,37 +3,30 @@ using System;
 //Adding a new character: update, update constructor here, update character enums, and gameData GetCharacter(), newSave and serializtion
 
 [Serializable]
-public class Character: BattleFigure
+public partial class BattleCharacter: BattleActor
 {
     public CharacterEnum who;
-    public Character() {}
-    public Character(CharacterEnum character)
+    public BattleCharacter() {}
+    public BattleCharacter(CharacterEnum character)
     {
         switch(character)
         {
-            case CharacterEnum.Player:
-                who = CharacterEnum.Player;
-                HP = 10; maxHP = 10;
-                ATK = 2;
-                DEF = 2;
-                SPD = 5;
+            case CharacterEnum.CLAUS:
+                name = "Claus";
+                who = CharacterEnum.CLAUS;
+                hp = 11; maxHp = 11;
+                atk = 3;
+                def = 1;
+                spd = 8;
                 skills.Add(new FirstStrike());
                 skills.Add(new PrecisionNeedle());
-                break;
-            case CharacterEnum.Claus:
-                who = CharacterEnum.Claus;
-                HP = 11; maxHP = 11;
-                ATK = 3;
-                DEF = 1;
-                SPD = 8;
-                skills.Add(new BasicAttack());
                 break;
         }
         Reset();
     }
-    public Character Clone()
+    public BattleCharacter Clone()
     {
-        Character clone = new Character();
+        BattleCharacter clone = new BattleCharacter();
         base.Clone(clone);
         clone.who = who;
 
@@ -41,10 +34,10 @@ public class Character: BattleFigure
     }
 
     // Resets parameters after fight: sets stacks according to level, and resets skill cooldowns
-    public Character Reset()
+    public BattleCharacter Reset()
     {
         turnActive = true;
-        stack = Lvl;
+        stack = level;
         foreach (BattleSkill skill in skills)
             skill.Reset();
         return this;

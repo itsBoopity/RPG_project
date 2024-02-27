@@ -1,4 +1,4 @@
-public class GameSettings
+public partial class GameSettings
 {
     public bool timerEnabled = true;
     public bool noTimerForAnalysis = false;

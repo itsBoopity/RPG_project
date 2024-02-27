@@ -1,10 +1,11 @@
 using Godot;
 using System;
 
-public class TalkAnimator : AnimationPlayer
+public partial class TalkAnimator : AnimationPlayer
 {
+    [Export] private float variation = 0.5f;
     public void RandomSpeed()
     {
-        this.PlaybackSpeed = 1f + GD.Randf() * 0.7f;
+        this.SpeedScale = 1f + GD.Randf() * variation;
     }
 }

@@ -1,27 +1,39 @@
 using Godot;
 using System;
 
-public class DungeonCardUI : TextureRect
+public partial class DungeonCardUI : Control
 {
-    [Export] NodePath root;
-    [Export] int index;
+    [Export] private DungeonEngine dungeonEngine;
+    [Export(PropertyHint.Range, "0,4")] int index;
 
     
+    private Control cardSprite;
     private Label title;
     private Label desc;
-
-    private DungeonEngine dungeonEngine;
-    private Control button;
+    private AnimationPlayer hoverPlayer;
     private AnimationPlayer animationPlayer;
+    private AudioStreamPlayer audio;
+    private static AudioStreamWav[] sfxSrc = {
+        GD.Load<AudioStreamWav>("res://Audio/SFX/cardUse.wav"),
+        GD.Load<AudioStreamWav>("res://Audio/SFX/cardDraw.wav"),
+        GD.Load<AudioStreamWav>("res://Audio/SFX/cardHover.wav")
+    };
+
+    public override void _ExitTree()
+    {
+        audio.Stop();
+    }
+
     public override void _Ready()
     {
-        title = GetNode<Label>("Title");
-        desc = GetNode<Label>("Description");
-        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.GetActionList("dungeon_card" + index)[0]).AsText();
+        cardSprite = GetNode<Control>("CardSprite");
+        title = GetNode<Label>("CardSprite/Title");
+        desc = GetNode<Label>("CardSprite/Description");
+        GetNode<Label>("CardSprite/Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents("dungeon_card" + index)[0]).AsText();
 
-        dungeonEngine = GetNode<DungeonEngine>(root);
+        hoverPlayer = GetNode<AnimationPlayer>("HoverPlayer");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        button = GetNode<Control>("Button");
+        audio = GetNode<AudioStreamPlayer>("Audio");
     }
 
     public override void _Input(InputEvent @event)
@@ -32,44 +44,55 @@ public class DungeonCardUI : TextureRect
 
     public void OnHover()
     {
-        button.RectScale = new Vector2(1.05f, 1.05f);
+        audio.Stream = sfxSrc[2];
+        audio.Play();
+        hoverPlayer.Play("Hover");
     }
 
     public void OnHoverExit()
     {
-        button.RectScale = Vector2.One;
+        hoverPlayer.Play("Unhover");
     }
 
 
     public void OnButtonDown()
     {
-        this.RectScale = new Vector2(0.97f, 0.97f);
+        this.Scale = new Vector2(0.97f, 0.97f);
     }
 
     public void OnButtonUp()
     {
-        this.RectScale = Vector2.One;
+        this.Scale = Vector2.One;
     }
-
 
     public void OnButtonPressed()
     {
-        animationPlayer.Play("Activate");
-        dungeonEngine.UseCard(index, animationPlayer);
+        dungeonEngine.UseCard(index);
     }
 
-    public void Draw()
+    public AnimationPlayer ActivateAnimation()
     {
+        audio.Stream = sfxSrc[0];
+        audio.Play();
+        animationPlayer.Play("Activate");
+        return animationPlayer;
+    }
+
+    public void DrawCard(DungeonCard card)
+    {
+        SetCard(card);
         animationPlayer.Play("Draw");
+        audio.Stream = sfxSrc[1];
+        audio.Play();
     }
     public void SetCard(DungeonCard card)
     {
-        animationPlayer.Play("RESET");
         title.Text = card.name;
         desc.Text = card.GetDescription();
-
-        GD.Print("[Unfinished] DungeonCardUI.SetCard doesn't have all UI implemented yet");
     }
 
-
+    public void ResetAnimations()
+    {
+        animationPlayer.Play("RESET");
+    }
 }

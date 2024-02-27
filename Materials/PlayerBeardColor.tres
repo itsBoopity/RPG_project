@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c67jyhw76r52n"]
+
+[ext_resource type="Shader" path="res://src/Shaders/ColorShader.gdshader" id="1_twl2p"]
+
+[resource]
+shader = ExtResource("1_twl2p")
+shader_parameter/hue = 0.0
+shader_parameter/brightness = 1.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.0

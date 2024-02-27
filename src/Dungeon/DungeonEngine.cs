@@ -1,9 +1,9 @@
 using Godot;
 using System.Collections.Generic;
 
-public class DungeonEngine : Node2D
+public partial class DungeonEngine : Node2D
 {
-    private int handSize = 5;
+    private int handSize;
     private List<DungeonCard> deck;
     private List<DungeonCard> hand;
     private DungeonCard bossCard; bool bossCardDrawn = false;
@@ -14,6 +14,8 @@ public class DungeonEngine : Node2D
     private Label cardsLeftLabel;
     
     private PackedScene cardSpawn;
+    private bool controlLock = false;
+    private int lastIndexUsed = -1;
     public override void _Ready()
     {
         handUI = GetNode("Hand");
@@ -28,6 +30,8 @@ public class DungeonEngine : Node2D
 
     private void LoadTest()
     {
+        GlobalAudio.Instance.PlayMusic("Music/StreamingStreamingEverFlowing.ogg");
+
         List<DungeonCard> deckLoad = new List<DungeonCard>();
         // Fill with cards
 
@@ -38,12 +42,10 @@ public class DungeonEngine : Node2D
         deckLoad.Add(new MonsterCard(oneSlime));
         deckLoad.Add(new MonsterCard(oneSlime));
         deckLoad.Add(new MonsterCard(oneSlime));
-        deckLoad.Add(new MonsterCard(oneSlime));
 
         DungeonCard bossLoad = new MonsterCard(twoSlimes, true);
-        Initiate(deckLoad, bossLoad);
+        Initiate(deckLoad, bossLoad, 4);
     }
-
 
     public void Initiate(List<DungeonCard> deck, DungeonCard bossCard, int handSize = 5)
     {
@@ -61,29 +63,31 @@ public class DungeonEngine : Node2D
 
     public void StartBattle(BattleSetup setup)
     {
-        Global glob = GetNode<Global>("/root/Global");
-        glob.CallDeferred(nameof(glob.StartBattle), setup);
+        Global.Instance.CallDeferred(Global.MethodName.StartBattle, setup);
     }
 
-    public async void UseCard(int index, AnimationPlayer animationPlayer)
+    public async void UseCard(int index)
     {
-        // Play and wait for card to finish animation then
-
-        await ToSignal(animationPlayer, "animation_finished");
-
+        if (controlLock) return;
+        lastIndexUsed = index;
+        controlLock = true;
+        await ToSignal(handUI.GetChild<DungeonCardUI>(lastIndexUsed).ActivateAnimation(), "animation_finished");
+        controlLock = false;
         hand[index].UseCard(this);
-        
+    }
+
+    public void AfterBattle()
+    {
         try
         {
-            hand[index] = DrawFromDeck();
-            if (hand[index] == bossCard)
-                bossCardDrawn = true;
+            hand[lastIndexUsed] = DrawFromDeck();
+            handUI.GetChild<DungeonCardUI>(lastIndexUsed).DrawCard(hand[lastIndexUsed]);
         }
-        catch { hand.RemoveAt(index); }
-
-        UpdateUIHand();
-        
-        handUI.GetChild<DungeonCardUI>(index).Draw();
+        catch
+        {
+            hand.RemoveAt(lastIndexUsed); 
+            UpdateUIHand();
+        }
     }
 
     private void DrawToFull()
@@ -98,6 +102,7 @@ public class DungeonEngine : Node2D
         UpdateUIHand();
     }
 
+    // This method is specifically used to draw into the player's hand. As such the boss card behaves that way
     private DungeonCard DrawFromDeck()
     {
         int deckCount = deck.Count;
@@ -106,10 +111,27 @@ public class DungeonEngine : Node2D
             if (!bossCardDrawn)
             {
                 cardsLeftLabel.Text = "0";
+                bossCardDrawn = true;
                 return bossCard;
             }
             else
                 throw new System.Exception("Unhandled exception: DrawFromDeck() called when deck empty.");
+        }
+        
+        DungeonCard output = deck[deckCount - 1];
+        deck.RemoveAt(deckCount - 1);
+
+        cardsLeftLabel.Text = (deck.Count + (bossCardDrawn ? 0 : 1)).ToString();
+        return output;
+    }
+
+    // Similar to DrawFromDeck, except it is used in effects, such as discard the top deck etc. Therefore it does nothing if bosscard is drawn
+    private DungeonCard TopFromDeck()
+    {
+        int deckCount = deck.Count;
+        if (deckCount == 0)
+        {
+            throw new System.Exception("Unhandled exception: TopFromDeck() called when deck empty.");
         }
         
         DungeonCard output = deck[deckCount - 1];
@@ -154,13 +176,10 @@ public class DungeonEngine : Node2D
             if (i < hand.Count)
             {
                 card.SetCard(hand[i]);
-                card.Show();
+                card.ResetAnimations();
             }
             else
-            {
                 card.Hide();
-            }
-
             i++;
         }
     }

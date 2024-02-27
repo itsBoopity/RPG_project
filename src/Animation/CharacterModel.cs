@@ -1,13 +1,13 @@
 using Godot;
 using System;
 
-public class CharacterModel : Node2D
+public partial class CharacterModel : Node2D
 {
     private float blinkSpeed = 5;
     protected AudioStreamPlayer2D bleep;
     private AnimationPlayer blinkAnimator;
     protected AnimationPlayer talkAnimator;
-    private float blinkNext;
+    private double blinkNext;
     public bool blink = true;
 
     private float dialogueSpeed;
@@ -19,7 +19,7 @@ public class CharacterModel : Node2D
         talkAnimator = GetNode<AnimationPlayer>("TalkAnimator");
         blinkNext = (GD.Randf() + 0.2f) * blinkSpeed;
 
-        dialogueSpeed = Global.settings.dialogueSpeed;
+        dialogueSpeed = Global.Settings.dialogueSpeed;
     }
 
     /// <summary>
@@ -27,15 +27,15 @@ public class CharacterModel : Node2D
     /// </summary>
     public void SetOutfit(string pathToImage)
     {
-        GetNode<Sprite>("Body/Outfit").Texture = GD.Load<ImageTexture>(pathToImage);
+        GetNode<Sprite2D>("Body/Outfit").Texture = GD.Load<ImageTexture>(pathToImage);
     }
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (blink) Blink(delta);
     }
 
-    public void Blink(float delta)
+    public void Blink(double delta)
     {
         if (blinkNext <= 0)
         {
@@ -43,18 +43,19 @@ public class CharacterModel : Node2D
             blinkNext = (GD.Randf() + 0.2f) * blinkSpeed;
         }
         else
+        {
             blinkNext -= delta;
+        }
     }
 
     virtual public void Talk() 
     {
-        talkAnimator.GetAnimation("Talk").Loop = true;
-        talkAnimator.Stop();
+        talkAnimator.GetAnimation("Talk").LoopMode = Animation.LoopModeEnum.Linear;
         talkAnimator.Play("Talk");
     }
     virtual public void StopTalk()
     {
-        talkAnimator.GetAnimation("Talk").Loop = false;
+        talkAnimator.GetAnimation("Talk").LoopMode = Animation.LoopModeEnum.None;
     }
 
     public void ChangeExpression(string expression)

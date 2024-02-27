@@ -1,7 +1,7 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform vec4 color: hint_color;
+uniform vec4 color: source_color;
 
 // https://gist.github.com/McSpider/c8c693f1065fdb5ec44c64cb9fdac340
 uniform float hue: hint_range(0, 1) = 0;

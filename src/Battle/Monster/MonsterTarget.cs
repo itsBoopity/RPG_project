@@ -1,23 +1,18 @@
 using Godot;
-using System;
 
-public class MonsterTarget : Sprite
+public partial class MonsterTarget : Sprite2D
 {
-    [Export] private NodePath rootPath = null;
-    private MonsterModel root;
-
-    public override void _Ready()
-    {
-        root = GetNode<MonsterModel>(rootPath);
-    }
+    [Signal]
+    public delegate void TargetHitEventHandler(MonsterTarget where);
+    
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("battle_clickTarget"))
         {
-            if (this.IsPixelOpaque(GetLocalMousePosition()))
+            if (IsPixelOpaque(GetLocalMousePosition()))
             {
-                GetTree().SetInputAsHandled();
-                root.TargetHit(this);
+                GetViewport().SetInputAsHandled();
+                EmitSignal(SignalName.TargetHit, this);
             }
         }
     }

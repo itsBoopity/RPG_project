@@ -1,4 +1,4 @@
-using System.Collections;
+using Godot;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -8,29 +8,24 @@ using System.IO;
 // Version Number = helps with conversion of old files
 // currentScene = to see if the player is in dungeon, in the middle of dialogue, or in the village (maybe not all this)
 // data based on currentScene (dungeon state / dialogue file name and line being parsed)
-// AvatarData
 // CharacterMembers in order
 // Party
 // bench
 // Flags
-public class GameData
+public partial class GameData : Node
 {
-    public AvatarData avaData;
-    public Character playerCharacter;
-    public Character clausCharacter;
-    // The rest of the party members 
+    private BattleCharacter clausCharacter;
+
+    // The rest of the party members
     public CharacterEnum[] party;
     public List<CharacterEnum> bench;
-    //public byte[] flags;
 
     //returns the corresponding character based on enum
-    public Character GetCharacter(CharacterEnum characterEnum)
+    public BattleCharacter GetCharacter(CharacterEnum characterEnum)
     {
         switch (characterEnum)
         {
-            case CharacterEnum.Player:
-                return playerCharacter;
-            case CharacterEnum.Claus:
+            case CharacterEnum.CLAUS:
                 return clausCharacter;
             default:
                 return null;
@@ -39,11 +34,9 @@ public class GameData
     //<summary>
     // Takes in character and sets the corresponding character to it. Uses .who to decide who is
     //</summary>
-    public void UpdateCharacter(Character newValue)
+    public void UpdateCharacter(BattleCharacter newValue)
     {
-        if (newValue.who == CharacterEnum.Player)
-            playerCharacter = newValue;
-        else if (newValue.who == CharacterEnum.Claus)
+        if (newValue.who == CharacterEnum.CLAUS)
             clausCharacter = newValue;
         else
             throw new System.ArgumentException("GameData.UpdateCharacter does not have " + newValue.who + " enum implemented.");
@@ -56,11 +49,12 @@ public class GameData
         Directory.CreateDirectory(Godot.ProjectSettings.GlobalizePath("user://save"));
         FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.OpenOrCreate);
 
-        bf.Serialize(file, "v0.0.1");
-        bf.Serialize(file, avaData);
-        bf.Serialize(file,playerCharacter);
-        bf.Serialize(file,clausCharacter);
-        bf.Serialize(file,party);
+        //BinaryFormatter is obsolete and dangerous, use something else instead
+        // bf.Serialize(file, "v0.0.1");
+        // bf.Serialize(file, avaData);
+        // bf.Serialize(file,playerCharacter);
+        // bf.Serialize(file,clausCharacter);
+        // bf.Serialize(file,party);
 
         file.Close();
     }
@@ -69,11 +63,11 @@ public class GameData
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.Open);
 
-        string saveVersion = (string) bf.Deserialize(file);
-        avaData = (AvatarData) bf.Deserialize(file);
-        playerCharacter = (Character) bf.Deserialize(file);
-        clausCharacter = (Character) bf.Deserialize(file);
-        party = (CharacterEnum[]) bf.Deserialize(file);
+        //BinaryFormatter is obsolete and dangerous, use something else instead
+        // string saveVersion = (string) bf.Deserialize(file);
+        // playerCharacter = (Character) bf.Deserialize(file);
+        // clausCharacter = (Character) bf.Deserialize(file);
+        // party = (CharacterEnum[]) bf.Deserialize(file);
         //flags = (byte[]) bf.Deserialize(file);
 
         file.Close();
@@ -81,10 +75,8 @@ public class GameData
 
     public void newSave() // Create New Save
     {
-        avaData = new AvatarData();
-        playerCharacter = new Character(CharacterEnum.Player);
-        clausCharacter = new Character(CharacterEnum.Claus);
-        party = new CharacterEnum[3] {CharacterEnum.Player, CharacterEnum.Claus, CharacterEnum.Null};
+        clausCharacter = new BattleCharacter(CharacterEnum.CLAUS);
+        party = new CharacterEnum[3] {CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
 

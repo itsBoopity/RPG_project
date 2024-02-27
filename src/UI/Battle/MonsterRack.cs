@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class MonsterRack : Node2D
+public partial class MonsterRack : Node2D
 {
     private float width = 0;
     private float mouseSensitivity;
@@ -14,20 +14,28 @@ public class MonsterRack : Node2D
 
     public override void _Ready()
     {
-        mouseSensitivity = Global.settings.monsterScrollSensitivity;
-        mouseSmoothness = Global.settings.monsterScrollSmoothness;
-        originalX = this.Position.x;
+        mouseSensitivity = Global.Settings.monsterScrollSensitivity;
+        mouseSmoothness = Global.Settings.monsterScrollSmoothness;
+        originalX = this.Position.X;
         targetX = originalX;
         center = originalX;
-        tween = GetNode<Tween>("Tween"); 
+        tween = CreateTween();
+        tween.Stop();
     }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationWMCloseRequest)
+            if (tween != null) tween.Kill();
+    }
+
     public void Clear()
     {
         width = 0;
-        this.Position = new Vector2(originalX, this.Position.y);
+        this.Position = new Vector2(originalX, this.Position.Y);
         foreach (Node node in GetChildren())
         {
-            if (node.Name != "Tween") RemoveChild(node);
+            if (node.Name != "Tween") node.QueueFree();
         }
     }
     public override void _Input(InputEvent @event)
@@ -36,46 +44,40 @@ public class MonsterRack : Node2D
         {
             if (targetX < originalX)
             {
-                if (targetX < this.Position.x) targetX = this.Position.x;
+                if (targetX < this.Position.X) targetX = this.Position.X;
                 targetX += mouseSensitivity;
 
-                tween.Stop(this);
-                tween.InterpolateProperty(this, "position:x", this.Position.x, targetX, mouseSmoothness);
-                tween.Start();
+                tween.Kill();
+                tween = CreateTween();
+                tween.TweenProperty(this, "position:x", targetX, mouseSmoothness);
             }
         }
         else if (@event.IsActionPressed("battle_monsterScrollLeft"))
         {
             if (targetX > originalX - width)
             {
-                if (targetX > this.Position.x) targetX = this.Position.x;
+                if (targetX > this.Position.X) targetX = this.Position.X;
                 targetX -= mouseSensitivity;
 
-                tween.Stop(this);
-                tween.InterpolateProperty(this, "position:x", this.Position.x, targetX, mouseSmoothness);
-                tween.Start();
+                tween.Kill();
+                tween = CreateTween();
+                tween.TweenProperty(this, "position:x", targetX, mouseSmoothness);
             }
         }
         else if (@event.IsActionPressed("battle_monsterScrollCenter"))
         {
-            tween.Stop(this);
+            tween.Kill();
             targetX = center;
-            this.Position = new Vector2(center, this.Position.y);
+            this.Position = new Vector2(center, this.Position.Y);
         }
     }
     public void AddModel(MonsterModel model)
     {   
         AddChild(model);
         model.Position = new Vector2(width, 0);
-        width += model.GetBoundary().x;
-        this.Position = new Vector2(Utility.MiddleX() - width/2, this.Position.y);
-        center = this.Position.x;
+        width += model.GetBoundary().X;
+        this.Position = new Vector2(Utility.MiddleX() - width/2, this.Position.Y);
+        center = this.Position.X;
         targetX = center;
-    }
-
-    public void Remove(MonsterModel model)
-    {
-        foreach(Node i in GetChildren())
-        if (i == model) { RemoveChild(i); return;}
     }
 }

@@ -1,19 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cenr41pyojylw"]
 
-[ext_resource path="res://src/UI/SidebarButton.cs" type="Script" id=1]
-[ext_resource path="res://Font/Theme/Title.tres" type="Theme" id=2]
+[ext_resource type="Script" path="res://src/UI/SidebarButton.cs" id="1"]
+[ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="2"]
 
 [node name="Button" type="Button"]
-margin_left = 39.0
-margin_top = 528.0
-margin_right = 364.0
-margin_bottom = 601.0
-theme = ExtResource( 2 )
+offset_left = 39.0
+offset_top = 528.0
+offset_right = 364.0
+offset_bottom = 601.0
+theme = ExtResource("2")
 shortcut_in_tooltip = false
 text = "Continue"
 flat = true
-align = 0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [connection signal="button_down" from="." to="." method="ScaleDown"]
 [connection signal="button_up" from="." to="." method="ScaleBack"]

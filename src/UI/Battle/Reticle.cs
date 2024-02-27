@@ -1,14 +1,12 @@
 using Godot;
-using System;
 
-public class Reticle : Node2D
+public partial class Reticle : Node2D
 {
     public override void _Ready()
     {
         Disable();
-        this.Hide();
     }
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         this.Position = GetGlobalMousePosition();
     }

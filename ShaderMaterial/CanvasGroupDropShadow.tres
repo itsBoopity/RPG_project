@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dw4436da7lib4"]
+
+[ext_resource type="Shader" path="res://src/Shaders/CanvasGroupDropShadow.gdshader" id="1_6w54m"]
+
+[resource]
+shader = ExtResource("1_6w54m")
+shader_parameter/offset = Vector2(20, -18)
+shader_parameter/shadowIntensity = 0.5
+shader_parameter/colorMultiply = Color(0.0784314, 0.0156863, 0.101961, 0.705882)

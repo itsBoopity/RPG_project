@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public class DamageCounter : Node2D
+public partial class DamageCounter : Node2D
 {
     private AnimationPlayer animationPlayer;
     private Label estimate;

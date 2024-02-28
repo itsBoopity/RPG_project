@@ -469,19 +469,20 @@ color = Color(0.0470588, 0, 0.670588, 1)
 
 [node name="HPLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 123.0
+offset_left = 65.0
 offset_top = 50.0
 offset_right = 183.0
 offset_bottom = 111.0
 theme = ExtResource("5")
 text = "HP:"
 label_settings = ExtResource("8_raaf4")
+horizontal_alignment = 2
 
 [node name="HPCurrent" type="Label" parent="."]
 layout_mode = 0
 offset_left = 176.0
 offset_top = 34.0
-offset_right = 278.0
+offset_right = 276.0
 offset_bottom = 110.0
 theme = ExtResource("5")
 text = "999"
@@ -502,7 +503,7 @@ label_settings = ExtResource("7_o2gai")
 layout_mode = 0
 offset_left = 293.0
 offset_top = 48.0
-offset_right = 399.0
+offset_right = 416.0
 offset_bottom = 131.0
 theme = ExtResource("5")
 text = "999"
@@ -510,13 +511,14 @@ label_settings = ExtResource("7_o2gai")
 
 [node name="StackLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 131.0
+offset_left = 80.0
 offset_top = 108.0
 offset_right = 228.0
 offset_bottom = 169.0
 theme = ExtResource("5")
-text = "Stack:"
+text = "STA:"
 label_settings = SubResource("LabelSettings_rgt41")
+horizontal_alignment = 2
 
 [node name="StackCurrent" type="Label" parent="."]
 layout_mode = 0

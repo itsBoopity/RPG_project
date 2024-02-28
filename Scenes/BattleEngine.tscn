@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=58 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -30,6 +30,116 @@
 [ext_resource type="FontFile" uid="uid://dwv40r1mukx3j" path="res://Font/PTSerif-Italic.ttf" id="27_vofdh"]
 [ext_resource type="AudioStream" uid="uid://dcmnty8s5i31p" path="res://Audio/SFX/click2.wav" id="29_r3ion"]
 [ext_resource type="AudioStream" uid="uid://c7ljmivjse2v4" path="res://Audio/SFX/error_sound.wav" id="30_5us6w"]
+
+[sub_resource type="Animation" id="Animation_tiihm"]
+resource_name = "Swap"
+length = 0.07
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(86, 90), Vector2(86, 86)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.15708, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Icon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 5), Vector2(0, -5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.06),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(78.025, 18), Vector2(78.025, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_e520e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(86, 86)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Icon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(78.025, 10)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6f1w8"]
+_data = {
+"RESET": SubResource("Animation_e520e"),
+"Swap": SubResource("Animation_tiihm")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_6frhx"]
 font = ExtResource("12_jr8c7")
@@ -362,30 +472,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Filmbar/FilmbarTop:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-202.0, -120.0, -130.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Filmbar/FilmbarBottom:position:y")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [1295.0, 1150.0, 1170.0]
-}
 
 [sub_resource type="Animation" id="18"]
 length = 0.001
@@ -426,10 +512,51 @@ tracks/2/keys = {
 "values": [Vector2(0, 1295)]
 }
 
+[sub_resource type="Animation" id="Animation_b0bv5"]
+resource_name = "OnEnter_2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Backdrop:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Filmbar/FilmbarTop:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-202.0, -120.0, -130.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Filmbar/FilmbarBottom:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1295.0, 1150.0, 1170.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_umugs"]
 _data = {
 "BarEnter": SubResource("19"),
 "OnEnter": SubResource("17"),
+"OnEnter_2": SubResource("Animation_b0bv5"),
 "RESET": SubResource("18")
 }
 
@@ -445,11 +572,88 @@ script = ExtResource("2")
 
 [node name="Backdrop" type="ColorRect" parent="."]
 unique_name_in_owner = true
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(0.0784314, 0.0666667, 0.0862745, 0.392157)
+
+[node name="Filmbar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FilmbarTop" type="TextureRect" parent="Filmbar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -202.0
+offset_bottom = -2.0
+grow_horizontal = 2
+texture = ExtResource("27")
+
+[node name="InfoLabel" type="Control" parent="Filmbar/FilmbarTop"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -501.0
+offset_top = 135.0
+offset_right = -501.0
+offset_bottom = 135.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("17")
+
+[node name="Icon" type="TextureRect" parent="Filmbar/FilmbarTop/InfoLabel"]
+show_behind_parent = true
+layout_mode = 0
+offset_top = -5.0
+offset_right = 86.0
+offset_bottom = 81.0
+texture = ExtResource("18")
+expand_mode = 1
+
+[node name="Label" type="RichTextLabel" parent="Filmbar/FilmbarTop/InfoLabel"]
+clip_contents = false
+layout_mode = 0
+offset_left = 78.025
+offset_top = 10.0
+offset_right = 487.025
+offset_bottom = 74.0
+pivot_offset = Vector2(0, 32)
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("4")
+bbcode_enabled = true
+text = "Enemy Targetting"
+scroll_active = false
+meta_underlined = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Filmbar/FilmbarTop/InfoLabel"]
+libraries = {
+"": SubResource("AnimationLibrary_6f1w8")
+}
+
+[node name="FilmbarBottom" type="TextureRect" parent="Filmbar"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 215.0
+offset_bottom = 415.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3")
 
 [node name="Monsters" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -462,40 +666,6 @@ process_priority = 10
 position = Vector2(-216, 0)
 texture = ExtResource("20")
 script = ExtResource("19")
-
-[node name="Filmbar" type="Node2D" parent="."]
-
-[node name="FilmbarTop" type="Sprite2D" parent="Filmbar"]
-position = Vector2(0, -202)
-texture = ExtResource("27")
-centered = false
-
-[node name="InfoLabel" type="RichTextLabel" parent="Filmbar/FilmbarTop"]
-unique_name_in_owner = true
-clip_contents = false
-offset_left = 1504.0
-offset_top = 146.0
-offset_right = 1914.0
-offset_bottom = 206.0
-mouse_filter = 2
-theme = ExtResource("4")
-bbcode_enabled = true
-text = "Enemy Targetting"
-scroll_active = false
-meta_underlined = false
-script = ExtResource("17")
-
-[node name="Icon" type="Sprite2D" parent="Filmbar/FilmbarTop/InfoLabel"]
-show_behind_parent = true
-position = Vector2(-36, 29)
-scale = Vector2(0.671875, 0.671875)
-texture = ExtResource("18")
-
-[node name="FilmbarBottom" type="Sprite2D" parent="Filmbar"]
-position = Vector2(0, 1295)
-texture = ExtResource("3")
-centered = false
-offset = Vector2(0, -200)
 
 [node name="CharacterModels" type="Control" parent="."]
 unique_name_in_owner = true
@@ -562,8 +732,9 @@ vertical_alignment = 1
 [node name="Timer" type="Timer" parent="Timer"]
 one_shot = true
 
-[node name="PartyBar" type="Node2D" parent="."]
+[node name="PartyBar" type="Control" parent="."]
 unique_name_in_owner = true
+anchors_preset = 0
 
 [node name="1" parent="PartyBar" instance=ExtResource("1")]
 
@@ -759,7 +930,7 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -509.0
-offset_top = 46.0
+offset_top = 86.0
 offset_bottom = 308.0
 grow_horizontal = 0
 color = Color(0, 0, 0, 0.490196)

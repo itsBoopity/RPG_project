@@ -15,7 +15,7 @@ public partial class BattleCharacter: BattleActor
                 name = "Claus";
                 who = CharacterEnum.CLAUS;
                 hp = 11; maxHp = 11;
-                atk = 3;
+                atk = 6;
                 def = 1;
                 spd = 8;
                 skills.Add(new FirstStrike());

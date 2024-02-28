@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public partial class BattleNarration : Node2D
+public partial class BattleNarration : Node
 {
     private AnimationPlayer animationPlayer;
     private Label label;

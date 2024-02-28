@@ -7,8 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bnnj2liwihfu7" path="res://Images/UI/Battle/hpBarOver.png" id="4_yv2cx"]
 [ext_resource type="Texture2D" uid="uid://dr86qx5k2vmr0" path="res://Images/UI/Battle/hpBarProgress.png" id="5_kl4rg"]
 [ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="5_u0mw5"]
-[ext_resource type="Script" path="res://src/Battle/DamageCounter.cs" id="6_4lp2t"]
 [ext_resource type="Theme" path="res://Font/Theme/InvisibleButton.tres" id="7_6eyv2"]
+[ext_resource type="Script" path="res://src/UI/Battle/DamageEstimate.cs" id="8_6remu"]
+[ext_resource type="Script" path="res://src/UI/Battle/DamageCounter.cs" id="9_i3mtb"]
 
 [sub_resource type="Animation" id="14"]
 resource_name = "Death"
@@ -137,7 +138,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10, 0)]
+"values": [Vector2(-112.5, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -149,7 +150,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -166,22 +167,10 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Label:visible")
+tracks/3/path = NodePath("Number:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Number:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -201,7 +190,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(15, 0), Vector2(-15, 0), Vector2(10, 0), Vector2(-8, 0), Vector2(5, 0), Vector2(0, 0)]
+"values": [Vector2(-112.5, 0), Vector2(-97.5, 0), Vector2(-127.5, 0), Vector2(-102.5, 0), Vector2(-120.5, 0), Vector2(-107.5, 0), Vector2(-112.5, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -230,97 +219,20 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Label:visible")
-tracks/3/interp = 1
+tracks/3/path = NodePath("Number:scale")
+tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Number:scale")
-tracks/4/interp = 2
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.25),
+"times": PackedFloat32Array(0, 0.15, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(2, 2), Vector2(0.9, 0.9), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_tnerc"]
-resource_name = "ViewEstimate"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Number:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(10, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Number:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Number:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Label:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [true]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Number:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(3, 3), Vector2(0.9, 0.9), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0aoxr"]
 _data = {
 "RESET": SubResource("9"),
-"Shake": SubResource("10"),
-"ViewEstimate": SubResource("Animation_tnerc")
+"Shake": SubResource("10")
 }
 
 [node name="MonsterBase" type="CanvasGroup"]
@@ -393,35 +305,52 @@ theme = ExtResource("3_gj4c7")
 text = "9999"
 label_settings = SubResource("LabelSettings_wpdll")
 
+[node name="DamageEstimate" type="Control" parent="OverheadUI"]
+visible = false
+anchors_preset = 0
+script = ExtResource("8_6remu")
+
+[node name="Label" type="Label" parent="OverheadUI/DamageEstimate"]
+layout_mode = 0
+offset_left = -112.0
+offset_top = -108.0
+offset_right = -2.0
+offset_bottom = -40.0
+theme = ExtResource("3_gj4c7")
+text = "Est:"
+label_settings = SubResource("LabelSettings_v4mow")
+
+[node name="Number" type="Label" parent="OverheadUI/DamageEstimate"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -148.0
+offset_right = 227.0
+offset_bottom = -21.0
+pivot_offset = Vector2(32, 73)
+theme = ExtResource("3_gj4c7")
+text = "2"
+label_settings = SubResource("LabelSettings_a1u8d")
+
 [node name="DamageCounter" type="Control" parent="OverheadUI"]
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_top = -148.0
 offset_bottom = -148.0
-script = ExtResource("6_4lp2t")
-
-[node name="Label" type="Label" parent="OverheadUI/DamageCounter"]
-visible = false
-layout_mode = 0
-offset_left = -112.0
-offset_top = 40.0
-offset_right = -2.0
-offset_bottom = 108.0
-theme = ExtResource("3_gj4c7")
-text = "Est:"
-label_settings = SubResource("LabelSettings_v4mow")
+script = ExtResource("9_i3mtb")
 
 [node name="Number" type="Label" parent="OverheadUI/DamageCounter"]
 visible = false
+modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 10.0
-offset_right = 227.0
+offset_left = -112.5
+offset_right = 112.5
 offset_bottom = 127.0
-pivot_offset = Vector2(32, 73)
+pivot_offset = Vector2(112.5, 64)
 theme = ExtResource("3_gj4c7")
 text = "2"
 label_settings = SubResource("LabelSettings_a1u8d")
+horizontal_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="OverheadUI/DamageCounter"]
 libraries = {

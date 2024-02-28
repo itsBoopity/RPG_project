@@ -1,7 +1,4 @@
-using Godot;
-using System;
-
-public partial class PassiveSkill
+public abstract class PassiveSkill
 {
     public string name;
 

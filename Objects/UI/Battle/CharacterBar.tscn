@@ -408,8 +408,12 @@ pivot_offset = Vector2(256, 21)
 texture_normal = ExtResource("1")
 script = ExtResource("2")
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(99, 209)
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = 35.0
+offset_top = 145.0
+offset_right = 291.0
+offset_bottom = 401.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8")
 

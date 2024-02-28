@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public partial class InfoLabel : Node
+public partial class InfoLabel : Control
 {
     private TextureRect icon;
     private RichTextLabel label;
@@ -10,7 +9,6 @@ public partial class InfoLabel : Node
     private ControlState currentState = ControlState.FULLY_DISABLED; 
     public override void _Ready()
     {
-        TranslationServer.SetLocale("en");
         icon = GetNode<TextureRect>("Icon");   
         label = GetNode<RichTextLabel>("Label");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -18,14 +16,15 @@ public partial class InfoLabel : Node
 
     public void UpdateUI(ControlState state)
     {
-        GD.Print(Tr("T_B_IL_PT"));
         if (state == ControlState.PLAYER_DEFAULT)
         {
             label.Text = "T_B_IL_PT";
             icon.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/InfoLabel/player.png");
+            
             if (currentState == ControlState.ENEMY_TURN)
             {
-                animationPlayer.Play("Slide");
+                this.Modulate = Colors.Transparent;
+                animationPlayer.Play("SlideLeft");
             }
             else
             {
@@ -48,6 +47,7 @@ public partial class InfoLabel : Node
         {
             label.Text = "T_B_IL_ETU";
             icon.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/InfoLabel/enemy.png");
+            this.Modulate = Colors.Transparent;
             animationPlayer.Play("Slide");
         }
         currentState = state;

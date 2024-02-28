@@ -1,30 +1,26 @@
 using Godot;
-using System;
 
 public partial class CharacterBar : Control
 {
     private CharacterEnum who = 0;
 
     private RichTextLabel name;
-    private Sprite2D icon;
+    private TextureRect icon;
     private Label hp;
     private Label maxHp;
     private Label stack;
 
     private bool turnActive = false;
 
-
     private CanvasItem selector;
     private AnimationPlayer selectPlayer;
     private AnimationPlayer fadePlayer;
     private AnimationPlayer shakePlayer;
 
-
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         name = GetNode<RichTextLabel>("Name");
-        icon = GetNode<Sprite2D>("Icon");
+        icon = GetNode<TextureRect>("Icon");
 
         hp = GetNode<Label>("HPCurrent");
         maxHp = GetNode<Label>("HPMax");

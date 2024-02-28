@@ -4,7 +4,8 @@ using System;
 public partial class MonsterModel : CanvasGroup
 {
     private Monster owner = null;
-    private DamageCounter counter;
+    private DamageEstimate dmgEstimate;
+    private DamageCounter dmgCounter;
     private AnimationPlayer animationPlayer;
     private Control boundary;
 
@@ -16,7 +17,8 @@ public partial class MonsterModel : CanvasGroup
 
     public override void _Ready()
     {
-        counter = GetNode<DamageCounter>("OverheadUI/DamageCounter");
+        dmgEstimate = GetNode<DamageEstimate>("OverheadUI/DamageEstimate");
+        dmgCounter = GetNode<DamageCounter>("OverheadUI/DamageCounter");
         hpCurrent = GetNode<Label>("OverheadUI/HP/Current");
         hpMax = GetNode<Label>("OverheadUI/HP/Max");
         hpBar = GetNode<TextureProgressBar>("OverheadUI/HP/Bar");
@@ -55,19 +57,21 @@ public partial class MonsterModel : CanvasGroup
 
     public void ShowEstimate(int damage)
     {
-        counter.ShowEstimate(damage);
+        dmgEstimate.ShowEstimate(damage);
     }
     public void HideEstimate()
     {
-        counter.HideEstimate();
+        dmgEstimate.HideEstimate();
     }
     public void PlayDamage(int damage)
     {
-        counter.Play(damage);
+        HideEstimate();
+        this.dmgCounter.Play(damage);
     }
     public void PlayDamage(string text)
     {
-        counter.Play(text);
+        HideEstimate();
+        dmgCounter.Play(text);
     }
 
     public void TargetMiss()

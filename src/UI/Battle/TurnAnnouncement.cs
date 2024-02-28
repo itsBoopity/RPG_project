@@ -1,12 +1,11 @@
 using Godot;
 
-public partial class TurnAnnouncement : Node2D
+public partial class TurnAnnouncement : Node
 {
     Control label;
     Tween tweenModulation;
     Tween tweenPosition;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         label = GetNode<Control>("Label");
@@ -23,6 +22,7 @@ public partial class TurnAnnouncement : Node2D
         }
     }
 
+    // TODO: this can just be an AnimationPlayer
     public void Play()
     {
         tweenModulation.Kill();

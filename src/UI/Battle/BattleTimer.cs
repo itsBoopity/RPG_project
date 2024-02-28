@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public partial class BattleTimer : Sprite2D
+public partial class BattleTimer : Node
 {
     private ProgressBar bar;
     private Label label;

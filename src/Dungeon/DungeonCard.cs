@@ -1,6 +1,3 @@
-using Godot;
-using System;
-
 public abstract class DungeonCard
 {
     public string name;

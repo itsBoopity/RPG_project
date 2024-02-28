@@ -1,11 +1,8 @@
 using Godot;
-using System;
-
 public partial class Tab : TextureButton
 {
     private Vector2 originalScale;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         originalScale = this.Scale;

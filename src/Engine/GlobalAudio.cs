@@ -38,7 +38,7 @@ public partial class GlobalAudio : Node
 
         musicFade.Stop();
         musicFade.Play("FadeOut");
-        await ToSignal(musicFade, "animation_finished");
+        await ToSignal(musicFade, AnimationPlayer.SignalName.AnimationFinished);
         AudioStreamOggVorbis loadedAudio;
         if (path.StartsWith("res://"))
         {
@@ -69,7 +69,7 @@ public partial class GlobalAudio : Node
 
         ambientFade.Stop();
         ambientFade.Play("FadeOut");
-        await ToSignal(ambientFade, "animation_finished");
+        await ToSignal(ambientFade, AnimationPlayer.SignalName.AnimationFinished);
 
         AudioStreamOggVorbis loadedAudio = GD.Load<AudioStreamOggVorbis>("res://Audio/" + path);
         loadedAudio.Loop = true;

@@ -8,7 +8,6 @@ public partial class BattleEngine : Control
     public List<BattleCharacter> bench;
     public List<Monster> monsters;
     public BattleTimer timer;
-    private Timer internalTimer;
 
     // Separate the UI into another class you maniac
     private ControlState state;
@@ -21,8 +20,8 @@ public partial class BattleEngine : Control
     private InfoLabel infoLabel;
     private SkillDescription skillDesc;
 
-    public BattleNarration narration;
-    public BattleNarration centerNarration;
+    public FadingMessage characterMessage;
+    public FadingMessage centerMessage;
 
     private BattleSkill selectedSkill;
 
@@ -48,7 +47,6 @@ public partial class BattleEngine : Control
     {
         reticle = GetNode<Reticle>("%Reticle");
         timer = GetNode<BattleTimer>("%Timer");
-        internalTimer = GetNode<Timer>("InternalTimer");
         partyNode = GetNode("%PartyBar");
         characterModels = GetNode<CharacterModelRack>("CharacterModels");
         monsterNode = GetNode<MonsterRack>("%Monsters");
@@ -56,8 +54,8 @@ public partial class BattleEngine : Control
         basicSkillNode = GetNode<CanvasItem>("%BasicSkills");
         infoLabel = GetNode<InfoLabel>("%InfoLabel");
         skillDesc = GetNode<SkillDescription>("%SkillDescription");
-        narration = GetNode<BattleNarration>("BattleNarration");
-        centerNarration = GetNode<BattleNarration>("CenterNarration");
+        characterMessage = GetNode<FadingMessage>("CharacterMessage");
+        centerMessage = GetNode<FadingMessage>("CenterMessage");
         turnAnnouncement = GetNode<TurnAnnouncement>("TurnAnnouncement");
         characterDamageCounter = GetNode<DamageCounter>("CharacterDamageCounter");
         sfx = GetNode<Node>("Sfx");
@@ -269,24 +267,16 @@ public partial class BattleEngine : Control
         timer.Stop();
         ExitCurrentMode(); // First set the player mode and UI back to defaault
         EnterEnemyTurn(); // Then enter enemy Turn
-
-        internalTimer.Start(0.25f / enemyTurnSpeed);
-        await ToSignal(internalTimer, "timeout");
+        await ToSignal(GetTree().CreateTimer(0.25f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
 
         turnAnnouncement.Play();
-        
         foreach (Monster monster in monsters)
         {
-            internalTimer.Start(0.85f / enemyTurnSpeed);
-            await ToSignal(internalTimer, "timeout");
-            await ToSignal(monster.ExecuteTurn(this), "animation_finished");
+            await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
+            await ToSignal(monster.ExecuteTurn(this), AnimationPlayer.SignalName.AnimationFinished);
         }
-
         turnAnnouncement.Stop();
-
-        internalTimer.Start(0.85f/ enemyTurnSpeed);
-        await ToSignal(internalTimer, "timeout");
-
+        await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
         UpdateUI(); // TODO: This should instead be animated and updated by each skill
         PlayerTurn();
     }
@@ -321,7 +311,7 @@ public partial class BattleEngine : Control
     {
         if (actor is Monster monster)
         {
-            centerNarration.ShowText(monster.name + " defeated!");
+            centerMessage.ShowText(monster.name + " defeated!");
             monsters.Remove(monster);
             monster.Free();
             
@@ -330,7 +320,7 @@ public partial class BattleEngine : Control
         }
         else if (actor is BattleCharacter)
         {
-            narration.ShowText("You deaded.");
+            characterMessage.ShowText("You deaded.");
             GD.Print("Game over you deaded :(");
             // TODO: if target is Character, player ded, game over
         }
@@ -359,11 +349,11 @@ public partial class BattleEngine : Control
         if (isUsable > 0)
         {
             sfx.GetNode<AudioStreamPlayer>("Error").Play();
-            if (isUsable == 1) narration.ShowText("Skill is in cooldown!");
+            if (isUsable == 1) characterMessage.ShowText("Skill is in cooldown!");
             else if (isUsable == 2)
             {
                 partyNode.GetChild<CharacterBar>(selectedCharacter).ShakeStack();
-                narration.ShowText("Not enough stacks!");
+                characterMessage.ShowText("Not enough stacks!");
             }
             return;
         }
@@ -404,7 +394,7 @@ public partial class BattleEngine : Control
         ExitCurrentMode();
         if (!party[index].turnActive && state != ControlState.ENEMY_TURN)
         {
-            narration.ShowText("Character's turn already over.");
+            characterMessage.ShowText("Character's turn already over.");
         }
         if (index == selectedCharacter) return;
 

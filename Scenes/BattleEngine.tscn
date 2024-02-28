@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=52 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -22,8 +22,8 @@
 [ext_resource type="Script" path="res://src/UI/Battle/Reticle.cs" id="19"]
 [ext_resource type="Texture2D" uid="uid://bo7j48vbyyg7l" path="res://Images/UI/Battle/reticle.png" id="20"]
 [ext_resource type="Texture2D" uid="uid://b6blcuhkbjbue" path="res://Images/UI/Battle/skillBoxSimple.png" id="22"]
-[ext_resource type="Script" path="res://src/UI/Battle/BattleNarration.cs" id="23_jyo2k"]
 [ext_resource type="Script" path="res://src/UI/Battle/TurnAnnouncement.cs" id="24_0xso1"]
+[ext_resource type="PackedScene" uid="uid://dbmterbq660bd" path="res://Objects/UI/FadingMessage.tscn" id="24_xsgoi"]
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="25_vkcmm"]
 [ext_resource type="FontFile" uid="uid://4byjtcu5sf4u" path="res://Font/PTSerif-Bold.ttf" id="26_tibu4"]
 [ext_resource type="Texture2D" uid="uid://ceoubc440y0bd" path="res://Images/UI/filmbarTop.png" id="27"]
@@ -171,6 +171,59 @@ tracks/3/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_gpjne"]
+resource_name = "SlideLeft"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-600, -501.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-600, -501.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_tiihm"]
 resource_name = "Swap"
 length = 0.07
@@ -258,59 +311,6 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [-501.0]
-}
-
-[sub_resource type="Animation" id="Animation_gpjne"]
-resource_name = "SlideLeft"
-length = 0.3
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset_left")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.05, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-600, -501.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:offset_right")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.05, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-600, -501.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.05, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Label:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.05),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6f1w8"]
@@ -502,126 +502,6 @@ _data = {
 "PopIn": SubResource("Animation_jtkxe")
 }
 
-[sub_resource type="Animation" id="Animation_fu8tr"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_wairr"]
-resource_name = "ShowText"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -35)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhexi"]
-_data = {
-"RESET": SubResource("Animation_fu8tr"),
-"ShowText": SubResource("Animation_wairr")
-}
-
-[sub_resource type="Animation" id="Animation_xi2uk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_wsvbx"]
-resource_name = "ShowText"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -35)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hht0w"]
-_data = {
-"RESET": SubResource("Animation_xi2uk"),
-"ShowText": SubResource("Animation_wsvbx")
-}
-
 [sub_resource type="LabelSettings" id="LabelSettings_bi27a"]
 font = ExtResource("12_jr8c7")
 font_size = 65
@@ -809,6 +689,7 @@ texture = ExtResource("27")
 [node name="InfoLabel" type="Control" parent="Filmbar/FilmbarTop"]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -501.0
@@ -1103,43 +984,29 @@ libraries = {
 "": SubResource("AnimationLibrary_n0dt3")
 }
 
-[node name="BattleNarration" type="Node2D" parent="."]
-position = Vector2(0, 793)
-script = ExtResource("23_jyo2k")
+[node name="CharacterMessage" parent="." instance=ExtResource("24_xsgoi")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = -305.0
+offset_right = 547.0
+offset_bottom = -49.0
+grow_vertical = 0
 
-[node name="Label" type="Label" parent="BattleNarration"]
-offset_right = 527.0
-offset_bottom = 189.0
-theme = ExtResource("4")
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BattleNarration"]
-root_node = NodePath("../Label")
-libraries = {
-"": SubResource("AnimationLibrary_mhexi")
-}
-
-[node name="CenterNarration" type="Node2D" parent="."]
-position = Vector2(0, 600)
-script = ExtResource("23_jyo2k")
-metadata/_edit_lock_ = true
-
-[node name="Label" type="Label" parent="CenterNarration"]
-modulate = Color(1, 1, 1, 0)
-offset_right = 1812.0
-offset_bottom = 189.0
-theme = ExtResource("4")
-horizontal_alignment = 1
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CenterNarration"]
-root_node = NodePath("../Label")
-libraries = {
-"": SubResource("AnimationLibrary_hht0w")
-}
-
-[node name="InternalTimer" type="Timer" parent="."]
+[node name="CenterMessage" parent="." instance=ExtResource("24_xsgoi")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = 124.0
+offset_right = -100.0
+offset_bottom = 380.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TurnAnnouncement" type="Control" parent="."]
 z_index = 2
@@ -1159,6 +1026,8 @@ offset_right = 371.0
 offset_bottom = 90.0
 text = "ENEMY Turn"
 label_settings = SubResource("LabelSettings_bi27a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TurnAnnouncement"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1207,7 +1076,6 @@ stream = ExtResource("29_r3ion")
 stream = ExtResource("30_5us6w")
 
 [connection signal="timeout" from="Timer/Timer" to="." method="EnemyTurn"]
-[connection signal="timeout" from="Timer/Timer" to="CenterNarration" method="TimeOut"]
 [connection signal="pressed" from="PartyBar/1" to="." method="SelectCharacter" binds= [0]]
 [connection signal="pressed" from="PartyBar/2" to="." method="SelectCharacter" binds= [1]]
 [connection signal="pressed" from="PartyBar/3" to="." method="SelectCharacter" binds= [2]]

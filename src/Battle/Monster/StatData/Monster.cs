@@ -71,7 +71,7 @@ public abstract class Monster: BattleActor
     {
         skills[targetSkill].Use(battleEngine, this, battleEngine.party[targetCharacter]);
         string targetName = battleEngine.party[targetCharacter].name;
-        battleEngine.centerNarration.ShowText(name + " uses " + skills[targetSkill].name + " on " + targetName + "!");
+        battleEngine.centerMessage.ShowText(name + " uses " + skills[targetSkill].name + " on " + targetName + "!");
         Node2D animation = skills[targetSkill].GetAnimation();
         battleEngine.SpawnEffectParty(animation, targetCharacter);
         ExecuteTurnAdditional();

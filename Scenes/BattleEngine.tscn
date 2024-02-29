@@ -17,11 +17,11 @@
 [ext_resource type="Script" path="res://src/UI/Battle/MonsterRack.cs" id="16"]
 [ext_resource type="AudioStream" uid="uid://cywqoindf6m4s" path="res://Audio/SFX/click3.wav" id="16_5l314"]
 [ext_resource type="Script" path="res://src/UI/Battle/InfoLabel.cs" id="17"]
+[ext_resource type="Texture2D" uid="uid://b6blcuhkbjbue" path="res://Images/UI/Battle/skillBoxSimple.png" id="17_ifx84"]
 [ext_resource type="Texture2D" uid="uid://c418w5e77orej" path="res://Images/UI/Battle/InfoLabel/enemy.png" id="18"]
 [ext_resource type="Theme" uid="uid://d2nrmjx36a1ys" path="res://Font/Theme/PrintedText.tres" id="18_p35u0"]
 [ext_resource type="Script" path="res://src/UI/Battle/Reticle.cs" id="19"]
 [ext_resource type="Texture2D" uid="uid://bo7j48vbyyg7l" path="res://Images/UI/Battle/reticle.png" id="20"]
-[ext_resource type="Texture2D" uid="uid://b6blcuhkbjbue" path="res://Images/UI/Battle/skillBoxSimple.png" id="22"]
 [ext_resource type="Script" path="res://src/UI/Battle/TurnAnnouncement.cs" id="24_0xso1"]
 [ext_resource type="PackedScene" uid="uid://dbmterbq660bd" path="res://Objects/UI/FadingMessage.tscn" id="24_xsgoi"]
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="25_vkcmm"]
@@ -656,6 +656,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2")
 
+[node name="UI" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Backdrop" type="ColorRect" parent="."]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
@@ -684,6 +689,7 @@ anchor_right = 1.0
 offset_top = -202.0
 offset_bottom = -2.0
 grow_horizontal = 2
+mouse_filter = 2
 texture = ExtResource("27")
 
 [node name="InfoLabel" type="Control" parent="Filmbar/FilmbarTop"]
@@ -781,6 +787,7 @@ offset_right = 129.0
 offset_bottom = -301.0
 grow_vertical = 0
 scale = Vector2(0.9, 0.9)
+mouse_filter = 2
 script = ExtResource("11_sbnhs")
 
 [node name="Number" type="Label" parent="CharacterDamageCounter"]
@@ -814,6 +821,7 @@ offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(30, 44)
+mouse_filter = 2
 texture = ExtResource("11")
 script = ExtResource("7")
 
@@ -847,6 +855,7 @@ one_shot = true
 [node name="PartyBar" type="Control" parent="."]
 unique_name_in_owner = true
 anchors_preset = 0
+mouse_filter = 2
 
 [node name="1" parent="PartyBar" instance=ExtResource("1")]
 layout_mode = 0
@@ -861,44 +870,102 @@ layout_mode = 0
 offset_left = 937.0
 offset_right = 1449.0
 
-[node name="Skills" type="Node2D" parent="."]
+[node name="Skills" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-position = Vector2(960, 788)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -450.0
+offset_top = -413.0
+offset_right = 450.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="0" parent="Skills" instance=ExtResource("6")]
+layout_mode = 2
 
 [node name="1" parent="Skills" instance=ExtResource("6")]
-position = Vector2(-330.04, -27.5999)
-root = NodePath("../..")
+layout_mode = 2
+index = 1
 
 [node name="2" parent="Skills" instance=ExtResource("6")]
-position = Vector2(-170.04, -27.5999)
-index = 1
-root = NodePath("../..")
+layout_mode = 2
+index = 2
 
 [node name="3" parent="Skills" instance=ExtResource("6")]
-position = Vector2(-10.0399, -27.5999)
-index = 2
-root = NodePath("../..")
+layout_mode = 2
+index = 3
 
 [node name="4" parent="Skills" instance=ExtResource("6")]
-position = Vector2(149.96, -27.5999)
-index = 3
-root = NodePath("../..")
-
-[node name="5" parent="Skills" instance=ExtResource("6")]
-position = Vector2(309.96, -27.5999)
+layout_mode = 2
 index = 4
-root = NodePath("../..")
 
-[node name="BasicSkills" type="Node2D" parent="."]
+[node name="BasicSkills" type="HBoxContainer" parent="."]
 unique_name_in_owner = true
-position = Vector2(1002, 971)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -213.0
+offset_right = 400.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 0
 scale = Vector2(0.9, 0.9)
+pivot_offset = Vector2(400, 0)
+mouse_filter = 2
+theme_override_constants/separation = 32
+alignment = 1
 
 [node name="1" parent="BasicSkills" instance=ExtResource("6")]
-position = Vector2(-330.04, -27.5999)
-texture = ExtResource("22")
+layout_mode = 2
 index = 10
-root = NodePath("../..")
+
+[node name="RootTexture" parent="BasicSkills/1" index="0"]
+texture = ExtResource("17_ifx84")
+
+[node name="Cost" parent="BasicSkills/1/RootTexture" index="5"]
+visible = false
+
+[node name="2" parent="BasicSkills" instance=ExtResource("6")]
+layout_mode = 2
+index = 11
+
+[node name="RootTexture" parent="BasicSkills/2" index="0"]
+texture = ExtResource("17_ifx84")
+
+[node name="Cost" parent="BasicSkills/2/RootTexture" index="5"]
+visible = false
+
+[node name="3" parent="BasicSkills" instance=ExtResource("6")]
+layout_mode = 2
+index = 12
+
+[node name="RootTexture" parent="BasicSkills/3" index="0"]
+texture = ExtResource("17_ifx84")
+
+[node name="Cost" parent="BasicSkills/3/RootTexture" index="5"]
+visible = false
+
+[node name="4" parent="BasicSkills" instance=ExtResource("6")]
+layout_mode = 2
+index = 13
+
+[node name="RootTexture" parent="BasicSkills/4" index="0"]
+texture = ExtResource("17_ifx84")
+
+[node name="Cost" parent="BasicSkills/4/RootTexture" index="5"]
+visible = false
 
 [node name="SkillDescription" type="NinePatchRect" parent="."]
 unique_name_in_owner = true
@@ -1022,12 +1089,11 @@ script = ExtResource("24_0xso1")
 [node name="Label" type="Label" parent="TurnAnnouncement"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 371.0
-offset_bottom = 90.0
+offset_left = -200.0
+offset_right = 200.0
+offset_bottom = 100.0
 text = "ENEMY Turn"
 label_settings = SubResource("LabelSettings_bi27a")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="TurnAnnouncement"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1079,3 +1145,8 @@ stream = ExtResource("30_5us6w")
 [connection signal="pressed" from="PartyBar/1" to="." method="SelectCharacter" binds= [0]]
 [connection signal="pressed" from="PartyBar/2" to="." method="SelectCharacter" binds= [1]]
 [connection signal="pressed" from="PartyBar/3" to="." method="SelectCharacter" binds= [2]]
+
+[editable path="BasicSkills/1"]
+[editable path="BasicSkills/2"]
+[editable path="BasicSkills/3"]
+[editable path="BasicSkills/4"]

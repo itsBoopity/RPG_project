@@ -275,8 +275,8 @@ public partial class BattleEngine : Control
             await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
             await ToSignal(monster.ExecuteTurn(this), AnimationPlayer.SignalName.AnimationFinished);
         }
-        turnAnnouncement.Stop();
         await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
+        turnAnnouncement.Stop();
         UpdateUI(); // TODO: This should instead be animated and updated by each skill
         PlayerTurn();
     }

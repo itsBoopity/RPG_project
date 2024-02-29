@@ -2,7 +2,8 @@ using Godot;
 
 public partial class AnimatedSpriteOneOff : AnimatedSprite2D
 {
-    [Export] AudioStreamWav[] sfxSrc;
+    [Export]
+    AudioStreamWav[] sfxSrc;
     public override void _Ready()
     {
         GetNode<AudioStreamPlayer>("Audio").Stream = sfxSrc[GD.Randi() % sfxSrc.Length];

@@ -2,8 +2,10 @@ using Godot;
 
 public partial class DungeonCardUI : Control
 {
-    [Export] private DungeonEngine dungeonEngine;
-    [Export(PropertyHint.Range, "0,4")] int index;
+    [Export]
+    private DungeonEngine dungeonEngine;
+    [Export(PropertyHint.Range, "0,4")]
+    int index;
 
     
     private Control cardSprite;

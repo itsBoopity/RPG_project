@@ -1,56 +1,58 @@
 using Godot;
-using System;
 
-public partial class SkillBoxUI : Sprite2D
+public partial class SkillBoxUI : Control
 {
-    // The index of the skill that this skillbox represents;
-    [Export] public int index;
-    private Sprite2D fill;
-    private Sprite2D icon;
+    [Signal]
+    public delegate void ShowSkillDetailEventHandler(int index);
+    [Signal]
+    public delegate void HideSkillDetailEventHandler();
+    [Signal]
+    public delegate void SelectSkillEventHandler(int index);
+
+    // The index of the skill that this skillbox represents. Used in signal as well as well as getting the mapped button name.
+    [Export]
+    private int index = 0;
+    private TextureRect rootTexture;
+    private TextureRect fill;
+    private TextureRect icon;
     private Label stackCost;
     private Label cooldown;
     private CanvasItem snap;
     private Label cooldownCountdown;
 
     private Vector2 originalScale;
-    [Export] private NodePath root = null;
-    private BattleEngine battleEngine;
-    private Color fadeColor = new Color(0.4f, 0.4f, 0.4f, 1);
     private AudioStreamPlayer sfx;
     
     public override void _Ready()
     {
-        fill = GetNode<Sprite2D>("Fill");
-        icon = GetNode<Sprite2D>("Fill/Icon");
-        stackCost = GetNode<Label>("Cost");
-        cooldown = GetNode<Label>("Cooldown");
-        snap = GetNode<CanvasItem>("SnapIcon");
-        cooldownCountdown = GetNode<Label>("Countdown");
+        rootTexture = GetNode<TextureRect>("RootTexture");
+        fill = GetNode<TextureRect>("RootTexture/Fill");
+        icon = GetNode<TextureRect>("RootTexture/Fill/Icon");
+        stackCost = GetNode<Label>("RootTexture/Cost");
+        cooldown = GetNode<Label>("RootTexture/Cooldown");
+        snap = GetNode<CanvasItem>("RootTexture/SnapIcon");
+        cooldownCountdown = GetNode<Label>("RootTexture/Countdown");
         sfx = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 
-        originalScale = this.Scale;
-        if (root == null) throw new Exception("SkillBoxUI does not have [Exoirt] root set");
-        battleEngine = GetNode<BattleEngine>(root);
-
-        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents("battle_skill" + index)[0]).AsText();
+        originalScale = rootTexture.Scale;
+        GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_skill" + index)[0].AsText();
     }
 
     public void OnHover()
     {
         sfx.Play();
-        this.Scale = originalScale * 1.1f;
-        battleEngine.ShowSkillDetail(index);
+        rootTexture.Scale = originalScale * 1.1f;
+        EmitSignal(SignalName.ShowSkillDetail, index);
     }
     public void ExitHover()
     {
-        this.Scale = originalScale;
-        battleEngine.HideSkillDetail();
+        rootTexture.Scale = originalScale;
+        EmitSignal(SignalName.HideSkillDetail);
     }
-    public void Grow() { this.Scale = originalScale * 1.1f; }
-    public void Shrink() { this.Scale = originalScale; }
+    
     public void OnPress() {
         sfx.Play();
-        battleEngine.SelectSkill(index); 
+        EmitSignal(SignalName.SelectSkill, index);
     }
 
     public void Initiate(BattleSkill skill)
@@ -96,13 +98,13 @@ public partial class SkillBoxUI : Sprite2D
         int result = skill.IsUsable(owner);
         if (result ==  1)
         {
-            fill.Modulate = fadeColor;
+            fill.Modulate = new Color(0.4f, 0.4f, 0.4f, 1);
             cooldownCountdown.Show();
             cooldownCountdown.Text = skill.currentCooldown.ToString();
         }
         else if (result == 2 || result == 3)
         {
-            fill.Modulate = fadeColor;
+            fill.Modulate = new Color(0.4f, 0.4f, 0.4f, 1);
         }
         else
         {

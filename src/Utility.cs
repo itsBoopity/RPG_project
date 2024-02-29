@@ -7,12 +7,6 @@ using System;
 /// </summary>
 public partial class Utility : Node
 {
-
-    /// <summary>
-    /// Middle bottom of the screen
-    /// </summary>
-    public static Vector2 MiddleBottomCoord() {return new Vector2(960, 1080);}
-    public static float MiddleX() {return 960;}
     public static int CountChar(ref string text, char character)
     {
         int output = 0;

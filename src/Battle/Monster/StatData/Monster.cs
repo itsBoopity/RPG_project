@@ -42,38 +42,14 @@ public abstract class Monster: BattleActor
         }
         return model;
     }
-    public void UpdateUIModel()
-    {
-        model.UpdateHP();
-    }
-
-    public void ShowEstimate(int damage)
-    {
-        model.ShowEstimate(damage);
-    }
-
-    public void HideEstimate()
-    {
-        model.HideEstimate();
-    }
-
-    public void PlayDamage(int damage)
-    {
-        model.PlayDamage(damage);
-    }
-
-    public void PlayDamage(string text)
-    {
-        model.PlayDamage(text);
-    }
 
     public Node ExecuteTurn(BattleEngine battleEngine)
     {
-        skills[targetSkill].Use(battleEngine, this, battleEngine.party[targetCharacter]);
-        string targetName = battleEngine.party[targetCharacter].name;
-        battleEngine.centerMessage.ShowText(name + " uses " + skills[targetSkill].name + " on " + targetName + "!");
+        skills[targetSkill].Use(battleEngine, this, battleEngine.GetPartyMember(targetCharacter));
+        string targetName = battleEngine.GetPartyMember(targetCharacter).name;
+        battleEngine.Ui.ShowCenterMessage(name + " uses " + skills[targetSkill].name + " on " + targetName + "!");
         Node2D animation = skills[targetSkill].GetAnimation();
-        battleEngine.SpawnEffectParty(animation, targetCharacter);
+        battleEngine.Ui.SpawnEffectParty(animation, battleEngine.GetPartyMember(targetCharacter));
         ExecuteTurnAdditional();
         return animation;
     }

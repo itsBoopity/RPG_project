@@ -66,9 +66,9 @@ public partial class MonsterModel : CanvasGroup
     public void PlayDamage(int damage)
     {
         HideEstimate();
-        this.dmgCounter.Play(damage);
+        dmgCounter.Play(damage);
     }
-    public void PlayDamage(string text)
+    public void DisplayText(string text)
     {
         HideEstimate();
         dmgCounter.Play(text);

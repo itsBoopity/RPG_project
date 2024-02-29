@@ -1,6 +1,9 @@
 using Godot;
 using System.Collections.Generic;
 
+/// <summary>
+/// Manages model nodes by storing them in a Dictionary, and instancing and showing only the one that is currently displayed.
+/// </summary>
 public partial class CharacterModelRack : Control
 {
     private Dictionary<string, Node2D> models = new Dictionary<string, Node2D>();

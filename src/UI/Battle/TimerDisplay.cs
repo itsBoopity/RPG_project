@@ -1,16 +1,18 @@
 using Godot;
 
-public partial class BattleTimer : Node
+public partial class TimerDisplay : Node
 {
     private ProgressBar bar;
     private Label label;
-    private Timer timer;
+
+    [Export]
+    private CustomTimer timer;
     public override void _Ready()
     {
         bar = GetNode<ProgressBar>("Bar");
         label = GetNode<Label>("Label");
-        timer = GetNode<Timer>("Timer");
-
+        timer.Timeout += Stop;
+        timer.Started += StartTimer;
         SetProcess(false);
     }
     
@@ -19,7 +21,7 @@ public partial class BattleTimer : Node
         timer.Stop();
         SetProcess(false);
     }
-    public void StartTimer(int length)
+    public void StartTimer(double length)
     {
         timer.Start(length);
         bar.MaxValue = length;

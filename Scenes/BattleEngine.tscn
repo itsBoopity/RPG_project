@@ -1,11 +1,12 @@
-[gd_scene load_steps=52 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=56 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
+[ext_resource type="Script" path="res://src/NodeExtensions/CustomTimer.cs" id="2_0hfn6"]
 [ext_resource type="Texture2D" uid="uid://bdv1cdejvowkd" path="res://Images/UI/filmbarBottom.png" id="3"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="4"]
+[ext_resource type="Script" path="res://src/UI/Battle/BattleUI.cs" id="5_tdtxk"]
 [ext_resource type="PackedScene" uid="uid://b8wob103hvoxb" path="res://Objects/UI/Battle/SkillBox.tscn" id="6"]
-[ext_resource type="Script" path="res://src/UI/Battle/BattleTimer.cs" id="7"]
 [ext_resource type="Texture2D" uid="uid://c0gvhc76yfr8e" path="res://Images/UI/Battle/skillWindow.png" id="8"]
 [ext_resource type="Script" path="res://src/UI/Battle/CharacterModelRack.cs" id="9"]
 [ext_resource type="Script" path="res://src/UI/Battle/SkillDescription.cs" id="10"]
@@ -14,6 +15,7 @@
 [ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="12_jr8c7"]
 [ext_resource type="Script" path="res://Font/RichTextEffect/RichTextAtkColor.gd" id="14"]
 [ext_resource type="Script" path="res://Font/RichTextEffect/RichTextStackColor.gd" id="15"]
+[ext_resource type="Script" path="res://src/UI/Battle/TimerDisplay.cs" id="15_wy43w"]
 [ext_resource type="Script" path="res://src/UI/Battle/MonsterRack.cs" id="16"]
 [ext_resource type="AudioStream" uid="uid://cywqoindf6m4s" path="res://Audio/SFX/click3.wav" id="16_5l314"]
 [ext_resource type="Script" path="res://src/UI/Battle/InfoLabel.cs" id="17"]
@@ -22,6 +24,7 @@
 [ext_resource type="Theme" uid="uid://d2nrmjx36a1ys" path="res://Font/Theme/PrintedText.tres" id="18_p35u0"]
 [ext_resource type="Script" path="res://src/UI/Battle/Reticle.cs" id="19"]
 [ext_resource type="Texture2D" uid="uid://bo7j48vbyyg7l" path="res://Images/UI/Battle/reticle.png" id="20"]
+[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/BasicAttack.tres" id="23_rvc8y"]
 [ext_resource type="Script" path="res://src/UI/Battle/TurnAnnouncement.cs" id="24_0xso1"]
 [ext_resource type="PackedScene" uid="uid://dbmterbq660bd" path="res://Objects/UI/FadingMessage.tscn" id="24_xsgoi"]
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="25_vkcmm"]
@@ -487,19 +490,59 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
+tracks/1/path = NodePath(".:offset_top")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.01, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(1369, 599), Vector2(1369, 604), Vector2(1369, 599)]
+"values": [-481.0, -476.0, -481.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:offset_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [136.001, 141.001, 136.001]
+}
+
+[sub_resource type="Animation" id="Animation_slsfn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-481.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [136.001]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n0dt3"]
 _data = {
-"PopIn": SubResource("Animation_jtkxe")
+"PopIn": SubResource("Animation_jtkxe"),
+"RESET": SubResource("Animation_slsfn")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_bi27a"]
@@ -656,12 +699,31 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2")
 
-[node name="UI" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TurnTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("2_0hfn6")
 
-[node name="Backdrop" type="ColorRect" parent="."]
+[node name="Sfx" type="Node" parent="."]
+
+[node name="PartyBar" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("16_5l314")
+
+[node name="SkillClick" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("29_r3ion")
+
+[node name="Error" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("30_5us6w")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_tdtxk")
+
+[node name="Backdrop" type="ColorRect" parent="UI"]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
@@ -673,7 +735,30 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.0784314, 0.0666667, 0.0862745, 0.392157)
 
-[node name="Filmbar" type="Control" parent="."]
+[node name="MonstersAnchor" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -346.0
+offset_bottom = -346.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Monsters" type="Node2D" parent="UI/MonstersAnchor"]
+unique_name_in_owner = true
+script = ExtResource("16")
+
+[node name="Reticle" type="Sprite2D" parent="UI"]
+unique_name_in_owner = true
+process_priority = 10
+position = Vector2(-216, 0)
+texture = ExtResource("20")
+script = ExtResource("19")
+
+[node name="Filmbar" type="Control" parent="UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -682,7 +767,37 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="FilmbarTop" type="TextureRect" parent="Filmbar"]
+[node name="Log" type="ColorRect" parent="UI/Filmbar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -509.0
+offset_top = 67.0
+offset_bottom = 289.0
+grow_horizontal = 0
+color = Color(0, 0, 0, 0.490196)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Filmbar/Log"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("25_vkcmm")
+theme_override_fonts/bold_font = ExtResource("26_tibu4")
+theme_override_fonts/italics_font = ExtResource("27_vofdh")
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+bbcode_enabled = true
+
+[node name="FilmbarTop" type="TextureRect" parent="UI/Filmbar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -692,7 +807,7 @@ grow_horizontal = 2
 mouse_filter = 2
 texture = ExtResource("27")
 
-[node name="InfoLabel" type="Control" parent="Filmbar/FilmbarTop"]
+[node name="InfoLabel" type="Control" parent="UI/Filmbar/FilmbarTop"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
@@ -706,7 +821,7 @@ grow_horizontal = 0
 mouse_filter = 2
 script = ExtResource("17")
 
-[node name="Icon" type="TextureRect" parent="Filmbar/FilmbarTop/InfoLabel"]
+[node name="Icon" type="TextureRect" parent="UI/Filmbar/FilmbarTop/InfoLabel"]
 show_behind_parent = true
 layout_mode = 0
 offset_top = -5.0
@@ -715,7 +830,7 @@ offset_bottom = 81.0
 texture = ExtResource("18")
 expand_mode = 1
 
-[node name="Label" type="RichTextLabel" parent="Filmbar/FilmbarTop/InfoLabel"]
+[node name="Label" type="RichTextLabel" parent="UI/Filmbar/FilmbarTop/InfoLabel"]
 clip_contents = false
 layout_mode = 0
 offset_left = 78.025
@@ -731,12 +846,12 @@ text = "Enemy Targetting"
 scroll_active = false
 meta_underlined = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Filmbar/FilmbarTop/InfoLabel"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/Filmbar/FilmbarTop/InfoLabel"]
 libraries = {
 "": SubResource("AnimationLibrary_6f1w8")
 }
 
-[node name="FilmbarBottom" type="TextureRect" parent="Filmbar"]
+[node name="FilmbarBottom" type="TextureRect" parent="UI/Filmbar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -748,49 +863,38 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("3")
 
-[node name="Monsters" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(960, 734)
-script = ExtResource("16")
-
-[node name="Reticle" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-process_priority = 10
-position = Vector2(-216, 0)
-texture = ExtResource("20")
-script = ExtResource("19")
-
-[node name="CharacterModels" type="Control" parent="."]
+[node name="CharacterModels" type="Control" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 257.0
+offset_left = 254.0
 offset_top = 116.0
-offset_right = 257.0
+offset_right = 254.0
 offset_bottom = 116.0
 grow_vertical = 0
 scale = Vector2(0.8, 0.8)
 mouse_filter = 2
 script = ExtResource("9")
 
-[node name="CharacterDamageCounter" type="Control" parent="."]
+[node name="CharacterDamageCounter" type="Control" parent="UI"]
+unique_name_in_owner = true
 z_index = 1
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 129.0
-offset_top = -301.0
+offset_top = 739.0
 offset_right = 129.0
-offset_bottom = -301.0
+offset_bottom = 739.0
 grow_vertical = 0
 scale = Vector2(0.9, 0.9)
 mouse_filter = 2
 script = ExtResource("11_sbnhs")
 
-[node name="Number" type="Label" parent="CharacterDamageCounter"]
+[node name="Number" type="Label" parent="UI/CharacterDamageCounter"]
 visible = false
 layout_mode = 0
 offset_right = 266.0
@@ -801,31 +905,32 @@ text = "9999"
 label_settings = SubResource("LabelSettings_6frhx")
 horizontal_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterDamageCounter"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/CharacterDamageCounter"]
 libraries = {
 "": SubResource("AnimationLibrary_7xve3")
 }
 
-[node name="Timer" type="TextureRect" parent="."]
+[node name="TimerDisplay" type="TextureRect" parent="UI" node_paths=PackedStringArray("timer")]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -426.0
-offset_top = -88.0
-offset_right = -361.0
-offset_bottom = -11.0
+offset_left = -411.0
+offset_top = -87.0
+offset_right = -346.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(30, 44)
 mouse_filter = 2
 texture = ExtResource("11")
-script = ExtResource("7")
+script = ExtResource("15_wy43w")
+timer = NodePath("../../TurnTimer")
 
-[node name="Bar" type="ProgressBar" parent="Timer"]
+[node name="Bar" type="ProgressBar" parent="UI/TimerDisplay"]
 show_behind_parent = true
 layout_mode = 0
 offset_left = 62.0
@@ -838,7 +943,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ib063")
 value = 100.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="Timer"]
+[node name="Label" type="Label" parent="UI/TimerDisplay"]
 layout_mode = 0
 offset_left = 2.0
 offset_top = -3.0
@@ -849,68 +954,65 @@ label_settings = SubResource("LabelSettings_c3guw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Timer" type="Timer" parent="Timer"]
-one_shot = true
-
-[node name="PartyBar" type="Control" parent="."]
+[node name="PartyBar" type="Control" parent="UI"]
 unique_name_in_owner = true
 anchors_preset = 0
 mouse_filter = 2
 
-[node name="1" parent="PartyBar" instance=ExtResource("1")]
+[node name="1" parent="UI/PartyBar" instance=ExtResource("1")]
 layout_mode = 0
 
-[node name="2" parent="PartyBar" instance=ExtResource("1")]
+[node name="2" parent="UI/PartyBar" instance=ExtResource("1")]
 layout_mode = 0
 offset_left = 468.0
 offset_right = 980.0
 
-[node name="3" parent="PartyBar" instance=ExtResource("1")]
+[node name="3" parent="UI/PartyBar" instance=ExtResource("1")]
 layout_mode = 0
 offset_left = 937.0
 offset_right = 1449.0
 
-[node name="Skills" type="HBoxContainer" parent="."]
+[node name="Skills" type="HBoxContainer" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -450.0
-offset_top = -413.0
+offset_top = -398.0
 offset_right = 450.0
-offset_bottom = -285.0
+offset_bottom = -270.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="0" parent="Skills" instance=ExtResource("6")]
+[node name="0" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
 
-[node name="1" parent="Skills" instance=ExtResource("6")]
+[node name="1" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
 index = 1
 
-[node name="2" parent="Skills" instance=ExtResource("6")]
+[node name="2" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
 index = 2
 
-[node name="3" parent="Skills" instance=ExtResource("6")]
+[node name="3" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
 index = 3
 
-[node name="4" parent="Skills" instance=ExtResource("6")]
+[node name="4" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
 index = 4
 
-[node name="BasicSkills" type="HBoxContainer" parent="."]
+[node name="BasicSkills" type="HBoxContainer" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -927,53 +1029,41 @@ mouse_filter = 2
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="1" parent="BasicSkills" instance=ExtResource("6")]
+[node name="0" parent="UI/BasicSkills" instance=ExtResource("6")]
 layout_mode = 2
-index = 10
+secondRow = true
 
-[node name="RootTexture" parent="BasicSkills/1" index="0"]
+[node name="RootTexture" parent="UI/BasicSkills/0" index="0"]
 texture = ExtResource("17_ifx84")
 
-[node name="Cost" parent="BasicSkills/1/RootTexture" index="5"]
+[node name="Icon" parent="UI/BasicSkills/0/RootTexture/Fill" index="0"]
+texture = ExtResource("23_rvc8y")
+
+[node name="Countdown" parent="UI/BasicSkills/0/RootTexture" index="1"]
 visible = false
 
-[node name="2" parent="BasicSkills" instance=ExtResource("6")]
-layout_mode = 2
-index = 11
-
-[node name="RootTexture" parent="BasicSkills/2" index="0"]
-texture = ExtResource("17_ifx84")
-
-[node name="Cost" parent="BasicSkills/2/RootTexture" index="5"]
+[node name="SnapIcon" parent="UI/BasicSkills/0/RootTexture" index="2"]
 visible = false
 
-[node name="3" parent="BasicSkills" instance=ExtResource("6")]
-layout_mode = 2
-index = 12
-
-[node name="RootTexture" parent="BasicSkills/3" index="0"]
-texture = ExtResource("17_ifx84")
-
-[node name="Cost" parent="BasicSkills/3/RootTexture" index="5"]
+[node name="Cooldown" parent="UI/BasicSkills/0/RootTexture" index="3"]
 visible = false
 
-[node name="4" parent="BasicSkills" instance=ExtResource("6")]
-layout_mode = 2
-index = 13
-
-[node name="RootTexture" parent="BasicSkills/4" index="0"]
-texture = ExtResource("17_ifx84")
-
-[node name="Cost" parent="BasicSkills/4/RootTexture" index="5"]
+[node name="Cost" parent="UI/BasicSkills/0/RootTexture" index="5"]
 visible = false
 
-[node name="SkillDescription" type="NinePatchRect" parent="."]
+[node name="SkillDescription" type="NinePatchRect" parent="UI"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1369.0
-offset_top = 599.0
-offset_right = 1920.0
-offset_bottom = 1216.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -551.0
+offset_top = -481.0
+offset_bottom = 136.001
+grow_horizontal = 0
+grow_vertical = 0
 theme = ExtResource("18_p35u0")
 texture = ExtResource("8")
 patch_margin_left = 25
@@ -981,7 +1071,7 @@ patch_margin_top = 12
 patch_margin_right = 38
 script = ExtResource("10")
 
-[node name="Name" type="RichTextLabel" parent="SkillDescription"]
+[node name="Name" type="RichTextLabel" parent="UI/SkillDescription"]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 19.0
@@ -994,7 +1084,7 @@ bbcode_enabled = true
 text = "Dancing is Nice"
 scroll_active = false
 
-[node name="PropertyType" type="RichTextLabel" parent="SkillDescription"]
+[node name="PropertyType" type="RichTextLabel" parent="UI/SkillDescription"]
 layout_mode = 0
 offset_left = 31.0
 offset_top = 54.0
@@ -1006,7 +1096,7 @@ text = "Offensive"
 scroll_active = false
 custom_effects = [SubResource("RichTextEffect_unglj")]
 
-[node name="PropertyCost" type="RichTextLabel" parent="SkillDescription"]
+[node name="PropertyCost" type="RichTextLabel" parent="UI/SkillDescription"]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 54.0
@@ -1019,7 +1109,7 @@ text = "| Cost 99
 scroll_active = false
 custom_effects = [SubResource("RichTextEffect_unglj")]
 
-[node name="PropertyCD" type="RichTextLabel" parent="SkillDescription"]
+[node name="PropertyCD" type="RichTextLabel" parent="UI/SkillDescription"]
 layout_mode = 0
 offset_left = 275.0
 offset_top = 54.0
@@ -1031,7 +1121,7 @@ text = "| CD 5"
 scroll_active = false
 custom_effects = [SubResource("RichTextEffect_unglj")]
 
-[node name="Description" type="RichTextLabel" parent="SkillDescription"]
+[node name="Description" type="RichTextLabel" parent="UI/SkillDescription"]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 102.0
@@ -1046,47 +1136,135 @@ text = "- Type: Lightning/Magical
 scroll_active = false
 custom_effects = [SubResource("RichTextEffect_ho78x"), SubResource("RichTextEffect_pmqfr")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SkillDescription"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/SkillDescription"]
 libraries = {
 "": SubResource("AnimationLibrary_n0dt3")
 }
 
-[node name="CharacterMessage" parent="." instance=ExtResource("24_xsgoi")]
+[node name="SkillDescription2" type="NinePatchRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 1369.0
+offset_top = -481.0
+offset_right = 1920.0
+offset_bottom = 136.001
+theme = ExtResource("18_p35u0")
+texture = ExtResource("8")
+patch_margin_left = 25
+patch_margin_top = 12
+patch_margin_right = 38
+script = ExtResource("10")
+
+[node name="Name" type="RichTextLabel" parent="UI/SkillDescription2"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 19.0
+offset_right = 504.0
+offset_bottom = 65.0
+mouse_filter = 2
+theme = ExtResource("4")
+theme_override_font_sizes/normal_font_size = 38
+bbcode_enabled = true
+text = "Dancing is Nice"
+scroll_active = false
+
+[node name="PropertyType" type="RichTextLabel" parent="UI/SkillDescription2"]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 54.0
+offset_right = 174.0
+offset_bottom = 102.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "Offensive"
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_unglj")]
+
+[node name="PropertyCost" type="RichTextLabel" parent="UI/SkillDescription2"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 54.0
+offset_right = 285.0
+offset_bottom = 102.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "| Cost 99
+"
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_unglj")]
+
+[node name="PropertyCD" type="RichTextLabel" parent="UI/SkillDescription2"]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 54.0
+offset_right = 434.0
+offset_bottom = 102.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "| CD 5"
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_unglj")]
+
+[node name="Description" type="RichTextLabel" parent="UI/SkillDescription2"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 102.0
+offset_right = 504.0
+offset_bottom = 625.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "- Type: Lightning/Magical
+- Target: Single
+
+- It's pretty Cool"
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_ho78x"), SubResource("RichTextEffect_pmqfr")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/SkillDescription2"]
+libraries = {
+"": SubResource("AnimationLibrary_n0dt3")
+}
+
+[node name="CharacterMessage" parent="UI" instance=ExtResource("24_xsgoi")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 35.0
-offset_top = -305.0
-offset_right = 547.0
-offset_bottom = -49.0
+offset_left = 25.0
+offset_top = -320.0
+offset_right = 537.0
+offset_bottom = -64.0
 grow_vertical = 0
 
-[node name="CenterMessage" parent="." instance=ExtResource("24_xsgoi")]
+[node name="CenterMessage" parent="UI" instance=ExtResource("24_xsgoi")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 100.0
-offset_top = 124.0
-offset_right = -100.0
-offset_bottom = 380.0
+offset_left = 64.0
+offset_top = 121.0
+offset_right = -64.0
+offset_bottom = 377.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TurnAnnouncement" type="Control" parent="."]
+[node name="TurnAnnouncement" type="Control" parent="UI"]
+unique_name_in_owner = true
 z_index = 2
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 276.0
-offset_bottom = 276.0
+offset_top = 365.0
+offset_bottom = 365.0
 grow_horizontal = 2
 script = ExtResource("24_0xso1")
 
-[node name="Label" type="Label" parent="TurnAnnouncement"]
+[node name="Label" type="Label" parent="UI/TurnAnnouncement"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = -200.0
@@ -1095,58 +1273,32 @@ offset_bottom = 100.0
 text = "ENEMY Turn"
 label_settings = SubResource("LabelSettings_bi27a")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
 libraries = {
 "": SubResource("AnimationLibrary_umugs")
 }
 
-[node name="Log" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -509.0
-offset_top = 86.0
-offset_bottom = 308.0
-grow_horizontal = 0
-color = Color(0, 0, 0, 0.490196)
+[connection signal="timeout" from="TurnTimer" to="." method="EnemyTurn"]
+[connection signal="pressed" from="UI/PartyBar/1" to="." method="SelectCharacter" binds= [0]]
+[connection signal="pressed" from="UI/PartyBar/2" to="." method="SelectCharacter" binds= [1]]
+[connection signal="pressed" from="UI/PartyBar/3" to="." method="SelectCharacter" binds= [2]]
+[connection signal="HideSkillDetail" from="UI/Skills/0" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/Skills/0" to="." method="SelectSkill"]
+[connection signal="ShowSkillDetail" from="UI/Skills/0" to="." method="ViewSkill"]
+[connection signal="HideSkillDetail" from="UI/Skills/1" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/Skills/1" to="." method="SelectSkill"]
+[connection signal="ShowSkillDetail" from="UI/Skills/1" to="." method="ViewSkill"]
+[connection signal="HideSkillDetail" from="UI/Skills/2" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/Skills/2" to="." method="SelectSkill"]
+[connection signal="ShowSkillDetail" from="UI/Skills/2" to="." method="ViewSkill"]
+[connection signal="HideSkillDetail" from="UI/Skills/3" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/Skills/3" to="." method="SelectSkill"]
+[connection signal="ShowSkillDetail" from="UI/Skills/3" to="." method="ViewSkill"]
+[connection signal="HideSkillDetail" from="UI/Skills/4" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/Skills/4" to="." method="SelectSkill"]
+[connection signal="ShowSkillDetail" from="UI/Skills/4" to="." method="ViewSkill"]
+[connection signal="HideSkillDetail" from="UI/BasicSkills/0" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/BasicSkills/0" to="." method="SelectBasicSkill"]
+[connection signal="ShowSkillDetail" from="UI/BasicSkills/0" to="." method="ViewBasicSkill"]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Log"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = 17.0
-offset_right = -17.0
-offset_bottom = -14.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/normal_font = ExtResource("25_vkcmm")
-theme_override_fonts/bold_font = ExtResource("26_tibu4")
-theme_override_fonts/italics_font = ExtResource("27_vofdh")
-theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 20
-theme_override_font_sizes/italics_font_size = 20
-bbcode_enabled = true
-
-[node name="Sfx" type="Node" parent="."]
-
-[node name="PartyBar" type="AudioStreamPlayer" parent="Sfx"]
-stream = ExtResource("16_5l314")
-
-[node name="SkillClick" type="AudioStreamPlayer" parent="Sfx"]
-stream = ExtResource("29_r3ion")
-
-[node name="Error" type="AudioStreamPlayer" parent="Sfx"]
-stream = ExtResource("30_5us6w")
-
-[connection signal="timeout" from="Timer/Timer" to="." method="EnemyTurn"]
-[connection signal="pressed" from="PartyBar/1" to="." method="SelectCharacter" binds= [0]]
-[connection signal="pressed" from="PartyBar/2" to="." method="SelectCharacter" binds= [1]]
-[connection signal="pressed" from="PartyBar/3" to="." method="SelectCharacter" binds= [2]]
-
-[editable path="BasicSkills/1"]
-[editable path="BasicSkills/2"]
-[editable path="BasicSkills/3"]
-[editable path="BasicSkills/4"]
+[editable path="UI/BasicSkills/0"]

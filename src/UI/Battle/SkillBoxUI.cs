@@ -9,9 +9,16 @@ public partial class SkillBoxUI : Control
     [Signal]
     public delegate void SelectSkillEventHandler(int index);
 
-    // The index of the skill that this skillbox represents. Used in signal as well as well as getting the mapped button name.
+    /// <summary>
+    /// The index of the skill that this skillbox represents. Used to signal to the engine which button was pressed, as well as to map the appropriate shortcut key.
+    /// </summary>
     [Export]
     private int index = 0;
+    /// <summary>
+    /// Whether the button is part of the second row of keys. Used when mapping to hotkeys to determine which button to use.
+    /// </summary>
+    [Export]
+    private bool secondRow = false;
     private TextureRect rootTexture;
     private TextureRect fill;
     private TextureRect icon;
@@ -35,7 +42,17 @@ public partial class SkillBoxUI : Control
         sfx = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 
         originalScale = rootTexture.Scale;
-        GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_skill" + index)[0].AsText();
+
+        if (!secondRow)
+        {
+            GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_skill" + index)[0].AsText();
+        }
+        else
+        {
+            {
+            GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_basicskill" + index)[0].AsText();
+        }
+        }
     }
 
     public void OnHover()

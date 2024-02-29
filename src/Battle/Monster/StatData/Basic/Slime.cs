@@ -24,7 +24,7 @@ public partial class Slime: Monster
     public override void LoadUpcomingTurn(BattleEngine battleEngine)
     {
         targetCharacter = targetCycle;
-        targetCycle = (targetCycle + 1) % battleEngine.party.Count;
+        targetCycle = (targetCycle + 1) % battleEngine.GetPartySize();
         targetSkill = 0;
     }
 

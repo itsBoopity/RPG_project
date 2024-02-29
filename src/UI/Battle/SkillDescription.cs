@@ -5,10 +5,9 @@ public partial class SkillDescription : NinePatchRect
     private RichTextLabel name;
     private RichTextLabel type;
     private RichTextLabel cost;
-    private RichTextLabel cooldown;   
+    private RichTextLabel cooldown;
     private RichTextLabel description;
 
-    public int currentFocus = -1; // -1 means no focus
     private AnimationPlayer animationPlayer;
     public override void _Ready()
     {
@@ -22,10 +21,8 @@ public partial class SkillDescription : NinePatchRect
         this.Hide();
     }
 
-    public void ShowSkill(BattleSkill skill, int index)
+    public void ShowSkill(BattleSkill skill)
     {
-        currentFocus = index;
-
         name.Text = skill.name;
         type.Text = Utility.SkillBBName(skill.type);
         if (skill.type != SkillType.BASIC)
@@ -57,7 +54,6 @@ public partial class SkillDescription : NinePatchRect
 
     public void HideSkill()
     {
-        currentFocus = -1;
         this.Hide();
     }
 }

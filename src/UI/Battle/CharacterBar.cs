@@ -3,6 +3,7 @@ using Godot;
 public partial class CharacterBar : Control
 {
     private CharacterEnum who = 0;
+    public CharacterEnum Who { get { return who;} }
 
     private RichTextLabel name;
     private TextureRect icon;

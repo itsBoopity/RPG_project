@@ -3,7 +3,7 @@ using Godot;
 [System.Serializable]
 public partial class SkillTemplate: BattleSkill
 {
-    public SkillTemplate()
+    public SkillTemplate(): base("s_null")
     {
         name = "First Strike";
         type = SkillType.BASIC;

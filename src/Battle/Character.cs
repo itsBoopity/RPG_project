@@ -1,8 +1,3 @@
-using System;
-
-//Adding a new character: update, update constructor here, update character enums, and gameData GetCharacter(), newSave and serializtion
-
-[Serializable]
 public partial class BattleCharacter: BattleActor
 {
     public CharacterEnum who;

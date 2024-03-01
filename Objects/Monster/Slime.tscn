@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://ddtw87gqr8cl5"]
+[gd_scene load_steps=25 format=3 uid="uid://ddtw87gqr8cl5"]
 
 [ext_resource type="Texture2D" uid="uid://bjywb14wsedqi" path="res://Images/Monster/Slime/BottomStrong.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Monster/MonsterBase.tscn" id="1_4yv1e"]
 [ext_resource type="Texture2D" uid="uid://dt1wyvpluldgh" path="res://Images/Monster/Slime/Sploosh2.png" id="2"]
+[ext_resource type="Script" path="res://src/Animation/AnimationPlayerRandomStart.cs" id="2_vrhhy"]
 [ext_resource type="Texture2D" uid="uid://dq3u25sxau1hv" path="res://Images/Monster/Slime/Bottom.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://b3ssht188dh8v" path="res://Images/Monster/Slime/TendrilRight.png" id="5"]
 [ext_resource type="Texture2D" uid="uid://klptd158djxq" path="res://Images/Monster/Slime/Sploosh1.png" id="6"]
@@ -340,6 +341,7 @@ autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_tp30w")
 }
+script = ExtResource("2_vrhhy")
 
 [node name="OverheadUI" parent="." index="4"]
 offset_left = 184.0
@@ -385,6 +387,7 @@ script = ExtResource("7")
 
 [node name="Tendril2" type="Sprite2D" parent="." index="9"]
 position = Vector2(253, -34)
+rotation = -0.194702
 texture = ExtResource("5")
 offset = Vector2(11, 13)
 
@@ -409,6 +412,8 @@ script = ExtResource("7")
 
 [node name="Head" type="Sprite2D" parent="." index="11"]
 position = Vector2(159.486, -42.549)
+rotation = -0.0437288
+scale = Vector2(1, 1.05351)
 texture = ExtResource("20")
 offset = Vector2(12.3457, -85.1042)
 

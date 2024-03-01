@@ -3,9 +3,9 @@ using Godot;
 [System.Serializable]
 public partial class BasicAttack: BattleSkill
 {
-    public BasicAttack()
+    public BasicAttack(): base("s_basicattack")
     {
-        name = "Basic Attack";
+        name = "T_SKL_BASICATTACK_TITLE";
         type = SkillType.BASIC;
         element = SkillElement.VARIABLE;
         targetting = TargettingType.ENEMY_TARGET;
@@ -25,6 +25,6 @@ public partial class BasicAttack: BattleSkill
 
     public override string Description()
     {
-        return "- Do " + Utility.ATK("ATK") + " damage\n- Generates " + Utility.STA("+1STA");
+        return "T_SKL_BASICATTACK_DESC";
     }
 }

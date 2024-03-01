@@ -7,6 +7,14 @@ using System;
 /// </summary>
 public partial class Utility : Node
 {
+    private static Utility _instance;
+    public static Utility Instance => _instance;
+    public override void _EnterTree()
+    {
+        if (_instance != null) this.QueueFree();
+        _instance = this;
+    }
+
     public static int CountChar(ref string text, char character)
     {
         int output = 0;
@@ -59,22 +67,22 @@ public partial class Utility : Node
         }
     }
     
-    public static string SkillBBName(SkillElement type)
+    public string SkillBBName(SkillElement type)
     {
         switch (type)
         {
             case SkillElement.BLUNT:
-                return "[color=#979EDF]Blunt[/color]";
+                return $"[color=#979EDF]{Tr("T_SKT_BLUNT")}[/color]";
             case SkillElement.SLASH:
-                return "[color=#C86B36]Slash[/color]";
+                return $"[color=#C86B36]{Tr("T_SKT_SLASH")}[/color]";
             case SkillElement.PIERCE:
-                return "[color=#B868A3]Pierce[/color]";
+                return $"[color=#B868A3]{Tr("T_SKT_PIERCE")}[/color]";
             case SkillElement.FIRE:
-                return "[color=#FF4849]Fire[/color]";
+                return $"[color=#FF4849]{Tr("T_SKT_FIRE")}[/color]";
             case SkillElement.ICE:
-                return "[color=#3AB7F9]Ice[/color]";
+                return $"[color=#3AB7F9]{Tr("T_SKT_ICE")}[/color]";
             case SkillElement.LIGHTNING:
-                return "[color=#FFF936]Lightning[/color]";
+                return $"[color=#FFF936]{Tr("T_SKT_LIGHTNING")}[/color]";
             default:
                 throw new ArgumentException("Utility.SkillBBName does not contain " + type.ToString());
         }

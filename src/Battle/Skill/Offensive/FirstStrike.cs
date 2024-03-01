@@ -4,7 +4,7 @@ using Godot;
 public partial class FirstStrike: BattleSkill
 {
     private bool first;
-    public FirstStrike()
+    public FirstStrike(): base("s_firststrike")
     {
         name = "First Strike";
         type = SkillType.OFFENSIVE;

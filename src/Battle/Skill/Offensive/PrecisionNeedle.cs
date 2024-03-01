@@ -3,7 +3,7 @@ using Godot;
 [System.Serializable]
 public partial class PrecisionNeedle: BattleSkill
 {
-    public PrecisionNeedle()
+    public PrecisionNeedle(): base("s_precisionneedle")
     {
         name = "Precision Needle";
         type = SkillType.OFFENSIVE;

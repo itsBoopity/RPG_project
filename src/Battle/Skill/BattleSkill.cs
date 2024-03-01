@@ -4,6 +4,7 @@ using System;
 [Serializable]
 public abstract class BattleSkill
 {
+    public string Id { get; }
     public string name;
     public SkillType type;
     public TargettingType targetting = TargettingType.NONE;
@@ -15,6 +16,8 @@ public abstract class BattleSkill
     public bool snap = false;
 
     private string animationPath = "res://Objects/VFX/Hit.tscn";
+
+    public BattleSkill(string id) { Id = id; }
     
     // Encapsulates Execute. Actual skill effects are implemented in Execute.
     public bool Use(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency = 1f)

@@ -17,7 +17,7 @@ public partial class GameData : Node
     private BattleCharacter clausCharacter;
 
     // The rest of the party members
-    public CharacterEnum[] party;
+    public List<CharacterEnum> party;
     public List<CharacterEnum> bench;
 
     //returns the corresponding character based on enum
@@ -76,7 +76,7 @@ public partial class GameData : Node
     public void newSave() // Create New Save
     {
         clausCharacter = new BattleCharacter(CharacterEnum.CLAUS);
-        party = new CharacterEnum[3] {CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
+        party = new List<CharacterEnum>{CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
     }

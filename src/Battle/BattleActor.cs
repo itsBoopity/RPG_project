@@ -7,13 +7,13 @@ public abstract class BattleActor
     public string name;
     public int level = 1;
     public int stack = 0;
-    public int hp = 0, maxHp = 0;
+    public int hp = 0;
+    public int maxHp = 0;
     protected int atk = 0;
     protected int def = 0;
     protected int spd = 0;
-    
-    public bool turnActive = true;
     public List<BattleSkill> skills = new List<BattleSkill>();
+    public bool turnActive = true;
     public int[] status = new int[3];
 
     protected BattleActor Clone(BattleActor clone)

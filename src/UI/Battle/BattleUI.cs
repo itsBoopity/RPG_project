@@ -194,7 +194,6 @@ public partial class BattleUI : Control
         {
             bar.Deselect();
         }
-        GD.Print($"Small {index}");
         partyNode.GetChild<CharacterBar>(index).Select();
 
         // Update the currently viewed skill to the one of the new character.

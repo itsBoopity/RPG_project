@@ -27,8 +27,8 @@ public partial class SkillDescription : NinePatchRect
         type.Text = Utility.SkillBBName(skill.type);
         if (skill.type != SkillType.BASIC)
         {
-            cost.Text = "| [st]Cost[/st] " + skill.cost;
-            cooldown.Text = "| CD " + skill.cooldown;
+            cost.Text = $"| [st]{Tr("T_B_SKILLCOST")}[/st] " + skill.cost;
+            cooldown.Text = $"| {Tr("T_B_CD")} " + skill.cooldown;
         }
         else
         {
@@ -38,14 +38,14 @@ public partial class SkillDescription : NinePatchRect
 
         description.Text = "";
         if (Utility.IsPhysical(skill.element))
-            description.Text += "- Type: "  + Utility.SkillBBName(skill.element) + "/Physical\n";
+            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.element)}/{Tr("T_SKT_PHYSICAL")}\n";
         else if (Utility.IsMagical(skill.element))
-            description.Text += "- Type: "  + Utility.SkillBBName(skill.element) + "/Magical\n";
+            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.element)}/{Tr("T_SKT_MAGICAL")}\n";
         
         if (!skill.isAoE) description.Text += "- Target: Single\n\n";
         else description.Text += "- Target: Multiple\n\n";
 
-        description.Text += skill.Description();
+        description.Text += Tr(skill.Description());
 
         
         animationPlayer.Stop();

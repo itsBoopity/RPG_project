@@ -37,7 +37,6 @@ public partial class CharacterBar : Control
 
     public void Select()
     {
-        GD.Print("I am selecting!!!");
         selector.Show();
         selectPlayer.Stop();
         selectPlayer.Play("Select");
@@ -45,7 +44,6 @@ public partial class CharacterBar : Control
 
     public void Deselect()
     {
-        GD.Print("I've been deselected :(");
         selector.Hide();
         selectPlayer.Stop();
         selectPlayer.Play("RESET");

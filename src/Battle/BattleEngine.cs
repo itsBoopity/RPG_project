@@ -14,7 +14,7 @@ public partial class BattleEngine : Control
     private int selectedCharacter = -1;
     private List<BattleCharacter> party;
     private List<BattleCharacter> bench;
-    public List<Monster> monsters;
+    private List<Monster> monsters;
     public CustomTimer timer;
 
     // TODO: Should ControlState be here or in BattleUI?

@@ -2,11 +2,14 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// The main class and root scene facilitating battles.
+/// </summary>
 public partial class BattleEngine : Control
 {
     private BattleUI ui;
     public BattleUI Ui { get {return ui;} }
-    private Node sfx;
+    private BattleSfx sfx;
     private BattleSkill selectedSkill;
     private int selectedCharacter = -1;
     private List<BattleCharacter> party;
@@ -24,10 +27,10 @@ public partial class BattleEngine : Control
     {
         ui = GetNode<BattleUI>("UI");
         timer = GetNode<CustomTimer>("TurnTimer");
-        sfx = GetNode<Node>("Sfx");
+        sfx = GetNode<BattleSfx>("BattleSfx");
         enemyTurnSpeed = Global.Settings.enemyTurnSpeed;
     }
-    public override void _Input(InputEvent @event)
+    public override void _UnhandledKeyInput(InputEvent @event)
     {
         if (state != ControlState.FULLY_DISABLED)
         {
@@ -51,13 +54,14 @@ public partial class BattleEngine : Control
         }
     }
 
-    //Loads all the data and calls UpdateUI() at the end
+    /// <summary>
+    /// Loads all the data and calls UpdateUI() at the end
+    /// </summary>
+    /// <param name="battleSetup">The battle setup that contains enemy data, special effects and win conditions.</param>
     public void Initiate(BattleSetup battleSetup)
     {
         GameData data = Global.Data;
-
         selectedCharacter = -1;
-
         party = new List<BattleCharacter>();
         bench = new List<BattleCharacter>();
         foreach (CharacterEnum i in data.party)
@@ -205,6 +209,7 @@ public partial class BattleEngine : Control
     private void PlayerTurn()
     {
         // Generate spots for healing/buff/utility
+        
         EnterPlayerDefault();
 
         foreach (Monster monster in monsters)
@@ -220,6 +225,7 @@ public partial class BattleEngine : Control
         ui.UpdateAll(party, GetCurrentPartyMember());
 
         // Tick down cooldowns, statusi etc.
+
         SetTimer();
     }
     private async void EnemyTurn()
@@ -246,7 +252,6 @@ public partial class BattleEngine : Control
         UseUpTurn(GetCurrentPartyMember());
         ExitCurrentMode();
         ui.DisplayMissMonster(target);
-        // TODO: Play miss animation and sfx   
     }
 
     public void DoDamage(int damage, BattleActor user, BattleActor target) // damage is FINALIZED, this is just the engine doing the exact amount stated
@@ -315,7 +320,7 @@ public partial class BattleEngine : Control
     {
         if (index < GetCurrentPartyMember().skills.Count && GetCurrentPartyMember().turnActive)
         {
-            sfx.GetNode<AudioStreamPlayer>("SkillClick").Play();
+            sfx.RollClickPitchIndex(index);
             SelectAction(GetCurrentPartyMember().skills[index], index);
         }
         
@@ -326,7 +331,7 @@ public partial class BattleEngine : Control
         {
             return;
         }
-        sfx.GetNode<AudioStreamPlayer>("SkillClick").Play();
+        sfx.RollClickPitchIndex(index);
         SelectAction(basicSkills[index], index);
     }
 
@@ -335,12 +340,12 @@ public partial class BattleEngine : Control
         int isUsable = action.IsUsable(GetCurrentPartyMember());
         if (isUsable > 0)
         {
-            sfx.GetNode<AudioStreamPlayer>("Error").Play();
+            sfx.ErrorSound();
             if (isUsable == 1) ui.ShowCharacterMessage("Skill is in cooldown!");
 
             else if (isUsable == 2)
             {
-                ui.ShakeStackCount(GetCurrentPartyMember());
+                ui.ShakeStackCount(selectedCharacter);
                 ui.ShowCharacterMessage("Not enough stacks!");
             }
             return;
@@ -386,10 +391,10 @@ public partial class BattleEngine : Control
         }
         if (index == selectedCharacter) return;
 
-        sfx.GetNode<AudioStreamPlayer>("PartyBar").Play();
+        sfx.StrongClickPitchIndex(index);
 
         selectedCharacter = index;
-        ui.SelectCharacter(GetCurrentPartyMember());
+        ui.SelectCharacter(GetCurrentPartyMember(), index);
         ui.UpdateSkills(GetCurrentPartyMember());
         if (state != ControlState.ENEMY_TURN)
         {

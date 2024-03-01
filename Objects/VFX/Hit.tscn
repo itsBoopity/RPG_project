@@ -56,6 +56,7 @@ sfxSrc = [ExtResource("2"), ExtResource("5"), ExtResource("3")]
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 autoplay = true
+bus = &"Sfx"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 amount = 5

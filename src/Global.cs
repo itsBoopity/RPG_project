@@ -34,6 +34,8 @@ public partial class Global : Node
         Data.newSave();
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
         currentScene = GetTree().CurrentScene;
+        AddChild(battleEngine);
+        CallDeferred(MethodName.RemoveChild, battleEngine);
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)

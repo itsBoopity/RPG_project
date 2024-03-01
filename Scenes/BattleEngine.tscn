@@ -1,9 +1,10 @@
-[gd_scene load_steps=56 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=57 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
 [ext_resource type="Script" path="res://src/NodeExtensions/CustomTimer.cs" id="2_0hfn6"]
 [ext_resource type="Texture2D" uid="uid://bdv1cdejvowkd" path="res://Images/UI/filmbarBottom.png" id="3"]
+[ext_resource type="Script" path="res://src/Audio/BattleSfx.cs" id="3_445sj"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="4"]
 [ext_resource type="Script" path="res://src/UI/Battle/BattleUI.cs" id="5_tdtxk"]
 [ext_resource type="PackedScene" uid="uid://b8wob103hvoxb" path="res://Objects/UI/Battle/SkillBox.tscn" id="6"]
@@ -703,16 +704,20 @@ script = ExtResource("2")
 one_shot = true
 script = ExtResource("2_0hfn6")
 
-[node name="Sfx" type="Node" parent="."]
+[node name="BattleSfx" type="Node" parent="."]
+script = ExtResource("3_445sj")
 
-[node name="PartyBar" type="AudioStreamPlayer" parent="Sfx"]
+[node name="StrongClick" type="AudioStreamPlayer" parent="BattleSfx"]
 stream = ExtResource("16_5l314")
+bus = &"Sfx"
 
-[node name="SkillClick" type="AudioStreamPlayer" parent="Sfx"]
+[node name="RollClick" type="AudioStreamPlayer" parent="BattleSfx"]
 stream = ExtResource("29_r3ion")
+bus = &"Sfx"
 
-[node name="Error" type="AudioStreamPlayer" parent="Sfx"]
+[node name="ErrorSound" type="AudioStreamPlayer" parent="BattleSfx"]
 stream = ExtResource("30_5us6w")
+bus = &"Sfx"
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 1

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Godot;
 
 public partial class BattleUI : Control
@@ -187,20 +188,15 @@ public partial class BattleUI : Control
         characterMessage.ShowText(text);
     }
 
-    public void SelectCharacter(BattleCharacter character)
+    public void SelectCharacter(BattleCharacter character, int index)
     {
         foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
         {
             bar.Deselect();
         }
-        foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
-		{
-			if (bar.Who == character.who)
-			{
-				bar.Select();
-                break;
-			}
-		}
+        GD.Print($"Small {index}");
+        partyNode.GetChild<CharacterBar>(index).Select();
+
         // Update the currently viewed skill to the one of the new character.
         if (lastViewedActionIndex >= character.skills.Count)
         {
@@ -211,16 +207,9 @@ public partial class BattleUI : Control
             ViewActionDetail(character.skills[lastViewedActionIndex], lastViewedActionIndex);
         }
     }
-    public void ShakeStackCount(BattleCharacter character)
+    public void ShakeStackCount(int index)
     {
-        foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
-		{
-			if (bar.Who == character.who)
-			{
-				bar.ShakeStack();
-				break;
-			}
-		}
+        partyNode.GetChild<CharacterBar>(index).ShakeStack();
     }
 
     // Is handed an animation that wants to be played, and the party member's bar it should play on

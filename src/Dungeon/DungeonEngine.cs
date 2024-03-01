@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class DungeonEngine : Node2D
+public partial class DungeonEngine : Control
 {
     private int handSize;
     private List<DungeonCard> deck;
@@ -18,14 +18,22 @@ public partial class DungeonEngine : Node2D
     private int lastIndexUsed = -1;
     public override void _Ready()
     {
-        handUI = GetNode("Hand");
+        handUI = GetNode("%Hand");
 
-        handSizeLabel = GetNode<Label>("TopTab/HandSize/Current");
-        cardsLeftLabel = GetNode<Label>("TopTab/CardsLeft/Current");
+        handSizeLabel = GetNode<Label>("%HandSizeCount");
+        cardsLeftLabel = GetNode<Label>("%CardsLeftCount");
 
         cardSpawn = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn");
 
         if (Global.debugMode) LoadTest();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        // DungeonCard hotkeys
+        // if (@event.IsActionPressed("dungeon_card" + index) && this.Visible && !this.Disabled)
+        //     EmitSignal(SignalName.Pressed);
+        
     }
 
     private void LoadTest()
@@ -159,12 +167,6 @@ public partial class DungeonEngine : Node2D
             deck[n-1] = deck[index];
             deck[index] = endReplaced;          
         }
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (@event.IsActionPressed("debug_button"))
-            UpdateUIHand();
     }
 
     private void UpdateUIHand()

@@ -79,8 +79,6 @@ public partial class GameData : Node
         party = new CharacterEnum[3] {CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
-
-        
     }
 
 }

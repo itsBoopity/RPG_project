@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cq0oo5l62l4bc"]
+[gd_scene load_steps=16 format=3 uid="uid://cq0oo5l62l4bc"]
 
-[ext_resource type="Texture2D" uid="uid://bvc8lqnpfmchs" path="res://Images/UI/card.png" id="1"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_yjsvl"]
 [ext_resource type="Script" path="res://src/Dungeon/DungeonCardUI.cs" id="3"]
-[ext_resource type="Texture2D" uid="uid://cmbrjg3tai7ra" path="res://Images/UI/resource_Food.png" id="4"]
-[ext_resource type="Texture2D" uid="uid://glpq2hfdqwgq" path="res://Images/UI/template.png" id="7"]
-[ext_resource type="Texture2D" uid="uid://wbm2m2sco3v8" path="res://Images/UI/cardFrame.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://bvc8lqnpfmchs" path="res://Images/UI/Dungeon/DungeonCard/card.png" id="3_f6eyt"]
+[ext_resource type="Texture2D" uid="uid://glpq2hfdqwgq" path="res://Images/UI/Dungeon/DungeonCard/template.png" id="5_24cjn"]
+[ext_resource type="Texture2D" uid="uid://wbm2m2sco3v8" path="res://Images/UI/Dungeon/DungeonCard/cardFrame.png" id="5_affmc"]
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="12"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6181l"]
@@ -272,7 +271,7 @@ offset_right = 370.0
 offset_bottom = 602.0
 pivot_offset = Vector2(185, 337)
 mouse_filter = 2
-texture = ExtResource("1")
+texture = ExtResource("3_f6eyt")
 
 [node name="Hotkey" type="Label" parent="CardSprite"]
 layout_mode = 0
@@ -287,10 +286,10 @@ horizontal_alignment = 1
 [node name="Title" type="Label" parent="CardSprite"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 110.0
+offset_top = 102.0
 offset_right = 348.0
-offset_bottom = 166.0
-theme_override_font_sizes/font_size = 37
+offset_bottom = 142.0
+theme_override_font_sizes/font_size = 32
 text = "Card Name"
 horizontal_alignment = 1
 
@@ -307,26 +306,23 @@ text = "- it's time
 label_settings = SubResource("LabelSettings_6181l")
 autowrap_mode = 2
 
-[node name="Illustration" type="Sprite2D" parent="CardSprite"]
-position = Vector2(184, 249)
-texture = ExtResource("7")
+[node name="Illustration" type="TextureRect" parent="CardSprite"]
+layout_mode = 1
+offset_left = 33.0
+offset_top = 141.0
+offset_right = 333.0
+offset_bottom = 341.0
+texture = ExtResource("5_24cjn")
+stretch_mode = 4
 
-[node name="Frame" type="Sprite2D" parent="CardSprite"]
-position = Vector2(185, 248)
-texture = ExtResource("9")
-
-[node name="ResourceCost" type="Label" parent="CardSprite"]
-layout_mode = 0
-offset_left = 237.0
-offset_top = 519.0
-offset_right = 287.0
-offset_bottom = 571.0
-text = "-1"
-
-[node name="ResourceIcon" type="Sprite2D" parent="CardSprite"]
-position = Vector2(314, 542)
-scale = Vector2(0.4372, 0.4372)
-texture = ExtResource("4")
+[node name="Frame" type="TextureRect" parent="CardSprite"]
+layout_mode = 1
+offset_left = 33.0
+offset_top = 141.0
+offset_right = 333.0
+offset_bottom = 341.0
+texture = ExtResource("5_affmc")
+stretch_mode = 4
 
 [node name="HoverPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -340,9 +336,10 @@ libraries = {
 }
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
 
 [connection signal="button_down" from="." to="." method="OnButtonDown"]
 [connection signal="button_up" from="." to="." method="OnButtonUp"]
 [connection signal="mouse_entered" from="." to="." method="OnHover"]
 [connection signal="mouse_exited" from="." to="." method="OnHoverExit"]
-[connection signal="pressed" from="." to="." method="OnButtonPressed"]
+[connection signal="pressed" from="." to="." method="OnPressed"]

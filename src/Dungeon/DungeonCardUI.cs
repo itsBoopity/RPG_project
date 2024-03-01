@@ -1,13 +1,16 @@
 using Godot;
 
-public partial class DungeonCardUI : Control
+public partial class DungeonCardUI : BaseButton
 {
-    [Export]
-    private DungeonEngine dungeonEngine;
+    [Signal]
+    public delegate void CardSelectedEventHandler(int index);
+
+    /// <summary>
+    /// Used in signal to pass which button was pressed.
+    /// </summary>
     [Export(PropertyHint.Range, "0,4")]
     int index;
 
-    
     private Control cardSprite;
     private Label title;
     private Label desc;
@@ -30,7 +33,7 @@ public partial class DungeonCardUI : Control
         cardSprite = GetNode<Control>("CardSprite");
         title = GetNode<Label>("CardSprite/Title");
         desc = GetNode<Label>("CardSprite/Description");
-        GetNode<Label>("CardSprite/Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents("dungeon_card" + index)[0]).AsText();
+        GetNode<Label>("CardSprite/Hotkey").Text = InputMap.ActionGetEvents("dungeon_card" + index)[0].AsText();
 
         hoverPlayer = GetNode<AnimationPlayer>("HoverPlayer");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -39,8 +42,8 @@ public partial class DungeonCardUI : Control
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("dungeon_card" + index) && this.Visible)
-            OnButtonPressed();
+        if (@event.IsActionPressed("dungeon_card" + index) && this.Visible && !this.Disabled)
+            EmitSignal(SignalName.Pressed);
     }
 
     public void OnHover()
@@ -66,9 +69,9 @@ public partial class DungeonCardUI : Control
         this.Scale = Vector2.One;
     }
 
-    public void OnButtonPressed()
+    public void OnPressed()
     {
-        dungeonEngine.UseCard(index);
+        EmitSignal(SignalName.CardSelected, index);
     }
 
     public AnimationPlayer ActivateAnimation()

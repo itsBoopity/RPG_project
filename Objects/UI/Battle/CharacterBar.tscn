@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://g0xs816ob8i0" path="res://Images/CharacterIcon/Claus.png" id="8"]
 [ext_resource type="LabelSettings" uid="uid://gryk6lcwmns0" path="res://Font/LabelSettings/FancyText.tres" id="8_raaf4"]
 [ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="9"]
-[ext_resource type="Texture2D" uid="uid://bevtswbht80kd" path="res://Images/UI/battle_skillbox_select.png" id="11"]
+[ext_resource type="Texture2D" uid="uid://bevtswbht80kd" path="res://Images/UI/selector.png" id="10_1vbii"]
 
 [sub_resource type="FontVariation" id="FontVariation_jycq4"]
 base_font = ExtResource("6")
@@ -554,12 +554,11 @@ offset_top = 7.0
 offset_right = 475.0
 offset_bottom = 217.0
 pivot_offset = Vector2(220, 0)
-texture = ExtResource("11")
-region_rect = Rect2(0, 0, 136, 136)
-patch_margin_left = 20
-patch_margin_top = 20
-patch_margin_right = 20
-patch_margin_bottom = 20
+texture = ExtResource("10_1vbii")
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 11
+patch_margin_bottom = 12
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
 autoplay = "Blink"

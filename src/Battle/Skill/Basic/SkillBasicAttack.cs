@@ -1,9 +1,7 @@
-using Godot;
-
 [System.Serializable]
-public partial class BasicAttack: BattleSkill
+public partial class SkillBasicAttack: BattleSkill
 {
-    public BasicAttack(): base("s_basicattack")
+    public SkillBasicAttack(): base("s_basicattack")
     {
         name = "T_SKL_BASICATTACK_TITLE";
         type = SkillType.BASIC;

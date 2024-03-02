@@ -14,11 +14,27 @@ using System.IO;
 // Flags
 public partial class GameData : Node
 {
+    private static GameData _instance;
     private BattleCharacter clausCharacter;
 
     // The rest of the party members
-    public List<CharacterEnum> party;
-    public List<CharacterEnum> bench;
+    private List<CharacterEnum> party;
+    private List<CharacterEnum> bench;
+
+    public static GameData Instance => _instance;
+
+    public override void _EnterTree()
+    {
+        if (_instance != null) this.QueueFree();
+        _instance = this;
+    }
+
+    // TODO: currently required to initialize data when launching directly into dungeon engine scene for texting,
+    // remove after adding a proper start menu
+    public override void _Ready()
+    {
+        newSave();
+    }
 
     //returns the corresponding character based on enum
     public BattleCharacter GetCharacter(CharacterEnum characterEnum)
@@ -40,6 +56,27 @@ public partial class GameData : Node
             clausCharacter = newValue;
         else
             throw new System.ArgumentException("GameData.UpdateCharacter does not have " + newValue.who + " enum implemented.");
+    }
+
+    public List<BattleCharacter> GetBattleParty()
+    {
+        List<BattleCharacter> output = new List<BattleCharacter>();
+        foreach (CharacterEnum i in party)
+        {
+            if (GetCharacter(i) != null)
+                output.Add(GetCharacter(i).Clone());
+        }
+        return output;
+    }
+
+    public List<BattleCharacter> GetBattleBench()
+    {
+        List<BattleCharacter> output = new List<BattleCharacter>();
+        foreach (CharacterEnum i in bench)
+        {
+            output.Add(GetCharacter(i).Clone());
+        }
+        return output;
     }
 
     // All these functions handle the file writing itself. The UI should ask for confirmation/warn overwrite before calling these.

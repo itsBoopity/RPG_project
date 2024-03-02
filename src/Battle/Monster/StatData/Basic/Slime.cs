@@ -18,7 +18,7 @@ public partial class Slime: Monster
         def = 1;
         spd = 2;
 
-        skills.Add(new BasicAttack());
+        skills.Add(new SkillBasicAttack());
     }
 
     public override void LoadUpcomingTurn(BattleEngine battleEngine)

@@ -13,8 +13,8 @@ public partial class BattleCharacter: BattleActor
                 atk = 3;
                 def = 1;
                 spd = 8;
-                skills.Add(new FirstStrike());
-                skills.Add(new PrecisionNeedle());
+                skills.Add(new SkillFirstStrike());
+                skills.Add(new SkillPrecisionNeedle());
                 break;
         }
         Reset();

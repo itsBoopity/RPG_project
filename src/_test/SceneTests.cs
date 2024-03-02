@@ -4,7 +4,7 @@ public partial class SceneTests : Node
 {
     public void BattleEngineTest()
     {
-        Global.Data.newSave();
+        GameData.Instance.newSave();
         BattleEngine battleEngine = Utility.InstanceBattle();
         AddChild(battleEngine);
         BattleSetup testSetup = new BattleSetup();
@@ -15,8 +15,8 @@ public partial class SceneTests : Node
 
     public void SaveLoadTest()
     {
-        Global.Data.newSave();
-        Global.Data.Save("testSave.dat");
-        Global.Data.Load("testSave.dat");
+        GameData.Instance.newSave();
+        GameData.Instance.Save("testSave.dat");
+        GameData.Instance.Load("testSave.dat");
     }
 }

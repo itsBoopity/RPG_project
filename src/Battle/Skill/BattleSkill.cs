@@ -49,7 +49,7 @@ public abstract class BattleSkill
     public abstract string Description();
     public Texture2D GetIcon()
     {
-        return GD.Load<Texture2D>("res://Images/UI/Battle/SkillIcon/" + this.GetType().Name + ".tres");
+        return GD.Load<Texture2D>($"res://Images/UI/Battle/SkillIcon/{Id}.tres");
     }
 
     public Node2D GetAnimation()

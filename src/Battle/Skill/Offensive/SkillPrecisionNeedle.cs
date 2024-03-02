@@ -1,9 +1,6 @@
-using Godot;
-
-[System.Serializable]
-public partial class PrecisionNeedle: BattleSkill
+public partial class SkillPrecisionNeedle: BattleSkill
 {
-    public PrecisionNeedle(): base("s_precisionneedle")
+    public SkillPrecisionNeedle(): base("s_precisionneedle")
     {
         name = "Precision Needle";
         type = SkillType.OFFENSIVE;

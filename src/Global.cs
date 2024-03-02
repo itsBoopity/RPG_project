@@ -14,7 +14,7 @@ public partial class Global : Node
 
     public static Global Instance => _instance;
     public static GameSettings Settings { get => settings; set => settings = value; }
-    public static GameData Data { get => data; set => data = value; }
+    private static GameData Data { get => data; set => data = value; }
 
     public override void _EnterTree()
     {

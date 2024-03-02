@@ -21,7 +21,9 @@ public partial class BattleEngine : Control
     private ControlState state;
     private float enemyTurnSpeed;
 
-    private readonly BattleSkill[] basicSkills = { new BasicAttack() };
+    private readonly BattleSkill[] basicSkills = { 
+        SkillDatabase.GetSkillData("s_basicattack")
+        };
 
     public override void _Ready()
     {
@@ -60,19 +62,9 @@ public partial class BattleEngine : Control
     /// <param name="battleSetup">The battle setup that contains enemy data, special effects and win conditions.</param>
     public void Initiate(BattleSetup battleSetup)
     {
-        GameData data = Global.Data;
         selectedCharacter = -1;
-        party = new List<BattleCharacter>();
-        bench = new List<BattleCharacter>();
-        foreach (CharacterEnum i in data.party)
-        {
-            if (data.GetCharacter(i) != null)
-                party.Add(data.GetCharacter(i).Clone());
-        }
-        foreach (CharacterEnum i in data.bench)
-        {
-            bench.Add(data.GetCharacter(i).Clone());
-        }
+        party = GameData.Instance.GetBattleParty();
+        bench = GameData.Instance.GetBattleBench();
         monsters = new List<Monster>();
         foreach (int i in battleSetup.monsterID)
         {
@@ -94,7 +86,7 @@ public partial class BattleEngine : Control
         GD.Print("[UNFINISHED] Don't forget to code in adding of rewards. - BattleEngine.Finish()");
         timer.Stop();
         ui.ClearMonsters();
-        GameData data = Global.Data;
+        GameData data = GameData.Instance;
         foreach (BattleCharacter i in party)
         {
             data.UpdateCharacter(i.Reset());

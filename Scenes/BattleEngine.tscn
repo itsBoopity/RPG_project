@@ -25,12 +25,12 @@
 [ext_resource type="Theme" uid="uid://d2nrmjx36a1ys" path="res://Font/Theme/PrintedText.tres" id="18_p35u0"]
 [ext_resource type="Script" path="res://src/UI/Battle/Reticle.cs" id="19"]
 [ext_resource type="Texture2D" uid="uid://bo7j48vbyyg7l" path="res://Images/UI/Battle/reticle.png" id="20"]
-[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/BasicAttack.tres" id="23_rvc8y"]
 [ext_resource type="Script" path="res://src/UI/Battle/TurnAnnouncement.cs" id="24_0xso1"]
 [ext_resource type="PackedScene" uid="uid://dbmterbq660bd" path="res://Objects/UI/FadingMessage.tscn" id="24_xsgoi"]
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="25_vkcmm"]
 [ext_resource type="FontFile" uid="uid://4byjtcu5sf4u" path="res://Font/PTSerif-Bold.ttf" id="26_tibu4"]
 [ext_resource type="Texture2D" uid="uid://ceoubc440y0bd" path="res://Images/UI/filmbarTop.png" id="27"]
+[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/s_basicattack.tres" id="27_ovefk"]
 [ext_resource type="FontFile" uid="uid://dwv40r1mukx3j" path="res://Font/PTSerif-Italic.ttf" id="27_vofdh"]
 [ext_resource type="AudioStream" uid="uid://dcmnty8s5i31p" path="res://Audio/SFX/click2.wav" id="29_r3ion"]
 [ext_resource type="AudioStream" uid="uid://c7ljmivjse2v4" path="res://Audio/SFX/error_sound.wav" id="30_5us6w"]
@@ -1042,7 +1042,7 @@ secondRow = true
 texture = ExtResource("17_ifx84")
 
 [node name="Icon" parent="UI/BasicSkills/0/RootTexture/Fill" index="0"]
-texture = ExtResource("23_rvc8y")
+texture = ExtResource("27_ovefk")
 
 [node name="Countdown" parent="UI/BasicSkills/0/RootTexture" index="1"]
 visible = false

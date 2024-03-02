@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b8wob103hvoxb"]
 
-[ext_resource type="Texture2D" uid="uid://crvt1ge80pg55" path="res://Images/UI/Battle/SkillIcon/FirstStrike.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://crvt1ge80pg55" path="res://Images/UI/Battle/SkillIcon/s_firststrike.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://jhpsmj20h45u" path="res://Images/UI/Battle/FillBASIC.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://bjq823kya5t8v" path="res://Images/UI/Battle/skillBox.png" id="4"]
 [ext_resource type="Script" path="res://src/UI/Battle/SkillBoxUI.cs" id="5"]

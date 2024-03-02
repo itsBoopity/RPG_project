@@ -1,10 +1,7 @@
-using Godot;
-
-[System.Serializable]
-public partial class FirstStrike: BattleSkill
+public partial class SkillFirstStrike: BattleSkill
 {
     private bool first;
-    public FirstStrike(): base("s_firststrike")
+    public SkillFirstStrike(): base("s_firststrike")
     {
         name = "First Strike";
         type = SkillType.OFFENSIVE;

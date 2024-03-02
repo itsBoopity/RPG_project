@@ -41,15 +41,20 @@ public partial class DungeonEngine : Control
         GlobalAudio.Instance.PlayMusic("Music/StreamingStreamingEverFlowing.ogg");
 
         List<DungeonCard> deckLoad = new List<DungeonCard>();
-        // Fill with cards
 
-        BattleSetup twoSlimes = new BattleSetup(); twoSlimes.monsterID.Add(0); twoSlimes.monsterID.Add(0);
+        BattleSetup twoSlimes = new();
+        twoSlimes
+            .AddMonsterId(0)
+            .AddMonsterId(0);
 
-        BattleSetup oneSlime = new BattleSetup(); oneSlime.monsterID.Add(0);
-        deckLoad.Add(new MonsterCard(oneSlime));
-        deckLoad.Add(new MonsterCard(oneSlime));
-        deckLoad.Add(new MonsterCard(oneSlime));
-        deckLoad.Add(new MonsterCard(oneSlime));
+        BattleSetup oneSlime = new();
+        oneSlime
+            .AddMonsterId(0);
+        
+        for (int i=0; i<4; i++)
+        {
+            deckLoad.Add(new MonsterCard(oneSlime));
+        }
 
         DungeonCard bossLoad = new MonsterCard(twoSlimes, true);
         Initiate(deckLoad, bossLoad, 4);

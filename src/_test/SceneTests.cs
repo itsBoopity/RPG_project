@@ -7,9 +7,10 @@ public partial class SceneTests : Node
         GameData.Instance.newSave();
         BattleEngine battleEngine = Utility.InstanceBattle();
         AddChild(battleEngine);
-        BattleSetup testSetup = new BattleSetup();
-        testSetup.monsterID.Add(0);
-        testSetup.monsterID.Add(0);
+        BattleSetup testSetup = new();
+        testSetup
+            .AddMonsterId(0)
+            .AddMonsterId(0);
         battleEngine.Initiate(testSetup);
     }
 

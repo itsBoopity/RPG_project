@@ -17,7 +17,6 @@ public partial class BattleEngine : Control
     private List<Monster> monsters;
     public CustomTimer timer;
 
-    // TODO: Should ControlState be here or in BattleUI?
     private ControlState state;
     private float enemyTurnSpeed;
 
@@ -66,7 +65,7 @@ public partial class BattleEngine : Control
         party = GameData.Instance.GetBattleParty();
         bench = GameData.Instance.GetBattleBench();
         monsters = new List<Monster>();
-        foreach (int i in battleSetup.monsterID)
+        foreach (int i in battleSetup.MonsterIds)
         {
             monsters.Add(MonsterFactory.Create(i));
         }
@@ -97,46 +96,37 @@ public partial class BattleEngine : Control
         }
         GetNode<Global>("/root/Global").EndBattle();
     }
-    private void SetTimer()
-    {
-        if (Global.Settings.timerEnabled)
-        {
-            float partySpeed = 0, enemySpeed = 1;
-            foreach (BattleActor i in party)
-            {
-                partySpeed += i.GetSpd();
-            }
-            foreach (BattleActor i in monsters)
-            {
-                enemySpeed += i.GetSpd();
-            }
-            float ratio = partySpeed/enemySpeed;
-            int coefficient = 0;
 
-            if (ratio < 0.5)
-            {
-                coefficient = -5;
-            }
-            else if (ratio < 1)
-            {
-                coefficient = Godot.Mathf.RoundToInt(ratio * 10) - 10;
-            }
-            else if (ratio > 2)
-            {
-                coefficient = 10;
-            }
-            else if (ratio > 1)
-            {
-                coefficient = Godot.Mathf.RoundToInt((ratio - 1) * 10);
-            }
-            timer.CustomStart(10 + coefficient);
+    // ---------------------- GETTERS --------------------------------------------------
+    public BattleCharacter GetPartyMember(int index)
+    {
+        if (index >= party.Count)
+        {
+            throw new ArgumentException("BattleEngine.GetPartyMember index out of bounds.");
+        }
+        else
+        {
+            return party[index];
         }
     }
 
-    // ---------------------- STATE LOGIC ----------------------------------------------
-    // --------------------------------------------------------------------------------
+    public int GetPartySize()
+    {
+        return party.Count;
+    }
 
-    // Sets the state and updates the infolabel to show the appropriate state
+    /// <summary>
+    /// Returns the party member that is currently selected and being controlled.
+    /// </summary>
+    public BattleCharacter GetCurrentPartyMember()
+    {
+        return GetPartyMember(selectedCharacter);
+    }
+
+    // ---------------------- STATE LOGIC ----------------------------------------------
+    /// <summary>
+    /// Sets the ControlState and updates UI to reflect that.
+    /// </summary>
     private void SetState(ControlState state)
     {
         this.state = state;
@@ -195,9 +185,36 @@ public partial class BattleEngine : Control
             // TODO: Show the party, model,skill, skillDesc UI again. Hide the enemy estimates;
         }
     }
-    // ---------------------- END OF STATE LOGIC ------------------------------------------
 
     // ---------------------- GAME LOGIC --------------------------------------------------
+    private void CalculateAndStartTimer()
+    {
+        if (Global.Settings.timerEnabled)
+        {
+            float partySpeed = 0.0f, enemySpeed = 1.0f;
+            foreach (BattleActor i in party)
+            {
+                partySpeed += i.GetSpd();
+            }
+            foreach (BattleActor i in monsters)
+            {
+                enemySpeed += i.GetSpd();
+            }
+            float ratio = partySpeed/enemySpeed;
+            float speedFactor = 0.0f;
+
+            if (ratio < 1.0)
+            {
+                speedFactor = Math.Max(-5.0f, ratio * 10.0f - 10.0f);
+            }
+            else if (ratio > 1.0)
+            {
+                speedFactor = Math.Min((ratio - 1.0f) * 10.0f, 10.0f);
+            }
+            timer.CustomStart(10.0f + speedFactor);
+        }
+    }
+
     private void PlayerTurn()
     {
         // Generate spots for healing/buff/utility
@@ -218,7 +235,7 @@ public partial class BattleEngine : Control
 
         // Tick down cooldowns, statusi etc.
 
-        SetTimer();
+        CalculateAndStartTimer();
     }
     private async void EnemyTurn()
     {
@@ -260,6 +277,7 @@ public partial class BattleEngine : Control
         {
             ui.DisplayDamageCharacter(damage);
         }
+
         if (target.hp <= 0)
         {
             BattleActorDefeated(target);
@@ -312,19 +330,15 @@ public partial class BattleEngine : Control
     {
         if (index < GetCurrentPartyMember().skills.Count && GetCurrentPartyMember().turnActive)
         {
-            sfx.RollClickPitchIndex(index);
             SelectAction(GetCurrentPartyMember().skills[index], index);
         }
-        
     }
     public void SelectBasicSkill(int index)
     {
-        if (index >= basicSkills.Length)
+        if (index < basicSkills.Length && GetCurrentPartyMember().turnActive)
         {
-            return;
-        }
-        sfx.RollClickPitchIndex(index);
-        SelectAction(basicSkills[index], index);
+            SelectAction(basicSkills[index], index);
+        }        
     }
 
     public void SelectAction(BattleSkill action, int index)
@@ -333,8 +347,10 @@ public partial class BattleEngine : Control
         if (isUsable > 0)
         {
             sfx.ErrorSound();
-            if (isUsable == 1) ui.ShowCharacterMessage("Skill is in cooldown!");
-
+            if (isUsable == 1)
+            {
+                ui.ShowCharacterMessage("Skill is in cooldown!");
+            } 
             else if (isUsable == 2)
             {
                 ui.ShakeStackCount(selectedCharacter);
@@ -342,7 +358,7 @@ public partial class BattleEngine : Control
             }
             return;
         }
-
+        sfx.RollClickPitchIndex(index);
         if (action.targetting == TargettingType.ENEMY_TARGET)
         {
             selectedSkill = action;
@@ -413,45 +429,25 @@ public partial class BattleEngine : Control
         ui.UpdateCharacterBars(party);
         ui.HideCharacterModel();
         ui.UpdateSkills(GetCurrentPartyMember());
-        CheckForTurns();
-    }
-
-    // Checks if player still has turns, if not enemy turn time
-    private void CheckForTurns()
-    {
-        foreach (BattleCharacter i in party)
-        {
-            if (i.turnActive) return;
-        }
-        if (monsters.Count != 0)
+        if (PlayerTurnFinished() && monsters.Count > 0)
         {
             EnemyTurn();
         }
     }
 
-    // ---------------------- GETTERS --------------------------------------------------
-    public BattleCharacter GetPartyMember(int index)
-    {
-        if (index >= party.Count)
-        {
-            throw new ArgumentException("BattleEngine.GetPartyMember index out of bounds.");
-        }
-        else
-        {
-            return party[index];
-        }
-    }
-
-    public int GetPartySize()
-    {
-        return party.Count;
-    }
-
     /// <summary>
-    /// Returns the party member that is currently selected and being controlled.
+    /// Checks if all of player's party members have finished acting this turn.
     /// </summary>
-    public BattleCharacter GetCurrentPartyMember()
+    /// <returns>True if all finished, false if not yet.</returns>
+    private bool PlayerTurnFinished()
     {
-        return GetPartyMember(selectedCharacter);
+        foreach (BattleCharacter i in party)
+        {
+            if (i.turnActive)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

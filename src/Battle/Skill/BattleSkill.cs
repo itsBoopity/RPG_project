@@ -1,7 +1,6 @@
 using Godot;
 using System;
 
-[Serializable]
 public abstract class BattleSkill
 {
     public string Id { get; }

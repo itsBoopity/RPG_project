@@ -48,9 +48,9 @@ public partial class MonsterModel : CanvasGroup
             if (hpBar.Value != owner.hp)
             {
                 Tween tween = CreateTween();
-                tween.TweenProperty(hpBar, "value", owner.hp, 0.2f).
-                    SetEase(Tween.EaseType.InOut).
-                    SetTrans(Tween.TransitionType.Elastic);
+                tween.TweenProperty(hpBar, "value", owner.hp, 0.2f)
+                    .SetEase(Tween.EaseType.InOut)
+                    .SetTrans(Tween.TransitionType.Elastic);
             }
         }
     }

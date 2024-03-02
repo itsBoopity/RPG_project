@@ -2,6 +2,8 @@ using Godot;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Text.Json;
+using System;
 
 
 // Save File Structure:
@@ -15,9 +17,7 @@ using System.IO;
 public partial class GameData : Node
 {
     private static GameData _instance;
-    private BattleCharacter clausCharacter;
-
-    // The rest of the party members
+    private CharacterData cdClaus;
     private List<CharacterEnum> party;
     private List<CharacterEnum> bench;
 
@@ -36,55 +36,63 @@ public partial class GameData : Node
         newSave();
     }
 
-    //returns the corresponding character based on enum
-    public BattleCharacter GetCharacter(CharacterEnum characterEnum)
+    /// <summary>
+    /// Returns the corresponding CharacterData.
+    /// </summary>
+    public CharacterData GetCharacter(CharacterEnum characterEnum)
     {
         switch (characterEnum)
         {
             case CharacterEnum.CLAUS:
-                return clausCharacter;
+                return cdClaus;
             default:
-                return null;
+                throw new ArgumentException($"GameData::GetCharacter does not recognize enum: {characterEnum}");
         }
     }
-    //<summary>
-    // Takes in character and sets the corresponding character to it. Uses .who to decide who is
-    //</summary>
+    /// <summary>
+    /// Updates CharacterData using BattleCharacter
+    /// </summary>
     public void UpdateCharacter(BattleCharacter newValue)
     {
-        if (newValue.who == CharacterEnum.CLAUS)
-            clausCharacter = newValue;
-        else
-            throw new System.ArgumentException("GameData.UpdateCharacter does not have " + newValue.who + " enum implemented.");
+        GetCharacter(newValue.who).UpdateData(newValue);
     }
 
+    /// <summary>
+    /// Creates a list of BattleCharacters in the main party
+    /// </summary>
     public List<BattleCharacter> GetBattleParty()
     {
         List<BattleCharacter> output = new List<BattleCharacter>();
-        foreach (CharacterEnum i in party)
+        foreach (CharacterEnum who in party)
         {
-            if (GetCharacter(i) != null)
-                output.Add(GetCharacter(i).Clone());
+            if (who != CharacterEnum.NULL)
+            {
+                output.Add(CharacterBattleDataConvertor.ToBattleCharacter(GetCharacter(who)));
+            }
         }
         return output;
     }
 
+    /// <summary>
+    /// Creates a list of BattleCharacters in the bench
+    /// </summary>
     public List<BattleCharacter> GetBattleBench()
     {
         List<BattleCharacter> output = new List<BattleCharacter>();
-        foreach (CharacterEnum i in bench)
+        foreach (CharacterEnum who in bench)
         {
-            output.Add(GetCharacter(i).Clone());
+            output.Add(CharacterBattleDataConvertor.ToBattleCharacter(GetCharacter(who)));
         }
         return output;
     }
 
-    // All these functions handle the file writing itself. The UI should ask for confirmation/warn overwrite before calling these.
+    
     public void Save(string filePath)
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        Directory.CreateDirectory(Godot.ProjectSettings.GlobalizePath("user://save"));
-        FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.OpenOrCreate);
+        Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://save"));
+        FileStream file = File.Open(ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.OpenOrCreate);
+
+        // string oneElement = JsonSerializer.Serialize<CharacterData>(cdClaus)
 
         //BinaryFormatter is obsolete and dangerous, use something else instead
         // bf.Serialize(file, "v0.0.1");
@@ -92,6 +100,9 @@ public partial class GameData : Node
         // bf.Serialize(file,playerCharacter);
         // bf.Serialize(file,clausCharacter);
         // bf.Serialize(file,party);
+         
+
+
 
         file.Close();
     }
@@ -112,7 +123,7 @@ public partial class GameData : Node
 
     public void newSave() // Create New Save
     {
-        clausCharacter = new BattleCharacter(CharacterEnum.CLAUS);
+        cdClaus = CharacterDataConstructor.Create(CharacterEnum.CLAUS);
         party = new List<CharacterEnum>{CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];

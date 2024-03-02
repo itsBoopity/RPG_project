@@ -1,7 +1,20 @@
+using System.Collections.Generic;
+
 public partial class BattleCharacter: BattleActor
 {
     public CharacterEnum who;
-    public BattleCharacter() {}
+    private BattleCharacter() {}
+    public BattleCharacter(string name, CharacterEnum who, int hp, int maxHp, int atk, int def, int spd, List<BattleSkill> skills)
+    {
+        this.name = name;
+        this.who = who;
+        this.hp = hp;
+        this.maxHp = maxHp;
+        this.atk = atk;
+        this.def = def;
+        this.spd = spd;
+        this.skills = skills;
+    }
     public BattleCharacter(CharacterEnum character)
     {
         switch(character)
@@ -21,7 +34,7 @@ public partial class BattleCharacter: BattleActor
     }
     public BattleCharacter Clone()
     {
-        BattleCharacter clone = new BattleCharacter();
+        BattleCharacter clone = new();
         base.Clone(clone);
         clone.who = who;
 

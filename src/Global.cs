@@ -3,7 +3,6 @@ using Godot;
 public partial class Global : Node
 {
     private static Global _instance;
-    private static GameData data = new GameData();
     private static GameSettings settings = new GameSettings();
 
     private BattleEngine battleEngine = GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instantiate<BattleEngine>();
@@ -14,7 +13,6 @@ public partial class Global : Node
 
     public static Global Instance => _instance;
     public static GameSettings Settings { get => settings; set => settings = value; }
-    private static GameData Data { get => data; set => data = value; }
 
     public override void _EnterTree()
     {
@@ -31,7 +29,6 @@ public partial class Global : Node
     public override void _Ready()
     {
         GD.Randomize();
-        Data.newSave();
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
         currentScene = GetTree().CurrentScene;
         AddChild(battleEngine);
@@ -45,11 +42,6 @@ public partial class Global : Node
                 GetWindow().Mode = Window.ModeEnum.Windowed;
             else
                 GetWindow().Mode = Window.ModeEnum.Fullscreen;
-    }
-
-    public void LoadSave(string path)
-    {
-        Data.Load(path);
     }
 
     /// <summary>

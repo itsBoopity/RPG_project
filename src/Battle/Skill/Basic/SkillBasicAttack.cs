@@ -1,4 +1,3 @@
-[System.Serializable]
 public partial class SkillBasicAttack: BattleSkill
 {
     public SkillBasicAttack(): base("s_basicattack")

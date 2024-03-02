@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 public partial class CharacterModelRack : Control
 {
-    private Dictionary<string, Node2D> models = new Dictionary<string, Node2D>();
+    private Dictionary<string, Node2D> models = new();
 
     public override void _ExitTree()
     {

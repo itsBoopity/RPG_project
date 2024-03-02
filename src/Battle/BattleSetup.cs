@@ -6,10 +6,20 @@ using System.Collections.Generic;
 [Serializable]
 public partial class BattleSetup: Godot.GodotObject
 {
-    public List<int> monsterID = new List<int>();
-    public BattleWinCondition winCondition = BattleWinCondition.DEFEAT_ALL;
+    private List<int> monsterIds = new();
+    public List<int> MonsterIds { get {return monsterIds;} }
+
+    private BattleWinCondition winCondition = BattleWinCondition.DEFEAT_ALL;
+    public BattleWinCondition WinCondition { get {return winCondition;} }
 
     ~BattleSetup() { this.Free(); }
+
+    public BattleSetup AddMonsterId(int monsterId)
+    {
+        monsterIds.Add(monsterId);
+        return this;
+    }
+
 
     //BattleCondition[] battleConditions;
     // public void ExecuteConditions(BattleEngine battleEngine)

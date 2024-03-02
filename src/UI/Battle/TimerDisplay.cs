@@ -1,9 +1,13 @@
 using Godot;
 
+/// <summary>
+/// UI Element that displays the remaining time of CustomTimer specified by Export.
+/// </summary>
 public partial class TimerDisplay : Node
 {
     private ProgressBar bar;
     private Label label;
+    private Tween tween;
 
     [Export]
     private CustomTimer timer;
@@ -11,6 +15,7 @@ public partial class TimerDisplay : Node
     {
         bar = GetNode<ProgressBar>("Bar");
         label = GetNode<Label>("Label");
+        timer.Stopped += Stop;
         timer.Timeout += Stop;
         timer.Started += StartTimer;
         SetProcess(false);
@@ -18,18 +23,25 @@ public partial class TimerDisplay : Node
     
     public void Stop()
     {
-        timer.Stop();
+        GD.Print("Not fast enough!");
+        if (tween.IsRunning())
+        {
+            tween.Kill();
+        }
         SetProcess(false);
     }
     public void StartTimer(double length)
     {
-        timer.Start(length);
         bar.MaxValue = length;
-        SetProcess(true);
+        tween = GetTree().CreateTween();
+        tween.TweenProperty(bar, "value", length, 0.1f)
+            .SetEase(Tween.EaseType.InOut);
+        tween.TweenCallback(Callable.From(() => SetProcess(true)));
     }
 
     public override void _Process(double delta)
     {
+        // GD.Print(timer.TimeLeft);
         label.Text = timer.TimeLeft.ToString("F1");
         bar.Value = timer.TimeLeft;
     }

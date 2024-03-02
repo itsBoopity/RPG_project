@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-[Serializable]
 public abstract class BattleActor
 {
     public string name;
@@ -12,7 +11,7 @@ public abstract class BattleActor
     protected int atk = 0;
     protected int def = 0;
     protected int spd = 0;
-    public List<BattleSkill> skills = new List<BattleSkill>();
+    public List<BattleSkill> skills = new();
     public bool turnActive = true;
     public int[] status = new int[3];
 

@@ -4,14 +4,13 @@ using System.Collections.Generic;
 
 public static class SkillDatabase
 {
-	private static readonly Dictionary<string, Type> db = new Dictionary<string, Type>{
-		{"s_basicattack", typeof(SkillBasicAttack)},
-		{"s_firststrike", typeof(SkillFirstStrike)},
-		{"s_precisionneedle", typeof(SkillPrecisionNeedle)},
-		
+	private static readonly Dictionary<SkillId, Type> db = new() {
+		{SkillId.BasicAttack, typeof(SkillBasicAttack)},
+		{SkillId.FirstStrike, typeof(SkillFirstStrike)},
+		{SkillId.PrecisionNeedle, typeof(SkillPrecisionNeedle)},
 	};
 
-	public static BattleSkill GetSkillData(string id)
+	public static BattleSkill GetSkillData(SkillId id)
 	{
 		if (!db.ContainsKey(id))
 		{

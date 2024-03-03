@@ -1,22 +1,33 @@
 using Godot;
-using System;
 
 public abstract class BattleSkill
 {
-    public string Id { get; }
-    public string name;
-    public SkillType type;
-    public TargettingType targetting = TargettingType.NONE;
-    public SkillElement element = SkillElement.NONE;
-    public bool isAoE = false;
-    public int cost;
-    public int cooldown;
+    public readonly SkillId id;
+    public readonly string name;
+    public readonly SkillType type;
+    public readonly SkillElement element = SkillElement.NONE;
+    public readonly TargettingType targetting = TargettingType.NONE;
+    public readonly bool isAoE = false;
+    public readonly int cost;
+    public readonly int cooldown;
+    public readonly bool snap = false;
     public int currentCooldown = 0;
-    public bool snap = false;
 
     private string animationPath = "res://Objects/VFX/Hit.tscn";
 
-    public BattleSkill(string id) { Id = id; }
+    public BattleSkill( SkillId id, string name, SkillType skillType, SkillElement element,
+                        TargettingType targetting, bool isAoE, int cost, int cooldown, bool snap)
+    { 
+        this.id = id; 
+        this.name = name;
+        this.type = skillType;
+        this.element = element;
+        this.targetting = targetting;
+        this.isAoE = isAoE;
+        this.cost = cost;
+        this.cooldown = cooldown;
+        this.snap = snap;
+    }
     
     // Encapsulates Execute. Actual skill effects are implemented in Execute.
     public bool Use(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency = 1f)
@@ -48,7 +59,7 @@ public abstract class BattleSkill
     public abstract string Description();
     public Texture2D GetIcon()
     {
-        return GD.Load<Texture2D>($"res://Images/UI/Battle/SkillIcon/{Id}.tres");
+        return GD.Load<Texture2D>($"res://Images/UI/Battle/SkillIcon/{id}.tres");
     }
 
     public Node2D GetAnimation()

@@ -1,10 +1,11 @@
 using Godot;
+using System.Collections.Generic;
 
 public abstract class Monster: BattleActor
-{ 
-    BattleEngine battleEngine = null;
-
-    public bool targettingEnabled = false; // Whether clicks on monsters should be read;
+{
+    public readonly MonsterId id;
+    
+    public bool targettingEnabled = false;
     protected MonsterModel model = null;
 
     // The default damage modifier that gets used when non targetting offensive skills are used 
@@ -14,8 +15,11 @@ public abstract class Monster: BattleActor
     protected int targetCharacter = 0;
     protected int targetSkill = 0;
 
-    public Monster()
+    public Monster( MonsterId id, string name, int level, int hp, int maxHp,
+                            int atk, int def, int spd, List<BattleSkill> skills)
+        : base(name, level, hp, maxHp, atk, def, spd, skills)
     {
+        this.id = id;
         model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instantiate<MonsterModel>();
         model.SetOwner(this);
     }
@@ -26,11 +30,6 @@ public abstract class Monster: BattleActor
         //model.QueueFree();
         model.AnimateDefeat();
         model = null;
-    }
-
-    public void Initiate(BattleEngine battleEngine)
-    {
-        this.battleEngine = battleEngine;
     }
 
     public MonsterModel GetModel()

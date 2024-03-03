@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 
+
+/// <summary>
+/// A class representing general player character data. 
+/// </summary>
 [Serializable]
 public class CharacterData
 {

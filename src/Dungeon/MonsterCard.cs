@@ -1,5 +1,3 @@
-using Godot;
-
 public partial class MonsterCard: DungeonCard
 {
     private BattleSetup setup;
@@ -15,9 +13,9 @@ public partial class MonsterCard: DungeonCard
             name = "Monster Battle";
             description = "Enemies block the way!\n-";
         }
-        foreach(int monsterID in setup.MonsterIds)
+        foreach(int monsterId in setup.MonsterIds)
         {
-            description += " " + MonsterFactory.GetName(monsterID);
+            description += " " + MonsterFactory.GetName(monsterId);
         }
     }
 

@@ -1,17 +1,18 @@
 public partial class SkillFirstStrike: BattleSkill
 {
     private bool first;
-    public SkillFirstStrike(): base("s_firststrike")
-    {
-        name = "First Strike";
-        type = SkillType.OFFENSIVE;
-        element = SkillElement.BLUNT;
-        targetting = TargettingType.ENEMY_TARGET;
-        cost = 3;
-        cooldown = 2;
+    public SkillFirstStrike(): base(
+        SkillId.FirstStrike,
+        "T_SKL_FIRSTSTRIKE_TITLE",
+        SkillType.OFFENSIVE,
+        SkillElement.BLUNT,
+        TargettingType.ENEMY_TARGET,
+        false,
+        3,
+        2,
+        false
+    ) {}
 
-        first = true;
-    }
     protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
         int damage;
@@ -35,12 +36,7 @@ public partial class SkillFirstStrike: BattleSkill
 
     public override string Description()
     {
+        return "T_SKL_FIRSTSTRIKE_DESC";
         return "- Do " + Utility.ATK("2*ATK") + " damage on first use\n- Do " + Utility.ATK("1.5*ATK") + " the rest of the combat";
-    }
-
-    public override void Reset()
-    {
-        base.Reset();
-        first = true;
     }
 }

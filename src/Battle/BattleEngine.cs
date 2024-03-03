@@ -21,7 +21,7 @@ public partial class BattleEngine : Control
     private float enemyTurnSpeed;
 
     private readonly BattleSkill[] basicSkills = { 
-        SkillDatabase.GetSkillData("s_basicattack")
+        SkillDatabase.GetSkillData(SkillId.BasicAttack)
         };
 
     public override void _Ready()
@@ -64,35 +64,47 @@ public partial class BattleEngine : Control
         selectedCharacter = -1;
         party = GameData.Instance.GetBattleParty();
         bench = GameData.Instance.GetBattleBench();
-        monsters = new List<Monster>();
-        foreach (int i in battleSetup.MonsterIds)
+        foreach (BattleCharacter character in party)
         {
-            monsters.Add(MonsterFactory.Create(i));
+            StartInitializeCharacter(character);
         }
-        foreach (Monster monster in monsters)
+        foreach (BattleCharacter character in bench)
         {
-            monster.Initiate(this);
+            StartInitializeCharacter(character);
+        }
+        monsters = new List<Monster>();
+        foreach (MonsterId id in battleSetup.MonsterIds)
+        {
+            Monster monster = MonsterFactory.Create(id);
+            monsters.Add(monster);
             ui.AddMonster(monster.GetModel());
         }
-
         SelectCharacter(0);
         PlayerTurn();
+    }
+
+    /// <summary>
+    /// Setup character stats and effects at the start of battle.
+    /// </summary>
+    public void StartInitializeCharacter(BattleCharacter character)
+    {
+        character.stack = character.level;
     }
 
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
     private void Finish()
     {
         GD.Print("[UNFINISHED] Don't forget to code in adding of rewards. - BattleEngine.Finish()");
-        timer.Stop();
+        timer.CustomStop();
         ui.ClearMonsters();
         GameData data = GameData.Instance;
         foreach (BattleCharacter i in party)
         {
-            data.UpdateCharacter(i.Reset());
+            data.UpdateCharacter(i);
         }
         foreach (BattleCharacter i in bench)
         {
-            data.UpdateCharacter(i.Reset());
+            data.UpdateCharacter(i);
         }
         GetNode<Global>("/root/Global").EndBattle();
     }
@@ -239,7 +251,7 @@ public partial class BattleEngine : Control
     }
     private async void EnemyTurn()
     {
-        timer.Stop();
+        timer.CustomStop();
         ExitCurrentMode(); // First set the player mode and UI back to defaault
         EnterEnemyTurn(); // Then enter enemy Turn
         await ToSignal(GetTree().CreateTimer(0.25f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);

@@ -2,17 +2,21 @@ using System;
 
 public partial class MonsterFactory
 {
-    public static Monster Create(int monsterID)
+    public static Monster Create(MonsterId monsterId)
     {
-        if (monsterID == Slime.GetID()) return new Slime();
-
-        throw new ArgumentException("MonsterID " + monsterID + "wasn't added to the MonsterFactory.");
+        switch(monsterId)
+        {
+            case MonsterId.Slime: return new Slime();
+            default:
+                throw new ArgumentException("MonsterId " + monsterId + "wasn't added to the MonsterFactory.");
+        }
+        
     }
 
-    public static string GetName(int monsterID)
+    public static string GetName(MonsterId monsterId)
     {
-        if (monsterID == Slime.GetID()) return "Slime";
+        if (monsterId == Slime.GetId()) return "Slime";
 
-        throw new ArgumentException("MonsterID " + monsterID + "wasn't added to the MonsterFactory.");
+        throw new ArgumentException("MonsterId " + monsterId + "wasn't added to the MonsterFactory.");
     }
 }

@@ -44,12 +44,12 @@ public partial class DungeonEngine : Control
 
         BattleSetup twoSlimes = new();
         twoSlimes
-            .AddMonsterId(0)
-            .AddMonsterId(0);
+            .AddMonsterId(MonsterId.Slime)
+            .AddMonsterId(MonsterId.Slime);
 
         BattleSetup oneSlime = new();
         oneSlime
-            .AddMonsterId(0);
+            .AddMonsterId(MonsterId.Slime);
         
         for (int i=0; i<4; i++)
         {

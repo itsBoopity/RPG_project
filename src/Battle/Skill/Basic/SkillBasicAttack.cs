@@ -1,14 +1,17 @@
 public partial class SkillBasicAttack: BattleSkill
 {
-    public SkillBasicAttack(): base("s_basicattack")
-    {
-        name = "T_SKL_BASICATTACK_TITLE";
-        type = SkillType.BASIC;
-        element = SkillElement.VARIABLE;
-        targetting = TargettingType.ENEMY_TARGET;
-        cost = 0;
-        cooldown = 0;
-    }
+    public SkillBasicAttack(): base(
+        SkillId.BasicAttack,
+        "T_SKL_BASICATTACK_T",
+        SkillType.BASIC,
+        SkillElement.VARIABLE,
+        TargettingType.ENEMY_TARGET,
+        false,
+        0,
+        0,
+        false
+    ) {}
+
     protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
         user.stack += 1;

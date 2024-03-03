@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://cn011iuuvxhat"]
 
-[ext_resource type="Script" path="res://src/Battle/Monster/MonsterModel.cs" id="1_qs2kr"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Node/MonsterModel.cs" id="1_qs2kr"]
 [ext_resource type="AudioStream" uid="uid://dwr0orejnp60b" path="res://Audio/SFX/cymbal.wav" id="2_2v4mg"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="3_gj4c7"]
 [ext_resource type="Texture2D" uid="uid://cq7ss25v1l8mg" path="res://Images/UI/Battle/hpBarUnder.png" id="3_juprv"]

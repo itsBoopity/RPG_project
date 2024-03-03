@@ -1,14 +1,16 @@
 public partial class SkillPrecisionNeedle: BattleSkill
 {
-    public SkillPrecisionNeedle(): base("s_precisionneedle")
-    {
-        name = "Precision Needle";
-        type = SkillType.OFFENSIVE;
-        element = SkillElement.PIERCE;
-        targetting = TargettingType.ENEMY_TARGET;
-        cost = 2;
-        cooldown = 2;
-    }
+    public SkillPrecisionNeedle(): base(
+        SkillId.PrecisionNeedle,
+        "T_SKL_PRECISIONNEEDLE_TITLE",
+        SkillType.OFFENSIVE,
+        SkillElement.PIERCE,
+        TargettingType.ENEMY_TARGET,
+        false,
+        2,
+        2,
+        false
+    ) {}
     protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
     {
         int damage = 1;
@@ -27,6 +29,6 @@ public partial class SkillPrecisionNeedle: BattleSkill
 
     public override string Description()
     {
-        return "- Does " + Utility.ATK("1-5DMG") + " (ignoring all effects and DEF) depending on Target Efficiency";
+        return "T_SKL_PRECISIONNEEDLE_DESC";
     }
 }

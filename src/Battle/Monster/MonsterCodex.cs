@@ -4,21 +4,21 @@ public partial class MonsterCodex
 {
     private static Dictionary<int,int> codex = new Dictionary<int,int>();
 
-    public static void Analyze(int monsterID)
+    public static void Analyze(int monsterId)
     {
-        if (!codex.ContainsKey(monsterID))
+        if (!codex.ContainsKey(monsterId))
         {
-            codex.Add(monsterID, 1);
+            codex.Add(monsterId, 1);
             return;
         }
 
-        if (codex[monsterID] < 100) //Only keep it up to 100 to prevent overflow. Who the fuck would do it 2 million times!?
-            codex[monsterID] += 1;
+        if (codex[monsterId] < 100) //Only keep it up to 100 to prevent overflow. Who the fuck would do it 2 million times!?
+            codex[monsterId] += 1;
     }
 
-    public int ViewCodex(int monsterID)
+    public int ViewCodex(int monsterId)
     {
-        return codex[monsterID];
+        return codex[monsterId];
     }
 
 }

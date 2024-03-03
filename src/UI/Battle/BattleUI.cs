@@ -61,15 +61,15 @@ public partial class BattleUI : Control
 		monsterNode.Clear();
 	}
 
-    public void UpdateMonsterModel(Monster monster)
+    public void UpdateMonsterModel(BattleMonster monster)
     {
         monster.GetModel().UpdateHP();
     }
-    public void DisplayMissMonster(Monster monster)
+    public void DisplayMissMonster(BattleMonster monster)
     {
         monster.GetModel().DisplayText("T_B_MISS");
     }
-    public void DisplayDamageMonster(Monster monster, int damage)
+    public void DisplayDamageMonster(BattleMonster monster, int damage)
     {
         monster.GetModel().PlayDamage(damage);
     }
@@ -170,7 +170,7 @@ public partial class BattleUI : Control
         skillNode.Show();
         basicSkillNode.Show();
     }
-    public void ShowEstimate(Monster monster, int estimate)
+    public void ShowEstimate(BattleMonster monster, int estimate)
     {
         monster.GetModel().ShowEstimate(estimate);
     }

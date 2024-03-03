@@ -21,12 +21,12 @@ public static class CharacterDataConstructor
         {
             name = "Claus",
             who = CharacterEnum.CLAUS,
-            hp = 11,
-            maxHp = 11,
-            atk = 3,
-            def = 1,
-            spd = 8,
-			skillIds = new List<string>{"s_firststrike", "s_precisionneedle"}
+            health = 11,
+            maxHealth = 11,
+            attack = 3,
+            defense = 1,
+            speed = 8,
+			skillIds = new List<SkillId> { SkillId.FirstStrike, SkillId.PrecisionNeedle }
         };
 	}
 }

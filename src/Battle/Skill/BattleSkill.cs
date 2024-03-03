@@ -30,11 +30,11 @@ public abstract class BattleSkill
     }
     
     // Encapsulates Execute. Actual skill effects are implemented in Execute.
-    public bool Use(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency = 1f)
+    public bool Use(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency = 1f)
     {
         if (IsUsable(user) == 0)
         {
-            user.stack -= cost;
+            user.Stack -= cost;
             currentCooldown = cooldown;
             Execute(battleEngine, user, target, targetEfficiency);
             return true;
@@ -44,18 +44,18 @@ public abstract class BattleSkill
     // <summary>
     // 0, not usable. 1 not usable because in cooldown, 2 not usable because not enough stacks, 3 user is not active
     // </summary>
-    public int IsUsable(BattleActor user)
+    public int IsUsable(IBattleActor user)
     {
         if (currentCooldown > 0)
             return 1;
-        else if (user.stack < cost)
+        else if (user.Stack < cost)
             return 2;
-        else if (!user.turnActive)
+        else if (user is BattleCharacter character && !character.TurnActive)
             return 3;
         return 0;
     }
-    protected abstract void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency);
-    public abstract int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target);
+    protected abstract void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency);
+    public abstract int EstimateDamage(BattleEngine battleEngine, IBattleActor user, IBattleActor target);
     public abstract string Description();
     public Texture2D GetIcon()
     {

@@ -3,7 +3,7 @@ using System;
 
 public partial class MonsterModel : CanvasGroup
 {
-    private Monster owner = null;
+    private BattleMonster owner = null;
     private DamageEstimate dmgEstimate;
     private DamageCounter dmgCounter;
     private AnimationPlayer animationPlayer;
@@ -27,7 +27,7 @@ public partial class MonsterModel : CanvasGroup
         boundary = GetNode<Control>("BoundaryBox");
     }
 
-    public void SetOwner(Monster owner) { this.owner = owner; }
+    public void SetOwner(BattleMonster owner) { this.owner = owner; }
 
     public Vector2 GetBoundary()
     {

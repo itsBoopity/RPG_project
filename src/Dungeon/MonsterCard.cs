@@ -13,7 +13,7 @@ public partial class MonsterCard: DungeonCard
             name = "Monster Battle";
             description = "Enemies block the way!\n-";
         }
-        foreach(int monsterId in setup.MonsterIds)
+        foreach(MonsterId monsterId in setup.MonsterIds)
         {
             description += " " + MonsterFactory.GetName(monsterId);
         }

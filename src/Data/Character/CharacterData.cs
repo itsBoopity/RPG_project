@@ -11,19 +11,19 @@ public class CharacterData
     public CharacterEnum who;
     public string name;
     public int level;
-    public int hp;
-    public int maxHp;
-    public int atk;
-    public int def;
-    public int spd;
-    public List<string> skillIds;
+    public int health;
+    public int maxHealth;
+    public int attack;
+    public int defense;
+    public int speed;
+    public List<SkillId> skillIds;
 
 	public void UpdateData(BattleCharacter character)
 	{
-		if (character.who != who)
+		if (character.Who != who)
 		{
-			throw new ArgumentException($"CharacterData::UpdateData(BattleCharacter) expected {who} enum, but got {character.who}");
+			throw new ArgumentException($"CharacterData::UpdateData(BattleCharacter) expected {who} enum, but got {character.Who}");
 		}
-		hp = character.hp;
+		health = character.Health;
 	}
 }

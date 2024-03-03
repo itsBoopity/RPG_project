@@ -2,7 +2,7 @@ public partial class SkillBasicAttack: BattleSkill
 {
     public SkillBasicAttack(): base(
         SkillId.BasicAttack,
-        "T_SKL_BASICATTACK_T",
+        "T_SKL_BASICATTACK_TITLE",
         SkillType.BASIC,
         SkillElement.VARIABLE,
         TargettingType.ENEMY_TARGET,
@@ -12,15 +12,15 @@ public partial class SkillBasicAttack: BattleSkill
         false
     ) {}
 
-    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
     {
-        user.stack += 1;
-        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), targetEfficiency), user, target);
+        user.Stack += 1;
+        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), targetEfficiency), user, target);
     }
 
-    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
+    public override int EstimateDamage(BattleEngine battleEngine, IBattleActor user, IBattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef());
+        return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense());
     }
 
     public override string Description()

@@ -5,11 +5,11 @@ public static class CharacterBattleDataConvertor
 	public static BattleCharacter ToBattleCharacter(CharacterData c)
 	{
 		List<BattleSkill> skills = new();
-		foreach (string skillId in c.skillIds)
+		foreach (SkillId skillId in c.skillIds)
 		{
 			skills.Add(SkillDatabase.GetSkillData(skillId));
 		}
-		return new BattleCharacter(c.name, c.who, c.hp, c.maxHp, c.atk, c.def, c.spd, skills);
+		return new BattleCharacter(c.who, c.name, c.level, c.health, c.maxHealth, c.attack, c.defense, c.speed, skills);
 	}
 
 	// public static CharacterData ToCharacterData(BattleCharacter  battleCharacter)

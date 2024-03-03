@@ -1,10 +1,29 @@
 using Godot;
 using System.Collections.Generic;
 
-public abstract class Monster: BattleActor
+public abstract class BattleMonster: IBattleActor
 {
-    public readonly MonsterId id;
-    
+    public readonly MonsterId _id;
+    private readonly string _name;
+    private readonly int _level;
+    private readonly int _maxHealth;
+    private readonly int _attack;
+    private readonly int _defense;
+    private readonly int _speed;
+    private int _health;
+    private int _stack;
+    private readonly List<BattleSkill> _skills;
+    private readonly List<int> _statuses;
+
+    public MonsterId Id { get {return _id;} }
+    public string Name => _name;
+    public int Level => _level;
+    public int MaxHealth => _maxHealth;
+    public int Health { get { return _health;} set { _health = value; }}
+    public int Stack { get { return _stack;} set { _stack = value; }}
+    public List<BattleSkill> Skills => _skills;
+    public List<int> Statuses => _statuses;
+
     public bool targettingEnabled = false;
     protected MonsterModel model = null;
 
@@ -15,16 +34,38 @@ public abstract class Monster: BattleActor
     protected int targetCharacter = 0;
     protected int targetSkill = 0;
 
-    public Monster( MonsterId id, string name, int level, int hp, int maxHp,
-                            int atk, int def, int spd, List<BattleSkill> skills)
-        : base(name, level, hp, maxHp, atk, def, spd, skills)
+    public BattleMonster(   MonsterId id, string name, int level, int health, int maxHealth,
+                            int attack, int defense, int speed, List<BattleSkill> skills)
     {
-        this.id = id;
+        _id = id;
+        _name = name;
+        _level = level;
+        _health = health;
+        _maxHealth = maxHealth;
+        _attack = attack;
+        _defense = defense;
+        _speed = speed;
+        _skills = skills;
         model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instantiate<MonsterModel>();
         model.SetOwner(this);
     }
 
-    public void Free()
+    public int GetAttack()
+    {
+        return _attack;
+    }
+
+    public int GetDefense()
+    {
+        return _defense;
+    }
+
+    public int GetSpeed()
+    {
+        return _speed;
+    }
+
+    public void Defeated()
     {
         targettingEnabled = false;
         //model.QueueFree();
@@ -44,10 +85,10 @@ public abstract class Monster: BattleActor
 
     public Node ExecuteTurn(BattleEngine battleEngine)
     {
-        skills[targetSkill].Use(battleEngine, this, battleEngine.GetPartyMember(targetCharacter));
-        string targetName = battleEngine.GetPartyMember(targetCharacter).name;
-        battleEngine.Ui.ShowCenterMessage(name + " uses " + skills[targetSkill].name + " on " + targetName + "!");
-        Node2D animation = skills[targetSkill].GetAnimation();
+        Skills[targetSkill].Use(battleEngine, this, battleEngine.GetPartyMember(targetCharacter));
+        string targetName = battleEngine.GetPartyMember(targetCharacter).Name;
+        battleEngine.Ui.ShowCenterMessage(Name + " uses " + Skills[targetSkill].name + " on " + targetName + "!");
+        Node2D animation = Skills[targetSkill].GetAnimation();
         battleEngine.Ui.SpawnEffectParty(animation, battleEngine.GetPartyMember(targetCharacter));
         ExecuteTurnAdditional();
         return animation;

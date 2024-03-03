@@ -11,7 +11,7 @@ public partial class SkillPrecisionNeedle: BattleSkill
         2,
         false
     ) {}
-    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
     {
         int damage = 1;
         
@@ -22,7 +22,7 @@ public partial class SkillPrecisionNeedle: BattleSkill
         battleEngine.DoDamage(damage, user, target);
     }
 
-    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
+    public override int EstimateDamage(BattleEngine battleEngine, IBattleActor user, IBattleActor target)
     {
         return -1;
     }

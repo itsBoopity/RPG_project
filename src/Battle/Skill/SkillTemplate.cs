@@ -1,24 +1,15 @@
-using Godot;
-
-[System.Serializable]
 public partial class SkillTemplate: BattleSkill
 {
-    public SkillTemplate(): base("s_null")
-    {
-        name = "First Strike";
-        type = SkillType.BASIC;
-        element = SkillElement.NONE;
-        targetting = TargettingType.NONE;
-        cost = 0;
-        cooldown = 0;
-    }
-    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
+    public SkillTemplate(): base(
+        SkillId.Null, "SKILL_NULL", 0, 0, 0, false, 0, 0, false
+    ) {}
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
     {
     
     }
-    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
+    public override int EstimateDamage(BattleEngine battleEngine, IBattleActor user, IBattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef());
+        return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense());
     }
     public override string Description()
     {

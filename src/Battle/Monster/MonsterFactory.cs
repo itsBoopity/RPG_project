@@ -2,11 +2,11 @@ using System;
 
 public partial class MonsterFactory
 {
-    public static Monster Create(MonsterId monsterId)
+    public static BattleMonster Create(MonsterId monsterId)
     {
         switch(monsterId)
         {
-            case MonsterId.Slime: return new Slime();
+            case MonsterId.Slime: return new BattleSlime();
             default:
                 throw new ArgumentException("MonsterId " + monsterId + "wasn't added to the MonsterFactory.");
         }
@@ -15,7 +15,8 @@ public partial class MonsterFactory
 
     public static string GetName(MonsterId monsterId)
     {
-        if (monsterId == Slime.GetId()) return "Slime";
+        // TODO: ew, why is slime name stored/duplicated here
+        if (monsterId == MonsterId.Slime) return "Slime";
 
         throw new ArgumentException("MonsterId " + monsterId + "wasn't added to the MonsterFactory.");
     }

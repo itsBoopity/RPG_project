@@ -13,30 +13,29 @@ public partial class SkillFirstStrike: BattleSkill
         false
     ) {}
 
-    protected override void Execute(BattleEngine battleEngine, BattleActor user, BattleActor target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
     {
         int damage;
         if (first) {
-            damage = Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), targetEfficiency, 2);
+            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), targetEfficiency, 2);
             first = false;
         }
         else
-            damage = Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), targetEfficiency, 1.5f);
+            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), targetEfficiency, 1.5f);
 
         battleEngine.DoDamage(damage, user, target);
     }
 
-    public override int EstimateDamage(BattleEngine battleEngine, BattleActor user, BattleActor target)
+    public override int EstimateDamage(BattleEngine battleEngine, IBattleActor user, IBattleActor target)
     {
         if (first)
-            return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), 1, 2);
+            return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), 1, 2.0f);
         else
-            return Utility.BasicDamageFormula(user.GetAtk(), target.GetDef(), 1, 1.5f);
+            return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), 1, 1.5f);
     }
 
     public override string Description()
     {
         return "T_SKL_FIRSTSTRIKE_DESC";
-        return "- Do " + Utility.ATK("2*ATK") + " damage on first use\n- Do " + Utility.ATK("1.5*ATK") + " the rest of the combat";
     }
 }

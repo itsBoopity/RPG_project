@@ -91,9 +91,13 @@ public partial class Utility : Node
     public static string ATK(string text) { return "[atk][b]" + text + "[/b][/atk]"; }
     public static string STA(string text) { return "[st][b]" + text + "[/b][/st]"; }
 
-    public static int BasicDamageFormula(int userATK, int targetDEF, float targetEfficiency = 1, float coefATK = 1)
+    /// <summary>
+    /// Calculates output damage using formula of [ attackCoefficient * userAttack - targetDefense) * targetEfficiency ].
+    /// Clamped to do at least 1 damage if result is lower.
+    /// </summary>
+    public static int BasicDamageFormula(int userAttack, int targetDefense, float targetEfficiency = 1, float attackCoefficient = 1)
     {
-        int damage = Mathf.RoundToInt((userATK * coefATK - targetDEF) * targetEfficiency);
+        int damage = Mathf.RoundToInt((userAttack * attackCoefficient - targetDefense) * targetEfficiency);
         return (damage < 1) ? 1 : damage;
     }
 

@@ -89,11 +89,11 @@ public partial class MonsterRack : Node2D
         }
     }
 
-    public void AddModel(MonsterModel model)
+    public void Add(BattleMonster monster)
     {   
-        AddChild(model);
-        model.Position = new Vector2(width, 0);
-        width += model.GetBoundary().X;
+        AddChild(monster);
+        monster.Position = new Vector2(width, 0);
+        width += monster.GetBoundary().X;
         this.Position = new Vector2(-width/2, this.Position.Y);
         center = this.Position.X;
         targetX = center;
@@ -105,15 +105,33 @@ public partial class MonsterRack : Node2D
         this.Position = new Vector2(0, this.Position.Y);
         foreach (Node node in GetChildren())
         {
-            if (node.Name != "Tween") node.QueueFree();
+            if (node.Name != "Tween") node.Free();
         }
+    }
+
+    /// <summary>
+    /// Returns the amount of monsters currently still alive.
+    /// Doesn't count ones that are currently in death animation. 
+    /// </summary>
+    /// <returns></returns>
+    public int Count()
+    {
+        int output = 0;
+        foreach (BattleMonster child in GetChildren())
+        {
+            if (!child.IsDisappearing)
+            {
+                output += 1;
+            }
+        }
+        return output;
     }
 
     public void HideEstimateAll()
     {
-        foreach (MonsterModel i in GetChildren().Cast<MonsterModel>())
+        foreach (BattleMonster monster in GetChildren().Cast<BattleMonster>())
         {
-            i.HideEstimate();
+            monster.HideEstimate();
         }
     }
 }

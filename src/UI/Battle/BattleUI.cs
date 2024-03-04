@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Godot;
 
 public partial class BattleUI : Control
 {
+    [Signal]
+    public delegate void ActionDetailHiddenEventHandler();
+
 	private Reticle reticle;
     private Node partyNode;
-    private MonsterRack monsterNode;
     private CanvasItem skillNode;
     private CanvasItem basicSkillNode;
     private CharacterModelRack characterModels;
@@ -39,7 +40,6 @@ public partial class BattleUI : Control
 		reticle = GetNode<Reticle>("%Reticle");
         partyNode = GetNode("%PartyBar");
         characterModels = GetNode<CharacterModelRack>("%CharacterModels");
-        monsterNode = GetNode<MonsterRack>("%Monsters");
         skillNode = GetNode<CanvasItem>("%Skills");
         basicSkillNode = GetNode<CanvasItem>("%BasicSkills");
         infoLabel = GetNode<InfoLabel>("%InfoLabel");
@@ -50,29 +50,6 @@ public partial class BattleUI : Control
         characterDamageCounter = GetNode<DamageCounter>("%CharacterDamageCounter");
 	}
 
-	public void AddMonster(MonsterModel model)
-	{
-		monsterNode.AddModel(model);
-		model.UpdateHP();
-	}
-
-	public void ClearMonsters()
-	{
-		monsterNode.Clear();
-	}
-
-    public void UpdateMonsterModel(BattleMonster monster)
-    {
-        monster.GetModel().UpdateHP();
-    }
-    public void DisplayMissMonster(BattleMonster monster)
-    {
-        monster.GetModel().DisplayText("T_B_MISS");
-    }
-    public void DisplayDamageMonster(BattleMonster monster, int damage)
-    {
-        monster.GetModel().PlayDamage(damage);
-    }
     public void DisplayDamageCharacter(int damage)
     {
         characterDamageCounter.Play(damage);
@@ -124,7 +101,7 @@ public partial class BattleUI : Control
     }
     public void SwapCharacterModel(BattleCharacter selectedCharacter)
     {
-        characterModels.ShowCharacter(selectedCharacter.who);
+        characterModels.ShowCharacter(selectedCharacter.Who);
     }
     public void HideCharacterModel()
     { 
@@ -135,9 +112,9 @@ public partial class BattleUI : Control
     {
         for (int i=0; i<5; i++)
         {
-            if (i < selectedCharacter.skills.Count)
+            if (i < selectedCharacter.Skills.Count)
             {
-                skillNode.GetChild<SkillBoxUI>(i).Update(selectedCharacter, selectedCharacter.skills[i]);
+                skillNode.GetChild<SkillBoxUI>(i).Update(selectedCharacter, selectedCharacter.Skills[i]);
             }
             else
             {
@@ -155,7 +132,6 @@ public partial class BattleUI : Control
     {
         lastViewedActionIndex = -1;
         skillDesc.HideSkill();
-        HideEstimateAll();
     }
 
     public void HideMostUI()
@@ -169,14 +145,6 @@ public partial class BattleUI : Control
         characterModels.Show();
         skillNode.Show();
         basicSkillNode.Show();
-    }
-    public void ShowEstimate(BattleMonster monster, int estimate)
-    {
-        monster.GetModel().ShowEstimate(estimate);
-    }
-    public void HideEstimateAll()
-    {
-        monsterNode.HideEstimateAll();
     }
 
     public void ShowCenterMessage(string text)
@@ -197,13 +165,13 @@ public partial class BattleUI : Control
         partyNode.GetChild<CharacterBar>(index).Select();
 
         // Update the currently viewed skill to the one of the new character.
-        if (lastViewedActionIndex >= character.skills.Count)
+        if (lastViewedActionIndex >= character.Skills.Count)
         {
             HideActionDetail();
         }
         else if (lastViewedActionIndex >= 0)
         {
-            ViewActionDetail(character.skills[lastViewedActionIndex], lastViewedActionIndex);
+            ViewActionDetail(character.Skills[lastViewedActionIndex], lastViewedActionIndex);
         }
     }
     public void ShakeStackCount(int index)
@@ -215,13 +183,13 @@ public partial class BattleUI : Control
     public void SpawnEffectParty(Node2D animation, BattleCharacter character)
     {
         AddChild(animation);
-        characterModels.ShowCharacter(character.who);
+        characterModels.ShowCharacter(character.Who);
         animation.Position = characterModels.Position - new Vector2(0, 400);
         characterModels.Show();
 
 		foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
 		{
-			if (bar.Who == character.who)
+			if (bar.Who == character.Who)
 			{
 				bar.Update(character);
 				bar.ShakeHP();

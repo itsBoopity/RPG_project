@@ -92,12 +92,12 @@ public partial class Utility : Node
     public static string STA(string text) { return "[st][b]" + text + "[/b][/st]"; }
 
     /// <summary>
-    /// Calculates output damage using formula of [ attackCoefficient * userAttack - targetDefense) * targetEfficiency ].
+    /// Calculates output damage using formula of [ attackCoefficient * userAttack - targetDefense) * appendageCoef ].
     /// Clamped to do at least 1 damage if result is lower.
     /// </summary>
-    public static int BasicDamageFormula(int userAttack, int targetDefense, float targetEfficiency = 1, float attackCoefficient = 1)
+    public static int BasicDamageFormula(int userAttack, int targetDefense, float appendageCoef = 1, float attackCoefficient = 1)
     {
-        int damage = Mathf.RoundToInt((userAttack * attackCoefficient - targetDefense) * targetEfficiency);
+        int damage = Mathf.RoundToInt((userAttack * attackCoefficient - targetDefense) * appendageCoef);
         return (damage < 1) ? 1 : damage;
     }
 

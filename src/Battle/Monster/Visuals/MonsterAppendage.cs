@@ -1,10 +1,10 @@
 using Godot;
 
-public partial class MonsterTarget : Sprite2D
+public partial class MonsterAppendage : Sprite2D
 {
     [Signal]
-    public delegate void TargetHitEventHandler(MonsterTarget where);
-    
+    public delegate void HitEventHandler(MonsterAppendage where);
+
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("battle_clickTarget"))
@@ -12,7 +12,7 @@ public partial class MonsterTarget : Sprite2D
             if (IsPixelOpaque(GetLocalMousePosition()))
             {
                 GetViewport().SetInputAsHandled();
-                EmitSignal(SignalName.TargetHit, this);
+                EmitSignal(SignalName.Hit, this);
             }
         }
     }

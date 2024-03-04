@@ -6,7 +6,7 @@ public partial class MonsterFactory
     {
         switch(monsterId)
         {
-            case MonsterId.Slime: return new BattleSlime();
+            case MonsterId.Slime: return BattleSlime.Instance();
             default:
                 throw new ArgumentException("MonsterId " + monsterId + "wasn't added to the MonsterFactory.");
         }

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// The main class and root scene facilitating battles.
@@ -14,7 +15,7 @@ public partial class BattleEngine : Control
     private int selectedCharacter = -1;
     private List<BattleCharacter> party;
     private List<BattleCharacter> bench;
-    private List<BattleMonster> monsters;
+    private MonsterRack monsters;
     public CustomTimer timer;
 
     private ControlState state;
@@ -26,9 +27,10 @@ public partial class BattleEngine : Control
 
     public override void _Ready()
     {
-        ui = GetNode<BattleUI>("UI");
-        timer = GetNode<CustomTimer>("TurnTimer");
-        sfx = GetNode<BattleSfx>("BattleSfx");
+        ui = GetNode<BattleUI>("%UI");
+        monsters = GetNode<MonsterRack>("%Monsters");
+        sfx = GetNode<BattleSfx>("%BattleSfx");
+        timer = GetNode<CustomTimer>("%TurnTimer");
         enemyTurnSpeed = Global.Settings.enemyTurnSpeed;
     }
     public override void _UnhandledKeyInput(InputEvent @event)
@@ -72,12 +74,13 @@ public partial class BattleEngine : Control
         {
             StartInitializeCharacter(character);
         }
-        monsters = new List<BattleMonster>();
+        monsters.Clear();
         foreach (MonsterId id in battleSetup.MonsterIds)
         {
             BattleMonster monster = MonsterFactory.Create(id);
             monsters.Add(monster);
-            ui.AddMonster(monster.GetModel());
+            monster.Attacked += PlayerHitEnemy;
+            monster.Missed += PlayerMissedEnemy;
         }
         SelectCharacter(0);
         PlayerTurn();
@@ -88,7 +91,7 @@ public partial class BattleEngine : Control
     /// </summary>
     public void StartInitializeCharacter(BattleCharacter character)
     {
-        character.Stack = character.Level;
+        character.ChangeStack(character.Level);
     }
 
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
@@ -96,7 +99,7 @@ public partial class BattleEngine : Control
     {
         GD.Print("[UNFINISHED] Don't forget to code in adding of rewards. - BattleEngine.Finish()");
         timer.CustomStop();
-        ui.ClearMonsters();
+        monsters.Clear();
         GameData data = GameData.Instance;
         foreach (BattleCharacter i in party)
         {
@@ -154,10 +157,10 @@ public partial class BattleEngine : Control
         SetState(ControlState.PLAYER_TARGETTING_ENEMY);
         ui.ShowReticle();
 
-        foreach (BattleMonster monster in monsters)
+        foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
         {
             monster.targettingEnabled = true;
-            ui.ShowEstimate(monster, selectedSkill.EstimateDamage(this, GetCurrentPartyMember(), monster));
+            monster.ShowEstimate(selectedSkill.EstimateDamage(this, GetCurrentPartyMember(), monster));
         }
         ui.HideMostUI();
     }
@@ -187,11 +190,11 @@ public partial class BattleEngine : Control
         {
             SetState(ControlState.PLAYER_DEFAULT);
             ui.DisableReticle();
-            foreach (BattleMonster i in monsters)
+            foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
             {
-                i.targettingEnabled = false;
+                monster.targettingEnabled = false;
+                monster.HideEstimate();
             }
-            ui.HideEstimateAll();
             ui.HideActionDetail();
             ui.ShowMostUI();
             // TODO: Show the party, model,skill, skillDesc UI again. Hide the enemy estimates;
@@ -208,7 +211,7 @@ public partial class BattleEngine : Control
             {
                 partySpeed += i.GetSpeed();
             }
-            foreach (IBattleActor i in monsters)
+            foreach (IBattleActor i in monsters.GetChildren())
             {
                 enemySpeed += i.GetSpeed();
             }
@@ -233,7 +236,7 @@ public partial class BattleEngine : Control
         
         EnterPlayerDefault();
 
-        foreach (BattleMonster monster in monsters)
+        foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
             monster.LoadUpcomingTurn(this);
         
         foreach (BattleCharacter character in party)
@@ -257,7 +260,7 @@ public partial class BattleEngine : Control
         await ToSignal(GetTree().CreateTimer(0.25f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
 
         ui.PlayTurnAnnouncement();
-        foreach (BattleMonster monster in monsters)
+        foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
         {
             await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
             await ToSignal(monster.ExecuteTurn(this), AnimationPlayer.SignalName.AnimationFinished);
@@ -268,24 +271,25 @@ public partial class BattleEngine : Control
         PlayerTurn();
     }
 
-    public void PlayerMissed(BattleMonster target)
-    { 
+    public void PlayerHitEnemy(BattleMonster target, float appendageCoef)
+    {
+        PlayerExecuteSkill(target, appendageCoef);
+    }
+
+    public void PlayerMissedEnemy(BattleMonster target)
+    {
         UseUpTurn(GetCurrentPartyMember());
         ExitCurrentMode();
-        ui.DisplayMissMonster(target);
+        target.PlayerMissed();
     }
 
     public void DoDamage(int damage, IBattleActor user, IBattleActor target) // damage is FINALIZED, this is just the engine doing the exact amount stated
     {
         if (damage < 0) damage = 0;
-        target.Health -= damage;
 
-        if (target is BattleMonster monster)
-        {
-            ui.UpdateMonsterModel(monster);
-            ui.DisplayDamageMonster(monster, damage);
-        }
-        else
+        target.SustainDamage(damage);
+
+        if (target is BattleCharacter)
         {
             ui.DisplayDamageCharacter(damage);
         }
@@ -300,11 +304,10 @@ public partial class BattleEngine : Control
     {
         if (actor is BattleMonster monster)
         {
-            ui.ShowCenterMessage(monster.Name + " defeated!");
-            monsters.Remove(monster);
+            ui.ShowCenterMessage(monster.DisplayName + " defeated!");
             monster.Defeated();
             
-            if (monsters.Count == 0)
+            if (monsters.Count() == 0)
                 CallDeferred(MethodName.Finish);
         }
         else if (actor is BattleCharacter)
@@ -332,9 +335,9 @@ public partial class BattleEngine : Control
     public void ViewAction(BattleSkill action, int index)
     {
         ui.ViewActionDetail(action, index);
-        foreach (BattleMonster monster in monsters)
+        foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
         {
-            ui.ShowEstimate(monster, action.EstimateDamage(this, GetCurrentPartyMember(), monster));
+            monster.ShowEstimate(action.EstimateDamage(this, GetCurrentPartyMember(), monster));
         }
     }
 
@@ -384,9 +387,9 @@ public partial class BattleEngine : Control
         }
     }
 
-    public void ExecuteSkill(BattleMonster monster, float targetEfficiency)
+    public void PlayerExecuteSkill(BattleMonster monster, float appendageCoef)
     {
-        selectedSkill.Use(this, GetCurrentPartyMember(), monster, targetEfficiency);
+        selectedSkill.Use(this, GetCurrentPartyMember(), monster, appendageCoef);
 
         Node2D temp = selectedSkill.GetAnimation();
         AddChild(temp);
@@ -441,7 +444,7 @@ public partial class BattleEngine : Control
         ui.UpdateCharacterBars(party);
         ui.HideCharacterModel();
         ui.UpdateSkills(GetCurrentPartyMember());
-        if (PlayerTurnFinished() && monsters.Count > 0)
+        if (PlayerTurnFinished() && monsters.Count() > 0)
         {
             EnemyTurn();
         }

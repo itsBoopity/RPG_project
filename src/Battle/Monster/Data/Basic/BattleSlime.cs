@@ -1,3 +1,4 @@
+using Godot;
 using System.Collections.Generic;
 
 public partial class BattleSlime: BattleMonster
@@ -7,7 +8,7 @@ public partial class BattleSlime: BattleMonster
 
     private int targetCycle = 0;
 
-    public BattleSlime(): base (
+    private BattleSlime(): base (
         MonsterId.Slime, "Slime",
         1, 10, 10, 2, 1, 2,
         new List<BattleSkill>
@@ -16,6 +17,14 @@ public partial class BattleSlime: BattleMonster
         }
     ) {}
 
+    /// <summary>
+    /// Instances and returns the .tscn Node containing this monster.
+    /// </summary>
+    public static BattleMonster Instance()
+    {
+        return GD.Load<PackedScene>("res://Objects/Monster/Basic/Slime.tscn").Instantiate<BattleMonster>();
+    }
+
     public override void LoadUpcomingTurn(BattleEngine battleEngine)
     {
         targetCharacter = targetCycle;
@@ -23,15 +32,15 @@ public partial class BattleSlime: BattleMonster
         targetSkill = 0;
     }
 
-    protected override void TargetHit(MonsterTarget target)
+    protected override void AppendageHit(MonsterAppendage appendage)
     {
-        if (target.Name == "Effective")
+        if (appendage.Name == "Effective")
         {
-            NotifyBattleEngine(1f);
+            EmitSignal(SignalName.Attacked, this, 1.0f);
         }
         else
         {
-            NotifyBattleEngine(0.5f);
+            EmitSignal(SignalName.Attacked, this, 0.5f);
         }
     }
 }

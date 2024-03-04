@@ -12,10 +12,10 @@ public partial class SkillBasicAttack: BattleSkill
         false
     ) {}
 
-    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float appendageCoef)
     {
-        user.Stack += 1;
-        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), targetEfficiency), user, target);
+        user.ChangeStack(1);
+        battleEngine.DoDamage(Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef), user, target);
     }
 
     public override int EstimateDamage(BattleEngine battleEngine, IBattleActor user, IBattleActor target)

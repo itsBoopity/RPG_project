@@ -1,9 +1,16 @@
 using Godot;
 using System.Collections.Generic;
 
-public abstract class BattleMonster: IBattleActor
+public abstract partial class BattleMonster: Node2D, IBattleActor
 {
+    [Signal]
+    public delegate void AttackedEventHandler(BattleMonster who, float appendageCoef);
+
+    [Signal]
+    public delegate void MissedEventHandler(BattleMonster who);
+
     public readonly MonsterId _id;
+    protected MonsterVisuals visuals;
     private readonly string _name;
     private readonly int _level;
     private readonly int _maxHealth;
@@ -13,19 +20,19 @@ public abstract class BattleMonster: IBattleActor
     private int _health;
     private int _stack;
     private readonly List<BattleSkill> _skills;
-    private readonly List<int> _statuses;
+    private readonly List<int> _statuses = new();
 
     public MonsterId Id { get {return _id;} }
-    public string Name => _name;
+    public string DisplayName => Tr(_name);
     public int Level => _level;
     public int MaxHealth => _maxHealth;
-    public int Health { get { return _health;} set { _health = value; }}
-    public int Stack { get { return _stack;} set { _stack = value; }}
+    public int Health { get { return _health;} }
+    public int Stack { get { return _stack;} }
     public List<BattleSkill> Skills => _skills;
     public List<int> Statuses => _statuses;
 
     public bool targettingEnabled = false;
-    protected MonsterModel model = null;
+    private bool isDisappearing = false;
 
     // The default damage modifier that gets used when non targetting offensive skills are used 
     protected float defaultDamage = 0.5f;
@@ -34,7 +41,8 @@ public abstract class BattleMonster: IBattleActor
     protected int targetCharacter = 0;
     protected int targetSkill = 0;
 
-    public BattleMonster(   MonsterId id, string name, int level, int health, int maxHealth,
+    public bool IsDisappearing { get {return isDisappearing; } }
+    protected BattleMonster(   MonsterId id, string name, int level, int health, int maxHealth,
                             int attack, int defense, int speed, List<BattleSkill> skills)
     {
         _id = id;
@@ -46,8 +54,12 @@ public abstract class BattleMonster: IBattleActor
         _defense = defense;
         _speed = speed;
         _skills = skills;
-        model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instantiate<MonsterModel>();
-        model.SetOwner(this);
+    }
+
+    public override void _Ready()
+    {
+        visuals = GetNode<MonsterVisuals>("%Visuals");
+        visuals.UpdateHP(Health, MaxHealth);
     }
 
     public int GetAttack()
@@ -65,53 +77,59 @@ public abstract class BattleMonster: IBattleActor
         return _speed;
     }
 
-    public void Defeated()
+    public void ChangeStack(int delta)
     {
-        targettingEnabled = false;
-        //model.QueueFree();
-        model.AnimateDefeat();
-        model = null;
+        _stack += delta;
     }
 
-    public MonsterModel GetModel()
+    public void SustainDamage(int damage)
     {
-        if (model == null)
-        {
-            model = GD.Load<PackedScene>("res://Objects/Monster/" + this.GetType().Name + ".tscn").Instantiate<MonsterModel>();
-            model.SetOwner(this);
-        }
-        return model;
+        _health -= damage;
+        visuals.UpdateHP(Health, MaxHealth);
+        visuals.PlayDamage(damage);
+    }
+    public async void Defeated()
+    {
+        targettingEnabled = false;
+        isDisappearing = true;
+        await ToSignal(visuals.AnimateDefeat(), AnimationPlayer.SignalName.AnimationFinished);
+        QueueFree();
     }
 
     public Node ExecuteTurn(BattleEngine battleEngine)
     {
         Skills[targetSkill].Use(battleEngine, this, battleEngine.GetPartyMember(targetCharacter));
-        string targetName = battleEngine.GetPartyMember(targetCharacter).Name;
+        string targetName = battleEngine.GetPartyMember(targetCharacter).DisplayName;
         battleEngine.Ui.ShowCenterMessage(Name + " uses " + Skills[targetSkill].name + " on " + targetName + "!");
         Node2D animation = Skills[targetSkill].GetAnimation();
         battleEngine.Ui.SpawnEffectParty(animation, battleEngine.GetPartyMember(targetCharacter));
-        ExecuteTurnAdditional();
+        ExecuteTurnDecorate();
         return animation;
     }
 
     // play animation or other unique animations a Monster inherited class would want when it performs its turn.
-    protected virtual void ExecuteTurnAdditional() {}
-    public void NotifyBattleEngine(float targetEfficiency)
+    protected virtual void ExecuteTurnDecorate() {}
+
+    public void AppendageHitCheck(MonsterAppendage target)
     {
-        battleEngine.ExecuteSkill(this, targetEfficiency);
+        if (targettingEnabled) AppendageHit(target);
     }
 
-    public void Hit(MonsterTarget target)
-    {
-        if (targettingEnabled) TargetHit(target);
-    
 
-    }
-    public void TargetMiss()
+    public void PlayerMissed()
     {
-        if (targettingEnabled) battleEngine.PlayerMissed(this);
+        visuals.PlayMiss();
     }
 
-    protected abstract void TargetHit(MonsterTarget target);
+    public void AppendageMissCheck()
+    {
+        if (targettingEnabled) AppendageMiss();
+        
+    }
+    private void AppendageMiss()
+    {
+        EmitSignal(SignalName.Missed, this);
+    }
+    protected abstract void AppendageHit(MonsterAppendage target);
     public abstract void LoadUpcomingTurn(BattleEngine battleEngine);
 }

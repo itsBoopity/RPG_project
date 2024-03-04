@@ -15,15 +15,15 @@ public class BattleCharacter: IBattleActor
     private int _health;
     private int _stack;
     private readonly List<BattleSkill> _skills;
-    private readonly List<int> _statuses;
+    private readonly List<int> _statuses = new();
     private bool _turnActive;
 
     public CharacterEnum Who { get {return _who;} }
-    public string Name => _name;
+    public string DisplayName => _name;
     public int Level => _level;
     public int MaxHealth => _maxHealth;
-    public int Health { get { return _health;} set { _health = value; }}
-    public int Stack { get { return _stack;} set { _stack = value; }}
+    public int Health { get { return _health;} }
+    public int Stack { get { return _stack;} }
     public List<BattleSkill> Skills => _skills;
     public List<int> Statuses => _statuses;
     public bool TurnActive { get { return _turnActive;} set { _turnActive = value; }}
@@ -40,6 +40,7 @@ public class BattleCharacter: IBattleActor
         _defense = defense;
         _speed = speed;
         _skills = skills;
+        TurnActive = true;
     }
 
     public int GetAttack()
@@ -57,4 +58,13 @@ public class BattleCharacter: IBattleActor
         return _speed;
     }
 
+    public void SustainDamage(int damage)
+    {
+        _health -= damage;
+    }
+
+    public void ChangeStack(int delta)
+    {
+        _stack += delta;
+    }
 }

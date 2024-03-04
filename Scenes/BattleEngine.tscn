@@ -30,7 +30,7 @@
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="25_vkcmm"]
 [ext_resource type="FontFile" uid="uid://4byjtcu5sf4u" path="res://Font/PTSerif-Bold.ttf" id="26_tibu4"]
 [ext_resource type="Texture2D" uid="uid://ceoubc440y0bd" path="res://Images/UI/filmbarTop.png" id="27"]
-[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/s_basicattack.tres" id="27_ovefk"]
+[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/BasicAttack.tres" id="27_701jy"]
 [ext_resource type="FontFile" uid="uid://dwv40r1mukx3j" path="res://Font/PTSerif-Italic.ttf" id="27_vofdh"]
 [ext_resource type="AudioStream" uid="uid://dcmnty8s5i31p" path="res://Audio/SFX/click2.wav" id="29_r3ion"]
 [ext_resource type="AudioStream" uid="uid://c7ljmivjse2v4" path="res://Audio/SFX/error_sound.wav" id="30_5us6w"]
@@ -697,14 +697,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 script = ExtResource("2")
 
 [node name="TurnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 one_shot = true
 script = ExtResource("2_0hfn6")
 
 [node name="BattleSfx" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_445sj")
 
 [node name="StrongClick" type="AudioStreamPlayer" parent="BattleSfx"]
@@ -719,28 +720,7 @@ bus = &"Sfx"
 stream = ExtResource("30_5us6w")
 bus = &"Sfx"
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("5_tdtxk")
-
-[node name="Backdrop" type="ColorRect" parent="UI"]
-unique_name_in_owner = true
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.0784314, 0.0666667, 0.0862745, 0.392157)
-
-[node name="MonstersAnchor" type="Control" parent="UI"]
+[node name="MonstersAnchor" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -752,9 +732,33 @@ offset_bottom = -346.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Monsters" type="Node2D" parent="UI/MonstersAnchor"]
+[node name="Monsters" type="Node2D" parent="MonstersAnchor"]
 unique_name_in_owner = true
 script = ExtResource("16")
+
+[node name="UI" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_tdtxk")
+
+[node name="Backdrop" type="ColorRect" parent="UI"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0784314, 0.0666667, 0.0862745, 0.392157)
 
 [node name="Reticle" type="Sprite2D" parent="UI"]
 unique_name_in_owner = true
@@ -1042,7 +1046,7 @@ secondRow = true
 texture = ExtResource("17_ifx84")
 
 [node name="Icon" parent="UI/BasicSkills/0/RootTexture/Fill" index="0"]
-texture = ExtResource("27_ovefk")
+texture = ExtResource("27_701jy")
 
 [node name="Countdown" parent="UI/BasicSkills/0/RootTexture" index="1"]
 visible = false
@@ -1284,6 +1288,7 @@ libraries = {
 }
 
 [connection signal="timeout" from="TurnTimer" to="." method="EnemyTurn"]
+[connection signal="ActionDetailHidden" from="UI" to="MonstersAnchor/Monsters" method="HideEstimateAll"]
 [connection signal="pressed" from="UI/PartyBar/1" to="." method="SelectCharacter" binds= [0]]
 [connection signal="pressed" from="UI/PartyBar/2" to="." method="SelectCharacter" binds= [1]]
 [connection signal="pressed" from="UI/PartyBar/3" to="." method="SelectCharacter" binds= [2]]

@@ -54,7 +54,7 @@ public partial class GameData : Node
     /// </summary>
     public void UpdateCharacter(BattleCharacter newValue)
     {
-        GetCharacter(newValue.who).UpdateData(newValue);
+        GetCharacter(newValue.Who).UpdateData(newValue);
     }
 
     /// <summary>

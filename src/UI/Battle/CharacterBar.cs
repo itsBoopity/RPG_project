@@ -51,21 +51,21 @@ public partial class CharacterBar : Control
 
     public void Update(BattleCharacter character)
     {
-        if (who != character.who) {
-            who = character.who;
-            name.Text = Utility.CharacterBBName(character.who);
+        if (who != character.Who) {
+            who = character.Who;
+            name.Text = Utility.CharacterBBName(character.Who);
         }
 
-        hp.Text = character.hp.ToString();
-        maxHp.Text = character.maxHp.ToString();
-        stack.Text = character.stack.ToString();
+        hp.Text = character.Health.ToString();
+        maxHp.Text = character.MaxHealth.ToString();
+        stack.Text = character.Stack.ToString();
 
-        if (character.turnActive && !this.turnActive)
+        if (character.TurnActive && !this.turnActive)
             fadePlayer.Play("RestoreTurn");
-        else if (!character.turnActive && this.turnActive)
+        else if (!character.TurnActive && this.turnActive)
             fadePlayer.Play("UsedTurn");
 
-        this.turnActive = character.turnActive;
+        this.turnActive = character.TurnActive;
     }
 
     public void ShakeStack()

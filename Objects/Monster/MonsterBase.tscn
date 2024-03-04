@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cn011iuuvxhat"]
+[gd_scene load_steps=23 format=3 uid="uid://cn011iuuvxhat"]
 
-[ext_resource type="Script" path="res://src/Battle/Monster/Node/MonsterModel.cs" id="1_qs2kr"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterVisuals.cs" id="1_87nde"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Data/BattleMonsterNull.cs" id="1_p0dsp"]
 [ext_resource type="AudioStream" uid="uid://dwr0orejnp60b" path="res://Audio/SFX/cymbal.wav" id="2_2v4mg"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="3_gj4c7"]
 [ext_resource type="Texture2D" uid="uid://cq7ss25v1l8mg" path="res://Images/UI/Battle/hpBarUnder.png" id="3_juprv"]
@@ -38,20 +39,6 @@ tracks/1/keys = {
 "values": [{
 "args": [0.0],
 "method": &"play"
-}]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
 }]
 }
 
@@ -236,30 +223,34 @@ _data = {
 }
 
 [node name="MonsterBase" type="CanvasGroup"]
-script = ExtResource("1_qs2kr")
+script = ExtResource("1_p0dsp")
 
-[node name="BaseAnimations" type="AnimationPlayer" parent="."]
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_87nde")
+
+[node name="Sprite" type="Node2D" parent="Visuals"]
+
+[node name="BaseAnimations" type="AnimationPlayer" parent="Visuals/Sprite"]
+root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_xq0vq")
 }
 
-[node name="SFXPlayer" type="AnimationPlayer" parent="."]
-
-[node name="Audio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_2v4mg")
-volume_db = -10.0
-pitch_scale = 0.65
-
-[node name="OverheadUI" type="Control" parent="."]
+[node name="UI" type="Control" parent="Visuals"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 140.0
+offset_top = -194.0
+offset_right = 140.0
+offset_bottom = -194.0
 
-[node name="HP" type="Control" parent="OverheadUI"]
+[node name="HP" type="Control" parent="Visuals/UI"]
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Bar" type="TextureProgressBar" parent="OverheadUI/HP"]
+[node name="Bar" type="TextureProgressBar" parent="Visuals/UI/HP"]
 layout_mode = 0
 offset_left = -143.0
 offset_top = -43.0
@@ -274,7 +265,7 @@ texture_under = ExtResource("3_juprv")
 texture_over = ExtResource("4_yv2cx")
 texture_progress = ExtResource("5_kl4rg")
 
-[node name="Current" type="Label" parent="OverheadUI/HP"]
+[node name="Current" type="Label" parent="Visuals/UI/HP"]
 layout_mode = 2
 offset_left = -159.0
 offset_top = -42.0
@@ -285,7 +276,7 @@ text = "9999"
 label_settings = SubResource("LabelSettings_bvmbb")
 horizontal_alignment = 2
 
-[node name="Slash" type="Label" parent="OverheadUI/HP"]
+[node name="Slash" type="Label" parent="Visuals/UI/HP"]
 layout_mode = 2
 offset_left = -21.0
 offset_top = -33.0
@@ -295,7 +286,7 @@ theme = ExtResource("3_gj4c7")
 text = "/"
 label_settings = SubResource("LabelSettings_442cb")
 
-[node name="Max" type="Label" parent="OverheadUI/HP"]
+[node name="Max" type="Label" parent="Visuals/UI/HP"]
 layout_mode = 2
 offset_left = 2.0
 offset_top = -20.0
@@ -305,12 +296,12 @@ theme = ExtResource("3_gj4c7")
 text = "9999"
 label_settings = SubResource("LabelSettings_wpdll")
 
-[node name="DamageEstimate" type="Control" parent="OverheadUI"]
+[node name="DamageEstimate" type="Control" parent="Visuals/UI"]
 visible = false
 anchors_preset = 0
 script = ExtResource("8_6remu")
 
-[node name="Label" type="Label" parent="OverheadUI/DamageEstimate"]
+[node name="Label" type="Label" parent="Visuals/UI/DamageEstimate"]
 layout_mode = 0
 offset_left = -112.0
 offset_top = -108.0
@@ -320,7 +311,7 @@ theme = ExtResource("3_gj4c7")
 text = "Est:"
 label_settings = SubResource("LabelSettings_v4mow")
 
-[node name="Number" type="Label" parent="OverheadUI/DamageEstimate"]
+[node name="Number" type="Label" parent="Visuals/UI/DamageEstimate"]
 layout_mode = 0
 offset_left = 10.0
 offset_top = -148.0
@@ -331,7 +322,7 @@ theme = ExtResource("3_gj4c7")
 text = "2"
 label_settings = SubResource("LabelSettings_a1u8d")
 
-[node name="DamageCounter" type="Control" parent="OverheadUI"]
+[node name="DamageCounter" type="Control" parent="Visuals/UI"]
 z_index = 1
 layout_mode = 3
 anchors_preset = 0
@@ -339,7 +330,7 @@ offset_top = -148.0
 offset_bottom = -148.0
 script = ExtResource("9_i3mtb")
 
-[node name="Number" type="Label" parent="OverheadUI/DamageCounter"]
+[node name="Number" type="Label" parent="Visuals/UI/DamageCounter"]
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
@@ -352,15 +343,20 @@ text = "2"
 label_settings = SubResource("LabelSettings_a1u8d")
 horizontal_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="OverheadUI/DamageCounter"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/UI/DamageCounter"]
 libraries = {
 "": SubResource("AnimationLibrary_0aoxr")
 }
 
-[node name="BoundaryBox" type="Button" parent="."]
-offset_right = 128.0
+[node name="BoundaryBox" type="Button" parent="Visuals"]
+offset_top = -128.0
+offset_right = 256.0
 offset_bottom = 128.0
 theme = ExtResource("7_6eyv2")
-metadata/_edit_lock_ = true
 
-[connection signal="button_down" from="BoundaryBox" to="." method="TargetMiss"]
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_2v4mg")
+volume_db = -10.0
+pitch_scale = 0.65
+
+[connection signal="button_down" from="Visuals/BoundaryBox" to="." method="AppendageMissCheck"]

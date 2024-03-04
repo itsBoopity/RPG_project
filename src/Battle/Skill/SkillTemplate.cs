@@ -3,7 +3,7 @@ public partial class SkillTemplate: BattleSkill
     public SkillTemplate(): base(
         SkillId.Null, "SKILL_NULL", 0, 0, 0, false, 0, 0, false
     ) {}
-    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float appendageCoef)
     {
     
     }

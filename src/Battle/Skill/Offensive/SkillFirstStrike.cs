@@ -13,15 +13,15 @@ public partial class SkillFirstStrike: BattleSkill
         false
     ) {}
 
-    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float targetEfficiency)
+    protected override void Execute(BattleEngine battleEngine, IBattleActor user, IBattleActor target, float appendageCoef)
     {
         int damage;
         if (first) {
-            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), targetEfficiency, 2);
+            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef, 2);
             first = false;
         }
         else
-            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), targetEfficiency, 1.5f);
+            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef, 1.5f);
 
         battleEngine.DoDamage(damage, user, target);
     }

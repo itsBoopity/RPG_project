@@ -1,10 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://cn011iuuvxhat"]
+[gd_scene load_steps=24 format=3 uid="uid://cn011iuuvxhat"]
 
 [ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterVisuals.cs" id="1_87nde"]
 [ext_resource type="Script" path="res://src/Battle/Monster/Data/BattleMonsterNull.cs" id="1_p0dsp"]
 [ext_resource type="AudioStream" uid="uid://dwr0orejnp60b" path="res://Audio/SFX/cymbal.wav" id="2_2v4mg"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="3_gj4c7"]
 [ext_resource type="Texture2D" uid="uid://cq7ss25v1l8mg" path="res://Images/UI/Battle/hpBarUnder.png" id="3_juprv"]
+[ext_resource type="Script" path="res://src/Animation/AnimationPlayerRandomStart.cs" id="3_k0j5j"]
 [ext_resource type="Texture2D" uid="uid://bnnj2liwihfu7" path="res://Images/UI/Battle/hpBarOver.png" id="4_yv2cx"]
 [ext_resource type="Texture2D" uid="uid://dr86qx5k2vmr0" path="res://Images/UI/Battle/hpBarProgress.png" id="5_kl4rg"]
 [ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="5_u0mw5"]
@@ -12,7 +13,7 @@
 [ext_resource type="Script" path="res://src/UI/Battle/DamageEstimate.cs" id="8_6remu"]
 [ext_resource type="Script" path="res://src/UI/Battle/DamageCounter.cs" id="9_i3mtb"]
 
-[sub_resource type="Animation" id="14"]
+[sub_resource type="Animation" id="Animation_7yyyd"]
 resource_name = "Death"
 length = 0.5
 tracks/0/type = "value"
@@ -42,7 +43,7 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="4"]
+[sub_resource type="Animation" id="Animation_4rjcj"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -57,10 +58,10 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xq0vq"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f18fp"]
 _data = {
-"Death": SubResource("14"),
-"RESET": SubResource("4")
+"Death": SubResource("Animation_7yyyd"),
+"RESET": SubResource("Animation_4rjcj")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_bvmbb"]
@@ -231,11 +232,13 @@ script = ExtResource("1_87nde")
 
 [node name="Sprite" type="Node2D" parent="Visuals"]
 
-[node name="BaseAnimations" type="AnimationPlayer" parent="Visuals/Sprite"]
+[node name="SpriteAnimation" type="AnimationPlayer" parent="Visuals/Sprite"]
+unique_name_in_owner = true
 root_node = NodePath("../../..")
 libraries = {
-"": SubResource("AnimationLibrary_xq0vq")
+"": SubResource("AnimationLibrary_f18fp")
 }
+script = ExtResource("3_k0j5j")
 
 [node name="UI" type="Control" parent="Visuals"]
 layout_mode = 3

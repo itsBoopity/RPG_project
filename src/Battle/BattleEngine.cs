@@ -79,8 +79,8 @@ public partial class BattleEngine : Control
         {
             BattleMonster monster = MonsterFactory.Create(id);
             monsters.Add(monster);
-            monster.Attacked += PlayerHitEnemy;
-            monster.Missed += PlayerMissedEnemy;
+            monster.Attacked += PlayerExecuteSkill;
+            monster.Missed += PlayerMissSkill;
         }
         SelectCharacter(0);
         PlayerTurn();
@@ -262,25 +262,16 @@ public partial class BattleEngine : Control
         ui.PlayTurnAnnouncement();
         foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
         {
-            await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
-            await ToSignal(monster.ExecuteTurn(this), AnimationPlayer.SignalName.AnimationFinished);
+            if (monster.CanAct())
+            {
+                await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
+                await ToSignal(monster.ExecuteTurn(this), AnimationPlayer.SignalName.AnimationFinished);
+            }
         }
         await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
         ui.StopTurnAnnouncement();
         ui.UpdateAll(party, GetCurrentPartyMember()); // TODO: This should instead be animated and updated by each skill
         PlayerTurn();
-    }
-
-    public void PlayerHitEnemy(BattleMonster target, float appendageCoef)
-    {
-        PlayerExecuteSkill(target, appendageCoef);
-    }
-
-    public void PlayerMissedEnemy(BattleMonster target)
-    {
-        UseUpTurn(GetCurrentPartyMember());
-        ExitCurrentMode();
-        target.PlayerMissed();
     }
 
     public void DoDamage(int damage, IBattleActor user, IBattleActor target) // damage is FINALIZED, this is just the engine doing the exact amount stated
@@ -387,7 +378,7 @@ public partial class BattleEngine : Control
         }
     }
 
-    public void PlayerExecuteSkill(BattleMonster monster, float appendageCoef)
+    private void PlayerExecuteSkill(BattleMonster monster, float appendageCoef)
     {
         selectedSkill.Use(this, GetCurrentPartyMember(), monster, appendageCoef);
 
@@ -401,6 +392,14 @@ public partial class BattleEngine : Control
         }
         
         ui.UpdateSkills(GetCurrentPartyMember());
+        ExitCurrentMode();
+    }
+
+    public void PlayerMissSkill(BattleMonster monster)
+    {
+        selectedSkill.Miss(GetCurrentPartyMember(), monster);
+        monster.PlayerMissed();
+        UseUpTurn(GetCurrentPartyMember());
         ExitCurrentMode();
     }
 

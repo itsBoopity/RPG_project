@@ -96,6 +96,11 @@ public abstract partial class BattleMonster: Node2D, IBattleActor
         QueueFree();
     }
 
+    public bool CanAct()
+    {
+        return !isDisappearing;
+    }
+
     public Node ExecuteTurn(BattleEngine battleEngine)
     {
         Skills[targetSkill].Use(battleEngine, this, battleEngine.GetPartyMember(targetCharacter));

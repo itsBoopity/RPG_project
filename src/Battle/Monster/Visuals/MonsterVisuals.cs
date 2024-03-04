@@ -20,7 +20,7 @@ public partial class MonsterVisuals : Node
         hpMax = GetNode<Label>("UI/HP/Max");
         hpBar = GetNode<TextureProgressBar>("UI/HP/Bar");
 
-        animationPlayer = GetNode<AnimationPlayer>("Sprite/AnimationPlayer");
+        animationPlayer = GetNode<AnimationPlayer>("%SpriteAnimation");
     }
 
     public Vector2 GetBoundary()
@@ -78,7 +78,7 @@ public partial class MonsterVisuals : Node
     /// <returns>The AnimationPlayer running the animation.</returns>
     public AnimationPlayer AnimateDefeat()
     {
-        GetNode<AnimationPlayer>("Sprite/BaseAnimations").Play("Death");
-        return GetNode<AnimationPlayer>("Sprite/BaseAnimations");
+        animationPlayer.Play("Death");
+        return animationPlayer;
     }
 }

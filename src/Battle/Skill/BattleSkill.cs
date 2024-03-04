@@ -41,6 +41,19 @@ public abstract class BattleSkill
         }
         return false;
     }
+
+    public virtual bool Miss(IBattleActor user, IBattleActor target)
+    {
+        if (IsUsable(user) == 0)
+        {
+            user.ChangeStack(-cost);
+            currentCooldown = cooldown;
+            return true;
+        }
+        return false;
+    }
+
+
     // <summary>
     // 0, not usable. 1 not usable because in cooldown, 2 not usable because not enough stacks, 3 user is not active
     // </summary>

@@ -1,5 +1,8 @@
 using Godot;
 
+/// <summary>
+/// The node containing all of the visual aspects of a monster, including UI such as health, damage estimates, and the sprite nodes. 
+/// </summary>
 public partial class MonsterVisuals : Node
 {
     private DamageEstimate dmgEstimate;
@@ -68,7 +71,8 @@ public partial class MonsterVisuals : Node
 
     public void Animate(string name)
     {
-        animationPlayer.Stop();
+        if (animationPlayer.CurrentAnimation == name)
+            animationPlayer.Stop();
         animationPlayer.Play(name);
     }
 

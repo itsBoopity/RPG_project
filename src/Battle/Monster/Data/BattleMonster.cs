@@ -120,12 +120,6 @@ public abstract partial class BattleMonster: Node2D, IBattleActor
         if (targettingEnabled) AppendageHit(target);
     }
 
-
-    public void PlayerMissed()
-    {
-        visuals.PlayMiss();
-    }
-
     public void AppendageMissCheck()
     {
         if (targettingEnabled) AppendageMiss();

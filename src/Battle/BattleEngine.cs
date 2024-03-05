@@ -16,13 +16,13 @@ public partial class BattleEngine : Control
     private List<BattleCharacter> party;
     private List<BattleCharacter> bench;
     private MonsterRack monsters;
-    public CustomTimer timer;
+    private CustomTimer timer;
 
     private ControlState state;
     private float enemyTurnSpeed;
 
     private readonly BattleSkill[] basicSkills = { 
-        SkillDatabase.GetSkillData(SkillId.BasicAttack)
+        SkillFactory.GetSkillData(SkillId.BasicAttack)
         };
 
     public override void _Ready()
@@ -79,7 +79,7 @@ public partial class BattleEngine : Control
         {
             BattleMonster monster = MonsterFactory.Create(id);
             monsters.Add(monster);
-            monster.Attacked += PlayerExecuteSkill;
+            monster.Attacked += PlayerExecuteSelectedSkill;
             monster.Missed += PlayerMissSkill;
         }
         SelectCharacter(0);
@@ -89,7 +89,7 @@ public partial class BattleEngine : Control
     /// <summary>
     /// Setup character stats and effects at the start of battle.
     /// </summary>
-    public void StartInitializeCharacter(BattleCharacter character)
+    private void StartInitializeCharacter(BattleCharacter character)
     {
         character.ChangeStack(character.Level);
     }
@@ -147,7 +147,7 @@ public partial class BattleEngine : Control
         this.state = state;
         ui.UpdateInfoLabel(state);
     }
-    private void EnterPlayerDefault()
+    private void EnterPlayerDefaultMode()
     {
         SetState(ControlState.PLAYER_DEFAULT);
         ui.ShowMostUI();
@@ -197,7 +197,6 @@ public partial class BattleEngine : Control
             }
             ui.HideActionDetail();
             ui.ShowMostUI();
-            // TODO: Show the party, model,skill, skillDesc UI again. Hide the enemy estimates;
         }
     }
 
@@ -234,7 +233,7 @@ public partial class BattleEngine : Control
     {
         // Generate spots for healing/buff/utility
         
-        EnterPlayerDefault();
+        EnterPlayerDefaultMode();
 
         foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
             monster.LoadUpcomingTurn(this);
@@ -378,7 +377,7 @@ public partial class BattleEngine : Control
         }
     }
 
-    private void PlayerExecuteSkill(BattleMonster monster, float appendageCoef)
+    private void PlayerExecuteSelectedSkill(BattleMonster monster, float appendageCoef)
     {
         selectedSkill.Use(this, GetCurrentPartyMember(), monster, appendageCoef);
 

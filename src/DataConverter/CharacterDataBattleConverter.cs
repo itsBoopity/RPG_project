@@ -7,7 +7,7 @@ public static class CharacterBattleDataConvertor
 		List<BattleSkill> skills = new();
 		foreach (SkillId skillId in c.skillIds)
 		{
-			skills.Add(SkillDatabase.GetSkillData(skillId));
+			skills.Add(SkillFactory.GetSkillData(skillId));
 		}
 		return new BattleCharacter(c.who, c.name, c.level, c.health, c.maxHealth, c.attack, c.defense, c.speed, skills);
 	}

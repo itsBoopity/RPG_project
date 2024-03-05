@@ -13,7 +13,7 @@ public partial class BattleSlime: BattleMonster
         1, 10, 10, 2, 1, 2,
         new List<BattleSkill>
         {
-            SkillDatabase.GetSkillData(SkillId.BasicAttack)
+            SkillFactory.GetSkillData(SkillId.BasicAttack)
         }
     ) {}
 

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public static class SkillDatabase
+public static class SkillFactory
 {
 	private static readonly Dictionary<SkillId, Type> db = new() {
 		{SkillId.BasicAttack, typeof(SkillBasicAttack)},

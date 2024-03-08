@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bonmknj8s7km"]
+
+[ext_resource type="Resource" uid="uid://dqurbo58oi1ww" path="res://Resources/Skills/Basic/BasicAttack.tres" id="1_fmd23"]
+[ext_resource type="Script" path="res://src/Data/Stats/Monster/SlimeStats.cs" id="1_kb8ht"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_kb8ht")
+Id = 1
+DefaultAppendageCoef = 0.5
+Name = "T_ENE_SLIME"
+Level = 1
+Health = 10
+MaxHealth = 10
+Attack = 2
+Defense = 1
+Speed = 2
+Skills = Array[Resource]([ExtResource("1_fmd23")])

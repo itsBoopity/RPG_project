@@ -3,7 +3,14 @@ using Godot;
 public partial class AnimatedSpriteOneOff : AnimatedSprite2D
 {
     [Export]
-    AudioStreamWav[] sfxSrc;
+    public AudioStreamWav[] sfxSrc;
+
+    /// <summary>
+    /// If false, plays at the location of attack on screen. Otherwise play regardless of position.
+    /// </summary>
+    [Export]
+    public bool fullscreenEffect = false;
+
     public override void _Ready()
     {
         GetNode<AudioStreamPlayer>("Audio").Stream = sfxSrc[GD.Randi() % sfxSrc.Length];

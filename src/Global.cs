@@ -2,6 +2,9 @@ using Godot;
 
 public partial class Global : Node
 {
+    [Signal]
+    public delegate void BattleFinishedEventHandler();
+
     private static Global _instance;
     private static GameSettings settings = new GameSettings();
 
@@ -86,8 +89,7 @@ public partial class Global : Node
         GetTree().Root.AddChild(sceneHold);
         currentScene = sceneHold;
         sceneHold = null;
-        if (currentScene is DungeonEngine engine)
-            engine.AfterBattle();
+        EmitSignal(SignalName.BattleFinished);
     }
 
 

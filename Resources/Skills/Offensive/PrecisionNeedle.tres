@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SkillPrecisionNeedle" load_steps=2 format=3 uid="uid://7y21iwc4ke1"]
+
+[ext_resource type="Script" path="res://src/Data/Skills/Offensive/SkillPrecisionNeedle.cs" id="1_dy8ci"]
+
+[resource]
+script = ExtResource("1_dy8ci")

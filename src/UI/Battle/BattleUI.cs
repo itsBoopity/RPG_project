@@ -79,13 +79,13 @@ public partial class BattleUI : Control
 	}
 
 	//Updates all UI using each of the standalone UpdateUI
-    public void UpdateAll(List<BattleCharacter> party, BattleCharacter selectedCharacter)
+    public void UpdateAll(CharacterRack party, BattleCharacter selectedCharacter)
     {
         UpdateCharacterBars(party);
         SwapCharacterModel(selectedCharacter);
         UpdateSkills(selectedCharacter);
     }
-    public void UpdateCharacterBars(List<BattleCharacter> party)
+    public void UpdateCharacterBars(CharacterRack party)
     {
         for (int i=0; i<3; i++)
         {
@@ -124,7 +124,7 @@ public partial class BattleUI : Control
     }
     public void ViewActionDetail(BattleSkill skill, int index)
     {
-        lastViewedActionIndex = (skill.type == SkillType.BASIC) ? -2 : index;
+        lastViewedActionIndex = (skill.Type == SkillType.BASIC) ? -2 : index;
         skillDesc.ShowSkill(skill);
     }
 
@@ -174,20 +174,11 @@ public partial class BattleUI : Control
             ViewActionDetail(character.Skills[lastViewedActionIndex], lastViewedActionIndex);
         }
     }
-    public void ShakeStackCount(int index)
-    {
-        partyNode.GetChild<CharacterBar>(index).ShakeStack();
-    }
 
-    // Is handed an animation that wants to be played, and the party member's bar it should play on
-    public void SpawnEffectParty(Node2D animation, BattleCharacter character)
+    public void CharacterTookDamage(BattleCharacter character, int damage)
     {
-        AddChild(animation);
-        characterModels.ShowCharacter(character.Who);
-        animation.Position = characterModels.Position - new Vector2(0, 400);
-        characterModels.Show();
-
-		foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
+        characterDamageCounter.Play(damage);
+        foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
 		{
 			if (bar.Who == character.Who)
 			{
@@ -196,5 +187,35 @@ public partial class BattleUI : Control
 				break;
 			}
 		}
+    }
+
+    public void UpdateCharacterHP(BattleCharacter character)
+    {
+        foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
+		{
+			if (bar.Who == character.Who)
+			{
+				bar.Update(character);
+				bar.ShakeHP();
+				break;
+			}
+		}
+    }
+    public void ShakeStackCount(int index)
+    {
+        partyNode.GetChild<CharacterBar>(index).ShakeStack();
+    }
+
+    public void PlayVfx(AnimatedSpriteOneOff animation, Vector2 position)
+    {
+        AddChild(animation);
+        animation.GlobalPosition = position;
+    }
+
+    public void PlayerAttackedVfx(AnimatedSpriteOneOff animation, BattleCharacter character)
+    {
+        characterModels.ShowCharacter(character.Who);
+        PlayVfx(animation, characterModels.Position - new Vector2(0, 400));
+        characterModels.Show();
     }
 }

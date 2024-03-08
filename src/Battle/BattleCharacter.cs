@@ -1,70 +1,28 @@
-using System.Collections.Generic;
+using Godot;
 
 /// <summary>
 /// A class representing a player character during battles.
 /// </summary>
-public class BattleCharacter: IBattleActor
+public partial class BattleCharacter: BattleActor
 {
-    private CharacterEnum _who;
-    private readonly string _name;
-    private readonly int _level;
-    private readonly int _maxHealth;
-    private readonly int _attack;
-    private readonly int _defense;
-    private readonly int _speed;
-    private int _health;
-    private int _stack;
-    private readonly List<BattleSkill> _skills;
-    private readonly List<int> _statuses = new();
-    private bool _turnActive;
+    [Signal]
+    new public delegate void TookDamageEventHandler(BattleCharacter who, int damage);
 
-    public CharacterEnum Who { get {return _who;} }
-    public string DisplayName => _name;
-    public int Level => _level;
-    public int MaxHealth => _maxHealth;
-    public int Health { get { return _health;} }
-    public int Stack { get { return _stack;} }
-    public List<BattleSkill> Skills => _skills;
-    public List<int> Statuses => _statuses;
-    public bool TurnActive { get { return _turnActive;} set { _turnActive = value; }}
-
-    public BattleCharacter( CharacterEnum who,string name, int level, int health, int maxHealth,
-                            int attack, int defense, int speed, List<BattleSkill> skills)
+    public CharacterEnum Who { get; private set; }
+    public bool TurnActive { get; set; } = true;
+    public BattleCharacter(CharacterStats characterStats)
     {
-        _who = who;
-        _name = name;
-        _level = level;
-        _health = health;
-        _maxHealth = maxHealth;
-        _attack = attack;
-        _defense = defense;
-        _speed = speed;
-        _skills = skills;
+        Who = characterStats.who;
+        Stats = characterStats;
+    }
+
+    /// <summary>
+    /// Counts down parameters at the start of the turn.
+    /// </summary>
+    public void NextTurn()
+    {
         TurnActive = true;
-    }
-
-    public int GetAttack()
-    {
-        return _attack;
-    }
-
-    public int GetDefense()
-    {
-        return _defense;
-    }
-
-    public int GetSpeed()
-    {
-        return _speed;
-    }
-
-    public void SustainDamage(int damage)
-    {
-        _health -= damage;
-    }
-
-    public void ChangeStack(int delta)
-    {
-        _stack += delta;
+        foreach (BattleSkill skill in Skills)
+            if (skill.CurrentCooldown > 0) skill.CurrentCooldown -= 1;
     }
 }

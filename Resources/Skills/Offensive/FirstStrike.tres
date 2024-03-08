@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SkillFirstStrike" load_steps=2 format=3 uid="uid://ct4k3xr7p0rnq"]
+
+[ext_resource type="Script" path="res://src/Data/Skills/Offensive/SkillFirstStrike.cs" id="1_p8aql"]
+
+[resource]
+script = ExtResource("1_p8aql")

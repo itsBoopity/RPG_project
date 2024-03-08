@@ -23,12 +23,12 @@ public partial class SkillDescription : NinePatchRect
 
     public void ShowSkill(BattleSkill skill)
     {
-        name.Text = skill.name;
-        type.Text = Utility.SkillBBName(skill.type);
-        if (skill.type != SkillType.BASIC)
+        name.Text = skill.DisplayName;
+        type.Text = Utility.SkillBBName(skill.Type);
+        if (skill.Type != SkillType.BASIC)
         {
-            cost.Text = $"| [st]{Tr("T_B_SKILLCOST")}[/st] " + skill.cost;
-            cooldown.Text = $"| {Tr("T_B_CD")} " + skill.cooldown;
+            cost.Text = $"| [st]{Tr("T_B_SKILLCOST")}[/st] " + skill.Cost;
+            cooldown.Text = $"| {Tr("T_B_CD")} " + skill.Cooldown;
         }
         else
         {
@@ -37,15 +37,15 @@ public partial class SkillDescription : NinePatchRect
         }
 
         description.Text = "";
-        if (Utility.IsPhysical(skill.element))
-            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.element)}/{Tr("T_SKT_PHYSICAL")}\n";
-        else if (Utility.IsMagical(skill.element))
-            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.element)}/{Tr("T_SKT_MAGICAL")}\n";
+        if (Utility.IsPhysical(skill.Element))
+            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.Element)}/{Tr("T_SKT_PHYSICAL")}\n";
+        else if (Utility.IsMagical(skill.Element))
+            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.Element)}/{Tr("T_SKT_MAGICAL")}\n";
         
-        if (!skill.isAoE) description.Text += "- Target: Single\n\n";
+        if (!skill.IsAoE) description.Text += "- Target: Single\n\n";
         else description.Text += "- Target: Multiple\n\n";
 
-        description.Text += Tr(skill.Description());
+        description.Text += Tr(skill.Description);
 
         
         animationPlayer.Stop();

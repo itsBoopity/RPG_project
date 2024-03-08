@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dd3dnqj1iqtr1"]
 
-[ext_resource type="Script" path="res://src/Engine/GlobalAudio.cs" id="1_3tnat"]
+[ext_resource type="Script" path="res://src/Global/GlobalAudio.cs" id="1_3tnat"]
 
 [sub_resource type="Animation" id="Animation_0s4ja"]
 resource_name = "FadeIn"

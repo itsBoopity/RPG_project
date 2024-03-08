@@ -1,29 +1,34 @@
 using Godot;
-using System.Collections.Generic;
 
 public partial class DungeonEngine : Control
 {
-    private int handSize;
-    private List<DungeonCard> deck;
-    private List<DungeonCard> hand;
-    private DungeonCard bossCard; bool bossCardDrawn = false;
+    [Signal]
+    public delegate void HandSizeChangedEventHandler(int newSize);
 
-
-    private Node handUI;
-    private Label handSizeLabel;
-    private Label cardsLeftLabel;
+    private DungeonUI ui;
+    private DungeonSetup setup;
+    private DungeonHand hand;
     
-    private PackedScene cardSpawn;
+    private PackedScene cardSpawn = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn");
+    private int HandSize
+    {
+        get { return handSize; }
+
+        set
+        {
+            handSize = value;
+            EmitSignal(SignalName.HandSizeChanged, value);
+        }
+    }
+    private const int MAXHANDSIZE = 5;
+    private int handSize;
     private bool controlLock = false;
-    private int lastIndexUsed = -1;
     public override void _Ready()
     {
-        handUI = GetNode("%Hand");
-
-        handSizeLabel = GetNode<Label>("%HandSizeCount");
-        cardsLeftLabel = GetNode<Label>("%CardsLeftCount");
-
-        cardSpawn = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn");
+        ui = GetNode<DungeonUI>("%UI");
+        hand = GetNode<DungeonHand>("%Hand");
+        HandSizeChanged += ui.UpdateHandSize;
+        Global.Instance.BattleFinished += AfterBattle;
 
         if (Global.debugMode) LoadTest();
     }
@@ -33,74 +38,54 @@ public partial class DungeonEngine : Control
         // DungeonCard hotkeys
         // if (@event.IsActionPressed("dungeon_card" + index) && this.Visible && !this.Disabled)
         //     EmitSignal(SignalName.Pressed);
-        
+        // GetNode<Label>("CardSprite/Hotkey").Text = InputMap.ActionGetEvents("dungeon_card" + index)[0].AsText();
+
     }
 
     private void LoadTest()
     {
         GlobalAudio.Instance.PlayMusic("Music/StreamingStreamingEverFlowing.ogg");
-
-        List<DungeonCard> deckLoad = new List<DungeonCard>();
-
-        BattleSetup twoSlimes = new();
-        twoSlimes
-            .AddMonsterId(MonsterId.Slime)
-            .AddMonsterId(MonsterId.Slime);
-
-        BattleSetup oneSlime = new();
-        oneSlime
-            .AddMonsterId(MonsterId.Slime);
-        
-        for (int i=0; i<4; i++)
-        {
-            deckLoad.Add(new MonsterCard(oneSlime));
-        }
-
-        DungeonCard bossLoad = new MonsterCard(twoSlimes, true);
-        Initiate(deckLoad, bossLoad, 4);
+        Initiate(GD.Load<DungeonSetup>("res://Resources/Dungeon/Setup/TestSetup.tres"));
     }
 
-    public void Initiate(List<DungeonCard> deck, DungeonCard bossCard, int handSize = 5)
+    public void Initiate(DungeonSetup setup)
     {
-        this.deck = deck;
-        this.bossCard = bossCard;
-        this.handSize = handSize;
-        hand = new List<DungeonCard>();
-
-        bossCardDrawn = false;
-
-        handSizeLabel.Text = handSize.ToString();
-        cardsLeftLabel.Text = deck.Count.ToString();
+        this.setup = setup;
+        handSize = setup.StartingHandSize;
+        controlLock = false;
+        hand.Clear();
+        setup.DeckSizeChanged += ui.UpdateCardsLeft;
+        ui.UpdateHandSize(HandSize);
+        ui.UpdateCardsLeft(setup.CardsLeft());
         DrawToFull();
     }
 
     public void StartBattle(BattleSetup setup)
     {
-        Global.Instance.CallDeferred(Global.MethodName.StartBattle, setup);
+        Global.Instance.StartBattle(setup);
     }
 
-    public async void UseCard(int index)
+    public void RequestUseCard(DungeonCard card)
     {
-        if (controlLock) return;
-        lastIndexUsed = index;
-        controlLock = true;
-        await ToSignal(handUI.GetChild<DungeonCardUI>(lastIndexUsed).ActivateAnimation(), "animation_finished");
+        if (controlLock == false)
+        {
+            card.Activate();
+            controlLock = true;
+        }
+    }
+
+    public void UseCard(DungeonCard card)
+    {
         controlLock = false;
-        hand[index].UseCard(this);
+        ConnectCardDataSignals(card.Data);
+        card.Data.UseCard();
+        DisconnectCardDataSignals(card.Data);
+        card.QueueFree();
     }
 
     public void AfterBattle()
     {
-        try
-        {
-            hand[lastIndexUsed] = DrawFromDeck();
-            handUI.GetChild<DungeonCardUI>(lastIndexUsed).DrawCard(hand[lastIndexUsed]);
-        }
-        catch
-        {
-            hand.RemoveAt(lastIndexUsed); 
-            UpdateUIHand();
-        }
+        DrawToFull();
     }
 
     private void DrawToFull()
@@ -109,86 +94,37 @@ public partial class DungeonEngine : Control
 
         for (int i=0; i < toDraw; i++)
         {
-            try { hand.Add(DrawFromDeck()); }
-            catch { break; }
-        }
-        UpdateUIHand();
-    }
-
-    // This method is specifically used to draw into the player's hand. As such the boss card behaves that way
-    private DungeonCard DrawFromDeck()
-    {
-        int deckCount = deck.Count;
-        if (deckCount == 0)
-        {
-            if (!bossCardDrawn)
+            DungeonCardData data = setup.DrawFromDeck();
+            if (data != null)
             {
-                cardsLeftLabel.Text = "0";
-                bossCardDrawn = true;
-                return bossCard;
+                DungeonCard card = DungeonCard.InstantiateFromData(data);
+                hand.Add(card);
+                card.RequestActivation += RequestUseCard;
+                card.CardSelected += UseCard;
             }
             else
-                throw new System.Exception("Unhandled exception: DrawFromDeck() called when deck empty.");
+            {
+                break;
+            }
         }
-        
-        DungeonCard output = deck[deckCount - 1];
-        deck.RemoveAt(deckCount - 1);
-
-        cardsLeftLabel.Text = (deck.Count + (bossCardDrawn ? 0 : 1)).ToString();
-        return output;
-    }
-
-    // Similar to DrawFromDeck, except it is used in effects, such as discard the top deck etc. Therefore it does nothing if bosscard is drawn
-    private DungeonCard TopFromDeck()
-    {
-        int deckCount = deck.Count;
-        if (deckCount == 0)
-        {
-            throw new System.Exception("Unhandled exception: TopFromDeck() called when deck empty.");
-        }
-        
-        DungeonCard output = deck[deckCount - 1];
-        deck.RemoveAt(deckCount - 1);
-
-        cardsLeftLabel.Text = (deck.Count + (bossCardDrawn ? 0 : 1)).ToString();
-        return output;
     }
 
     public void ExpandHandSize(int byHowMuch)
     {
         handSize += byHowMuch;
-        if (handSize > 5) handSize = 5;
-
+        if (handSize > MAXHANDSIZE)
+        {
+            handSize = MAXHANDSIZE;
+        }
         DrawToFull();
     }
 
-    public void ShuffleDeck()
+    private void ConnectCardDataSignals(DungeonCardData card)
     {
-        int n = deck.Count; if (n < 1) throw new System.Exception("Deck is being shuffled while already empty.");
-        for (int i = n; i > 1; i--)
-        {
-            int index = (int)(GD.Randi() % n);
-            DungeonCard endReplaced = deck[n-1];
-            deck[n-1] = deck[index];
-            deck[index] = endReplaced;          
-        }
+        card.StartBattle += StartBattle;
     }
-
-    private void UpdateUIHand()
+    private void DisconnectCardDataSignals(DungeonCardData card)
     {
-        int i = 0, handCount = hand.Count;
-
-        foreach(DungeonCardUI card in handUI.GetChildren())
-        {
-            if (i < hand.Count)
-            {
-                card.SetCard(hand[i]);
-                card.ResetAnimations();
-            }
-            else
-                card.Hide();
-            i++;
-        }
+        card.StartBattle -= StartBattle;
     }
-    
 }

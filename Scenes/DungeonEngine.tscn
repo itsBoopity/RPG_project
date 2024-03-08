@@ -1,6 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://n6xc6gkor2mb"]
 
 [ext_resource type="Script" path="res://src/Dungeon/DungeonEngine.cs" id="1"]
+[ext_resource type="Script" path="res://src/UI/Dungeon/DungeonUI.cs" id="2_asjkf"]
 [ext_resource type="Texture2D" uid="uid://rlbdmuvys40x" path="res://Images/UI/Dungeon/topTab.png" id="2_rxety"]
 [ext_resource type="Texture2D" uid="uid://chu0vb37vbujh" path="res://Images/UI/Dungeon/resource_Energy.png" id="3_p0i8n"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="4_fhxst"]
@@ -13,8 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dxxpcg2qcfj3v" path="res://Images/UI/Dungeon/bottomTab.png" id="9_aenpr"]
 [ext_resource type="Theme" uid="uid://bwa4fyytu0na1" path="res://Font/Theme/Number.tres" id="12"]
 [ext_resource type="Texture2D" uid="uid://t3gc0xxvlgo8" path="res://Images/UI/Dungeon/bottomTabButton.png" id="12_8hjte"]
-[ext_resource type="Script" path="res://src/Dungeon/DungeonHandUI.cs" id="14"]
-[ext_resource type="PackedScene" uid="uid://cq0oo5l62l4bc" path="res://Objects/UI/Dungeon/DungeonCard.tscn" id="15"]
+[ext_resource type="Script" path="res://src/Dungeon/DungeonHand.cs" id="15_y8nqk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_yedl4"]
 font = ExtResource("5")
@@ -86,12 +86,14 @@ mouse_filter = 2
 script = ExtResource("1")
 
 [node name="UI" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_asjkf")
 
 [node name="StatsTab" type="NinePatchRect" parent="UI"]
 layout_mode = 1
@@ -354,29 +356,4 @@ offset_bottom = 301.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
-script = ExtResource("14")
-
-[node name="0" parent="UI/Hand" instance=ExtResource("15")]
-layout_mode = 2
-
-[node name="1" parent="UI/Hand" instance=ExtResource("15")]
-layout_mode = 2
-index = 1
-
-[node name="2" parent="UI/Hand" instance=ExtResource("15")]
-layout_mode = 2
-index = 2
-
-[node name="3" parent="UI/Hand" instance=ExtResource("15")]
-layout_mode = 2
-index = 3
-
-[node name="4" parent="UI/Hand" instance=ExtResource("15")]
-layout_mode = 2
-index = 4
-
-[connection signal="CardSelected" from="UI/Hand/0" to="." method="UseCard"]
-[connection signal="CardSelected" from="UI/Hand/1" to="." method="UseCard"]
-[connection signal="CardSelected" from="UI/Hand/2" to="." method="UseCard"]
-[connection signal="CardSelected" from="UI/Hand/3" to="." method="UseCard"]
-[connection signal="CardSelected" from="UI/Hand/4" to="." method="UseCard"]
+script = ExtResource("15_y8nqk")

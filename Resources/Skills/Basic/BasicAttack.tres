@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SkillBasicAttack" load_steps=2 format=3 uid="uid://dqurbo58oi1ww"]
+
+[ext_resource type="Script" path="res://src/Data/Skills/Basic/SkillBasicAttack.cs" id="1_grut1"]
+
+[resource]
+script = ExtResource("1_grut1")

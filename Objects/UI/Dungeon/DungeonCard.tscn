@@ -1,10 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://cq0oo5l62l4bc"]
+[gd_scene load_steps=21 format=3 uid="uid://cq0oo5l62l4bc"]
 
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_yjsvl"]
-[ext_resource type="Script" path="res://src/Dungeon/DungeonCardUI.cs" id="3"]
+[ext_resource type="Script" path="res://src/Data/Dungeon/Card/DungeonCard.cs" id="2_6v5vq"]
 [ext_resource type="Texture2D" uid="uid://bvc8lqnpfmchs" path="res://Images/UI/Dungeon/DungeonCard/card.png" id="3_f6eyt"]
+[ext_resource type="Script" path="res://src/UI/Dungeon/DungeonCardUI.cs" id="4_21pya"]
 [ext_resource type="Texture2D" uid="uid://glpq2hfdqwgq" path="res://Images/UI/Dungeon/DungeonCard/template.png" id="5_24cjn"]
 [ext_resource type="Texture2D" uid="uid://wbm2m2sco3v8" path="res://Images/UI/Dungeon/DungeonCard/cardFrame.png" id="5_affmc"]
+[ext_resource type="Script" path="res://src/Audio/AudioPoolPlayer.cs" id="8_kcbur"]
+[ext_resource type="AudioStream" uid="uid://of3208hxbqa5" path="res://Audio/SFX/cardUse.wav" id="9_lw63q"]
+[ext_resource type="AudioStream" uid="uid://d1rd7hvv7s4gr" path="res://Audio/SFX/cardDraw.wav" id="10_0v0oh"]
+[ext_resource type="AudioStream" uid="uid://vvpccaacytqf" path="res://Audio/SFX/cardHover.wav" id="11_he3ti"]
 [ext_resource type="FontFile" uid="uid://bp08watagdgmr" path="res://Font/PTSerif-Regular.ttf" id="12"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6181l"]
@@ -20,7 +25,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardSprite:z_index")
+tracks/0/path = NodePath("UI:z_index")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -32,7 +37,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite:scale")
+tracks/1/path = NodePath("UI:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -47,7 +52,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardSprite:z_index")
+tracks/0/path = NodePath("UI:z_index")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -59,7 +64,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite:scale")
+tracks/1/path = NodePath("UI:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -76,7 +81,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardSprite:z_index")
+tracks/0/path = NodePath("UI:z_index")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -88,7 +93,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite:scale")
+tracks/1/path = NodePath("UI:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -111,7 +116,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardSprite:scale")
+tracks/0/path = NodePath("UI:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -123,7 +128,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite:position:y")
+tracks/1/path = NodePath("UI:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -135,7 +140,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CardSprite:modulate")
+tracks/2/path = NodePath("UI:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -151,7 +156,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardSprite:scale")
+tracks/0/path = NodePath("UI:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -163,7 +168,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite:position:y")
+tracks/1/path = NodePath("UI:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -175,7 +180,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CardSprite:modulate")
+tracks/2/path = NodePath("UI:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -187,7 +192,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CardSprite:scale")
+tracks/3/path = NodePath("UI:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -202,7 +207,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CardSprite:modulate")
+tracks/0/path = NodePath("UI:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -214,7 +219,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite:scale")
+tracks/1/path = NodePath("UI:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -226,7 +231,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CardSprite:position:y")
+tracks/2/path = NodePath("UI:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -238,7 +243,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CardSprite:size")
+tracks/3/path = NodePath("UI:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -262,9 +267,10 @@ offset_bottom = 602.0
 pivot_offset = Vector2(185, 340)
 theme = ExtResource("1_yjsvl")
 flat = true
-script = ExtResource("3")
+script = ExtResource("2_6v5vq")
 
-[node name="CardSprite" type="TextureRect" parent="."]
+[node name="UI" type="TextureRect" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(370, 602)
 layout_mode = 0
 offset_right = 370.0
@@ -272,18 +278,9 @@ offset_bottom = 602.0
 pivot_offset = Vector2(185, 337)
 mouse_filter = 2
 texture = ExtResource("3_f6eyt")
+script = ExtResource("4_21pya")
 
-[node name="Hotkey" type="Label" parent="CardSprite"]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 29.0
-offset_right = 307.0
-offset_bottom = 91.0
-theme_override_font_sizes/font_size = 55
-text = "1"
-horizontal_alignment = 1
-
-[node name="Title" type="Label" parent="CardSprite"]
+[node name="Title" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 23.0
 offset_top = 102.0
@@ -293,7 +290,7 @@ theme_override_font_sizes/font_size = 32
 text = "Card Name"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="CardSprite"]
+[node name="Description" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 27.0
 offset_top = 348.0
@@ -306,7 +303,7 @@ text = "- it's time
 label_settings = SubResource("LabelSettings_6181l")
 autowrap_mode = 2
 
-[node name="Illustration" type="TextureRect" parent="CardSprite"]
+[node name="Illustration" type="TextureRect" parent="UI"]
 layout_mode = 1
 offset_left = 33.0
 offset_top = 141.0
@@ -315,7 +312,7 @@ offset_bottom = 341.0
 texture = ExtResource("5_24cjn")
 stretch_mode = 4
 
-[node name="Frame" type="TextureRect" parent="CardSprite"]
+[node name="Frame" type="TextureRect" parent="UI"]
 layout_mode = 1
 offset_left = 33.0
 offset_top = 141.0
@@ -324,12 +321,14 @@ offset_bottom = 341.0
 texture = ExtResource("5_affmc")
 stretch_mode = 4
 
-[node name="HoverPlayer" type="AnimationPlayer" parent="."]
+[node name="HoverPlayer" type="AnimationPlayer" parent="UI"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_4iw5t")
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
+root_node = NodePath("../..")
 autoplay = "RESET"
 libraries = {
 "": SubResource("AnimationLibrary_8eqb1")
@@ -337,9 +336,12 @@ libraries = {
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 bus = &"Sfx"
+script = ExtResource("8_kcbur")
+AudioSource = Array[AudioStream]([ExtResource("9_lw63q"), ExtResource("10_0v0oh"), ExtResource("11_he3ti")])
 
-[connection signal="button_down" from="." to="." method="OnButtonDown"]
-[connection signal="button_up" from="." to="." method="OnButtonUp"]
-[connection signal="mouse_entered" from="." to="." method="OnHover"]
-[connection signal="mouse_exited" from="." to="." method="OnHoverExit"]
+[connection signal="button_down" from="." to="UI" method="OnButtonDown"]
+[connection signal="button_up" from="." to="UI" method="OnButtonUp"]
+[connection signal="mouse_entered" from="." to="UI" method="Hover"]
+[connection signal="mouse_entered" from="." to="Audio" method="PlayIndex" binds= [2]]
+[connection signal="mouse_exited" from="." to="UI" method="Unhover"]
 [connection signal="pressed" from="." to="." method="OnPressed"]

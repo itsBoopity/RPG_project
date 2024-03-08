@@ -20,8 +20,15 @@ public partial class TimerDisplay : Node
         timer.Started += StartTimer;
         SetProcess(false);
     }
+
+    public override void _Process(double delta)
+    {
+        // GD.Print(timer.TimeLeft);
+        label.Text = timer.TimeLeft.ToString("F1");
+        bar.Value = timer.TimeLeft;
+    }
     
-    public void Stop()
+    private void Stop()
     {
         GD.Print("Not fast enough!");
         if (tween.IsRunning())
@@ -30,19 +37,12 @@ public partial class TimerDisplay : Node
         }
         SetProcess(false);
     }
-    public void StartTimer(double length)
+    private void StartTimer(double length)
     {
         bar.MaxValue = length;
         tween = GetTree().CreateTween();
         tween.TweenProperty(bar, "value", length, 0.1f)
             .SetEase(Tween.EaseType.InOut);
         tween.TweenCallback(Callable.From(() => SetProcess(true)));
-    }
-
-    public override void _Process(double delta)
-    {
-        // GD.Print(timer.TimeLeft);
-        label.Text = timer.TimeLeft.ToString("F1");
-        bar.Value = timer.TimeLeft;
     }
 }

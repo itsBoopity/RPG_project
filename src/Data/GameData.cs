@@ -17,7 +17,7 @@ using System;
 public partial class GameData : Node
 {
     private static GameData _instance;
-    private CharacterData cdClaus;
+    private CharacterStats csClaus;
     private List<CharacterEnum> party;
     private List<CharacterEnum> bench;
 
@@ -39,22 +39,22 @@ public partial class GameData : Node
     /// <summary>
     /// Returns the corresponding CharacterData.
     /// </summary>
-    public CharacterData GetCharacter(CharacterEnum characterEnum)
+    public CharacterStats GetCharacter(CharacterEnum characterEnum)
     {
         switch (characterEnum)
         {
             case CharacterEnum.CLAUS:
-                return cdClaus;
+                return csClaus;
             default:
                 throw new ArgumentException($"GameData::GetCharacter does not recognize enum: {characterEnum}");
         }
     }
     /// <summary>
-    /// Updates CharacterData using BattleCharacter
+    /// Updates CharacterStats health.
     /// </summary>
-    public void UpdateCharacter(BattleCharacter newValue)
+    public void UpdateCharacterHealth(CharacterEnum who, int health)
     {
-        GetCharacter(newValue.Who).UpdateData(newValue);
+        GetCharacter(who).Health = health;
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public partial class GameData : Node
         {
             if (who != CharacterEnum.NULL)
             {
-                output.Add(CharacterBattleDataConvertor.ToBattleCharacter(GetCharacter(who)));
+                output.Add(new BattleCharacter(GetCharacter(who)));
             }
         }
         return output;
@@ -81,7 +81,7 @@ public partial class GameData : Node
         List<BattleCharacter> output = new List<BattleCharacter>();
         foreach (CharacterEnum who in bench)
         {
-            output.Add(CharacterBattleDataConvertor.ToBattleCharacter(GetCharacter(who)));
+            output.Add(new BattleCharacter(GetCharacter(who)));
         }
         return output;
     }
@@ -123,7 +123,7 @@ public partial class GameData : Node
 
     public void newSave() // Create New Save
     {
-        cdClaus = CharacterDataConstructor.Create(CharacterEnum.CLAUS);
+        csClaus = GD.Load<CharacterStats>("res://Resources/Stats/Character/Claus.tres");
         party = new List<CharacterEnum>{CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];

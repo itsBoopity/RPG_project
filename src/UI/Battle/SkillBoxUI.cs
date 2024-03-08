@@ -87,11 +87,11 @@ public partial class SkillBoxUI : Control
             cooldownCountdown.Hide();
         }
         
-        icon.Texture = skill.GetIcon();
+        icon.Texture = skill.Icon;
 
-        fill.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/Fill" + skill.type.ToString() + ".png");
+        fill.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/Fill" + skill.Type.ToString() + ".png");
         
-        if (skill.type == SkillType.BASIC)
+        if (skill.Type == SkillType.BASIC)
         {
             stackCost.Hide();
             cooldown.Hide();
@@ -99,9 +99,9 @@ public partial class SkillBoxUI : Control
         }
         else
         {
-            stackCost.Text = skill.cost.ToString();
-            cooldown.Text = skill.cooldown.ToString();
-            if (skill.snap)
+            stackCost.Text = skill.Cost.ToString();
+            cooldown.Text = skill.Cooldown.ToString();
+            if (skill.Snap)
                 snap.Show();
             else
                 snap.Hide();
@@ -112,14 +112,14 @@ public partial class SkillBoxUI : Control
     {
         Initiate(skill); // Only necessary if you plan to use the same skillbox for multiple characters/swapping out skillsZ
 
-        int result = skill.IsUsable(owner);
-        if (result ==  1)
+        SkillUsableResult result = skill.IsUsable(owner);
+        if (result == SkillUsableResult.IN_COOLDOWN)
         {
             fill.Modulate = new Color(0.4f, 0.4f, 0.4f, 1);
             cooldownCountdown.Show();
-            cooldownCountdown.Text = skill.currentCooldown.ToString();
+            cooldownCountdown.Text = skill.CurrentCooldown.ToString();
         }
-        else if (result == 2 || result == 3)
+        else if (result == SkillUsableResult.NOT_ENOUGH_STACKS || result == SkillUsableResult.CHARACTER_NOT_ACTIVE)
         {
             fill.Modulate = new Color(0.4f, 0.4f, 0.4f, 1);
         }

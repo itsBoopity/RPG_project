@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=58 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -8,7 +8,9 @@
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="4"]
 [ext_resource type="Script" path="res://src/UI/Battle/BattleUI.cs" id="5_tdtxk"]
 [ext_resource type="PackedScene" uid="uid://b8wob103hvoxb" path="res://Objects/UI/Battle/SkillBox.tscn" id="6"]
+[ext_resource type="Script" path="res://src/Battle/Rack/CharacterRack.cs" id="7_xhskm"]
 [ext_resource type="Texture2D" uid="uid://c0gvhc76yfr8e" path="res://Images/UI/Battle/skillWindow.png" id="8"]
+[ext_resource type="Script" path="res://src/Battle/Rack/MonsterRack.cs" id="8_yp80v"]
 [ext_resource type="Script" path="res://src/UI/Battle/CharacterModelRack.cs" id="9"]
 [ext_resource type="Script" path="res://src/UI/Battle/SkillDescription.cs" id="10"]
 [ext_resource type="Texture2D" uid="uid://8q6jalld2we7" path="res://Images/UI/Battle/timer.png" id="11"]
@@ -17,7 +19,6 @@
 [ext_resource type="Script" path="res://Font/RichTextEffect/RichTextAtkColor.gd" id="14"]
 [ext_resource type="Script" path="res://Font/RichTextEffect/RichTextStackColor.gd" id="15"]
 [ext_resource type="Script" path="res://src/UI/Battle/TimerDisplay.cs" id="15_wy43w"]
-[ext_resource type="Script" path="res://src/UI/Battle/MonsterRack.cs" id="16"]
 [ext_resource type="AudioStream" uid="uid://cywqoindf6m4s" path="res://Audio/SFX/click3.wav" id="16_5l314"]
 [ext_resource type="Script" path="res://src/UI/Battle/InfoLabel.cs" id="17"]
 [ext_resource type="Texture2D" uid="uid://b6blcuhkbjbue" path="res://Images/UI/Battle/skillBoxSimple.png" id="17_ifx84"]
@@ -720,6 +721,14 @@ bus = &"Sfx"
 stream = ExtResource("30_5us6w")
 bus = &"Sfx"
 
+[node name="Party" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_xhskm")
+
+[node name="Bench" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_xhskm")
+
 [node name="MonstersAnchor" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -734,7 +743,7 @@ grow_vertical = 0
 
 [node name="Monsters" type="Node2D" parent="MonstersAnchor"]
 unique_name_in_owner = true
-script = ExtResource("16")
+script = ExtResource("8_yp80v")
 
 [node name="UI" type="Control" parent="."]
 unique_name_in_owner = true

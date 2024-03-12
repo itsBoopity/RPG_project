@@ -18,6 +18,7 @@ public partial class GameData : Node
 {
     private static GameData _instance;
     private CharacterStats csClaus;
+    private CharacterStats csYellam;
     private List<CharacterEnum> party;
     private List<CharacterEnum> bench;
 
@@ -45,6 +46,8 @@ public partial class GameData : Node
         {
             case CharacterEnum.CLAUS:
                 return csClaus;
+            case CharacterEnum.YELLAM:
+                return csYellam;
             default:
                 throw new ArgumentException($"GameData::GetCharacter does not recognize enum: {characterEnum}");
         }
@@ -124,7 +127,8 @@ public partial class GameData : Node
     public void newSave() // Create New Save
     {
         csClaus = GD.Load<CharacterStats>("res://Resources/Stats/Character/Claus.tres");
-        party = new List<CharacterEnum>{CharacterEnum.CLAUS, CharacterEnum.NULL, CharacterEnum.NULL};
+        csYellam = GD.Load<CharacterStats>("res://Resources/Stats/Character/Yellam.tres");
+        party = new List<CharacterEnum>{CharacterEnum.CLAUS, CharacterEnum.YELLAM, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
     }

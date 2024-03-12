@@ -48,6 +48,8 @@ public partial class Utility : Node
         {
             case CharacterEnum.CLAUS:
                 return "[color=#c0694b][b]C[/b][/color]laus";
+            case CharacterEnum.YELLAM:
+                return "[color=#5E5B45][b]Y[/b][/color]ellam";
             default:
                 throw new ArgumentException("Utility.CharacterBBName is not fully implemented or given an incorrect argument.");
         }

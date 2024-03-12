@@ -705,21 +705,10 @@ unique_name_in_owner = true
 one_shot = true
 script = ExtResource("2_0hfn6")
 
-[node name="BattleSfx" type="Node" parent="."]
+[node name="BattleSfx" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_445sj")
-
-[node name="StrongClick" type="AudioStreamPlayer" parent="BattleSfx"]
-stream = ExtResource("16_5l314")
-bus = &"Sfx"
-
-[node name="RollClick" type="AudioStreamPlayer" parent="BattleSfx"]
-stream = ExtResource("29_r3ion")
-bus = &"Sfx"
-
-[node name="ErrorSound" type="AudioStreamPlayer" parent="BattleSfx"]
-stream = ExtResource("30_5us6w")
-bus = &"Sfx"
+AudioSource = Array[AudioStream]([ExtResource("16_5l314"), ExtResource("29_r3ion"), ExtResource("30_5us6w")])
 
 [node name="Party" type="Node" parent="."]
 unique_name_in_owner = true
@@ -887,12 +876,12 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 254.0
-offset_top = 116.0
-offset_right = 254.0
-offset_bottom = 116.0
+offset_left = 258.0
+offset_top = 235.0
+offset_right = 258.0
+offset_bottom = 235.0
 grow_vertical = 0
-scale = Vector2(0.8, 0.8)
+scale = Vector2(1.1, 1.1)
 mouse_filter = 2
 script = ExtResource("9")
 

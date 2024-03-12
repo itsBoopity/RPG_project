@@ -132,12 +132,19 @@ public partial class MonsterRack : Node2D
 		return GetChildren().Cast<BattleMonster>();
 	}
 
-    public void HideEstimateAll()
-    {
-        foreach (BattleMonster monster in GetChildren().Cast<BattleMonster>())
+    /// <summary>
+    /// Returns the next monster that hasn't acted yet. If non left, returns null.
+    /// </summary>
+    public BattleMonster GetNextCanAct()
+	{
+        foreach (BattleMonster monster in GetAll())
         {
-            monster.HideEstimate();
+            if (monster.CanAct())
+            {
+                return monster;
+            }
         }
-    }
+		return null;
+	}
 }
 

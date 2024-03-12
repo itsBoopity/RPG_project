@@ -26,7 +26,7 @@ public partial class SkillFirstStrike: BattleSkillData
         else
             damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef, 1.5f);
 
-        target.SustainDamage(damage);
+        target.SustainDamage(user, damage);
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

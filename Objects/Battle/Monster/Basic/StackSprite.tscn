@@ -1,0 +1,559 @@
+[gd_scene load_steps=30 format=3 uid="uid://cqe2b4tnycrji"]
+
+[ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Battle/Monster/MonsterBase.tscn" id="1_82a1v"]
+[ext_resource type="Texture2D" uid="uid://dxyjhfldmdy5l" path="res://Images/Monster/StackSprite/MainFlame.png" id="2_a134i"]
+[ext_resource type="Resource" uid="uid://bn122mi6gugnd" path="res://Resources/Stats/Monster/StackSpriteStats.tres" id="2_prk8v"]
+[ext_resource type="Texture2D" uid="uid://dd0oj6it15m7m" path="res://Images/Monster/StackSprite/Orb.png" id="3_1ajxm"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Visuals/StackSpriteVisuals.cs" id="3_2j0j7"]
+[ext_resource type="Texture2D" uid="uid://dty1bkjah5lxi" path="res://Images/Monster/StackSprite/MainFlame2.png" id="3_5te7k"]
+[ext_resource type="Texture2D" uid="uid://oj8l8vc0g8l7" path="res://Images/Monster/StackSprite/Light.png" id="3_bdk8v"]
+[ext_resource type="Texture2D" uid="uid://ddayne8raug4a" path="res://Images/Monster/StackSprite/Orb_Hitbox1.png" id="4_a8x6x"]
+[ext_resource type="Script" path="res://src/Animation/AnimationPlayerRandomStart.cs" id="4_mov4d"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterAppendage.cs" id="5_506tn"]
+[ext_resource type="Texture2D" uid="uid://nb1ifs115gq1" path="res://Images/Monster/StackSprite/FlameParticle1.png" id="6_wt72a"]
+[ext_resource type="Texture2D" uid="uid://d0b71l53k8ju0" path="res://Images/Monster/StackSprite/FlameParticle2.png" id="7_ojnkl"]
+[ext_resource type="AudioStream" uid="uid://c0x3qwy36vj6m" path="res://Audio/SFX/Monster/stack_sprite.wav" id="11_goccs"]
+
+[sub_resource type="Animation" id="Animation_uuxhi"]
+resource_name = "ShowOrb"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.575),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1.1), Vector2(1, 0.2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Effective:targettable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_m327p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CPUParticles2D2:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Effective:targettable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_7uoic"]
+resource_name = "ShowOrb"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../CPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CPUParticles2D2:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0.2), Vector2(1, 1.1), Vector2(1, 1.1), Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Effective:targettable")
+tracks/5/interp = 1
+tracks/5/loop_wrap = false
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b707j"]
+_data = {
+"HideOrb": SubResource("Animation_uuxhi"),
+"RESET": SubResource("Animation_m327p"),
+"ShowOrb": SubResource("Animation_7uoic")
+}
+
+[sub_resource type="Animation" id="Animation_xw677"]
+resource_name = "Hover"
+length = 5.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(151, -144), Vector2(151, -169)]
+}
+
+[sub_resource type="Animation" id="Animation_hjrvj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(151, -144)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8yaih"]
+_data = {
+"Hover": SubResource("Animation_xw677"),
+"RESET": SubResource("Animation_hjrvj")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pctpr"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_a2e6m"]
+resource_name = "Light"
+length = 4.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.2, 4.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.494118), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.8, 4.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(1.2, 1.2)]
+}
+
+[sub_resource type="Animation" id="Animation_4hnbw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ghofw"]
+_data = {
+"Light": SubResource("Animation_a2e6m"),
+"RESET": SubResource("Animation_4hnbw")
+}
+
+[sub_resource type="Animation" id="Animation_7yyyd"]
+resource_name = "Death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.47451, 0.47451, 1), Color(1, 0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Audio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_4rjcj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite/MainFlame:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(256, -144)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f18fp"]
+_data = {
+"Death": SubResource("Animation_7yyyd"),
+"RESET": SubResource("Animation_4rjcj")
+}
+
+[sub_resource type="Animation" id="Animation_qf8s5"]
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite/MainFlame:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(256, -144), Vector2(256, -167), Vector2(256, -144)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7vh0"]
+_data = {
+"Idle": SubResource("Animation_qf8s5")
+}
+
+[node name="StackSprite" instance=ExtResource("1_82a1v")]
+Stats = ExtResource("2_prk8v")
+
+[node name="Visuals" parent="." index="0"]
+script = ExtResource("3_2j0j7")
+
+[node name="Sprite" parent="Visuals" index="0"]
+position = Vector2(0, -113)
+
+[node name="MainFlame" type="Sprite2D" parent="Visuals/Sprite" index="0"]
+position = Vector2(256, -144)
+texture = ExtResource("2_a134i")
+
+[node name="Orb" type="Sprite2D" parent="Visuals/Sprite/MainFlame" index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-2, 77.7671)
+texture = ExtResource("3_1ajxm")
+
+[node name="Effective" type="Sprite2D" parent="Visuals/Sprite/MainFlame/Orb" index="0"]
+visible = false
+texture = ExtResource("4_a8x6x")
+script = ExtResource("5_506tn")
+targettable = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Sprite/MainFlame" index="1"]
+position = Vector2(-2, 80.58)
+emitting = false
+amount = 4
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.33
+texture = ExtResource("6_wt72a")
+emission_shape = 2
+emission_sphere_radius = 50.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 2.0
+initial_velocity_max = 20.0
+linear_accel_max = 10.0
+scale_amount_max = 1.2
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Visuals/Sprite/MainFlame" index="2"]
+position = Vector2(-9, 80.7303)
+emitting = false
+amount = 4
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+randomness = 0.33
+texture = ExtResource("7_ojnkl")
+emission_shape = 2
+emission_sphere_radius = 50.88
+gravity = Vector2(0, -100)
+initial_velocity_min = 2.0
+initial_velocity_max = 20.0
+linear_accel_max = 10.0
+scale_amount_max = 1.2
+
+[node name="OrbPlayer" type="AnimationPlayer" parent="Visuals/Sprite/MainFlame" index="3"]
+unique_name_in_owner = true
+root_node = NodePath("../Orb")
+libraries = {
+"": SubResource("AnimationLibrary_b707j")
+}
+
+[node name="Timer" type="Timer" parent="Visuals/Sprite/MainFlame" index="4"]
+one_shot = true
+
+[node name="MainFlame2" type="Sprite2D" parent="Visuals/Sprite" index="1"]
+position = Vector2(151, -144)
+texture = ExtResource("3_5te7k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/MainFlame2" index="0"]
+autoplay = "Hover"
+libraries = {
+"": SubResource("AnimationLibrary_8yaih")
+}
+script = ExtResource("4_mov4d")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Sprite" index="2"]
+position = Vector2(266, -109)
+amount = 1
+lifetime = 4.0
+explosiveness = 0.06
+randomness = 0.33
+texture = ExtResource("6_wt72a")
+emission_shape = 2
+emission_sphere_radius = 128.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.5
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="Visuals/Sprite" index="3"]
+position = Vector2(266, -109)
+amount = 1
+lifetime = 4.0
+explosiveness = 0.06
+randomness = 0.33
+texture = ExtResource("7_ojnkl")
+emission_shape = 2
+emission_sphere_radius = 128.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.5
+
+[node name="Light" type="Sprite2D" parent="Visuals/Sprite" index="4"]
+material = SubResource("CanvasItemMaterial_pctpr")
+position = Vector2(278, -137.887)
+texture = ExtResource("3_bdk8v")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Light" index="0"]
+autoplay = "Light"
+libraries = {
+"": SubResource("AnimationLibrary_ghofw")
+}
+script = ExtResource("4_mov4d")
+
+[node name="SpriteAnimation" parent="Visuals/Sprite" index="5"]
+autoplay = "StackSprite/Idle"
+libraries = {
+"": SubResource("AnimationLibrary_f18fp"),
+"StackSprite": SubResource("AnimationLibrary_n7vh0")
+}
+
+[node name="UI" parent="Visuals" index="1"]
+offset_left = 268.0
+offset_top = -405.0
+offset_right = 268.0
+offset_bottom = -405.0
+
+[node name="BoundaryBox" parent="Visuals" index="2"]
+offset_top = -530.0
+offset_right = 512.0
+offset_bottom = 45.0
+
+[node name="Timer" type="Timer" parent="Visuals" index="3"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = ExtResource("11_goccs")
+
+[connection signal="Hit" from="Visuals/Sprite/MainFlame/Orb/Effective" to="." method="AppendageHitCheck"]
+[connection signal="timeout" from="Visuals/Sprite/MainFlame/Timer" to="Visuals" method="OrbTimeout"]
+[connection signal="timeout" from="Visuals/Timer" to="Visuals" method="OrbTimeout"]

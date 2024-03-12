@@ -14,12 +14,14 @@ public partial class DamageCounter : Node
     public void Play(int damage)
     {
         number.Text = damage.ToString();
-        animationPlayer.Play("Shake", 0.0f);
+        animationPlayer.Stop();
+        animationPlayer.Play("Shake");
     }
 
     public void Play(string text)
     {
         number.Text = text;
+        animationPlayer.Stop();
         animationPlayer.Play("Shake");
     }
 }

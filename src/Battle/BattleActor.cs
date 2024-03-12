@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public abstract partial class BattleActor: Node2D
 {
     [Signal]
-    public delegate void TookDamageEventHandler(BattleActor who, int damage);
+    public delegate void TookDamageEventHandler(BattleActor who, BattleActor damageDealer, int damage);
 
     public string DisplayName { get { return Tr(Stats.Name); } }
     public int Level { get { return Stats.Level; } }
@@ -15,9 +15,11 @@ public abstract partial class BattleActor: Node2D
     private int Defense { get { return Stats.Defense; } }
     private int Speed { get { return Stats.Speed; } }
     
+    public bool TurnActive { get; set; } = true;
     public List<BattleSkill> Skills { get; set; }
     public List<int> Statuses { get; }
     private BattleActorStats stats;
+    
 
     [Export]
     protected BattleActorStats Stats
@@ -28,7 +30,7 @@ public abstract partial class BattleActor: Node2D
         }
         set
         {
-            stats = value;
+            stats = (BattleActorStats)value.Duplicate();
             Skills = new();
             foreach (BattleSkillData data in stats.Skills)
             {
@@ -64,14 +66,14 @@ public abstract partial class BattleActor: Node2D
     /// <summary>
     /// Sustains finalDamage amount of damage. The passed value should be the final calculated damage, as this method does not adjust it in any way.
     /// </summary>
-    public virtual void SustainDamage(int finalDamage)
+    public virtual void SustainDamage(BattleActor damageDealer, int finalDamage)
     {
         if (finalDamage < 0)
         {
             finalDamage = 0;
         }
         Health -= finalDamage;
-        EmitSignal(SignalName.TookDamage, this, finalDamage);
+        EmitSignal(SignalName.TookDamage, this, damageDealer, finalDamage);
     }
 
     /// <summary>
@@ -81,5 +83,15 @@ public abstract partial class BattleActor: Node2D
     public void ChangeStack(int delta)
     {
         Stack += delta;
+    }
+
+    /// <summary>
+    /// Counts down parameters at the start of the turn: cooldowns, statusi etc.
+    /// </summary>
+    public void NextTurn()
+    {
+        TurnActive = true;
+        foreach (BattleSkill skill in Skills)
+            if (skill.CurrentCooldown > 0) skill.CurrentCooldown -= 1;
     }
 }

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bntue8d21231h"]
+
+[ext_resource type="Resource" uid="uid://ct4k3xr7p0rnq" path="res://Resources/Skills/Offensive/FirstStrike.tres" id="1_k5chd"]
+[ext_resource type="Resource" uid="uid://7y21iwc4ke1" path="res://Resources/Skills/Offensive/PrecisionNeedle.tres" id="2_xcqhr"]
+[ext_resource type="Script" path="res://src/Data/Stats/CharacterStats.cs" id="3_oixyo"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("3_oixyo")
+who = 2
+Name = "T_CNAME_YELLAM"
+Level = 1
+Health = 15
+MaxHealth = 15
+Attack = 2
+Defense = 3
+Speed = 10
+Skills = Array[Resource]([ExtResource("1_k5chd"), ExtResource("2_xcqhr")])

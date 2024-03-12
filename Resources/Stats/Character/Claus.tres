@@ -15,4 +15,4 @@ MaxHealth = 11
 Attack = 3
 Defense = 1
 Speed = 8
-Skills = Array[Resource]([ExtResource("1_s445k"), ExtResource("2_2de02"), ExtResource("2_2de02")])
+Skills = Array[Resource]([ExtResource("1_s445k"), ExtResource("2_2de02")])

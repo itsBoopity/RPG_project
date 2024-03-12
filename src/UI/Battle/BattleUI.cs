@@ -175,7 +175,7 @@ public partial class BattleUI : Control
         }
     }
 
-    public void CharacterTookDamage(BattleCharacter character, int damage)
+    public void CharacterTookDamage(BattleCharacter character, BattleActor damageDealer, int damage)
     {
         characterDamageCounter.Play(damage);
         foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())

@@ -10,7 +10,7 @@ public partial class BattleMonster: BattleActor
     [Signal]
     public delegate void FinishedTurnEventHandler();
     [Signal]
-    new public delegate void TookDamageEventHandler(BattleMonster who, int damage);
+    new public delegate void TookDamageEventHandler(BattleMonster who, BattleActor damageDealer, int damage);
 
     [Signal]
     public delegate void PlayerAttackedVfxEventHandler(AnimatedSpriteOneOff vfx, BattleCharacter attackedCharacter);
@@ -35,19 +35,21 @@ public partial class BattleMonster: BattleActor
         visuals.UpdateHP(Health, MaxHealth);
         Stats.SignalHitResult += GetHitResult;
         Stats.SignalIntent +=  SetIntent;
+        
     }
 
-    public async void Defeated()
+    public async void Defeated(BattleActor byWho)
     {
         targettingEnabled = false;
         IsDisappearing = true;
+        Stats.OnDefeated(byWho);
         await ToSignal(visuals.AnimateDefeat(), AnimationPlayer.SignalName.AnimationFinished);
         QueueFree();
     }
 
     public bool CanAct()
     {
-        return !IsDisappearing;
+        return !IsDisappearing && TurnActive;
     }
 
     public void LoadUpcomingTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters)
@@ -57,12 +59,16 @@ public partial class BattleMonster: BattleActor
 
     public async void ExecuteTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters)
     {
-        LoadedSkill.Use(this, party[PartyTarget]);
-        EmitSignal( SignalName.DisplayCenterMessage,
-                    String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, party[PartyTarget].DisplayName));
-        AnimatedSpriteOneOff animation = LoadedSkill.Animation;
-        EmitSignal(SignalName.PlayerAttackedVfx, animation, party[PartyTarget]);
-        await ToSignal(animation, AnimatedSpriteOneOff.SignalName.AnimationFinished);
+        if (LoadedSkill != null)
+        {
+            LoadedSkill.Use(this, party[PartyTarget]);
+            EmitSignal( SignalName.DisplayCenterMessage,
+                        String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, party[PartyTarget].DisplayName));
+            AnimatedSpriteOneOff animation = LoadedSkill.Animation;
+            EmitSignal(SignalName.PlayerAttackedVfx, animation, party[PartyTarget]);
+            await ToSignal(animation, AnimatedSpriteOneOff.SignalName.AnimationFinished);
+        }
+        TurnActive = false;
         EmitSignal(SignalName.FinishedTurn);
     }
 
@@ -83,9 +89,9 @@ public partial class BattleMonster: BattleActor
         
     }
 
-    public override void SustainDamage(int finalDamage)
+    public override void SustainDamage(BattleActor damageDealer, int finalDamage)
     {
-        base.SustainDamage(finalDamage);
+        base.SustainDamage(damageDealer, finalDamage);
         visuals.UpdateHP(Health, MaxHealth);
         visuals.PlayDamage(finalDamage);
     }
@@ -103,6 +109,13 @@ public partial class BattleMonster: BattleActor
     private void SetIntent(int targetIndex, int skillIndex)
     {
         PartyTarget = targetIndex;
-        LoadedSkill = Skills[skillIndex];
+        if (skillIndex >= 0)
+        {
+            LoadedSkill = Skills[skillIndex];
+        }
+        else
+        {
+            LoadedSkill = null;
+        }
     }
 }

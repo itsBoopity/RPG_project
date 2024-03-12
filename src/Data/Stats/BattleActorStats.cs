@@ -20,4 +20,6 @@ public partial class BattleActorStats: Resource
     [Export]
     public Array<BattleSkillData> Skills { get; set; }
     public BattleActorStats() {}
+
+    public virtual void OnDefeated(BattleActor damageDealer) {}
 }

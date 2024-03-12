@@ -30,7 +30,6 @@ public partial class TimerDisplay : Node
     
     private void Stop()
     {
-        GD.Print("Not fast enough!");
         if (tween.IsRunning())
         {
             tween.Kill();

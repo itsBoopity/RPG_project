@@ -22,7 +22,7 @@ public partial class SkillPrecisionNeedle: BattleSkillData
         else if (appendageCoef >= 0.90f) damage = 3;
         else if (appendageCoef >= 0.6f) damage = 2;
 
-        target.SustainDamage(damage);
+        target.SustainDamage(user, damage);
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

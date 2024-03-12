@@ -18,7 +18,7 @@ public partial class SkillBasicAttack: BattleSkillData
     public override void Execute(BattleActor user, BattleActor target, float appendageCoef)
     {
         user.ChangeStack(1);
-        target.SustainDamage(Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef));
+        target.SustainDamage(user, Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef));
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

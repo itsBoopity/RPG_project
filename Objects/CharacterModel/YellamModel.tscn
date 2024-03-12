@@ -1,25 +1,20 @@
-[gd_scene load_steps=23 format=3 uid="uid://cmgc3mwik1fd1"]
+[gd_scene load_steps=21 format=3 uid="uid://cu0cfm4hrs3ih"]
 
-[ext_resource type="Texture2D" uid="uid://ca736jd42osrp" path="res://Images/CharacterModel/Claus/Body/default_clothes.png" id="2_pet7c"]
-[ext_resource type="Texture2D" uid="uid://cd2t2b05jugg8" path="res://Images/CharacterModel/Claus/Head/neutral.png" id="3_xa1v7"]
-[ext_resource type="Texture2D" uid="uid://dvqhksexqac4e" path="res://Images/CharacterModel/Claus/Head/open.png" id="4_fgj7m"]
-[ext_resource type="Texture2D" uid="uid://54ferck3rbqt" path="res://Images/CharacterModel/Claus/Eyes/neutral.png" id="5_son7q"]
-[ext_resource type="Texture2D" uid="uid://hw6ddexlt0fp" path="res://Images/CharacterModel/Claus/Eyes/blink.png" id="6_cixb1"]
-[ext_resource type="Texture2D" uid="uid://drmj3mmdctx3c" path="res://Images/CharacterModel/Claus/Eyebrows/neutral.png" id="7_mywg4"]
-[ext_resource type="Texture2D" uid="uid://0p0he5bdce0w" path="res://Images/CharacterModel/Claus/Mouth/neutral.png" id="8_6uv2u"]
-[ext_resource type="Texture2D" uid="uid://batagjj7k3nj6" path="res://Images/CharacterModel/Claus/Mouth/open.png" id="9_hu0hb"]
-[ext_resource type="AudioStream" uid="uid://ckbkxdbvhib6n" path="res://Audio/VoiceBleep/Claus.wav" id="10"]
-[ext_resource type="Script" path="res://src/Animation/CharacterModel.cs" id="11"]
-[ext_resource type="Script" path="res://src/Dialogue/TalkAnimator.cs" id="12"]
+[ext_resource type="Script" path="res://src/Animation/CharacterModel.cs" id="1_8a370"]
+[ext_resource type="Texture2D" uid="uid://b3bbso02csntp" path="res://Images/CharacterModel/Yellam/Body/default_clothes.png" id="2_5ooeh"]
+[ext_resource type="Texture2D" uid="uid://blp1oo1y134dt" path="res://Images/CharacterModel/Yellam/Eyes/neutral.png" id="4_foywc"]
+[ext_resource type="Texture2D" uid="uid://bq01ym3oanbyj" path="res://Images/CharacterModel/Yellam/Head/neutral.png" id="5_50lmt"]
+[ext_resource type="Texture2D" uid="uid://jjrbtlieim7j" path="res://Images/CharacterModel/Yellam/Eyes/blink.png" id="5_n1xpo"]
+[ext_resource type="Texture2D" uid="uid://bk7s7l545onrh" path="res://Images/CharacterModel/Yellam/Eyebrows/neutral.png" id="6_fc57i"]
+[ext_resource type="Texture2D" uid="uid://b8745851asm3j" path="res://Images/CharacterModel/Yellam/Mouth/smile.png" id="7_gboi3"]
+[ext_resource type="Script" path="res://src/Dialogue/TalkAnimator.cs" id="11_n4kr7"]
+[ext_resource type="AudioStream" uid="uid://ckbkxdbvhib6n" path="res://Audio/VoiceBleep/Claus.wav" id="12_s8r46"]
 
 [sub_resource type="SpriteFrames" id="11"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_xa1v7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_fgj7m")
+"texture": ExtResource("5_50lmt")
 }],
 "loop": true,
 "name": &"default",
@@ -30,10 +25,10 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_son7q")
+"texture": ExtResource("4_foywc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_cixb1")
+"texture": ExtResource("5_n1xpo")
 }],
 "loop": true,
 "name": &"default",
@@ -44,10 +39,7 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_6uv2u")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_hu0hb")
+"texture": ExtResource("7_gboi3")
 }],
 "loop": true,
 "name": &"default",
@@ -231,32 +223,31 @@ _data = {
 "Talk": SubResource("9")
 }
 
-[node name="Claus" type="CanvasGroup"]
-position = Vector2(0, 4)
-script = ExtResource("11")
+[node name="Yellam" type="CanvasGroup"]
+position = Vector2(0, 1)
+script = ExtResource("1_8a370")
 
 [node name="Body" type="Sprite2D" parent="."]
-texture = ExtResource("2_pet7c")
+texture = ExtResource("2_5ooeh")
 centered = false
 offset = Vector2(-512, -1024)
 
 [node name="Head" type="AnimatedSprite2D" parent="Body"]
-position = Vector2(18, -757)
+position = Vector2(6, -871)
 sprite_frames = SubResource("11")
 
 [node name="Eyes" type="AnimatedSprite2D" parent="Body/Head"]
-position = Vector2(-27, -92)
+position = Vector2(26, 10)
 sprite_frames = SubResource("3")
 
 [node name="BrowPosition" type="Node2D" parent="Body/Head"]
-position = Vector2(-21, -110)
+position = Vector2(27, -7)
 
 [node name="Eyebrows" type="Sprite2D" parent="Body/Head/BrowPosition"]
-texture = ExtResource("7_mywg4")
-metadata/_edit_lock_ = true
+texture = ExtResource("6_fc57i")
 
 [node name="Mouth" type="AnimatedSprite2D" parent="Body/Head"]
-position = Vector2(-31, -27)
+position = Vector2(10, 72)
 sprite_frames = SubResource("4")
 
 [node name="BreatheAnimator" type="AnimationPlayer" parent="."]
@@ -274,7 +265,7 @@ libraries = {
 libraries = {
 "": SubResource("AnimationLibrary_266fp")
 }
-script = ExtResource("12")
+script = ExtResource("11_n4kr7")
 
 [node name="Bleep" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10")
+stream = ExtResource("12_s8r46")

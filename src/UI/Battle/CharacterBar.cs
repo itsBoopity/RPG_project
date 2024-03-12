@@ -54,8 +54,8 @@ public partial class CharacterBar : Control
         if (who != character.Who) {
             who = character.Who;
             name.Text = Utility.CharacterBBName(character.Who);
+            icon.Texture = GD.Load<Texture2D>($"res://Images/CharacterIcon/{character.Who}.png");
         }
-
         hp.Text = character.Health.ToString();
         maxHp.Text = character.MaxHealth.ToString();
         stack.Text = character.Stack.ToString();

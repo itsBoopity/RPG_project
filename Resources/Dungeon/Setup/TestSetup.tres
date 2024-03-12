@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="DungeonSetup" load_steps=7 format=3 uid="uid://cspfybcp8mf8i"]
+[gd_resource type="Resource" script_class="DungeonSetup" load_steps=8 format=3 uid="uid://cspfybcp8mf8i"]
 
 [ext_resource type="Script" path="res://src/Data/Dungeon/DungeonSetup.cs" id="1_t8qoc"]
 [ext_resource type="Resource" uid="uid://b32yv320pffx0" path="res://Resources/Dungeon/Card/Boss/TwoSlime.tres" id="1_yojok"]
 [ext_resource type="Resource" uid="uid://cdoh1lak01kqy" path="res://Resources/Dungeon/Card/Regular/OneSlime.tres" id="2_wn7r4"]
 [ext_resource type="Script" path="res://src/Data/Dungeon/Card/DungeonCardBundle.cs" id="3_viukw"]
+[ext_resource type="Resource" uid="uid://ch0voi2kie6pr" path="res://Resources/Dungeon/Card/Regular/Slime2Sprite1.tres" id="4_nyt8i"]
 
 [sub_resource type="Resource" id="Resource_81pjn"]
 script = ExtResource("3_viukw")
@@ -12,7 +13,8 @@ Count = 5
 
 [sub_resource type="Resource" id="Resource_kphy2"]
 script = ExtResource("3_viukw")
-Count = 0
+Card = ExtResource("4_nyt8i")
+Count = 2
 
 [resource]
 resource_local_to_scene = true

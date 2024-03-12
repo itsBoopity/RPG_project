@@ -15,3 +15,5 @@
 "T_SKT_FIRE","Fire","Oheň"
 "T_SKT_ICE","Ice","Led"
 "T_SKT_LIGHTNING","Lightning","Blesk"
+"T_B_MSG_CD","Skill is in cooldown!","Skill je v cooldownu!"
+"T_B_MSG_NOSTACK","Not enough Stacks!","Nedostatek Stacků!"

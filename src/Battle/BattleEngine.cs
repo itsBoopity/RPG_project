@@ -90,6 +90,7 @@ public partial class BattleEngine : Control
             monster.TookDamage += MonsterTookDamage;
             monster.PlayerAttackedVfx += Ui.PlayerAttackedVfx;
             monster.DisplayCenterMessage += Ui.ShowCenterMessage;
+            monster.FinishedTurn += EnemyTurnPerformStep;
         }
         SelectCharacter(0);
         PlayerTurn();
@@ -110,11 +111,11 @@ public partial class BattleEngine : Control
         timer.CustomStop();
         monsters.Clear();
         GameData data = GameData.Instance;
-        foreach (BattleCharacter i in party.GetChildren())
+        foreach (BattleCharacter i in party.GetAll())
         {
             data.UpdateCharacterHealth(i.Who, i.Health);
         }
-        foreach (BattleCharacter i in bench.GetChildren())
+        foreach (BattleCharacter i in bench.GetAll())
         {
             data.UpdateCharacterHealth(i.Who, i.Health);
         }
@@ -166,7 +167,7 @@ public partial class BattleEngine : Control
         SetState(ControlState.PLAYER_TARGETTING_ENEMY);
         Ui.ShowReticle();
 
-        foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
+        foreach (BattleMonster monster in monsters.GetAll())
         {
             monster.targettingEnabled = true;
             monster.ShowEstimate(selectedSkill.EstimateDamage(GetCurrentPartyMember(), monster));
@@ -199,7 +200,7 @@ public partial class BattleEngine : Control
         {
             SetState(ControlState.PLAYER_DEFAULT);
             Ui.DisableReticle();
-            foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
+            foreach (BattleMonster monster in monsters.GetAll())
             {
                 monster.targettingEnabled = false;
                 monster.HideEstimate();
@@ -219,7 +220,7 @@ public partial class BattleEngine : Control
             {
                 partySpeed += i.GetSpeed();
             }
-            foreach (BattleActor i in monsters.GetChildren())
+            foreach (BattleActor i in monsters.GetAll())
             {
                 enemySpeed += i.GetSpeed();
             }
@@ -254,34 +255,51 @@ public partial class BattleEngine : Control
 
         Ui.UpdateAll(party, GetCurrentPartyMember());
 
-        // Tick down cooldowns, statusi etc.
-
         CalculateAndStartTimer();
     }
+
     private async void EnemyTurn()
     {
         timer.CustomStop();
         ExitCurrentMode(); // First set the player mode and UI back to defaault
         EnterEnemyTurn(); // Then enter enemy Turn
-        await ToSignal(GetTree().CreateTimer(0.25f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
-
-        Ui.PlayTurnAnnouncement();
         foreach (BattleMonster monster in monsters.GetAll())
         {
-            if (monster.CanAct())
-            {
-                await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
-                monster.ExecuteTurn(party, bench, monsters);
-                await ToSignal(monster, BattleMonster.SignalName.FinishedTurn);
-            }
+            monster.NextTurn();
         }
+        await ToSignal(GetTree().CreateTimer(0.25f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
+        Ui.PlayTurnAnnouncement();
+        EnemyTurnPerformStep();
+    }
+
+    private async void EnemyTurnPerformStep()
+    {
+        if (state != ControlState.ENEMY_TURN)
+        {
+            return;
+        }
+
+        BattleMonster monster = monsters.GetNextCanAct();
         await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
+        if (monster != null)
+        {
+            monster.ExecuteTurn(party, bench, monsters);
+        }
+        else
+        {
+            EnemyTurnFinished();
+        }
+        
+    }
+
+    private void EnemyTurnFinished()
+    {
         Ui.StopTurnAnnouncement();
         Ui.UpdateAll(party, GetCurrentPartyMember()); // TODO: This should instead be animated and updated by each skill
         PlayerTurn();
     }
 
-    public void CharacterTookDamage(BattleCharacter character, int damage)
+    public void CharacterTookDamage(BattleCharacter character, BattleActor damageDealer, int damage)
     {
         if (character.Health <= 0)
         {
@@ -290,12 +308,12 @@ public partial class BattleEngine : Control
             GD.Print("Game over you deaded :(");
         }
     }
-    public void MonsterTookDamage(BattleMonster monster, int damage)
+    public void MonsterTookDamage(BattleMonster monster, BattleActor damageDealer, int damage)
     {
         if (monster.Health <= 0)
         {
             Ui.ShowCenterMessage(String.Format(Tr("{0} defeated!"), monster.DisplayName));
-            monster.Defeated();
+            monster.Defeated(damageDealer);
             if (monsters.Count == 0)
             {
                 CallDeferred(MethodName.Finish);
@@ -320,7 +338,7 @@ public partial class BattleEngine : Control
     public void ViewAction(BattleSkill action, int index)
     {
         Ui.ViewActionDetail(action, index);
-        foreach (BattleMonster monster in monsters.GetChildren().Cast<BattleMonster>())
+        foreach (BattleMonster monster in monsters.GetAll())
         {
             monster.ShowEstimate(action.EstimateDamage(GetCurrentPartyMember(), monster));
         }
@@ -347,14 +365,14 @@ public partial class BattleEngine : Control
         if (isUsable != SkillUsableResult.USABLE)
         {
             sfx.ErrorSound();
-            if (isUsable != SkillUsableResult.IN_COOLDOWN)
+            if (isUsable == SkillUsableResult.IN_COOLDOWN)
             {
-                Ui.ShowCharacterMessage("Skill is in cooldown!");
+                Ui.ShowCharacterMessage("T_B_MSG_CD");
             } 
-            else if (isUsable != SkillUsableResult.NOT_ENOUGH_STACKS)
+            else if (isUsable == SkillUsableResult.NOT_ENOUGH_STACKS)
             {
                 Ui.ShakeStackCount(selectedCharacter);
-                Ui.ShowCharacterMessage("Not enough stacks!");
+                Ui.ShowCharacterMessage("T_B_MSG_NOSTACK");
             }
         }
         else

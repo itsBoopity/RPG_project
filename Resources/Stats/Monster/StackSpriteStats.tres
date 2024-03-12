@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bn122mi6gugnd"]
+
+[ext_resource type="Script" path="res://src/Data/Stats/Monster/StackSpriteStats.cs" id="1_pxu7f"]
+
+[resource]
+script = ExtResource("1_pxu7f")
+Id = 0
+DefaultAppendageCoef = 0.0
+Name = "T_ENE_STACKSPRITE"
+Level = 1
+Health = 1
+MaxHealth = 1
+Attack = 0
+Defense = 0
+Speed = 0
+Skills = null

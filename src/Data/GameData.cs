@@ -17,8 +17,8 @@ using System;
 public partial class GameData : Node
 {
     private static GameData _instance;
-    private CharacterStats csClaus;
     private CharacterStats csYellam;
+    private CharacterStats csSrinivas;
     private List<CharacterEnum> party;
     private List<CharacterEnum> bench;
 
@@ -42,15 +42,13 @@ public partial class GameData : Node
     /// </summary>
     public CharacterStats GetCharacter(CharacterEnum characterEnum)
     {
-        switch (characterEnum)
+        return characterEnum switch
         {
-            case CharacterEnum.CLAUS:
-                return csClaus;
-            case CharacterEnum.YELLAM:
-                return csYellam;
-            default:
-                throw new ArgumentException($"GameData::GetCharacter does not recognize enum: {characterEnum}");
-        }
+            CharacterEnum.YELLAM => csYellam,
+            CharacterEnum.SRINIVAS => csSrinivas,
+            _ => throw new ArgumentException($"GameData::GetCharacter does not recognize enum: {characterEnum}"),
+        };
+
     }
     /// <summary>
     /// Updates CharacterStats health.
@@ -65,7 +63,7 @@ public partial class GameData : Node
     /// </summary>
     public List<BattleCharacter> GetBattleParty()
     {
-        List<BattleCharacter> output = new List<BattleCharacter>();
+        List<BattleCharacter> output = new();
         foreach (CharacterEnum who in party)
         {
             if (who != CharacterEnum.NULL)
@@ -81,7 +79,7 @@ public partial class GameData : Node
     /// </summary>
     public List<BattleCharacter> GetBattleBench()
     {
-        List<BattleCharacter> output = new List<BattleCharacter>();
+        List<BattleCharacter> output = new();
         foreach (CharacterEnum who in bench)
         {
             output.Add(new BattleCharacter(GetCharacter(who)));
@@ -126,9 +124,9 @@ public partial class GameData : Node
 
     public void newSave() // Create New Save
     {
-        csClaus = GD.Load<CharacterStats>("res://Resources/Stats/Character/Claus.tres");
         csYellam = GD.Load<CharacterStats>("res://Resources/Stats/Character/Yellam.tres");
-        party = new List<CharacterEnum>{CharacterEnum.CLAUS, CharacterEnum.YELLAM, CharacterEnum.NULL};
+        csSrinivas = GD.Load<CharacterStats>("res://Resources/Stats/Character/Srinivas.tres");
+        party = new List<CharacterEnum>{CharacterEnum.YELLAM, CharacterEnum.SRINIVAS, CharacterEnum.NULL};
         bench = new List<CharacterEnum>();
         // flags = new byte[500];
     }

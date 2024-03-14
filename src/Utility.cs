@@ -29,30 +29,27 @@ public partial class Utility : Node
         return GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instantiate<BattleEngine>();
     }
 
-    public static Color GetCharacterColor(string name)
+    public static Color GetCharacterColor(CharacterEnum who)
     {
-        switch (name)
+        return who switch
         {
-            case "Claus":
-                return new Color("#c0694b");
-            default:
-                return new Color("#756361");
+            CharacterEnum.YELLAM => new Color("#5E5B45"),
+            CharacterEnum.SRINIVAS => new Color("#8B7D78"),
+            _ => new Color("#756361"),
+        };
 
-        }
     }
 
     // BBCode formatted names of the characters used in CharacterBar
     public static string CharacterBBName(CharacterEnum who)
     {
-        switch (who)
+        return who switch
         {
-            case CharacterEnum.CLAUS:
-                return "[color=#c0694b][b]C[/b][/color]laus";
-            case CharacterEnum.YELLAM:
-                return "[color=#5E5B45][b]Y[/b][/color]ellam";
-            default:
-                throw new ArgumentException("Utility.CharacterBBName is not fully implemented or given an incorrect argument.");
-        }
+            CharacterEnum.YELLAM => "[color=#5E5B45][b]Y[/b][/color]ellam",
+            CharacterEnum.SRINIVAS => "[color=#8B7D78][b]S[/b][/color]rinivas",
+            _ => throw new ArgumentException($"Utility.CharacterBBName does not recognize enum {who}"),
+        };
+
     }
 
     // BBCode formatted skill type

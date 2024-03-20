@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://e11u8dxkrtjg"]
+
+[ext_resource type="Script" path="res://src/Data/Stats/Monster/RainbowSentry.cs" id="1_2b082"]
+[ext_resource type="Resource" uid="uid://ct4k3xr7p0rnq" path="res://Resources/Skills/Offensive/FirstStrike.tres" id="1_aosnj"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_2b082")
+Id = 3
+DefaultAppendageCoef = 0.0
+Name = "T_ENE_RAINBOWSENTRY"
+Level = 5
+Health = 50
+MaxHealth = 50
+Attack = 3
+Defense = 5
+Speed = 30
+Skills = Array[Resource]([ExtResource("1_aosnj")])

@@ -45,13 +45,13 @@ public class BattleSkill
     }
 
 	// Encapsulates Execute. Actual skill effects are implemented in Execute.
-    public bool Use(BattleActor user, BattleActor target, float appendageCoef = 1.0f)
+    public bool Use(BattleFieldData bf, BattleInteractionData bInteraction)
     {
-        if (IsUsable(user) == SkillUsableResult.USABLE)
+        if (IsUsable(bInteraction.user) == SkillUsableResult.USABLE)
         {
-            user.ChangeStack(-data.Cost);
+            bInteraction.user.ChangeStack(-data.Cost);
             CurrentCooldown = data.Cooldown;
-            data.Execute(user, target, appendageCoef);
+            data.Execute(bf, bInteraction);
             return true;
         }
         return false;

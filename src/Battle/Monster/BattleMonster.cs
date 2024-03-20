@@ -33,9 +33,10 @@ public partial class BattleMonster: BattleActor
     {
         visuals = GetNode<MonsterVisuals>("%Visuals");
         visuals.UpdateHP(Health, MaxHealth);
+        Stats.Visuals = visuals;
         Stats.SignalHitResult += GetHitResult;
         Stats.SignalIntent +=  SetIntent;
-        
+        Stats.Initialize();
     }
 
     public async void Defeated(BattleActor byWho)
@@ -52,20 +53,21 @@ public partial class BattleMonster: BattleActor
         return !IsDisappearing && TurnActive;
     }
 
-    public void LoadUpcomingTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters)
+    public void LoadUpcomingTurn(BattleFieldData bf)
     {
-        Stats.LoadUpcomingTurn(party, bench, monsters);
+        Stats.LoadUpcomingTurn(bf);
     }
 
-    public async void ExecuteTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters)
+    public async void ExecuteTurn(BattleFieldData bf)
     {
         if (LoadedSkill != null)
         {
-            LoadedSkill.Use(this, party[PartyTarget]);
+            BattleInteractionData bInteraction = new(this, bf.party[PartyTarget], 1.0f);
+            LoadedSkill.Use(bf, bInteraction);
             EmitSignal( SignalName.DisplayCenterMessage,
-                        String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, party[PartyTarget].DisplayName));
+                        String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, bf.party[PartyTarget].DisplayName));
             AnimatedSpriteOneOff animation = LoadedSkill.Animation;
-            EmitSignal(SignalName.PlayerAttackedVfx, animation, party[PartyTarget]);
+            EmitSignal(SignalName.PlayerAttackedVfx, animation, bf.party[PartyTarget]);
             await ToSignal(animation, AnimatedSpriteOneOff.SignalName.AnimationFinished);
         }
         TurnActive = false;

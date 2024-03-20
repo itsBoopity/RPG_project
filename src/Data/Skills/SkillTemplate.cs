@@ -4,7 +4,7 @@ public partial class SkillTemplate: BattleSkillData
         SkillId.Null, "SKILL_NULL", 0, 0, 0, false, 0, 0, false
     ) {}
     
-    public override void Execute(BattleActor user, BattleActor target, float appendageCoef)
+    public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
     
     }
@@ -23,4 +23,5 @@ public partial class SkillTemplate: BattleSkillData
     //     base.Reset();
     //     // Rest of the code
     // }
+
 }

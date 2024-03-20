@@ -37,9 +37,9 @@ public partial class SkillDescription : NinePatchRect
         }
 
         description.Text = "";
-        if (Utility.IsPhysical(skill.Element))
+        if (skill.Element.IsPhysical())
             description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.Element)}/{Tr("T_SKT_PHYSICAL")}\n";
-        else if (Utility.IsMagical(skill.Element))
+        else if (skill.Element.IsMagical())
             description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.Element)}/{Tr("T_SKT_MAGICAL")}\n";
         
         if (!skill.IsAoE) description.Text += "- Target: Single\n\n";

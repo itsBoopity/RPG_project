@@ -47,7 +47,7 @@ public abstract partial class BattleSkillData: Resource
         return true;
     }
 
-    public abstract void Execute(BattleActor user, BattleActor target, float appendageCoef);
+    public abstract void Execute(BattleFieldData bf, BattleInteractionData bInteraction);
     public abstract int EstimateDamage(BattleActor user, BattleActor target);
     public abstract string Description();
 }

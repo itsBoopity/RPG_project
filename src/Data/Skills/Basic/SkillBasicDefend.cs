@@ -1,14 +1,14 @@
 using Godot;
 
 [GlobalClass]
-public partial class SkillBasicAttack: BattleSkillData
+public partial class SkillBasicDefend: BattleSkillData
 {
-    public SkillBasicAttack(): base(
-        SkillId.BasicAttack,
-        "T_SKL_BASICATTACK_TITLE",
+    public SkillBasicDefend(): base(
+        SkillId.Defend,
+        "T_SKL_BASICDEFEND_TITLE",
         SkillType.BASIC,
-        SkillElement.VARIABLE,
-        TargettingType.ENEMY_TARGET,
+        SkillElement.NONE,
+        TargettingType.NONE,
         false,
         0,
         0,
@@ -17,7 +17,7 @@ public partial class SkillBasicAttack: BattleSkillData
 
     public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
-        bInteraction.user.ChangeStack(1);
+        bInteraction.user.ChangeStack(2);
         bInteraction.target.SustainDamage(bInteraction.user, Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef));
     }
 

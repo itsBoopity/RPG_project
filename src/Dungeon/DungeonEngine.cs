@@ -28,7 +28,7 @@ public partial class DungeonEngine : Control
         ui = GetNode<DungeonUI>("%UI");
         hand = GetNode<DungeonHand>("%Hand");
         HandSizeChanged += ui.UpdateHandSize;
-        Global.Instance.BattleFinished += AfterBattle;
+        SceneManager.Instance.BattleExited += AfterBattle;
 
         if (Global.debugMode) LoadTest();
     }
@@ -62,7 +62,7 @@ public partial class DungeonEngine : Control
 
     public void StartBattle(BattleSetup setup)
     {
-        Global.Instance.StartBattle(setup);
+        SceneManager.Instance.StartBattle(setup);
     }
 
     public void RequestUseCard(DungeonCard card)

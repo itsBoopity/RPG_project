@@ -2,10 +2,10 @@ public partial class SlimeStats: MonsterStats
 {
     private int targetCycle = 0;
 
-    public override void LoadUpcomingTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters)
+    public override void LoadUpcomingTurn(BattleFieldData bf)
     {
         EmitSignal(SignalName.SignalIntent, targetCycle, 0);
-        targetCycle = (targetCycle + 1) % party.Count;
+        targetCycle = (targetCycle + 1) % bf.party.Count;
     }
 
     public override void AppendageHit(MonsterAppendage appendage)

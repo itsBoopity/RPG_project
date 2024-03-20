@@ -35,6 +35,8 @@ public partial class Utility : Node
         {
             CharacterEnum.YELLAM => new Color("#5E5B45"),
             CharacterEnum.SRINIVAS => new Color("#8B7D78"),
+            CharacterEnum.ISHKE =>  new Color("#933328"),
+            CharacterEnum.FRAY =>  new Color("#BCBBD2"),
             _ => new Color("#756361"),
         };
 
@@ -47,6 +49,8 @@ public partial class Utility : Node
         {
             CharacterEnum.YELLAM => "[color=#5E5B45][b]Y[/b][/color]ellam",
             CharacterEnum.SRINIVAS => "[color=#8B7D78][b]S[/b][/color]rinivas",
+            CharacterEnum.ISHKE => "[color=#933328][b]I[/b][/color]shke",
+            CharacterEnum.FRAY => "[color=#BCBBD2][b]F[/b][/color]ray",
             _ => throw new ArgumentException($"Utility.CharacterBBName does not recognize enum {who}"),
         };
 
@@ -71,7 +75,7 @@ public partial class Utility : Node
         switch (type)
         {
             case SkillElement.BLUNT:
-                return $"[color=#979EDF]{Tr("T_SKT_BLUNT")}[/color]";
+                return $"[color=#FFDD9F]{Tr("T_SKT_BLUNT")}[/color]";
             case SkillElement.SLASH:
                 return $"[color=#C86B36]{Tr("T_SKT_SLASH")}[/color]";
             case SkillElement.PIERCE:
@@ -98,15 +102,6 @@ public partial class Utility : Node
     {
         int damage = Mathf.RoundToInt((userAttack * attackCoefficient - targetDefense) * appendageCoef);
         return (damage < 1) ? 1 : damage;
-    }
-
-    public static bool IsPhysical(SkillElement type)
-    {
-        return type == SkillElement.SLASH || type == SkillElement.BLUNT || type == SkillElement.PIERCE;
-    }
-    public static bool IsMagical(SkillElement type)
-    {
-        return type == SkillElement.FIRE || type == SkillElement.ICE || type == SkillElement.LIGHTNING;
     }
 
     public static void SetHslShader(ShaderMaterial shader, float hue = 0.0f, float brightness = 1.0f, float contrast = 1.0f, float saturation = 1.0f)

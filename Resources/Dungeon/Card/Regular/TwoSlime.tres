@@ -10,5 +10,5 @@ monsters = Array[PackedScene]([ExtResource("1_7qs32"), ExtResource("1_7qs32")])
 
 [resource]
 script = ExtResource("1_xivq6")
-IsBossBattle = true
+IsBossBattle = false
 Setup = SubResource("Resource_hdmdl")

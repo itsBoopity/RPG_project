@@ -3,7 +3,7 @@ using Godot;
 [GlobalClass]
 public partial class SkillFirstStrike: BattleSkillData
 {
-    private bool first;
+    private bool first = true;
     public SkillFirstStrike(): base(
         SkillId.FirstStrike,
         "T_SKL_FIRSTSTRIKE_TITLE",
@@ -16,17 +16,17 @@ public partial class SkillFirstStrike: BattleSkillData
         false
     ) {}
 
-    public override void Execute(BattleActor user, BattleActor target, float appendageCoef)
+    public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
         int damage;
         if (first) {
-            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef, 2);
+            damage = Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef, 2);
             first = false;
         }
         else
-            damage = Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), appendageCoef, 1.5f);
+            damage = Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef, 1.5f);
 
-        target.SustainDamage(user, damage);
+        bInteraction.target.SustainDamage(bInteraction.user, damage);
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

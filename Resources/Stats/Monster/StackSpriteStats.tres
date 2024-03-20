@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://src/Data/Stats/Monster/StackSpriteStats.cs" id="1_pxu7f"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_pxu7f")
 Id = 0
 DefaultAppendageCoef = 0.0

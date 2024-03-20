@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cqe2b4tnycrji"]
+[gd_scene load_steps=28 format=3 uid="uid://cqe2b4tnycrji"]
 
 [ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Battle/Monster/MonsterBase.tscn" id="1_82a1v"]
 [ext_resource type="Texture2D" uid="uid://dxyjhfldmdy5l" path="res://Images/Monster/StackSprite/MainFlame.png" id="2_a134i"]
@@ -13,6 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://nb1ifs115gq1" path="res://Images/Monster/StackSprite/FlameParticle1.png" id="6_wt72a"]
 [ext_resource type="Texture2D" uid="uid://d0b71l53k8ju0" path="res://Images/Monster/StackSprite/FlameParticle2.png" id="7_ojnkl"]
 [ext_resource type="AudioStream" uid="uid://c0x3qwy36vj6m" path="res://Audio/SFX/Monster/stack_sprite.wav" id="11_goccs"]
+
+[sub_resource type="Gradient" id="Gradient_grbkb"]
+offsets = PackedFloat32Array(0, 0.181818, 0.844156, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="Animation" id="Animation_uuxhi"]
 resource_name = "ShowOrb"
@@ -216,6 +220,34 @@ tracks/5/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../CPUParticles2D")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../CPUParticles2D2")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b707j"]
 _data = {
@@ -327,76 +359,14 @@ _data = {
 "RESET": SubResource("Animation_4hnbw")
 }
 
-[sub_resource type="Animation" id="Animation_7yyyd"]
-resource_name = "Death"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0.47451, 0.47451, 1), Color(1, 0, 0, 0)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Audio")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_4rjcj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals/Sprite/MainFlame:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(256, -144)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_f18fp"]
-_data = {
-"Death": SubResource("Animation_7yyyd"),
-"RESET": SubResource("Animation_4rjcj")
-}
-
-[sub_resource type="Animation" id="Animation_qf8s5"]
+[sub_resource type="Animation" id="Animation_wbcqc"]
+resource_name = "Idle"
 length = 4.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals/Sprite/MainFlame:position")
+tracks/0/path = NodePath("MainFlame:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -406,9 +376,9 @@ tracks/0/keys = {
 "values": [Vector2(256, -144), Vector2(256, -167), Vector2(256, -144)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7vh0"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_72pkh"]
 _data = {
-"Idle": SubResource("Animation_qf8s5")
+"Idle": SubResource("Animation_wbcqc")
 }
 
 [node name="StackSprite" instance=ExtResource("1_82a1v")]
@@ -418,6 +388,7 @@ Stats = ExtResource("2_prk8v")
 script = ExtResource("3_2j0j7")
 
 [node name="Sprite" parent="Visuals" index="0"]
+self_modulate = Color(1, 0, 0, 0)
 position = Vector2(0, -113)
 
 [node name="MainFlame" type="Sprite2D" parent="Visuals/Sprite" index="0"]
@@ -452,6 +423,7 @@ initial_velocity_min = 2.0
 initial_velocity_max = 20.0
 linear_accel_max = 10.0
 scale_amount_max = 1.2
+color_ramp = SubResource("Gradient_grbkb")
 
 [node name="CPUParticles2D2" type="CPUParticles2D" parent="Visuals/Sprite/MainFlame" index="2"]
 position = Vector2(-9, 80.7303)
@@ -469,6 +441,7 @@ initial_velocity_min = 2.0
 initial_velocity_max = 20.0
 linear_accel_max = 10.0
 scale_amount_max = 1.2
+color_ramp = SubResource("Gradient_grbkb")
 
 [node name="OrbPlayer" type="AnimationPlayer" parent="Visuals/Sprite/MainFlame" index="3"]
 unique_name_in_owner = true
@@ -494,7 +467,7 @@ script = ExtResource("4_mov4d")
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Sprite" index="2"]
 position = Vector2(266, -109)
 amount = 1
-lifetime = 4.0
+lifetime = 3.0
 explosiveness = 0.06
 randomness = 0.33
 texture = ExtResource("6_wt72a")
@@ -504,11 +477,12 @@ gravity = Vector2(0, -100)
 initial_velocity_min = 2.0
 initial_velocity_max = 10.0
 scale_amount_min = 0.5
+color_ramp = SubResource("Gradient_grbkb")
 
 [node name="CPUParticles2D2" type="CPUParticles2D" parent="Visuals/Sprite" index="3"]
 position = Vector2(266, -109)
 amount = 1
-lifetime = 4.0
+lifetime = 3.0
 explosiveness = 0.06
 randomness = 0.33
 texture = ExtResource("7_ojnkl")
@@ -518,6 +492,7 @@ gravity = Vector2(0, -100)
 initial_velocity_min = 2.0
 initial_velocity_max = 10.0
 scale_amount_min = 0.5
+color_ramp = SubResource("Gradient_grbkb")
 
 [node name="Light" type="Sprite2D" parent="Visuals/Sprite" index="4"]
 material = SubResource("CanvasItemMaterial_pctpr")
@@ -531,12 +506,12 @@ libraries = {
 }
 script = ExtResource("4_mov4d")
 
-[node name="SpriteAnimation" parent="Visuals/Sprite" index="5"]
-autoplay = "StackSprite/Idle"
+[node name="Idle" type="AnimationPlayer" parent="Visuals/Sprite" index="5"]
+autoplay = "Idle"
 libraries = {
-"": SubResource("AnimationLibrary_f18fp"),
-"StackSprite": SubResource("AnimationLibrary_n7vh0")
+"": SubResource("AnimationLibrary_72pkh")
 }
+script = ExtResource("4_mov4d")
 
 [node name="UI" parent="Visuals" index="1"]
 offset_left = 268.0
@@ -551,7 +526,7 @@ offset_bottom = 45.0
 
 [node name="Timer" type="Timer" parent="Visuals" index="3"]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="1"]
 stream = ExtResource("11_goccs")
 
 [connection signal="Hit" from="Visuals/Sprite/MainFlame/Orb/Effective" to="." method="AppendageHitCheck"]

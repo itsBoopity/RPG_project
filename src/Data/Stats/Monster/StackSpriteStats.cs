@@ -1,6 +1,6 @@
 public partial class StackSpriteStats: MonsterStats
 {
-    public override void LoadUpcomingTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters)
+    public override void LoadUpcomingTurn(BattleFieldData bf)
     {
         EmitSignal(SignalName.SignalIntent, -1, -1);
     }

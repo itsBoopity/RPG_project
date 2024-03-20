@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://c1fnwe1e3famb"]
+
+[ext_resource type="Resource" uid="uid://ct4k3xr7p0rnq" path="res://Resources/Skills/Offensive/FirstStrike.tres" id="1_4ox5v"]
+[ext_resource type="Resource" uid="uid://7y21iwc4ke1" path="res://Resources/Skills/Offensive/PrecisionNeedle.tres" id="2_5dakm"]
+[ext_resource type="Script" path="res://src/Data/Stats/CharacterStats.cs" id="3_ikk6y"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("3_ikk6y")
+who = 3
+Name = "Yellam"
+Level = 1
+Health = 10
+MaxHealth = 10
+Attack = 3
+Defense = 0
+Speed = 9
+Skills = Array[Resource]([ExtResource("1_4ox5v"), ExtResource("2_5dakm")])

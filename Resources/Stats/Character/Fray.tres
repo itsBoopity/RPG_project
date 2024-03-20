@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ds0n3eoay0oa8"]
+
+[ext_resource type="Script" path="res://src/Data/Stats/CharacterStats.cs" id="3_eiwy0"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("3_eiwy0")
+who = 4
+Name = "Fray"
+Level = 1
+Health = 9
+MaxHealth = 9
+Attack = 2
+Defense = 3
+Speed = 11
+Skills = Array[Resource]([])

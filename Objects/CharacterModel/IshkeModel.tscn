@@ -1,0 +1,277 @@
+[gd_scene load_steps=22 format=3 uid="uid://wosvagsnmblu"]
+
+[ext_resource type="Script" path="res://src/Animation/CharacterModel.cs" id="1_sp8bi"]
+[ext_resource type="Texture2D" uid="uid://casq4rmhk3qp0" path="res://Images/CharacterModel/Ishke/Body/default_clothes.png" id="2_kt2jx"]
+[ext_resource type="Texture2D" uid="uid://dt00vraeay0xw" path="res://Images/CharacterModel/Ishke/Head/neutral.png" id="3_uyhx6"]
+[ext_resource type="Texture2D" uid="uid://cdqjnaslek012" path="res://Images/CharacterModel/Ishke/Eyes/neutral.png" id="4_kopcw"]
+[ext_resource type="Texture2D" uid="uid://c10qnqmel4ar7" path="res://Images/CharacterModel/Ishke/Eyes/blink.png" id="5_57w35"]
+[ext_resource type="Texture2D" uid="uid://7c78cb3ge0r3" path="res://Images/CharacterModel/Ishke/Eyebrows/neutral.png" id="6_5ooi6"]
+[ext_resource type="Texture2D" uid="uid://bd8gxfc0s6dr" path="res://Images/CharacterModel/Ishke/Mouth/neutral.png" id="7_yacug"]
+[ext_resource type="Texture2D" uid="uid://enjl23nh7txr" path="res://Images/CharacterModel/Ishke/Body/hand.png" id="8_mw377"]
+[ext_resource type="Script" path="res://src/Dialogue/TalkAnimator.cs" id="9_2lfj7"]
+[ext_resource type="AudioStream" uid="uid://ckbkxdbvhib6n" path="res://Audio/VoiceBleep/Claus.wav" id="10_udny6"]
+
+[sub_resource type="SpriteFrames" id="11"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_uyhx6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kopcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_57w35")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_yacug")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="2"]
+resource_name = "Breathe"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1.008), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c1mxq"]
+_data = {
+"Breathe": SubResource("2")
+}
+
+[sub_resource type="Animation" id="1"]
+resource_name = "Blink"
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Head/Eyes:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.225),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Head/BrowPosition/Eyebrows:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.225),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, 2), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="10"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Head/Eyes:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Head/BrowPosition/Eyebrows:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tu7vt"]
+_data = {
+"Blink": SubResource("1"),
+"RESET": SubResource("10")
+}
+
+[sub_resource type="Animation" id="Animation_igm8a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Head/Mouth:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/Head:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="9"]
+resource_name = "Talk"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Head/Mouth:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Bleep")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body/Head:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TalkAnimator")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"RandomSpeed"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_266fp"]
+_data = {
+"RESET": SubResource("Animation_igm8a"),
+"Talk": SubResource("9")
+}
+
+[node name="Ishke" type="CanvasGroup"]
+position = Vector2(0, 1)
+script = ExtResource("1_sp8bi")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = ExtResource("2_kt2jx")
+centered = false
+offset = Vector2(-512, -1024)
+
+[node name="Head" type="AnimatedSprite2D" parent="Body"]
+position = Vector2(19, -890)
+sprite_frames = SubResource("11")
+
+[node name="Eyes" type="AnimatedSprite2D" parent="Body/Head"]
+position = Vector2(-16, 0)
+sprite_frames = SubResource("3")
+
+[node name="BrowPosition" type="Node2D" parent="Body/Head"]
+position = Vector2(-18, -28)
+
+[node name="Eyebrows" type="Sprite2D" parent="Body/Head/BrowPosition"]
+texture = ExtResource("6_5ooi6")
+metadata/_edit_lock_ = true
+
+[node name="Mouth" type="AnimatedSprite2D" parent="Body/Head"]
+position = Vector2(-23, 65)
+sprite_frames = SubResource("4")
+
+[node name="Hand" type="Sprite2D" parent="Body"]
+position = Vector2(-93, -873)
+texture = ExtResource("8_mw377")
+
+[node name="BreatheAnimator" type="AnimationPlayer" parent="."]
+autoplay = "Breathe"
+libraries = {
+"": SubResource("AnimationLibrary_c1mxq")
+}
+
+[node name="BlinkAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tu7vt")
+}
+
+[node name="TalkAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_266fp")
+}
+script = ExtResource("9_2lfj7")
+
+[node name="Bleep" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_udny6")

@@ -16,7 +16,7 @@ public partial class SideBar : Node
     public void NewGame()
     {
         GameData.Instance.newSave();
-        GetNode<Global>("/root/Global").ChangeSceneToFile("res://Scenes/CharacterCreator.tscn");
+        SceneManager.Instance.ChangeSceneToFile("res://Scenes/CharacterCreator.tscn");
     }
 
     public void LoadGame()

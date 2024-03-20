@@ -119,7 +119,7 @@ public partial class BattleEngine : Control
         {
             data.UpdateCharacterHealth(i.Who, i.Health);
         }
-        Global.Instance.EndBattle();
+        SceneManager.Instance.EndBattle();
     }
 
     // ---------------------- GETTERS --------------------------------------------------
@@ -245,8 +245,9 @@ public partial class BattleEngine : Control
         
         EnterPlayerDefaultMode();
 
+        BattleFieldData bf = new(party, bench, monsters);
         foreach (BattleMonster monster in monsters.GetAll())
-            monster.LoadUpcomingTurn(party, bench, monsters);
+            monster.LoadUpcomingTurn(bf);
         
         foreach (BattleCharacter character in party.GetAll())
         {
@@ -283,13 +284,13 @@ public partial class BattleEngine : Control
         await ToSignal(GetTree().CreateTimer(0.85f / enemyTurnSpeed), SceneTreeTimer.SignalName.Timeout);
         if (monster != null)
         {
-            monster.ExecuteTurn(party, bench, monsters);
+            BattleFieldData data = new(party, bench, monsters);
+            monster.ExecuteTurn(data);
         }
         else
         {
             EnemyTurnFinished();
         }
-        
     }
 
     private void EnemyTurnFinished()
@@ -395,7 +396,9 @@ public partial class BattleEngine : Control
 
     private void PlayerExecuteSelectedSkill(BattleMonster monster, float appendageCoef)
     {
-        selectedSkill.Use(GetCurrentPartyMember(), monster, appendageCoef);
+        BattleFieldData bf = new(party, bench, monsters);
+        BattleInteractionData bInteraction = new(GetCurrentPartyMember(), monster, appendageCoef);
+        selectedSkill.Use(bf, bInteraction);
 
         Ui.PlayVfx(selectedSkill.Animation, GetGlobalMousePosition());
 

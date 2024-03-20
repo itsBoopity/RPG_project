@@ -19,6 +19,8 @@ public partial class GameData : Node
     private static GameData _instance;
     private CharacterStats csYellam;
     private CharacterStats csSrinivas;
+    private CharacterStats csIshke;
+    private CharacterStats csFray;
     private List<CharacterEnum> party;
     private List<CharacterEnum> bench;
 
@@ -46,6 +48,8 @@ public partial class GameData : Node
         {
             CharacterEnum.YELLAM => csYellam,
             CharacterEnum.SRINIVAS => csSrinivas,
+            CharacterEnum.ISHKE => csIshke,
+            CharacterEnum.FRAY => csFray,
             _ => throw new ArgumentException($"GameData::GetCharacter does not recognize enum: {characterEnum}"),
         };
 
@@ -126,8 +130,10 @@ public partial class GameData : Node
     {
         csYellam = GD.Load<CharacterStats>("res://Resources/Stats/Character/Yellam.tres");
         csSrinivas = GD.Load<CharacterStats>("res://Resources/Stats/Character/Srinivas.tres");
-        party = new List<CharacterEnum>{CharacterEnum.YELLAM, CharacterEnum.SRINIVAS, CharacterEnum.NULL};
-        bench = new List<CharacterEnum>();
+        csIshke = GD.Load<CharacterStats>("res://Resources/Stats/Character/Ishke.tres");
+        csFray = GD.Load<CharacterStats>("res://Resources/Stats/Character/Fray.tres");
+        party = new List<CharacterEnum>{CharacterEnum.YELLAM, CharacterEnum.FRAY, CharacterEnum.ISHKE};
+        bench = new List<CharacterEnum>{CharacterEnum.SRINIVAS};
         // flags = new byte[500];
     }
 

@@ -1,5 +1,9 @@
 using Godot;
 
+
+/// <summary>
+/// An abstract class representing the stats and behavior of a monster.
+/// </summary>
 public abstract partial class MonsterStats: BattleActorStats
 {
     [Signal]
@@ -19,7 +23,11 @@ public abstract partial class MonsterStats: BattleActorStats
     [Export]
     public float DefaultAppendageCoef { get; set; }
 
-    public abstract void LoadUpcomingTurn(CharacterRack party, CharacterRack bench, MonsterRack monsters);
+    public MonsterVisuals Visuals { get; set; }
+
+    public virtual void Initialize() {}
+
+    public abstract void LoadUpcomingTurn(BattleFieldData bf);
 
     public abstract void AppendageHit(MonsterAppendage appendage);
 }

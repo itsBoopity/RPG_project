@@ -4,6 +4,6 @@
 
 [resource]
 shader = ExtResource("1_bkshp")
-shader_parameter/offset = Vector2(20, -18)
+shader_parameter/offset = Vector2(40, -24)
 shader_parameter/shadowIntensity = 0.5
 shader_parameter/colorMultiply = Color(0.0784314, 0.0156863, 0.101961, 0.705882)

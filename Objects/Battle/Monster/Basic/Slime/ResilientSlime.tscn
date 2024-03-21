@@ -215,7 +215,7 @@ tracks/0/keys = {
 tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Audio")
+tracks/1/path = NodePath("../../Audio")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -367,8 +367,10 @@ _data = {
 }
 
 [node name="ResilientSlime" instance=ExtResource("1_cj3je")]
-material = SubResource("ShaderMaterial_bil4r")
 Stats = ExtResource("3_sixrt")
+
+[node name="Sprite" parent="Visuals" index="0"]
+material = SubResource("ShaderMaterial_bil4r")
 
 [node name="Splash" type="Sprite2D" parent="Visuals/Sprite" index="0"]
 position = Vector2(169, -130)

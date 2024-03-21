@@ -388,7 +388,6 @@ Stats = ExtResource("2_prk8v")
 script = ExtResource("3_2j0j7")
 
 [node name="Sprite" parent="Visuals" index="0"]
-self_modulate = Color(1, 0, 0, 0)
 position = Vector2(0, -113)
 
 [node name="MainFlame" type="Sprite2D" parent="Visuals/Sprite" index="0"]

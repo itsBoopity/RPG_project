@@ -30,7 +30,7 @@ tracks/0/keys = {
 tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Audio")
+tracks/1/path = NodePath("../../Audio")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -222,7 +222,8 @@ _data = {
 "Shake": SubResource("10")
 }
 
-[node name="MonsterBase" type="CanvasGroup"]
+[node name="MonsterBase" type="Node2D"]
+self_modulate = Color(1, 0.47451, 0.47451, 1)
 script = ExtResource("1_lauak")
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -230,13 +231,11 @@ unique_name_in_owner = true
 script = ExtResource("1_87nde")
 metadata/_edit_lock_ = true
 
-[node name="Sprite" type="Node2D" parent="Visuals"]
-self_modulate = Color(1, 0.47451, 0.47451, 1)
+[node name="Sprite" type="CanvasGroup" parent="Visuals"]
 metadata/_edit_lock_ = true
 
 [node name="SpriteAnimation" type="AnimationPlayer" parent="Visuals/Sprite"]
 unique_name_in_owner = true
-root_node = NodePath("../../..")
 libraries = {
 "": SubResource("AnimationLibrary_f18fp")
 }

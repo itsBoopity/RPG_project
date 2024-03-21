@@ -18,6 +18,7 @@ public partial class SkillFirstStrike: BattleSkillData
 
     public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
+        GD.Print(first);
         int damage;
         if (first) {
             damage = CalculationFormula.BasicDamage(bInteraction.user.GetStrength(), bInteraction.target.GetDefense(), bInteraction.target.GetAffinity(Element), bInteraction.appendageCoef, 2.0f);

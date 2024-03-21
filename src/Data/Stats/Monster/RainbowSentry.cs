@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 public partial class RainbowSentry: MonsterStats
 {
@@ -18,6 +19,9 @@ public partial class RainbowSentry: MonsterStats
     /// How many gems are left unbroken.
     /// </summary>
     private int gemsLeft;
+
+
+    private List<SkillElement> elementGrabBag = new();
     
 
     new private RainbowSentryVisuals Visuals { get {return (RainbowSentryVisuals)base.Visuals; } }
@@ -52,32 +56,14 @@ public partial class RainbowSentry: MonsterStats
     }
 
     /// <summary>
-    /// Generates random elements and spawns GEMCOUNT gems. Always creates at least one PHYSICAL and MAGICAL.
+    /// Generates semi-random elements and spawns GEMCOUNT gems. Randomization algorithm described in detail in 
     /// </summary>
     private void RandomizeGems()
     {
-        bool containsPhysical = false;
-        bool containsMagical = false;
         for (int i=0; i<GEMCOUNT; i++)
         {
-            gemElements[i] = SkillElementUtility.GetRandomPhysicalOrMagical();
-            if (gemElements[i].IsPhysical())
-            {
-                containsPhysical = true;
-            }
-            else
-            {
-                containsMagical = true;
-            }
-        }
+            gemElements[i] = PullFromGemGrabBag();
 
-        if (!containsPhysical)
-        {
-            gemElements[0] = SkillElementUtility.GetRandomPhysical();
-        }
-        else if (!containsMagical)
-        {
-            gemElements[0] = SkillElementUtility.GetRandomMagical();
         }
 
         for (int i=0; i<GEMCOUNT; i++)
@@ -86,6 +72,40 @@ public partial class RainbowSentry: MonsterStats
         }
 
         gemsLeft = GEMCOUNT;
+    }
+
+    /// <summary>
+    /// Grab bag method randomization (every element at least once),
+    /// with the added randomization of one element which appears twice in the grab bag every time it is refilled.
+    /// </summary>
+    /// <returns>Element pulled from the bag.</returns>
+    private SkillElement PullFromGemGrabBag()
+    {
+        if (elementGrabBag.Count == 0)
+        {
+            RefillGrabBag();
+        }
+
+        SkillElement output = elementGrabBag[^1];
+        elementGrabBag.RemoveAt(elementGrabBag.Count - 1);
+        return output; 
+    }
+
+    private void RefillGrabBag()
+    {
+        elementGrabBag.Add(SkillElement.BLUNT);
+        elementGrabBag.Add(SkillElement.SLASH);
+        elementGrabBag.Add(SkillElement.PIERCE);
+        elementGrabBag.Add(SkillElement.FIRE);
+        elementGrabBag.Add(SkillElement.ICE);
+        elementGrabBag.Add(SkillElement.LIGHTNING);
+        elementGrabBag.Add(elementGrabBag[(int)(GD.Randi() % elementGrabBag.Count)]);
+        int count = elementGrabBag.Count;
+        for (int i=0; i<elementGrabBag.Count - 1; i++)
+        {
+            int swapIndex = i + (int)(GD.Randi() % (count - i));
+            (elementGrabBag[swapIndex], elementGrabBag[i]) = (elementGrabBag[i], elementGrabBag[swapIndex]);
+        }
     }
 
     /// <summary>

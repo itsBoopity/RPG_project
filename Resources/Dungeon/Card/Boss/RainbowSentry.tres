@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MonsterCard" load_steps=5 format=3 uid="uid://4p0bqwjaol26"]
 
-[ext_resource type="PackedScene" uid="uid://chpte3662axvy" path="res://Objects/Battle/Monster/Basic/RainbowSentry.tscn" id="1_asldo"]
+[ext_resource type="PackedScene" uid="uid://chpte3662axvy" path="res://Objects/Battle/Monster/Boss/RainbowSentry.tscn" id="1_asldo"]
 [ext_resource type="Script" path="res://src/Data/Dungeon/Card/MonsterCard.cs" id="1_ifi5u"]
 [ext_resource type="Script" path="res://src/Data/BattleSetup/BattleSetup.cs" id="2_wb3oi"]
 

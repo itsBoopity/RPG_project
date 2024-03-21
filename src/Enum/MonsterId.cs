@@ -4,5 +4,6 @@ public enum MonsterId
 	Slime = 1,
 	StackSprite = 2,
 	RainbowSentry = 3,
-	
+	SturdySlime = 4,
+	ResilientSlime = 5,
 }

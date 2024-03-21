@@ -18,16 +18,16 @@ public partial class SkillBasicDefend: BattleSkillData
     public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
         bInteraction.user.ChangeStack(2);
-        bInteraction.target.SustainDamage(bInteraction.user, Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef));
+        
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense());
+        return 0;
     }
 
     public override string Description()
     {
-        return "T_SKL_BASICATTACK_DESC";
+        return "T_SKL_BASICDEFEND_DESC";
     }
 }

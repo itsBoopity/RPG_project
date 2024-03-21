@@ -10,7 +10,7 @@ public partial class SkillTemplate: BattleSkillData
     }
     public override int EstimateDamage(BattleActor user, BattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense());
+        return CalculationFormula.BasicDamage(user.GetStrength(), target.GetDefense(), target.GetAffinity(Element));
     }
     public override string Description()
     {

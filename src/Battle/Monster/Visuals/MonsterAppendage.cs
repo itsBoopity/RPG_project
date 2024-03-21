@@ -17,7 +17,6 @@ public partial class MonsterAppendage : Sprite2D
         {
             if (targettable && IsPixelOpaque(GetLocalMousePosition()))
             {
-                GetViewport().SetInputAsHandled();
                 EmitSignal(SignalName.Hit, this);
             }
         }

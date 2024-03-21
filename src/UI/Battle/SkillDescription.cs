@@ -1,24 +1,26 @@
 using Godot;
 
-public partial class SkillDescription : NinePatchRect
+public partial class SkillDescription : Control
 {
     private RichTextLabel name;
     private RichTextLabel type;
     private RichTextLabel cost;
     private RichTextLabel cooldown;
     private RichTextLabel description;
-
     private AnimationPlayer animationPlayer;
+
+    private NinePatchRect rect;
     public override void _Ready()
     {
-        name = GetNode<RichTextLabel>("Name");
-        type = GetNode<RichTextLabel>("PropertyType");
-        cost = GetNode<RichTextLabel>("PropertyCost");
-        cooldown = GetNode<RichTextLabel>("PropertyCD");
-        description = GetNode<RichTextLabel>("Description");
+        name = GetNode<RichTextLabel>("NinePatchRect/Name");
+        type = GetNode<RichTextLabel>("NinePatchRect/PropertyType");
+        cost = GetNode<RichTextLabel>("NinePatchRect/PropertyCost");
+        cooldown = GetNode<RichTextLabel>("NinePatchRect/PropertyCD");
+        description = GetNode<RichTextLabel>("NinePatchRect/Description");
+        rect = GetNode<NinePatchRect>("NinePatchRect");
+        rect.Hide();
 
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        this.Hide();
     }
 
     public void ShowSkill(BattleSkill skill)
@@ -47,13 +49,23 @@ public partial class SkillDescription : NinePatchRect
 
         description.Text += Tr(skill.Description);
 
-        
+        Show();
         animationPlayer.Stop();
         animationPlayer.Play("PopIn");
     }
 
     public void HideSkill()
     {
-        this.Hide();
+        Hide();
+    }
+
+    public void OnHover()
+    {
+        rect.Hide();
+    }
+
+    public void ExitHover()
+    {
+        rect.Show();
     }
 }

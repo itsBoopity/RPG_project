@@ -20,11 +20,11 @@ public partial class SkillFirstStrike: BattleSkillData
     {
         int damage;
         if (first) {
-            damage = Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef, 2);
+            damage = CalculationFormula.BasicDamage(bInteraction.user.GetStrength(), bInteraction.target.GetDefense(), bInteraction.target.GetAffinity(Element), bInteraction.appendageCoef, 2.0f);
             first = false;
         }
         else
-            damage = Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef, 1.5f);
+            damage = CalculationFormula.BasicDamage(bInteraction.user.GetStrength(), bInteraction.target.GetDefense(), bInteraction.target.GetAffinity(Element), bInteraction.appendageCoef, 1.5f);
 
         bInteraction.target.SustainDamage(bInteraction.user, damage);
     }
@@ -32,9 +32,9 @@ public partial class SkillFirstStrike: BattleSkillData
     public override int EstimateDamage(BattleActor user, BattleActor target)
     {
         if (first)
-            return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), 1, 2.0f);
+            return CalculationFormula.BasicDamage(user.GetStrength(), target.GetDefense(), target.GetAffinity(Element), 1.0f, 2.0f);
         else
-            return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense(), 1, 1.5f);
+            return CalculationFormula.BasicDamage(user.GetStrength(), target.GetDefense(), target.GetAffinity(Element), 1.0f, 1.5f);
     }
 
     public override string Description()

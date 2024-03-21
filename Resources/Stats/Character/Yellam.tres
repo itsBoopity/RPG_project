@@ -12,7 +12,18 @@ Name = "Yellam"
 Level = 1
 Health = 11
 MaxHealth = 11
-Attack = 3
+Strength = 4
+Intelligence = 3
 Defense = 1
 Speed = 8
+Element = 2
+elementalAffinity = {
+"BLUNT": 1.0,
+"FIRE": 1.0,
+"ICE": 1.0,
+"LIGHTNING": 1.0,
+"NONE": 1.0,
+"PIERCE": 1.0,
+"SLASH": 1.0
+}
 Skills = Array[Resource]([ExtResource("1_k5chd"), ExtResource("2_xcqhr")])

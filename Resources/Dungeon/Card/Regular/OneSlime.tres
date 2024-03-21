@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MonsterCard" load_steps=5 format=3 uid="uid://cdoh1lak01kqy"]
 
-[ext_resource type="PackedScene" uid="uid://ddtw87gqr8cl5" path="res://Objects/Battle/Monster/Basic/Slime.tscn" id="1_mcq7t"]
+[ext_resource type="PackedScene" uid="uid://ddtw87gqr8cl5" path="res://Objects/Battle/Monster/Basic/Slime/Slime.tscn" id="1_mcq7t"]
 [ext_resource type="Script" path="res://src/Data/BattleSetup/BattleSetup.cs" id="2_806dw"]
 [ext_resource type="Script" path="res://src/Data/Dungeon/Card/MonsterCard.cs" id="3_aqwfd"]
 

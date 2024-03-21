@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 public partial class RainbowSentry: MonsterStats
@@ -37,6 +38,7 @@ public partial class RainbowSentry: MonsterStats
         {
             Visuals.BreakGem(appendage.appendageId);
             gemsLeft -= 1;
+            SetWeakness(gemElements[appendage.appendageId]);
             if (gemsLeft == 0)
             {
                 RespawnGems();
@@ -91,6 +93,16 @@ public partial class RainbowSentry: MonsterStats
     /// </summary>
     private async void RespawnGems()
     {
+        await ToSignal(Utility.Instance.CreateTimer(2.0f), SceneTreeTimer.SignalName.Timeout);
         RandomizeGems();
+    }
+
+    private void SetWeakness(SkillElement element)
+    {
+        foreach (String key in elementalAffinity.Keys)
+        {
+            elementalAffinity[key] = 0.25f;
+        }
+        elementalAffinity[element.ToString()] = 2.0f;
     }
 }

@@ -1,0 +1,29 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dpabcr78ctyh4"]
+
+[ext_resource type="Resource" uid="uid://dqurbo58oi1ww" path="res://Resources/Skills/Basic/BasicAttack.tres" id="1_n4mfa"]
+[ext_resource type="Script" path="res://src/Data/Stats/Monster/SlimeStats.cs" id="2_27m40"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("2_27m40")
+Id = 5
+DefaultAppendageCoef = 0.5
+Name = "T_ENE_STURDYSLIME"
+Level = 1
+Health = 10
+MaxHealth = 10
+Strength = 2
+Intelligence = 0
+Defense = 1
+Speed = 2
+Element = 0
+elementalAffinity = {
+"BLUNT": 1.25,
+"FIRE": 0.25,
+"ICE": 0.25,
+"LIGHTNING": 0.25,
+"NONE": 0.25,
+"PIERCE": 1.25,
+"SLASH": 1.25
+}
+Skills = Array[Resource]([ExtResource("1_n4mfa")])

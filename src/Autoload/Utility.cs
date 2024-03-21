@@ -24,9 +24,9 @@ public partial class Utility : Node
         return output;
     }
 
-    public static BattleEngine InstanceBattle()
+    public SceneTreeTimer CreateTimer(double timeSec)
     {
-        return GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instantiate<BattleEngine>();
+        return GetTree().CreateTimer(timeSec);
     }
 
     public static Color GetCharacterColor(CharacterEnum who)
@@ -39,7 +39,6 @@ public partial class Utility : Node
             CharacterEnum.FRAY =>  new Color("#BCBBD2"),
             _ => new Color("#756361"),
         };
-
     }
 
     // BBCode formatted names of the characters used in CharacterBar
@@ -89,19 +88,6 @@ public partial class Utility : Node
             default:
                 throw new ArgumentException("Utility.SkillBBName does not contain " + type.ToString());
         }
-    }
-
-    public static string ATK(string text) { return "[atk][b]" + text + "[/b][/atk]"; }
-    public static string STA(string text) { return "[st][b]" + text + "[/b][/st]"; }
-
-    /// <summary>
-    /// Calculates output damage using formula of [ attackCoefficient * userAttack - targetDefense) * appendageCoef ].
-    /// Clamped to do at least 1 damage if result is lower.
-    /// </summary>
-    public static int BasicDamageFormula(int userAttack, int targetDefense, float appendageCoef = 1, float attackCoefficient = 1)
-    {
-        int damage = Mathf.RoundToInt((userAttack * attackCoefficient - targetDefense) * appendageCoef);
-        return (damage < 1) ? 1 : damage;
     }
 
     public static void SetHslShader(ShaderMaterial shader, float hue = 0.0f, float brightness = 1.0f, float contrast = 1.0f, float saturation = 1.0f)

@@ -43,6 +43,7 @@ public partial class MonsterVisuals : Node
                 .SetEase(Tween.EaseType.InOut)
                 .SetTrans(Tween.TransitionType.Elastic);
         }
+        OnHpChanged(health, maxHealth);
     }
 
     public void ShowEstimate(int damage)
@@ -85,4 +86,10 @@ public partial class MonsterVisuals : Node
         animationPlayer.Play("Death");
         return animationPlayer;
     }
+
+
+    /// <summary>
+    /// Virtual method that implementations of specific MonsterVisuals can override to implement custom behavior on HP change.
+    /// </summary>
+    protected virtual void OnHpChanged(int health, int maxHealth){}
 }

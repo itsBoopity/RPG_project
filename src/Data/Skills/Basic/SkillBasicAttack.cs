@@ -18,12 +18,23 @@ public partial class SkillBasicAttack: BattleSkillData
     public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
         bInteraction.user.ChangeStack(1);
-        bInteraction.target.SustainDamage(bInteraction.user, Utility.BasicDamageFormula(bInteraction.user.GetAttack(), bInteraction.target.GetDefense(), bInteraction.appendageCoef));
+        int damageStat = bInteraction.user.GetStrength();
+        if (bInteraction.user.GetIntelligence() > damageStat)
+        {
+            damageStat = bInteraction.user.GetIntelligence();
+        }
+
+        bInteraction.target.SustainDamage(bInteraction.user, CalculationFormula.BasicDamage(damageStat, bInteraction.target.GetDefense(), bInteraction.target.GetAffinity(bInteraction.user.Element), bInteraction.appendageCoef));
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)
     {
-        return Utility.BasicDamageFormula(user.GetAttack(), target.GetDefense());
+        int damageStat = user.GetStrength();
+        if (user.GetIntelligence() > damageStat)
+        {
+            damageStat = user.GetIntelligence();
+        }
+        return CalculationFormula.BasicDamage(damageStat, target.GetDefense(), target.GetAffinity(user.Element));
     }
 
     public override string Description()

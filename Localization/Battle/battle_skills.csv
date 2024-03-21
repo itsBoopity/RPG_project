@@ -1,11 +1,11 @@
 "keys","en","cs"
 "T_SKL_BASICATTACK_TITLE","Basic Attack","Útok"
-"T_SKL_BASICATTACK_DESC","- Do [atk][b]ATK[/b][/atk] damage
-- Generates [st][b]+1STA[/b][/st]","- Způsobí [atk][b]ATK[/b][/atk] poškození
+"T_SKL_BASICATTACK_DESC","- Do [atk][b]STR[/b][/atk] or [atk][b]INT[/b][/atk] damage, whichever is higher.
+- Generates [st][b]+1STA[/b][/st]","- Způsobí [atk][b]STR[/b][/atk] [atk][b]INT[/b][/atk] poškození, podle toho které je vyšší.
 - Generuje [st][b]+1STA[/b][/st]"
 "T_SKL_FIRSTSTRIKE_TITLE","First Strike","První Zásah"
-"T_SKL_FIRSTSTRIKE_DESC","- Do [atk][b]2*ATK[/b][/atk] damage on first use
-- Do [atk][b]1.5*ATK[/b][/atk] the rest of the combat","- Způsobí [atk][b]2*ATK[/b][/atk] poškození při prvním použití
-- Pak působí [atk][b]1.5*ATK[/b][/atk] poškození do konce bitvy."
+"T_SKL_FIRSTSTRIKE_DESC","- Do [atk][b]2*STR[/b][/atk] damage on first use
+- Do [atk][b]1.5*STR[/b][/atk] the rest of the combat","- Způsobí [atk][b]2*STR[/b][/atk] poškození při prvním použití
+- Pak působí [atk][b]1.5*STR[/b][/atk] poškození do konce bitvy."
 "T_SKL_PRECISIONNEEDLE_TITLE","Precision Needle","Precizní Jehla"
 "T_SKL_PRECISIONNEEDLE_DESC","- Does [atk][b]1-5DMG[/b][/atk](ignoring all effects and DEF) depending on Target Efficiency","- Způsobí [atk][b]1-5DMG[/b][/atk](ignoruje všechny efekty a DEF) podle Efektivity Zaměření"

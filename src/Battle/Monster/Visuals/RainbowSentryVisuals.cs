@@ -23,5 +23,10 @@ public partial class RainbowSentryVisuals : MonsterVisuals
 	{
 		gemRoots[index].GetNode<AnimationPlayer>("GemAnimation").Play("Break");
 	}
+
+	protected override void OnHpChanged(int health, int maxHealth)
+	{
+		((ShaderMaterial)GetNode<CanvasItem>("%Spine").Material).SetShaderParameter("saturation", 1.0 * health/maxHealth);
+	}
 	
 }

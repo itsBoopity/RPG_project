@@ -11,7 +11,18 @@ Name = "T_ENE_STACKSPRITE"
 Level = 1
 Health = 1
 MaxHealth = 1
-Attack = 0
+Strength = 0
+Intelligence = 0
 Defense = 0
 Speed = 0
+Element = 0
+elementalAffinity = {
+"BLUNT": 1.0,
+"FIRE": 1.0,
+"ICE": 1.0,
+"LIGHTNING": 1.0,
+"NONE": 1.0,
+"PIERCE": 1.0,
+"SLASH": 1.0
+}
 Skills = null

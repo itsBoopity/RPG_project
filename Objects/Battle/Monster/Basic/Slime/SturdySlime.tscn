@@ -1,21 +1,29 @@
-[gd_scene load_steps=28 format=3 uid="uid://ddtw87gqr8cl5"]
+[gd_scene load_steps=30 format=3 uid="uid://du5w837sw67ef"]
 
-[ext_resource type="Texture2D" uid="uid://bjywb14wsedqi" path="res://Images/Monster/Slime/BottomStrong.png" id="1"]
-[ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Battle/Monster/MonsterBase.tscn" id="1_4yv1e"]
-[ext_resource type="Texture2D" uid="uid://dt1wyvpluldgh" path="res://Images/Monster/Slime/Sploosh2.png" id="2"]
-[ext_resource type="Resource" uid="uid://bonmknj8s7km" path="res://Resources/Stats/Monster/SlimeStats.tres" id="2_txjat"]
-[ext_resource type="Texture2D" uid="uid://dq3u25sxau1hv" path="res://Images/Monster/Slime/Bottom.png" id="4"]
-[ext_resource type="Texture2D" uid="uid://b3ssht188dh8v" path="res://Images/Monster/Slime/TendrilRight.png" id="5"]
-[ext_resource type="Texture2D" uid="uid://klptd158djxq" path="res://Images/Monster/Slime/Sploosh1.png" id="6"]
-[ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterAppendage.cs" id="7_h57ob"]
-[ext_resource type="Texture2D" uid="uid://c6us1p50aai3h" path="res://Images/Monster/Slime/HeadStrong.png" id="8"]
-[ext_resource type="Texture2D" uid="uid://c8irfau52tpaw" path="res://Images/Monster/Slime/HeadWeak.png" id="9"]
-[ext_resource type="Texture2D" uid="uid://dppr8dcr7n0vg" path="res://Images/Monster/Slime/TendrilLeftWeak.png" id="10"]
-[ext_resource type="Texture2D" uid="uid://dxmjtm3hcaeot" path="res://Images/Monster/Slime/Drip.png" id="11"]
-[ext_resource type="Texture2D" uid="uid://byvn7mgxuccdi" path="res://Images/Monster/Slime/TendrilLeft.png" id="12"]
-[ext_resource type="Script" path="res://src/Animation/AnimationPlayerRandomStart.cs" id="16_li2ht"]
-[ext_resource type="Texture2D" uid="uid://4fg5jhv416b5" path="res://Images/Monster/Slime/TendrilRightStrong.png" id="19"]
-[ext_resource type="Texture2D" uid="uid://c1iqmmqveilpk" path="res://Images/Monster/Slime/Head.png" id="20"]
+[ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Battle/Monster/MonsterBase.tscn" id="1_0vsl3"]
+[ext_resource type="Shader" path="res://src/Shaders/CanvasGroupColorShader.gdshader" id="2_tqcsp"]
+[ext_resource type="Resource" uid="uid://dy5qpn7kovvhl" path="res://Resources/Stats/Monster/Slime/SturdySlimeStats.tres" id="3_5vnuo"]
+[ext_resource type="Texture2D" uid="uid://klptd158djxq" path="res://Images/Monster/Slime/Sploosh1.png" id="4_vnifi"]
+[ext_resource type="Texture2D" uid="uid://dt1wyvpluldgh" path="res://Images/Monster/Slime/Sploosh2.png" id="5_6um1a"]
+[ext_resource type="Texture2D" uid="uid://dq3u25sxau1hv" path="res://Images/Monster/Slime/Bottom.png" id="6_see5a"]
+[ext_resource type="Texture2D" uid="uid://bjywb14wsedqi" path="res://Images/Monster/Slime/BottomStrong.png" id="7_jysuh"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterAppendage.cs" id="8_f37ps"]
+[ext_resource type="Texture2D" uid="uid://b3ssht188dh8v" path="res://Images/Monster/Slime/TendrilRight.png" id="9_ueofd"]
+[ext_resource type="Texture2D" uid="uid://4fg5jhv416b5" path="res://Images/Monster/Slime/TendrilRightStrong.png" id="10_cnjer"]
+[ext_resource type="Texture2D" uid="uid://byvn7mgxuccdi" path="res://Images/Monster/Slime/TendrilLeft.png" id="11_5bw1j"]
+[ext_resource type="Texture2D" uid="uid://dppr8dcr7n0vg" path="res://Images/Monster/Slime/TendrilLeftWeak.png" id="12_uwv5g"]
+[ext_resource type="Texture2D" uid="uid://c1iqmmqveilpk" path="res://Images/Monster/Slime/Head.png" id="13_a6iyg"]
+[ext_resource type="Texture2D" uid="uid://c6us1p50aai3h" path="res://Images/Monster/Slime/HeadStrong.png" id="14_w72bs"]
+[ext_resource type="Texture2D" uid="uid://c8irfau52tpaw" path="res://Images/Monster/Slime/HeadWeak.png" id="15_vr8qq"]
+[ext_resource type="Texture2D" uid="uid://dxmjtm3hcaeot" path="res://Images/Monster/Slime/Drip.png" id="16_wxnp5"]
+[ext_resource type="Script" path="res://src/Animation/AnimationPlayerRandomStart.cs" id="17_x50g7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bil4r"]
+shader = ExtResource("2_tqcsp")
+shader_parameter/hue = 0.359
+shader_parameter/brightness = 1.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.512
 
 [sub_resource type="Animation" id="1"]
 length = 0.001
@@ -358,12 +366,13 @@ _data = {
 "Idle": SubResource("Animation_cgsse")
 }
 
-[node name="Slime" instance=ExtResource("1_4yv1e")]
-Stats = ExtResource("2_txjat")
+[node name="SturdySlime" instance=ExtResource("1_0vsl3")]
+material = SubResource("ShaderMaterial_bil4r")
+Stats = ExtResource("3_5vnuo")
 
 [node name="Splash" type="Sprite2D" parent="Visuals/Sprite" index="0"]
 position = Vector2(169, -130)
-texture = ExtResource("6")
+texture = ExtResource("4_vnifi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Splash" index="0"]
 autoplay = "Splash"
@@ -374,7 +383,7 @@ libraries = {
 [node name="Splash2" type="Sprite2D" parent="Visuals/Sprite" index="1"]
 position = Vector2(154.545, -52.7273)
 scale = Vector2(0.832793, 0.832793)
-texture = ExtResource("2")
+texture = ExtResource("5_6um1a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Splash2" index="0"]
 autoplay = "Splash"
@@ -384,61 +393,61 @@ libraries = {
 
 [node name="Bottom" type="Sprite2D" parent="Visuals/Sprite" index="2"]
 position = Vector2(167, -51)
-texture = ExtResource("4")
+texture = ExtResource("6_see5a")
 
 [node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Bottom" index="0"]
 visible = false
 modulate = Color(1, 1, 1, 0.392157)
-texture = ExtResource("1")
-script = ExtResource("7_h57ob")
+texture = ExtResource("7_jysuh")
+script = ExtResource("8_f37ps")
 
 [node name="Tendril2" type="Sprite2D" parent="Visuals/Sprite" index="3"]
 position = Vector2(253, -34)
-texture = ExtResource("5")
+texture = ExtResource("9_ueofd")
 offset = Vector2(11, 13)
 
 [node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Tendril2" index="0"]
 visible = false
 modulate = Color(1, 1, 1, 0.392157)
-texture = ExtResource("19")
+texture = ExtResource("10_cnjer")
 offset = Vector2(11, 13)
-script = ExtResource("7_h57ob")
+script = ExtResource("8_f37ps")
 
 [node name="Tendril1" type="Sprite2D" parent="Visuals/Sprite" index="4"]
 position = Vector2(107, -9)
-texture = ExtResource("12")
+texture = ExtResource("11_5bw1j")
 offset = Vector2(-12, 6.5)
 
 [node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Tendril1" index="0"]
 visible = false
 modulate = Color(1, 1, 1, 0.392157)
-texture = ExtResource("10")
+texture = ExtResource("12_uwv5g")
 offset = Vector2(-12, 6.5)
-script = ExtResource("7_h57ob")
+script = ExtResource("8_f37ps")
 
 [node name="Head" type="Sprite2D" parent="Visuals/Sprite" index="5"]
 position = Vector2(159.486, -42.549)
-texture = ExtResource("20")
+texture = ExtResource("13_a6iyg")
 offset = Vector2(12.3457, -85.1042)
 
 [node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Head" index="0"]
 visible = false
 modulate = Color(1, 1, 1, 0.392157)
-texture = ExtResource("8")
+texture = ExtResource("14_w72bs")
 offset = Vector2(12.3457, -85.1042)
-script = ExtResource("7_h57ob")
+script = ExtResource("8_f37ps")
 
 [node name="Effective" type="Sprite2D" parent="Visuals/Sprite/Head" index="1"]
 visible = false
 modulate = Color(1, 1, 1, 0.392157)
 position = Vector2(5.42355, -18.1592)
-texture = ExtResource("9")
+texture = ExtResource("15_vr8qq")
 offset = Vector2(12.3457, -85.1042)
-script = ExtResource("7_h57ob")
+script = ExtResource("8_f37ps")
 
 [node name="Drip" type="Sprite2D" parent="Visuals/Sprite/Head" index="2"]
 position = Vector2(45.1711, -57.234)
-texture = ExtResource("11")
+texture = ExtResource("16_wxnp5")
 offset = Vector2(-3.62823, 10.4377)
 
 [node name="SpriteAnimation" parent="Visuals/Sprite" index="6"]
@@ -452,7 +461,7 @@ autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_tt3fe")
 }
-script = ExtResource("16_li2ht")
+script = ExtResource("17_x50g7")
 
 [node name="UI" parent="Visuals" index="1"]
 offset_left = 175.0

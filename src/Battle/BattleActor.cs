@@ -11,9 +11,12 @@ public abstract partial class BattleActor: Node2D
     public int MaxHealth { get { return Stats.MaxHealth; } }
     public int Health { get { return Stats.Health; } private set { Stats.Health = value; } }
     public int Stack { get; private set;} = 0;
-    private int Attack { get { return Stats.Attack; } }
+    public SkillElement Element { get { return Stats.Element; } }
+    private int Strength { get { return Stats.Strength; } }
+    private int Intelligence { get { return Stats.Intelligence; } }
     private int Defense { get { return Stats.Defense; } }
     private int Speed { get { return Stats.Speed; } }
+
     
     public bool TurnActive { get; set; } = true;
     public List<BattleSkill> Skills { get; set; }
@@ -42,12 +45,22 @@ public abstract partial class BattleActor: Node2D
     public BattleActor() {}
 
     /// <summary>
-    /// Get final Attack stat calculated with every modifier from statuses applied to it.
+    /// Get final Strength stat calculated with every modifier from statuses applied to it.
     /// </summary>
-    public int GetAttack()
+    public int GetStrength()
     {
-        return Attack;
+        return Strength;
     }
+
+    /// <summary>
+    /// Get final Intelligence stat calculated with every modifier from statuses applied to it.
+    /// </summary>
+    public int GetIntelligence()
+    {
+        return Intelligence;
+    }
+
+
     /// <summary>
     /// Get final Defense stat calculated with every modifier from statuses applied to it.
     /// </summary>
@@ -74,6 +87,14 @@ public abstract partial class BattleActor: Node2D
         }
         Health -= finalDamage;
         EmitSignal(SignalName.TookDamage, this, damageDealer, finalDamage);
+    }
+
+    /// <summary>
+    /// Returns coefficient of damage modification for element.
+    /// </summary>
+    public float GetAffinity(SkillElement element)
+    {
+        return stats.GetAffinity(element);
     }
 
     /// <summary>

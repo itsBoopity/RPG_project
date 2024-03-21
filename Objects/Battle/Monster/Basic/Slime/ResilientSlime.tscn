@@ -1,0 +1,481 @@
+[gd_scene load_steps=30 format=3 uid="uid://bs7ombsydf4c4"]
+
+[ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Battle/Monster/MonsterBase.tscn" id="1_cj3je"]
+[ext_resource type="Shader" path="res://src/Shaders/CanvasGroupColorShader.gdshader" id="2_q2y2w"]
+[ext_resource type="Resource" uid="uid://dpabcr78ctyh4" path="res://Resources/Stats/Monster/Slime/ResilientSlimeStats.tres" id="3_sixrt"]
+[ext_resource type="Texture2D" uid="uid://klptd158djxq" path="res://Images/Monster/Slime/Sploosh1.png" id="4_n16w3"]
+[ext_resource type="Texture2D" uid="uid://dt1wyvpluldgh" path="res://Images/Monster/Slime/Sploosh2.png" id="5_4imv3"]
+[ext_resource type="Texture2D" uid="uid://dq3u25sxau1hv" path="res://Images/Monster/Slime/Bottom.png" id="6_5u6na"]
+[ext_resource type="Texture2D" uid="uid://bjywb14wsedqi" path="res://Images/Monster/Slime/BottomStrong.png" id="7_ghr5r"]
+[ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterAppendage.cs" id="8_asuh0"]
+[ext_resource type="Texture2D" uid="uid://b3ssht188dh8v" path="res://Images/Monster/Slime/TendrilRight.png" id="9_675pr"]
+[ext_resource type="Texture2D" uid="uid://4fg5jhv416b5" path="res://Images/Monster/Slime/TendrilRightStrong.png" id="10_a4cx8"]
+[ext_resource type="Texture2D" uid="uid://byvn7mgxuccdi" path="res://Images/Monster/Slime/TendrilLeft.png" id="11_lvmst"]
+[ext_resource type="Texture2D" uid="uid://dppr8dcr7n0vg" path="res://Images/Monster/Slime/TendrilLeftWeak.png" id="12_bqbhu"]
+[ext_resource type="Texture2D" uid="uid://c1iqmmqveilpk" path="res://Images/Monster/Slime/Head.png" id="13_l77d1"]
+[ext_resource type="Texture2D" uid="uid://c6us1p50aai3h" path="res://Images/Monster/Slime/HeadStrong.png" id="14_yt2dr"]
+[ext_resource type="Texture2D" uid="uid://c8irfau52tpaw" path="res://Images/Monster/Slime/HeadWeak.png" id="15_k8cn7"]
+[ext_resource type="Texture2D" uid="uid://dxmjtm3hcaeot" path="res://Images/Monster/Slime/Drip.png" id="16_y6ram"]
+[ext_resource type="Script" path="res://src/Animation/AnimationPlayerRandomStart.cs" id="17_k4sye"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bil4r"]
+shader = ExtResource("2_q2y2w")
+shader_parameter/hue = 0.675
+shader_parameter/brightness = 1.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.512
+
+[sub_resource type="Animation" id="1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(169, -130)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="2"]
+resource_name = "Splash"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(1.1, 1.4, 1.6, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(180, -150), Vector2(318.033, -200), Vector2(341.843, -180), Vector2(380.96, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(1.1, 1.4, 1.6, 1.9, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 74.9999, 94.0077, 112.977]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(1.1, 2, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ckqot"]
+_data = {
+"RESET": SubResource("1"),
+"Splash": SubResource("2")
+}
+
+[sub_resource type="Animation" id="12"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(154.545, -52.7273)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="13"]
+resource_name = "Splash"
+length = 4.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(140, -150), Vector2(54.545, -150), Vector2(20, -150), Vector2(-25.455, -20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9, 1.2, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 1.2, 2.02775),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -69.706, -89.9999, -89.9999]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p2d4t"]
+_data = {
+"RESET": SubResource("12"),
+"Splash": SubResource("13")
+}
+
+[sub_resource type="Animation" id="Animation_7yyyd"]
+resource_name = "Death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.47451, 0.47451, 1), Color(1, 0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Audio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_4rjcj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f18fp"]
+_data = {
+"Death": SubResource("Animation_7yyyd"),
+"RESET": SubResource("Animation_4rjcj")
+}
+
+[sub_resource type="Animation" id="Animation_cgsse"]
+resource_name = "Idle"
+length = 2.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Drip:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.973508, 1.2, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -13.9226, 6.86331, 16.8058, -13.4867]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Tendril1:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.8, 1.4, 1.8, 2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1.1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1.1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Tendril1:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.8, 1, 1.1, 1.8, 2, 2.2, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 15.0, -5.82712, 0.0, 0.0, 15.0, -5.82712, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Tendril2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.3, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1.1), Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Tendril2:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.3, 2, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -15.6346, 0.0, 0.0, 15.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bottom:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Bottom:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Head:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1.1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Head:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -3.51143, -7.02286]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tt3fe"]
+_data = {
+"Idle": SubResource("Animation_cgsse")
+}
+
+[node name="ResilientSlime" instance=ExtResource("1_cj3je")]
+material = SubResource("ShaderMaterial_bil4r")
+Stats = ExtResource("3_sixrt")
+
+[node name="Splash" type="Sprite2D" parent="Visuals/Sprite" index="0"]
+position = Vector2(169, -130)
+texture = ExtResource("4_n16w3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Splash" index="0"]
+autoplay = "Splash"
+libraries = {
+"": SubResource("AnimationLibrary_ckqot")
+}
+
+[node name="Splash2" type="Sprite2D" parent="Visuals/Sprite" index="1"]
+position = Vector2(154.545, -52.7273)
+scale = Vector2(0.832793, 0.832793)
+texture = ExtResource("5_4imv3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Splash2" index="0"]
+autoplay = "Splash"
+libraries = {
+"": SubResource("AnimationLibrary_p2d4t")
+}
+
+[node name="Bottom" type="Sprite2D" parent="Visuals/Sprite" index="2"]
+position = Vector2(167, -51)
+texture = ExtResource("6_5u6na")
+
+[node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Bottom" index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+texture = ExtResource("7_ghr5r")
+script = ExtResource("8_asuh0")
+
+[node name="Tendril2" type="Sprite2D" parent="Visuals/Sprite" index="3"]
+position = Vector2(253, -34)
+texture = ExtResource("9_675pr")
+offset = Vector2(11, 13)
+
+[node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Tendril2" index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+texture = ExtResource("10_a4cx8")
+offset = Vector2(11, 13)
+script = ExtResource("8_asuh0")
+
+[node name="Tendril1" type="Sprite2D" parent="Visuals/Sprite" index="4"]
+position = Vector2(107, -9)
+texture = ExtResource("11_lvmst")
+offset = Vector2(-12, 6.5)
+
+[node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Tendril1" index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+texture = ExtResource("12_bqbhu")
+offset = Vector2(-12, 6.5)
+script = ExtResource("8_asuh0")
+
+[node name="Head" type="Sprite2D" parent="Visuals/Sprite" index="5"]
+position = Vector2(159.486, -42.549)
+texture = ExtResource("13_l77d1")
+offset = Vector2(12.3457, -85.1042)
+
+[node name="Ineffective" type="Sprite2D" parent="Visuals/Sprite/Head" index="0"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+texture = ExtResource("14_yt2dr")
+offset = Vector2(12.3457, -85.1042)
+script = ExtResource("8_asuh0")
+
+[node name="Effective" type="Sprite2D" parent="Visuals/Sprite/Head" index="1"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(5.42355, -18.1592)
+texture = ExtResource("15_k8cn7")
+offset = Vector2(12.3457, -85.1042)
+script = ExtResource("8_asuh0")
+
+[node name="Drip" type="Sprite2D" parent="Visuals/Sprite/Head" index="2"]
+position = Vector2(45.1711, -57.234)
+texture = ExtResource("16_y6ram")
+offset = Vector2(-3.62823, 10.4377)
+
+[node name="SpriteAnimation" parent="Visuals/Sprite" index="6"]
+autoplay = "Slime/Idle"
+libraries = {
+"": SubResource("AnimationLibrary_f18fp")
+}
+
+[node name="IdlePlayer" type="AnimationPlayer" parent="Visuals/Sprite" index="7"]
+autoplay = "Idle"
+libraries = {
+"": SubResource("AnimationLibrary_tt3fe")
+}
+script = ExtResource("17_k4sye")
+
+[node name="UI" parent="Visuals" index="1"]
+offset_left = 175.0
+offset_top = -306.0
+offset_right = 175.0
+offset_bottom = -306.0
+
+[node name="BoundaryBox" parent="Visuals" index="2"]
+offset_top = -272.0
+offset_right = 328.0
+offset_bottom = 64.0
+
+[connection signal="Hit" from="Visuals/Sprite/Bottom/Ineffective" to="." method="AppendageHitCheck"]
+[connection signal="Hit" from="Visuals/Sprite/Tendril2/Ineffective" to="." method="AppendageHitCheck"]
+[connection signal="Hit" from="Visuals/Sprite/Tendril1/Ineffective" to="." method="AppendageHitCheck"]
+[connection signal="Hit" from="Visuals/Sprite/Head/Ineffective" to="." method="AppendageHitCheck"]
+[connection signal="Hit" from="Visuals/Sprite/Head/Effective" to="." method="AppendageHitCheck"]

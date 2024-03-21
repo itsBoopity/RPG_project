@@ -12,7 +12,18 @@ Name = "Srinivas"
 Level = 1
 Health = 15
 MaxHealth = 15
-Attack = 2
+Strength = 3
+Intelligence = 1
 Defense = 3
 Speed = 6
+Element = 0
+elementalAffinity = {
+"BLUNT": 1.0,
+"FIRE": 1.0,
+"ICE": 1.0,
+"LIGHTNING": 1.0,
+"NONE": 1.0,
+"PIERCE": 1.0,
+"SLASH": 1.0
+}
 Skills = Array[Resource]([ExtResource("1_ok5rc"), ExtResource("2_iqv63")])

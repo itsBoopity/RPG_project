@@ -29,7 +29,7 @@ public partial class BattleEngine : Control
         party = GetNode<CharacterRack>("%Party");
         bench = GetNode<CharacterRack>("%Bench");
         monsters = GetNode<MonsterRack>("%Monsters");
-        sfx = GetNode<BattleSfx>("%BattleSfx");
+        sfx = GetNode<BattleSfx>("%UiSfx");
         timer = GetNode<CustomTimer>("%TurnTimer");
         enemyTurnSpeed = Global.Settings.enemyTurnSpeed;
     }
@@ -90,7 +90,7 @@ public partial class BattleEngine : Control
             monster.Missed += PlayerMissSkill;
             monster.TookDamage += MonsterTookDamage;
             monster.PlayerAttackedVfx += Ui.PlayerAttackedVfx;
-            monster.DisplayCenterMessage += Ui.ShowCenterMessage;
+            monster.DisplayCenterMessage += Ui.PrintCenterMessage;
             monster.FinishedTurn += EnemyTurnPerformStep;
         }
         SelectCharacter(0);
@@ -264,6 +264,13 @@ public partial class BattleEngine : Control
         CalculateAndStartTimer();
     }
 
+    private void OutOfTime()
+    {
+        Ui.PrintCenterMessage("Ran out of time!");
+        GetNode<AudioStreamPlayer>("%TimeOutAudio").Play();
+        EnemyTurn();
+    }
+
     private async void EnemyTurn()
     {
         timer.CustomStop();
@@ -310,7 +317,7 @@ public partial class BattleEngine : Control
         if (character.Health <= 0)
         {
             // TODO: Gameover
-            Ui.ShowCharacterMessage("You deaded.");
+            Ui.PrintCharacterMessage("You deaded.");
             GD.Print("Game over you deaded :(");
         }
     }
@@ -318,7 +325,7 @@ public partial class BattleEngine : Control
     {
         if (monster.Health <= 0)
         {
-            Ui.ShowCenterMessage(String.Format(Tr("{0} defeated!"), monster.DisplayName));
+            Ui.PrintCenterMessage(String.Format(Tr("{0} defeated!"), monster.DisplayName));
             monster.Defeated(damageDealer);
             if (monsters.Count == 0)
             {
@@ -373,12 +380,12 @@ public partial class BattleEngine : Control
             sfx.ErrorSound();
             if (isUsable == SkillUsableResult.IN_COOLDOWN)
             {
-                Ui.ShowCharacterMessage("T_B_MSG_CD");
+                Ui.PrintCharacterMessage("T_B_MSG_CD");
             } 
             else if (isUsable == SkillUsableResult.NOT_ENOUGH_STACKS)
             {
                 Ui.ShakeStackCount(selectedCharacter);
-                Ui.ShowCharacterMessage("T_B_MSG_NOSTACK");
+                Ui.PrintCharacterMessage("T_B_MSG_NOSTACK");
             }
         }
         else
@@ -418,6 +425,7 @@ public partial class BattleEngine : Control
 
     public void PlayerMissSkill(BattleMonster monster)
     {
+        sfx.FailSound();
         selectedSkill.Miss(GetCurrentPartyMember(), monster);
         monster.PlayerMissed();
         UseUpTurn(GetCurrentPartyMember());
@@ -430,7 +438,7 @@ public partial class BattleEngine : Control
         ExitCurrentMode();
         if (!GetPartyMember(index).TurnActive && state != ControlState.ENEMY_TURN)
         {
-            Ui.ShowCharacterMessage("Character's turn already over.");
+            Ui.PrintCharacterMessage("Character's turn already over.");
         }
         if (index == selectedCharacter) return;
 

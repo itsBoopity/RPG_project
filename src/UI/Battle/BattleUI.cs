@@ -147,11 +147,11 @@ public partial class BattleUI : Control
         basicSkillNode.Show();
     }
 
-    public void ShowCenterMessage(string text)
+    public void PrintCenterMessage(string text)
     {
         centerMessage.ShowText(text);
     }
-    public void ShowCharacterMessage(string text)
+    public void PrintCharacterMessage(string text)
     {
         characterMessage.ShowText(text);
     }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=61 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -8,8 +8,10 @@
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="4"]
 [ext_resource type="Script" path="res://src/UI/Battle/BattleUI.cs" id="5_tdtxk"]
 [ext_resource type="PackedScene" uid="uid://b8wob103hvoxb" path="res://Objects/UI/Battle/SkillBox.tscn" id="6"]
+[ext_resource type="AudioStream" uid="uid://c8bqvbiy7a250" path="res://Audio/SFX/failsound.wav" id="7_cg0ne"]
 [ext_resource type="Script" path="res://src/Battle/Rack/CharacterRack.cs" id="7_xhskm"]
 [ext_resource type="Texture2D" uid="uid://c0gvhc76yfr8e" path="res://Images/UI/Battle/skillWindow.png" id="8"]
+[ext_resource type="AudioStream" uid="uid://blir3lp3pkxt4" path="res://Audio/SFX/timeout.wav" id="8_y0ah2"]
 [ext_resource type="Script" path="res://src/Battle/Rack/MonsterRack.cs" id="8_yp80v"]
 [ext_resource type="Script" path="res://src/UI/Battle/CharacterModelRack.cs" id="9"]
 [ext_resource type="Script" path="res://src/UI/Battle/SkillDescription.cs" id="10"]
@@ -706,10 +708,16 @@ unique_name_in_owner = true
 one_shot = true
 script = ExtResource("2_0hfn6")
 
-[node name="BattleSfx" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="UiSfx" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 script = ExtResource("3_445sj")
-AudioSource = Array[AudioStream]([ExtResource("16_5l314"), ExtResource("29_r3ion"), ExtResource("30_5us6w")])
+AudioSource = Array[AudioStream]([ExtResource("16_5l314"), ExtResource("29_r3ion"), ExtResource("30_5us6w"), ExtResource("7_cg0ne")])
+
+[node name="TimeOutAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("8_y0ah2")
 
 [node name="Party" type="Node" parent="."]
 unique_name_in_owner = true
@@ -1288,7 +1296,7 @@ libraries = {
 "": SubResource("AnimationLibrary_umugs")
 }
 
-[connection signal="timeout" from="TurnTimer" to="." method="EnemyTurn"]
+[connection signal="timeout" from="TurnTimer" to="." method="OutOfTime"]
 [connection signal="ActionDetailHidden" from="UI" to="MonstersAnchor/Monsters" method="HideEstimateAll"]
 [connection signal="SelectCharacter" from="UI/PartyBar/0" to="." method="SelectCharacter"]
 [connection signal="SelectCharacter" from="UI/PartyBar/1" to="." method="SelectCharacter"]

@@ -5,9 +5,6 @@ using Godot;
 /// </summary>
 public partial class BattleSfx : AudioPoolPlayer
 {
-	private AudioStreamPlayer strongClick;
-	private AudioStreamPlayer rollClick;
-	private AudioStreamPlayer errorSound;
 	public void StrongClick()
 	{
 		PlayIndex(0);
@@ -37,5 +34,10 @@ public partial class BattleSfx : AudioPoolPlayer
 	public void ErrorSound()
 	{
 		PlayIndex(2);
+	}
+
+	public void FailSound()
+	{
+		PlayIndex(3);
 	}
 }

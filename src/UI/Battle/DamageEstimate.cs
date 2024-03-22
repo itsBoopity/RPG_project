@@ -10,7 +10,7 @@ public partial class DamageEstimate : Control
     }
     public void HideEstimate()
     {
-        this.Hide();
+        Hide();
     }
 
     public void ShowEstimate(int damage)
@@ -19,6 +19,6 @@ public partial class DamageEstimate : Control
             number.Text = "?";
         else    
             number.Text = damage.ToString();
-        this.Show();
+        Show();
     }
 }

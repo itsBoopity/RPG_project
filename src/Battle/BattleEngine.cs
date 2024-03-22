@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Linq;
 
 /// <summary>
 /// The main class and root scene facilitating battles.
@@ -38,9 +37,9 @@ public partial class BattleEngine : Control
     {
         if (state != ControlState.FULLY_DISABLED)
         {
-            if (@event.IsActionPressed("battle_character1")) SelectCharacter(0);
-            else if (@event.IsActionPressed("battle_character2")) SelectCharacter(1);
-            else if (@event.IsActionPressed("battle_character3")) SelectCharacter(2);
+            if (@event.IsActionPressed("battle_character0")) SelectCharacter(0);
+            else if (@event.IsActionPressed("battle_character1")) SelectCharacter(1);
+            else if (@event.IsActionPressed("battle_character2")) SelectCharacter(2);
         }
         if (state == ControlState.PLAYER_DEFAULT)
         {

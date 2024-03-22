@@ -8,7 +8,7 @@ public partial class SkillBasicDefend: BattleSkillData
         "T_SKL_BASICDEFEND_TITLE",
         SkillType.BASIC,
         SkillElement.NONE,
-        TargettingType.NONE,
+        TargettingType.SELF,
         false,
         0,
         0,

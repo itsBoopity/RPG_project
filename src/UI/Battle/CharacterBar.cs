@@ -2,6 +2,15 @@ using Godot;
 
 public partial class CharacterBar : Control
 {
+    [Signal]
+    public delegate void SelectCharacterEventHandler(int index);
+
+    /// <summary>
+    /// The index of which of the three bars this is.
+    /// </summary>
+    [Export]
+    public int index = 0;
+
     private CharacterEnum who = 0;
     public CharacterEnum Who { get { return who;} }
 
@@ -32,7 +41,12 @@ public partial class CharacterBar : Control
         fadePlayer = GetNode<AnimationPlayer>("FadePlayer");
         shakePlayer = GetNode<AnimationPlayer>("ShakePlayer");
 
-        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents("battle_character" + Name)[0]).AsText();
+        GetNode<Label>("Hotkey").Text = ((InputEvent)InputMap.ActionGetEvents($"battle_character{index}")[0]).AsText();
+    }
+
+    public void OnPress()
+    {
+        EmitSignal(SignalName.SelectCharacter, index);
     }
 
     public void Select()

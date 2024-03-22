@@ -18,7 +18,6 @@ public partial class SkillBasicDefend: BattleSkillData
     public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
         bInteraction.user.ChangeStack(2);
-        
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

@@ -1,3 +1,4 @@
+using System.Threading;
 using Godot;
 
 public abstract partial class BattleSkillData: Resource
@@ -27,7 +28,6 @@ public abstract partial class BattleSkillData: Resource
         Cooldown = cooldown;
         Snap = snap;
     }
-
     public Texture2D GetIcon()
     {
         return GD.Load<Texture2D>($"res://Images/UI/Battle/SkillIcon/{Id}.tres");
@@ -37,6 +37,12 @@ public abstract partial class BattleSkillData: Resource
     {
         return GD.Load<PackedScene>(animationPath).Instantiate<AnimatedSpriteOneOff>();
     }
+
+    
+    /// <summary>
+    /// Called at the start of every battle. Used by specific skill implementations that need to set up data. 
+    /// </summary>
+    public virtual void Initialize() {}
 
     /// <summary>
     /// If skill has unique activation requirements, check for them here.

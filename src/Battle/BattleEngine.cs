@@ -20,7 +20,8 @@ public partial class BattleEngine : Control
     private float enemyTurnSpeed;
 
     private readonly BattleSkill[] basicSkills = { 
-        new(new SkillBasicAttack())
+        new(new SkillBasicAttack()),
+        new(new SkillBasicDefend())
     };
 
     public override void _Ready()
@@ -70,20 +71,21 @@ public partial class BattleEngine : Control
         foreach (BattleCharacter character in GameData.Instance.GetBattleParty()) 
         {
             party.Add(character);
-            StartInitializeCharacter(character);
+            StartInitializeActor(character);
             character.TookDamage += CharacterTookDamage;
             character.TookDamage += Ui.CharacterTookDamage;
         }
         foreach (BattleCharacter character in GameData.Instance.GetBattleBench()) 
         {
             bench.Add(character);
-            StartInitializeCharacter(character);
+            StartInitializeActor(character);
             character.TookDamage += CharacterTookDamage;
             character.TookDamage += Ui.CharacterTookDamage;
         }
         foreach (PackedScene m in battleSetup.monsters)
         {
             BattleMonster monster = m.Instantiate<BattleMonster>();
+            StartInitializeActor(monster);
             monsters.Add(monster);
             monster.Attacked += PlayerExecuteSelectedSkill;
             monster.Missed += PlayerMissSkill;
@@ -97,11 +99,15 @@ public partial class BattleEngine : Control
     }
 
     /// <summary>
-    /// Setup character stats and effects at the start of battle.
+    /// Setup BattleActor stats and effects at the start of battle.
     /// </summary>
-    private void StartInitializeCharacter(BattleCharacter character)
+    private void StartInitializeActor(BattleActor actor)
     {
-        character.ChangeStack(character.Level);
+        actor.ChangeStack(actor.Level);
+        foreach (BattleSkill skill in actor.Skills)
+        {
+            skill.Initialize();
+        }
     }
 
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards

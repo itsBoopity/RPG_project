@@ -25,6 +25,14 @@ public class BattleSkill
 		data = skill;
 	}
 
+    /// <summary>
+    /// At the start of every battle, initialize skill to set up its variables.
+    /// </summary>
+    public void Initialize()
+    {
+        data.Initialize();
+    }
+
     public virtual SkillUsableResult IsUsable(BattleActor user)
     {
         if (CurrentCooldown > 0)

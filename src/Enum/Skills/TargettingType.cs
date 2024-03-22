@@ -4,7 +4,7 @@
 public enum TargettingType
 {
     /// <summary>
-    /// Immediately activate the skill without requiring any further input
+    /// Activate the skill without requiring any specialized input, only a confirmation. 
     /// </summary>
     NONE,
     SELF,

@@ -248,6 +248,20 @@ tracks/7/keys = {
 "method": &"restart"
 }]
 }
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../AudioStreamPlayer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b707j"]
 _data = {
@@ -442,15 +456,18 @@ linear_accel_max = 10.0
 scale_amount_max = 1.2
 color_ramp = SubResource("Gradient_grbkb")
 
-[node name="OrbPlayer" type="AnimationPlayer" parent="Visuals/Sprite/MainFlame" index="3"]
+[node name="Timer" type="Timer" parent="Visuals/Sprite/MainFlame" index="3"]
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/MainFlame" index="4"]
+stream = ExtResource("11_goccs")
+
+[node name="OrbPlayer" type="AnimationPlayer" parent="Visuals/Sprite/MainFlame" index="5"]
 unique_name_in_owner = true
 root_node = NodePath("../Orb")
 libraries = {
 "": SubResource("AnimationLibrary_b707j")
 }
-
-[node name="Timer" type="Timer" parent="Visuals/Sprite/MainFlame" index="4"]
-one_shot = true
 
 [node name="MainFlame2" type="Sprite2D" parent="Visuals/Sprite" index="1"]
 position = Vector2(151, -144)
@@ -524,9 +541,6 @@ offset_right = 512.0
 offset_bottom = 45.0
 
 [node name="Timer" type="Timer" parent="Visuals" index="3"]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="1"]
-stream = ExtResource("11_goccs")
 
 [connection signal="Hit" from="Visuals/Sprite/MainFlame/Orb/Effective" to="." method="AppendageHitCheck"]
 [connection signal="timeout" from="Visuals/Sprite/MainFlame/Timer" to="Visuals" method="OrbTimeout"]

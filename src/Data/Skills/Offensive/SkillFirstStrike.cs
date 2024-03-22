@@ -16,6 +16,11 @@ public partial class SkillFirstStrike: BattleSkillData
         false
     ) {}
 
+    public override void Initialize()
+    {
+        first = true;
+    }
+
     public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
     {
         GD.Print(first);

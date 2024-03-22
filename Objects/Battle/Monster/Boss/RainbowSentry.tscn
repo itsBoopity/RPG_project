@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://chpte3662axvy"]
+[gd_scene load_steps=50 format=3 uid="uid://chpte3662axvy"]
 
 [ext_resource type="PackedScene" uid="uid://cn011iuuvxhat" path="res://Objects/Battle/Monster/MonsterBase.tscn" id="1_y854q"]
 [ext_resource type="Resource" uid="uid://e11u8dxkrtjg" path="res://Resources/Stats/Monster/RainbowSentryStats.tres" id="2_d6noq"]
@@ -15,11 +15,14 @@
 [ext_resource type="Texture2D" uid="uid://c4keyg0m4jfgv" path="res://Images/Monster/RainbowSentry/spine.png" id="10_jlk4i"]
 [ext_resource type="Texture2D" uid="uid://dltlv2xtopr1s" path="res://Images/Monster/RainbowSentry/brain.png" id="11_nbcp0"]
 [ext_resource type="Texture2D" uid="uid://dqe5vqaer27ki" path="res://Images/Monster/RainbowSentry/eye.png" id="12_36dp1"]
-[ext_resource type="AudioStream" uid="uid://c0x3qwy36vj6m" path="res://Audio/SFX/Monster/stack_sprite.wav" id="13_6ahs4"]
 [ext_resource type="Texture2D" uid="uid://b6d2y3chduowc" path="res://Images/Monster/RainbowSentry/Gems/ice.png" id="15_vt14v"]
 [ext_resource type="Texture2D" uid="uid://ctq5j6ctqx64o" path="res://Images/Monster/RainbowSentry/Gems/gem_hitbox.png" id="16_csvx0"]
 [ext_resource type="Script" path="res://src/Battle/Monster/Visuals/MonsterAppendage.cs" id="17_sbqmq"]
 [ext_resource type="Texture2D" uid="uid://35ec34ga6dck" path="res://Images/Monster/RainbowSentry/GemsShard/ice.png" id="19_w28pr"]
+[ext_resource type="Script" path="res://src/Audio/AudioPoolPlayer.cs" id="20_j31ja"]
+[ext_resource type="AudioStream" uid="uid://cq5ew4ydacn0" path="res://Audio/SFX/rocksmash1.wav" id="21_cvkr0"]
+[ext_resource type="AudioStream" uid="uid://boxaqu08rgtdt" path="res://Audio/SFX/rocksmash2.wav" id="22_idrud"]
+[ext_resource type="AudioStream" uid="uid://cdly27b7wuh2c" path="res://Audio/SFX/rocksmash3.wav" id="23_gh6g0"]
 
 [sub_resource type="Animation" id="Animation_fj2af"]
 resource_name = "Flow"
@@ -763,7 +766,7 @@ resource_name = "Break"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GemHitbox:targettable")
+tracks/0/path = NodePath("Gem/GemHitbox:targettable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -775,7 +778,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../BreakParticles:emitting")
+tracks/1/path = NodePath("BreakParticles:emitting")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -787,7 +790,7 @@ tracks/1/keys = {
 tracks/2/type = "method"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../BreakParticles")
+tracks/2/path = NodePath("BreakParticles")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -801,7 +804,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:modulate")
+tracks/3/path = NodePath("Gem:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -810,13 +813,27 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AudioPoolPlayer")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"PlayRandom"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_c7t7b"]
 resource_name = "PopUp"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GemHitbox:targettable")
+tracks/0/path = NodePath("Gem/GemHitbox:targettable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -828,7 +845,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
+tracks/1/path = NodePath("Gem:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -840,7 +857,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:scale")
+tracks/2/path = NodePath("Gem:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -855,7 +872,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GemHitbox:targettable")
+tracks/0/path = NodePath("Gem/GemHitbox:targettable")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -867,7 +884,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
+tracks/1/path = NodePath("Gem:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -879,7 +896,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:scale")
+tracks/2/path = NodePath("Gem:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -891,7 +908,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../BreakParticles:emitting")
+tracks/3/path = NodePath("BreakParticles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1298,8 +1315,11 @@ scale_amount_max = 1.2
 scale_amount_curve = SubResource("Curve_2cdwp")
 color_ramp = SubResource("Gradient_lmoni")
 
-[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="2"]
-root_node = NodePath("../Gem")
+[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="2"]
+script = ExtResource("20_j31ja")
+AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
+
+[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_prhpu")
 }
@@ -1339,8 +1359,11 @@ scale_amount_max = 1.2
 scale_amount_curve = SubResource("Curve_2cdwp")
 color_ramp = SubResource("Gradient_lmoni")
 
-[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="2"]
-root_node = NodePath("../Gem")
+[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="2"]
+script = ExtResource("20_j31ja")
+AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
+
+[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_prhpu")
 }
@@ -1380,8 +1403,11 @@ scale_amount_max = 1.2
 scale_amount_curve = SubResource("Curve_2cdwp")
 color_ramp = SubResource("Gradient_lmoni")
 
-[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="2"]
-root_node = NodePath("../Gem")
+[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="2"]
+script = ExtResource("20_j31ja")
+AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
+
+[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_prhpu")
 }
@@ -1419,9 +1445,6 @@ offset_right = 939.0
 offset_bottom = 368.0
 
 [node name="Timer" type="Timer" parent="Visuals" index="3"]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
-stream = ExtResource("13_6ahs4")
 
 [connection signal="Hit" from="Visuals/Sprite/ArmorFront/BodyHitbox" to="." method="AppendageHitCheck"]
 [connection signal="Hit" from="Visuals/Sprite/ArmorFront/GemOrbit/0/Gem/GemHitbox" to="." method="AppendageHitCheck"]

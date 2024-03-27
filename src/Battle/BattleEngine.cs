@@ -7,6 +7,7 @@ using System;
 public partial class BattleEngine : Control
 {
     public BattleUI Ui { get; private set; }
+    private BattleFieldData bF;
     private BattleSfx sfx;
     private BattleSkill selectedSkill;
     private int selectedCharacter = -1;
@@ -14,13 +15,12 @@ public partial class BattleEngine : Control
     private CharacterRack bench;
     private MonsterRack monsters;
     private CustomTimer timer;
-
-    private ControlState state;
     private float enemyTurnSpeed;
 
     private readonly BattleSkill[] basicSkills = { 
         new(new SkillBasicAttack()),
-        new(new SkillBasicDefend())
+        new(new SkillBasicDefend()),
+        new(new SkillBasicSwap()),
     };
 
     public override void _Ready()
@@ -32,6 +32,7 @@ public partial class BattleEngine : Control
         sfx = GetNode<BattleSfx>("%UiSfx");
         timer = GetNode<CustomTimer>("%TurnTimer");
         enemyTurnSpeed = Global.Settings.enemyTurnSpeed;
+        bF = new BattleFieldData(party, bench, monsters);
     }
     public override void _UnhandledKeyInput(InputEvent @event)
     {
@@ -50,6 +51,8 @@ public partial class BattleEngine : Control
             else if (@event.IsActionPressed("battle_skill4")) SelectSkill(4);
 
             else if (@event.IsActionPressed("battle_basicskill0")) SelectBasicSkill(0);
+            else if (@event.IsActionPressed("battle_basicskill1")) SelectBasicSkill(1);
+            else if (@event.IsActionPressed("battle_basicskill2")) SelectBasicSkill(2);
         }
         if (state != ControlState.ENEMY_TURN)
         {
@@ -153,68 +156,6 @@ public partial class BattleEngine : Control
         return GetPartyMember(selectedCharacter);
     }
 
-    // ---------------------- STATE LOGIC ----------------------------------------------
-    /// <summary>
-    /// Sets the ControlState and updates UI to reflect that.
-    /// </summary>
-    private void SetState(ControlState state)
-    {
-        this.state = state;
-        Ui.UpdateInfoLabel(state);
-    }
-    private void EnterPlayerDefaultMode()
-    {
-        SetState(ControlState.PLAYER_DEFAULT);
-        Ui.ShowMostUI();
-    }
-    private void EnterTargetMode()
-    {
-        SetState(ControlState.PLAYER_TARGETTING_ENEMY);
-        Ui.ShowReticle();
-
-        foreach (BattleMonster monster in monsters.GetAll())
-        {
-            monster.targettingEnabled = true;
-            monster.ShowEstimate(selectedSkill.EstimateDamage(GetCurrentPartyMember(), monster));
-        }
-        Ui.HideMostUI();
-    }
-    private void EnterTargetAllyMode()
-    {
-        SetState(ControlState.PLAYER_TARGETTING_ALLY);
-        // TODO: Hide party, model,skill, skillDesc UI and show estimated damage on enemies;
-    }
-    private void EnterEnemyTurn()
-    {
-        SetState(ControlState.ENEMY_TURN);  
-        Ui.HideMostUI();
-    }
-
-    // <summary> 
-    // Exits the player out of whatever mode they're in and sets them back to PLAYER_TURN (if currently in a state of control)
-    //</summary>
-    private void ExitCurrentMode()
-    {
-        selectedSkill = null;
-        if (state == ControlState.PLAYER_TARGETTING_ALLY)
-        {
-            SetState(ControlState.PLAYER_DEFAULT);
-            // TODO: Show the skill UI again, hide the bar blob areas;
-        }
-        else if (state == ControlState.PLAYER_TARGETTING_ENEMY)
-        {
-            SetState(ControlState.PLAYER_DEFAULT);
-            Ui.DisableReticle();
-            foreach (BattleMonster monster in monsters.GetAll())
-            {
-                monster.targettingEnabled = false;
-                monster.HideEstimate();
-            }
-            Ui.HideActionDetail();
-            Ui.ShowMostUI();
-        }
-    }
-
     // ---------------------- GAME LOGIC --------------------------------------------------
     private void CalculateAndStartTimer()
     {
@@ -250,9 +191,8 @@ public partial class BattleEngine : Control
         
         EnterPlayerDefaultMode();
 
-        BattleFieldData bf = new(party, bench, monsters);
         foreach (BattleMonster monster in monsters.GetAll())
-            monster.LoadUpcomingTurn(bf);
+            monster.LoadUpcomingTurn(bF);
         
         foreach (BattleCharacter character in party.GetAll())
         {
@@ -350,7 +290,7 @@ public partial class BattleEngine : Control
     }
     public void ViewAction(BattleSkill action, int index)
     {
-        Ui.ViewActionDetail(action, index);
+        Ui.ViewActionDetail(action, index, bF, GetCurrentPartyMember());
         foreach (BattleMonster monster in monsters.GetAll())
         {
             monster.ShowEstimate(action.EstimateDamage(GetCurrentPartyMember(), monster));
@@ -391,10 +331,11 @@ public partial class BattleEngine : Control
         else
         {
             sfx.RollClickPitchIndex(index);
+            
             if (action.Targetting == TargettingType.ENEMY_TARGET)
             {
                 selectedSkill = action;
-                Ui.ViewActionDetail(action, index);
+                Ui.ViewActionDetail(action, index, bF, GetCurrentPartyMember());
                 EnterTargetMode();
             }
             else if (action.Targetting == TargettingType.ALLY_TARGET)
@@ -402,15 +343,19 @@ public partial class BattleEngine : Control
                 selectedSkill = action;
                 EnterTargetAllyMode();
             }
+            else if (action.Targetting == TargettingType.CUSTOMWINDOW)
+            {
+                selectedSkill = action;
+                EnterCustomSkillWindowMode();
+            }
         }
         
     }
 
     private void PlayerExecuteSelectedSkill(BattleMonster monster, float appendageCoef)
     {
-        BattleFieldData bf = new(party, bench, monsters);
-        BattleInteractionData bInteraction = new(GetCurrentPartyMember(), monster, appendageCoef);
-        selectedSkill.Use(bf, bInteraction);
+        BattleInteractionData bI = new(GetCurrentPartyMember(), monster, appendageCoef);
+        selectedSkill.Use(bF, bI);
 
         Ui.PlayVfx(selectedSkill.Animation, GetGlobalMousePosition());
 
@@ -445,7 +390,7 @@ public partial class BattleEngine : Control
         sfx.StrongClickPitchIndex(index);
 
         selectedCharacter = index;
-        Ui.SelectCharacter(GetCurrentPartyMember(), index);
+        Ui.SelectCharacter(GetCurrentPartyMember(), index, bF);
         Ui.UpdateSkills(GetCurrentPartyMember());
         if (state != ControlState.ENEMY_TURN)
         {

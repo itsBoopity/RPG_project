@@ -15,9 +15,9 @@ public partial class SkillBasicDefend: BattleSkillData
         false
     ) {}
 
-    public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
+    public override void Execute(BattleFieldData bF, BattleInteractionData bI)
     {
-        bInteraction.user.ChangeStack(2);
+        bI.user.ChangeStack(2);
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)
@@ -25,7 +25,7 @@ public partial class SkillBasicDefend: BattleSkillData
         return 0;
     }
 
-    public override string Description()
+    public override string Description(BattleFieldData bF, BattleCharacter user)
     {
         return "T_SKL_BASICDEFEND_DESC";
     }

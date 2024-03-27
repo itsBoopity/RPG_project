@@ -1,0 +1,63 @@
+[gd_scene load_steps=12 format=3 uid="uid://dk626ut4rjmfb"]
+
+[ext_resource type="Shader" path="res://src/Shaders/PulsingColor.gdshader" id="1_dbik5"]
+[ext_resource type="Texture2D" uid="uid://dmthuvdbqdnuu" path="res://Images/UI/stretching_arrow_body.png" id="1_shkuh"]
+[ext_resource type="Texture2D" uid="uid://dtft1a411fakj" path="res://Images/UI/stretching_arrow_start.png" id="2_q7r0b"]
+[ext_resource type="Script" path="res://src/UI/StretchArrow.cs" id="2_uww5m"]
+[ext_resource type="Texture2D" uid="uid://dbf8l1kw7nssp" path="res://Images/UI/stretching_arrow_end.png" id="4_pbtwd"]
+
+[sub_resource type="Gradient" id="Gradient_jhhfj"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.238434, 0.451957, 0.55516, 0.843416, 1)
+colors = PackedColorArray(1, 0.978667, 0.92, 0, 1, 0.848, 0.43, 0.788235, 1, 0.960784, 0.180392, 0.917647, 1, 0.960784, 0.180392, 0.917647, 1, 0.848, 0.43, 0.788235, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hbx6p"]
+gradient = SubResource("Gradient_jhhfj")
+width = 32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6686u"]
+shader = ExtResource("1_dbik5")
+shader_parameter/speed = 0.7
+shader_parameter/pulseLength = 8.0
+shader_parameter/intensity = 1.0
+shader_parameter/color = SubResource("GradientTexture1D_hbx6p")
+
+[sub_resource type="Gradient" id="Gradient_4os0g"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.238434, 0.451957, 0.55516, 0.843416, 1)
+colors = PackedColorArray(1, 0.978667, 0.92, 0, 1, 0.848, 0.43, 0.788235, 1, 0.960784, 0.180392, 0.917647, 1, 0.960784, 0.180392, 0.917647, 1, 0.848, 0.43, 0.788235, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bb8v0"]
+gradient = SubResource("Gradient_4os0g")
+width = 32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sy4dp"]
+shader = ExtResource("1_dbik5")
+shader_parameter/speed = 0.7
+shader_parameter/pulseLength = 1.0
+shader_parameter/intensity = 1.0
+shader_parameter/color = SubResource("GradientTexture1D_bb8v0")
+
+[node name="StretchArrow" type="CanvasGroup"]
+z_index = 2
+texture_repeat = 2
+script = ExtResource("2_uww5m")
+
+[node name="Start" type="Sprite2D" parent="."]
+texture = ExtResource("2_q7r0b")
+
+[node name="End" type="Sprite2D" parent="."]
+texture_repeat = 1
+material = SubResource("ShaderMaterial_6686u")
+position = Vector2(4, 0)
+texture = ExtResource("4_pbtwd")
+offset = Vector2(26, 2)
+
+[node name="Line2D" type="Line2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_sy4dp")
+points = PackedVector2Array(0, 0, 0, 0)
+width = 64.0
+texture = ExtResource("1_shkuh")
+texture_mode = 1
+antialiased = true

@@ -14,9 +14,16 @@ public partial class BattleUI : Control
     private CharacterModelRack characterModels;
     private InfoLabel infoLabel;
 
-    // Used to refresh the skill description currently being displayed when switching characters
-    // as the SkillBoxes themselves don't have any method to re-check where the mouse is.
+    /// <summary>
+    /// Used to refresh the skill description currently being displayed when switching characters
+    /// as the SkillBoxes themselves don't have any method to re-check where the mouse is.
+    /// </summary>
     private int lastViewedActionIndex = -1;
+    /// <summary>
+    /// Similar to lastViewedAction, but for when the action used is a basic skill.
+    /// Is null if lastViewed action was a non-basic skill.
+    /// </summary>
+    private BattleSkill lastViewedActionBasic = null;
     private SkillDescription skillDesc;
 
     public FadingMessage characterMessage;
@@ -24,9 +31,9 @@ public partial class BattleUI : Control
 
     private TurnAnnouncement turnAnnouncement;
     private DamageCounter characterDamageCounter;
-
-
     private AnimationPlayer animationPlayer;
+
+    private Control skillCustomWindow;
 
 	public override void _EnterTree()
     {
@@ -48,6 +55,7 @@ public partial class BattleUI : Control
         centerMessage = GetNode<FadingMessage>("%CenterMessage");
         turnAnnouncement = GetNode<TurnAnnouncement>("%TurnAnnouncement");
         characterDamageCounter = GetNode<DamageCounter>("%CharacterDamageCounter");
+        skillCustomWindow = GetNode<Control>("%SkillCustomWindow");
 	}
 
     public void DisplayDamageCharacter(int damage)
@@ -122,10 +130,19 @@ public partial class BattleUI : Control
             }
         }
     }
-    public void ViewActionDetail(BattleSkill skill, int index)
+    public void ViewActionDetail(BattleSkill skill, int index, BattleFieldData bF, BattleCharacter owner)
     {
-        lastViewedActionIndex = (skill.Type == SkillType.BASIC) ? -2 : index;
-        skillDesc.ShowSkill(skill);
+        if (skill.Type == SkillType.BASIC)
+        {
+            lastViewedActionBasic = skill;
+            lastViewedActionIndex = -1;
+        }
+        else
+        {
+            lastViewedActionIndex = index;
+            lastViewedActionBasic = null;
+        }
+        skillDesc.ShowSkill(skill, bF, owner);
     }
 
     public void HideActionDetail()
@@ -156,7 +173,7 @@ public partial class BattleUI : Control
         characterMessage.ShowText(text);
     }
 
-    public void SelectCharacter(BattleCharacter character, int index)
+    public void SelectCharacter(BattleCharacter character, int index, BattleFieldData bF)
     {
         foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())
         {
@@ -165,13 +182,20 @@ public partial class BattleUI : Control
         partyNode.GetChild<CharacterBar>(index).Select();
 
         // Update the currently viewed skill to the one of the new character.
-        if (lastViewedActionIndex >= character.Skills.Count)
+        if (lastViewedActionBasic != null)
         {
-            HideActionDetail();
+            ViewActionDetail(lastViewedActionBasic, lastViewedActionIndex, bF, character);
         }
-        else if (lastViewedActionIndex >= 0)
+        else
         {
-            ViewActionDetail(character.Skills[lastViewedActionIndex], lastViewedActionIndex);
+            if (lastViewedActionIndex >= character.Skills.Count)
+            {
+                HideActionDetail();
+            }
+            else if (lastViewedActionIndex >= 0)
+            {
+                ViewActionDetail(character.Skills[lastViewedActionIndex], lastViewedActionIndex, bF, character);
+            }
         }
     }
 
@@ -217,5 +241,28 @@ public partial class BattleUI : Control
         characterModels.ShowCharacter(character.Who);
         PlayVfx(animation, characterModels.Position - new Vector2(0, 400));
         characterModels.Show();
+    }
+
+    public void OpenCustomWindow(SkillCustomWindow window, BattleFieldData bF, BattleCharacter user)
+    {
+        ClearCustomWindow();
+        skillCustomWindow.Show();
+        skillCustomWindow.AddChild(window);
+        window.Open(bF, user);
+    }
+
+    public void CloseCustomWindow()
+    {
+        skillCustomWindow.Hide();
+        ClearCustomWindow();
+    }
+
+    private void ClearCustomWindow()
+    {
+        foreach (SkillCustomWindow child in skillCustomWindow.GetChildren().Cast<SkillCustomWindow>())
+        {
+            child.Close();
+            child.QueueFree();
+        }
     }
 }

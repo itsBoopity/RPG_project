@@ -27,14 +27,26 @@ public partial class CharacterRack : Node
 		}
 	}
 
-	//Inserts passed character into index position and returns previous character at that index.
-	public BattleCharacter SwapOut(BattleCharacter character, int index)
+	/// <summary>
+	/// Swaps character out.
+	/// </summary>
+	/// <param name="current">The character currently in rack.</param>
+	/// <param name="replace">The character to replace.</param>
+	public void SwapOut(BattleCharacter current, BattleCharacter replace)
     {
-		BattleCharacter toRemove = GetChild<BattleCharacter>(index);
-		RemoveChild(toRemove);
-		AddChild(character);
-		MoveChild(character, index);
-		return toRemove;
+		int index = current.GetIndex();
+		Remove(current);
+		AddChild(replace);
+		MoveChild(replace, index);
+	}
+
+	/// <summary>
+	/// Removes the character from rack. Note: doesn't free the BattleCharacter node.
+	/// </summary>
+	/// <param name="character"></param>
+	public void Remove(BattleCharacter character)
+    {
+		RemoveChild(character);
 	}
 
 	public IEnumerable<BattleCharacter> GetAll()

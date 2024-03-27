@@ -1,7 +1,14 @@
 "keys","en","cs"
 "T_SKL_BASICATTACK_TITLE","Basic Attack","Útok"
-"T_SKL_BASICATTACK_DESC","- Do [atk][b]STR[/b][/atk] or [atk][b]INT[/b][/atk] damage, whichever is higher.
-- Generates [st][b]+1STA[/b][/st]","- Způsobí [atk][b]STR[/b][/atk] [atk][b]INT[/b][/atk] poškození, podle toho které je vyšší.
+"T_SKL_BASICATTACK_DESC_PHYSICAL","- Gains the user's Element.
+- Do [atk][b]STR[/b][/atk] damage.
+- Generates [st][b]+1STA[/b][/st]","- Mění svůj Element podle uživatele.
+- Způsobí [atk][b]STR[/b][/atk] poškození.
+- Generuje [st][b]+1STA[/b][/st]"
+"T_SKL_BASICATTACK_DESC_MAGICAL","- Gains the user's Element.
+- Do [atk][b]INT[/b][/atk] damage.
+- Generates [st][b]+1STA[/b][/st]","- Mění svůj Element podle uživatele.
+- Způsobí [atk][b]INT[/b][/atk] poškození.
 - Generuje [st][b]+1STA[/b][/st]"
 "T_SKL_FIRSTSTRIKE_TITLE","First Strike","První Zásah"
 "T_SKL_FIRSTSTRIKE_DESC","- Do [atk][b]2*STR[/b][/atk] damage on first use
@@ -9,3 +16,15 @@
 - Pak působí [atk][b]1.5*STR[/b][/atk] poškození do konce bitvy."
 "T_SKL_PRECISIONNEEDLE_TITLE","Precision Needle","Precizní Jehla"
 "T_SKL_PRECISIONNEEDLE_DESC","- Does [atk][b]1-5DMG[/b][/atk](ignoring all effects and DEF) depending on Target Efficiency","- Způsobí [atk][b]1-5DMG[/b][/atk](ignoruje všechny efekty a DEF) podle Efektivity Zaměření"
+"T_SKL_BASICDEFEND_TITLE","Defend","Obrana"
+"T_SKL_BASICDEFEND_DESC","- Reduce all damage taken this turn by 50%
+- Generates [st][b]+2STA[/b][/st]","- Sníží všechna utrpená poškození tenhle tah o 50%
+- Generuje [st][b]+2STA[/b][/st]"
+"T_SKL_SWAP_TITLE","Swap","Výměna"
+"T_SKL_SWAP_DESC","- Swap places with another character.
+[if]If[/if] swapping with a character from the bench:
+	- The swap in gains [st][b]+1STA[/b][/st]
+	- The swap in's turn is spent.","- Vymění pozici s jinou postavou
+[if]Pokud[/if] se mění s postavou v benči:
+	- Výměna získá [st][b]+1STA[/b][/st]
+	- Výměna může aktovat až příští tah."

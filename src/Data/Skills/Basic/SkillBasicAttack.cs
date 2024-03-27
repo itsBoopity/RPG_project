@@ -15,30 +15,51 @@ public partial class SkillBasicAttack: BattleSkillData
         false
     ) {}
 
-    public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
+    public override SkillElement GetDisplayElement(BattleFieldData bF, BattleCharacter user)
     {
-        bInteraction.user.ChangeStack(1);
-        int damageStat = bInteraction.user.GetStrength();
-        if (bInteraction.user.GetIntelligence() > damageStat)
+        return user.Element;
+    }
+
+    public override void Execute(BattleFieldData bF, BattleInteractionData bI)
+    {
+        bI.user.ChangeStack(1);
+        int damageStat;
+        if (bI.user.Element.IsMagical())
         {
-            damageStat = bInteraction.user.GetIntelligence();
+            damageStat = bI.user.GetIntelligence();
+        }
+        else
+        {
+            // Note that: if element is neither, defaults to using Strength.
+            damageStat = bI.user.GetStrength();
         }
 
-        bInteraction.target.SustainDamage(bInteraction.user, CalculationFormula.BasicDamage(damageStat, bInteraction.target.GetDefense(), bInteraction.target.GetAffinity(bInteraction.user.Element), bInteraction.appendageCoef));
+        bI.target.SustainDamage(bI.user, CalculationFormula.BasicDamage(damageStat, bI.target.GetDefense(), bI.target.GetAffinity(bI.user.Element), bI.appendageCoef));
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)
     {
-        int damageStat = user.GetStrength();
-        if (user.GetIntelligence() > damageStat)
+        int damageStat;
+        if (user.Element.IsMagical())
         {
             damageStat = user.GetIntelligence();
+        }
+        else
+        {
+            damageStat = user.GetStrength();
         }
         return CalculationFormula.BasicDamage(damageStat, target.GetDefense(), target.GetAffinity(user.Element));
     }
 
-    public override string Description()
+    public override string Description(BattleFieldData bF, BattleCharacter user)
     {
-        return "T_SKL_BASICATTACK_DESC";
+        if (user.Element.IsMagical())
+        {
+            return "T_SKL_BASICATTACK_DESC_MAGICAL";
+        }
+        else
+        {
+            return "T_SKL_BASICATTACK_DESC_PHYSICAL";
+        }
     }
 }

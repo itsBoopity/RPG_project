@@ -4,7 +4,7 @@ public partial class SkillTemplate: BattleSkillData
         SkillId.Null, "SKILL_NULL", 0, 0, 0, false, 0, 0, false
     ) {}
     
-    public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
+    public override void Execute(BattleFieldData bF, BattleInteractionData bI)
     {
     
     }
@@ -12,7 +12,7 @@ public partial class SkillTemplate: BattleSkillData
     {
         return CalculationFormula.BasicDamage(user.GetStrength(), target.GetDefense(), target.GetAffinity(Element));
     }
-    public override string Description()
+    public override string Description(BattleFieldData bF, BattleCharacter user)
     {
         return "";
     }

@@ -11,12 +11,14 @@ public abstract partial class BattleActor: Node2D
     public int MaxHealth { get { return Stats.MaxHealth; } }
     public int Health { get { return Stats.Health; } private set { Stats.Health = value; } }
     public int Stack { get; private set;} = 0;
+    /// <summary>
+    /// "Inherent" element of the character. Can be used by skills that inherit user's element. 
+    /// </summary>
     public SkillElement Element { get { return Stats.Element; } }
     private int Strength { get { return Stats.Strength; } }
     private int Intelligence { get { return Stats.Intelligence; } }
     private int Defense { get { return Stats.Defense; } }
     private int Speed { get { return Stats.Speed; } }
-
     
     public bool TurnActive { get; set; } = true;
     public List<BattleSkill> Skills { get; set; }

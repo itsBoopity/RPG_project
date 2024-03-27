@@ -38,22 +38,40 @@ public abstract partial class BattleSkillData: Resource
         return GD.Load<PackedScene>(animationPath).Instantiate<AnimatedSpriteOneOff>();
     }
 
-    
     /// <summary>
     /// Called at the start of every battle. Used by specific skill implementations that need to set up data. 
     /// </summary>
     public virtual void Initialize() {}
 
     /// <summary>
+    /// For skills whose Element is SkillElement.VARIABLE, the real Element changes depending on the environment.
+    /// For the UI to know which element to show to the play in the tooltip, it calls this method.
+    /// </summary>
+    /// <returns></returns>
+    public virtual SkillElement GetDisplayElement(BattleFieldData bF, BattleCharacter user)
+    {
+        return Element;
+    }
+
+    /// <summary>
     /// If skill has unique activation requirements, check for them here.
     /// </summary>
     /// <returns></returns>
-    public virtual bool IsUsableAdditional(BattleActor user)
-    {
-        return true;
-    }
+    public virtual bool IsUsableAdditional(BattleActor user){ return true; }
 
-    public abstract void Execute(BattleFieldData bf, BattleInteractionData bInteraction);
+    /// <summary>
+    /// For skills that use TargettingType.CUSTOMWINDOW, instances and returns the appropriate .tscn
+    /// </summary>
+    /// <returns>The UI window that the skill uses to control itself.</returns>
+    public virtual SkillCustomWindow GetCustomWindow() { return null; }
+
+    public abstract void Execute(BattleFieldData bF, BattleInteractionData bI);
     public abstract int EstimateDamage(BattleActor user, BattleActor target);
-    public abstract string Description();
+
+    /// <summary>
+    /// Returns the description of the skill
+    /// </summary>
+    /// <param name="bF">Info about the battlefield, necessary for skills that dynamically change based on its data.</param>
+    /// /// <param name="owner">The owner of the skill, necessary for skills that dynamically change based on owner's data.</param>
+    public abstract string Description(BattleFieldData bF, BattleCharacter user);
 }

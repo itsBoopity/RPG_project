@@ -1,8 +1,10 @@
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using Godot;
 
 public class BattleSkill
 {
-	private BattleSkillData data;
+	private readonly BattleSkillData data;
 
 	public int CurrentCooldown { get; set; } = 0;
 
@@ -14,7 +16,6 @@ public class BattleSkill
     public SkillElement Element { get { return data.Element; } }
     public bool IsAoE  { get { return data.IsAoE; } }
     public bool Snap { get { return data.Snap; } }
-    public string Description  { get { return data.Description(); } }
     public Texture2D Icon { get { return data.GetIcon(); } }
     public AnimatedSpriteOneOff Animation { get { return data.GetAnimation(); } }
     
@@ -53,13 +54,13 @@ public class BattleSkill
     }
 
 	// Encapsulates Execute. Actual skill effects are implemented in Execute.
-    public bool Use(BattleFieldData bf, BattleInteractionData bInteraction)
+    public bool Use(BattleFieldData bF, BattleInteractionData bI)
     {
-        if (IsUsable(bInteraction.user) == SkillUsableResult.USABLE)
+        if (IsUsable(bI.user) == SkillUsableResult.USABLE)
         {
-            bInteraction.user.ChangeStack(-data.Cost);
+            bI.user.ChangeStack(-data.Cost);
             CurrentCooldown = data.Cooldown;
-            data.Execute(bf, bInteraction);
+            data.Execute(bF, bI);
             return true;
         }
         return false;
@@ -80,4 +81,20 @@ public class BattleSkill
         }
         return false;
     }
+
+    public string GetDescription(BattleFieldData bF, BattleCharacter user)
+    { 
+        return data.Description(bF, user);
+    }
+
+    public SkillElement GetDisplayElement(BattleFieldData bF, BattleCharacter user)
+    {
+        return data.GetDisplayElement(bF, user);
+    }
+
+    /// <summary>
+    /// For skills that use TargettingType.CUSTOMWINDOW, instances and returns the appropriate .tscn
+    /// </summary>
+    /// <returns>The UI window that the skill uses to control itself.</returns>
+    public virtual SkillCustomWindow GetWindow() { return data.GetCustomWindow(); }
 }

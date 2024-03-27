@@ -23,7 +23,13 @@ public partial class SkillDescription : Control
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
-    public void ShowSkill(BattleSkill skill)
+    /// <summary>
+    /// Display the skills information.
+    /// </summary>
+    /// <param name="skill">The skill to display</param>
+    /// <param name="bF">Info about the battlefield, necessary for skills that dynamically change based on its data.</param>
+    /// /// <param name="owner">The owner of the skill, necessary for skills that dynamically change based on owner's data.</param>
+    public void ShowSkill(BattleSkill skill, BattleFieldData bF, BattleCharacter owner)
     {
         name.Text = skill.DisplayName;
         type.Text = Utility.SkillBBName(skill.Type);
@@ -39,15 +45,16 @@ public partial class SkillDescription : Control
         }
 
         description.Text = "";
-        if (skill.Element.IsPhysical())
-            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.Element)}/{Tr("T_SKT_PHYSICAL")}\n";
-        else if (skill.Element.IsMagical())
-            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skill.Element)}/{Tr("T_SKT_MAGICAL")}\n";
+        SkillElement skillElement = skill.GetDisplayElement(bF, owner);
+        if (skillElement.IsPhysical())
+            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skillElement)}/{Tr("T_SKT_PHYSICAL")}\n";
+        else if (skillElement.IsMagical())
+            description.Text += $"- {Tr("T_B_SKILLTYPE")}: {Utility.Instance.SkillBBName(skillElement)}/{Tr("T_SKT_MAGICAL")}\n";
         
         if (!skill.IsAoE) description.Text += "- Target: Single\n\n";
         else description.Text += "- Target: Multiple\n\n";
 
-        description.Text += Tr(skill.Description);
+        description.Text += Tr(skill.GetDescription(bF, owner));
 
         Show();
         animationPlayer.Stop();

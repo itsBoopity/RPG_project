@@ -15,5 +15,5 @@ public enum TargettingType
     /// </summary>
     ENEMY_TARGET,
     ENEMY_SELECT,
-    CUSTOM
+    CUSTOMWINDOW
 }

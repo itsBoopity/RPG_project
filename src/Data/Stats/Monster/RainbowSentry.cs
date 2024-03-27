@@ -31,7 +31,7 @@ public partial class RainbowSentry: MonsterStats
         RandomizeGems();
     }
 
-    public override void LoadUpcomingTurn(BattleFieldData bf)
+    public override void LoadUpcomingTurn(BattleFieldData bF)
     {
         EmitSignal(SignalName.SignalIntent, 0, 0);
     }

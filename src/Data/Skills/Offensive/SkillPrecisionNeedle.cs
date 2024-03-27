@@ -14,16 +14,16 @@ public partial class SkillPrecisionNeedle: BattleSkillData
         false
     ) {}
     
-    public override void Execute(BattleFieldData bf, BattleInteractionData bInteraction)
+    public override void Execute(BattleFieldData bF, BattleInteractionData bI)
     {
         int damage;
         
-        if (bInteraction.appendageCoef >= 1.2f) damage = 5;
-        else if (bInteraction.appendageCoef >= 1.0f) damage = 3;
-        else if (bInteraction.appendageCoef >= 0.6f) damage = 2;
+        if (bI.appendageCoef >= 1.2f) damage = 5;
+        else if (bI.appendageCoef >= 1.0f) damage = 3;
+        else if (bI.appendageCoef >= 0.6f) damage = 2;
         else damage = 1;
 
-        bInteraction.target.SustainDamage(bInteraction.user, damage);
+        bI.target.SustainDamage(bI.user, damage);
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)
@@ -31,7 +31,7 @@ public partial class SkillPrecisionNeedle: BattleSkillData
         return -1;
     }
 
-    public override string Description()
+    public override string Description(BattleFieldData bF, BattleCharacter user)
     {
         return "T_SKL_PRECISIONNEEDLE_DESC";
     }

@@ -100,11 +100,11 @@ public partial class GameData : Node
         // string oneElement = JsonSerializer.Serialize<CharacterData>(cdClaus)
 
         //BinaryFormatter is obsolete and dangerous, use something else instead
-        // bf.Serialize(file, "v0.0.1");
-        // bf.Serialize(file, avaData);
-        // bf.Serialize(file,playerCharacter);
-        // bf.Serialize(file,clausCharacter);
-        // bf.Serialize(file,party);
+        // bF.Serialize(file, "v0.0.1");
+        // bF.Serialize(file, avaData);
+        // bF.Serialize(file,playerCharacter);
+        // bF.Serialize(file,clausCharacter);
+        // bF.Serialize(file,party);
          
 
 
@@ -113,15 +113,15 @@ public partial class GameData : Node
     }
     public void Load(string filePath) //filePath is passed to this function through the slot selection
     {
-        BinaryFormatter bf = new BinaryFormatter();
+        BinaryFormatter bF = new BinaryFormatter();
         FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.Open);
 
         //BinaryFormatter is obsolete and dangerous, use something else instead
-        // string saveVersion = (string) bf.Deserialize(file);
-        // playerCharacter = (Character) bf.Deserialize(file);
-        // clausCharacter = (Character) bf.Deserialize(file);
-        // party = (CharacterEnum[]) bf.Deserialize(file);
-        //flags = (byte[]) bf.Deserialize(file);
+        // string saveVersion = (string) bF.Deserialize(file);
+        // playerCharacter = (Character) bF.Deserialize(file);
+        // clausCharacter = (Character) bF.Deserialize(file);
+        // party = (CharacterEnum[]) bF.Deserialize(file);
+        //flags = (byte[]) bF.Deserialize(file);
 
         file.Close();
     }

@@ -20,6 +20,9 @@ public partial class BattleActorStats: Resource
     [Export]
     public int Speed { get; set; }
 
+    /// <summary>
+    /// "Inherent" element of the character. Can be used by skills that inherit user's element. 
+    /// </summary>
     [Export]
     public SkillElement Element { get; set; }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=64 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -38,6 +38,8 @@
 [ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/Defend.tres" id="29_23nyu"]
 [ext_resource type="AudioStream" uid="uid://dcmnty8s5i31p" path="res://Audio/SFX/click2.wav" id="29_r3ion"]
 [ext_resource type="AudioStream" uid="uid://c7ljmivjse2v4" path="res://Audio/SFX/error_sound.wav" id="30_5us6w"]
+[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/Swap.tres" id="32_6rm28"]
+[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextIfColor.gd" id="38_hkyy5"]
 
 [sub_resource type="Animation" id="Animation_e520e"]
 length = 0.001
@@ -475,6 +477,9 @@ script = ExtResource("14")
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_pmqfr"]
 script = ExtResource("15")
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_7l1de"]
+script = ExtResource("38_hkyy5")
 
 [sub_resource type="Animation" id="Animation_jtkxe"]
 resource_name = "PopIn"
@@ -1095,14 +1100,14 @@ visible = false
 
 [node name="2" parent="UI/BasicSkills" instance=ExtResource("6")]
 layout_mode = 2
-index = 1
+index = 2
 secondRow = true
 
 [node name="RootTexture" parent="UI/BasicSkills/2" index="0"]
 texture = ExtResource("17_ifx84")
 
 [node name="Icon" parent="UI/BasicSkills/2/RootTexture/Fill" index="0"]
-texture = ExtResource("29_23nyu")
+texture = ExtResource("32_6rm28")
 
 [node name="Countdown" parent="UI/BasicSkills/2/RootTexture" index="1"]
 visible = false
@@ -1182,7 +1187,7 @@ mouse_filter = 2
 theme = ExtResource("4")
 theme_override_font_sizes/normal_font_size = 38
 bbcode_enabled = true
-text = "Dancing is Nice"
+text = "Skill"
 scroll_active = false
 
 [node name="PropertyType" type="RichTextLabel" parent="UI/SkillDescription/NinePatchRect"]
@@ -1233,15 +1238,27 @@ bbcode_enabled = true
 text = "- Type: Lightning/Magical
 - Target: Single
 
-- It's pretty Cool"
+- Description"
 scroll_active = false
-custom_effects = [SubResource("RichTextEffect_ho78x"), SubResource("RichTextEffect_pmqfr")]
+custom_effects = [SubResource("RichTextEffect_ho78x"), SubResource("RichTextEffect_pmqfr"), SubResource("RichTextEffect_7l1de")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/SkillDescription"]
 root_node = NodePath("../NinePatchRect")
 libraries = {
 "": SubResource("AnimationLibrary_n0dt3")
 }
+
+[node name="SkillCustomWindow" type="Control" parent="UI"]
+unique_name_in_owner = true
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="CharacterMessage" parent="UI" instance=ExtResource("24_xsgoi")]
 unique_name_in_owner = true
@@ -1268,6 +1285,7 @@ offset_right = -64.0
 offset_bottom = 377.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="TurnAnnouncement" type="Control" parent="UI"]
 unique_name_in_owner = true

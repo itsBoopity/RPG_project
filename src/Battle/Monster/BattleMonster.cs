@@ -53,21 +53,21 @@ public partial class BattleMonster: BattleActor
         return !IsDisappearing && TurnActive;
     }
 
-    public void LoadUpcomingTurn(BattleFieldData bf)
+    public void LoadUpcomingTurn(BattleFieldData bF)
     {
-        Stats.LoadUpcomingTurn(bf);
+        Stats.LoadUpcomingTurn(bF);
     }
 
-    public async void ExecuteTurn(BattleFieldData bf)
+    public async void ExecuteTurn(BattleFieldData bF)
     {
         if (LoadedSkill != null)
         {
-            BattleInteractionData bInteraction = new(this, bf.party[PartyTarget], 1.0f);
-            LoadedSkill.Use(bf, bInteraction);
+            BattleInteractionData bI = new(this, bF.party[PartyTarget], 1.0f);
+            LoadedSkill.Use(bF, bI);
             EmitSignal( SignalName.DisplayCenterMessage,
-                        String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, bf.party[PartyTarget].DisplayName));
+                        String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, bF.party[PartyTarget].DisplayName));
             AnimatedSpriteOneOff animation = LoadedSkill.Animation;
-            EmitSignal(SignalName.PlayerAttackedVfx, animation, bf.party[PartyTarget]);
+            EmitSignal(SignalName.PlayerAttackedVfx, animation, bF.party[PartyTarget]);
             await ToSignal(animation, AnimatedSpriteOneOff.SignalName.AnimationFinished);
         }
         TurnActive = false;

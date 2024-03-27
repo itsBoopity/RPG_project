@@ -27,7 +27,7 @@ public abstract partial class MonsterStats: BattleActorStats
 
     public virtual void Initialize() {}
 
-    public abstract void LoadUpcomingTurn(BattleFieldData bf);
+    public abstract void LoadUpcomingTurn(BattleFieldData bF);
 
     public abstract void AppendageHit(MonsterAppendage appendage);
 }

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Linq;
 
 public partial class SkillCustomWindowSwap : SkillCustomWindow
@@ -11,6 +10,8 @@ public partial class SkillCustomWindowSwap : SkillCustomWindow
 	private AnimationPlayer animationPlayer;
 
 	private BattleFieldData bF;
+	private BattleCharacter user;
+
 
 	public override void _Ready()
     {
@@ -22,6 +23,7 @@ public partial class SkillCustomWindowSwap : SkillCustomWindow
 	public override void Open(BattleFieldData bF, BattleCharacter user)
 	{
 		this.bF = bF;
+		this.user = user;
 		LoadParty(bF.party, user);
 		LoadBench(bF.bench);
 		stretchArrow.Enable();
@@ -103,15 +105,11 @@ public partial class SkillCustomWindowSwap : SkillCustomWindow
 	{
 		if (partyOrBench == "Party")
 		{
-			GD.Print(bF.party[index].Who);
-			EmitSignal(SignalName.ReturnBattleCharacter, bF.party[index]);
+			EmitSignal(SignalName.ReturnData, new BattleInteractionData(user, bF.party[index]));
 		}
 		else
 		{
-			GD.Print(bF.bench[index].Who);
-			EmitSignal(SignalName.ReturnBattleCharacter, bF.bench[index]);
-			
+			EmitSignal(SignalName.ReturnData, new BattleInteractionData(user, bF.bench[index]));
 		}
-		
 	}
 }

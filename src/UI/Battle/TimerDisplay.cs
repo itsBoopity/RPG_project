@@ -23,7 +23,6 @@ public partial class TimerDisplay : Node
 
     public override void _Process(double delta)
     {
-        // GD.Print(timer.TimeLeft);
         label.Text = timer.TimeLeft.ToString("F1");
         bar.Value = timer.TimeLeft;
     }

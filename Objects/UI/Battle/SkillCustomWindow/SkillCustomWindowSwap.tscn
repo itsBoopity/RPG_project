@@ -1,72 +1,49 @@
-[gd_scene load_steps=10 format=3 uid="uid://25si10y5swnm"]
+[gd_scene load_steps=11 format=3 uid="uid://25si10y5swnm"]
 
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_hq4uo"]
 [ext_resource type="Texture2D" uid="uid://dtt5wdyist48t" path="res://Images/UI/window.png" id="2_d1dxu"]
 [ext_resource type="Script" path="res://src/UI/SkillCustomWindow/SkillCustomWindowSwap.cs" id="3_mspq6"]
-[ext_resource type="Texture2D" uid="uid://c6i8vsfo0twsl" path="res://Images/UI/separator.png" id="4_lauiy"]
-[ext_resource type="PackedScene" uid="uid://dixbbfyfqvkv" path="res://Objects/UI/Battle/CharacterBarSmall.tscn" id="5_wq1or"]
+[ext_resource type="Texture2D" uid="uid://c6i8vsfo0twsl" path="res://Images/UI/separator.png" id="4_qboli"]
+[ext_resource type="PackedScene" uid="uid://dixbbfyfqvkv" path="res://Objects/UI/Battle/CharacterBarSmall.tscn" id="5_p14wy"]
 [ext_resource type="Texture2D" uid="uid://dnxu4loct6tl5" path="res://Images/UI/back_icon.png" id="6_nl7ji"]
+[ext_resource type="Texture2D" uid="uid://p4hjg72eec63" path="res://Images/UI/back_icon_hover.png" id="7_dr30f"]
 
-[sub_resource type="Animation" id="Animation_h8kwd"]
-resource_name = "new_animation"
-length = 0.12
+[sub_resource type="Animation" id="Animation_nr4x4"]
+resource_name = "Open"
+length = 0.06
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset_left")
+tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.12),
+"times": PackedFloat32Array(0, 0.04, 0.06),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [-54.0, -1427, -1377.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:offset_right")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.12),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [1260.0, -113, -63.0]
+"values": [Vector2(0.1, 1), Vector2(1.05, 1), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_no6n4"]
+[sub_resource type="Animation" id="Animation_mnvrj"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset_left")
+tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-1377.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:offset_right")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [-63.0]
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jbayl"]
 _data = {
-"Open": SubResource("Animation_h8kwd"),
-"RESET": SubResource("Animation_no6n4")
+"Open": SubResource("Animation_nr4x4"),
+"RESET": SubResource("Animation_mnvrj")
 }
 
 [node name="SkillCustomWindowSwap" type="NinePatchRect"]
@@ -100,7 +77,7 @@ offset_right = -16.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_lauiy")
+texture = ExtResource("4_qboli")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
@@ -138,13 +115,13 @@ grow_horizontal = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="0" parent="Party" instance=ExtResource("5_wq1or")]
+[node name="0" parent="Party" instance=ExtResource("5_p14wy")]
 layout_mode = 2
 
-[node name="1" parent="Party" instance=ExtResource("5_wq1or")]
+[node name="1" parent="Party" instance=ExtResource("5_p14wy")]
 layout_mode = 2
 
-[node name="2" parent="Party" instance=ExtResource("5_wq1or")]
+[node name="2" parent="Party" instance=ExtResource("5_p14wy")]
 layout_mode = 2
 
 [node name="Bench" type="HBoxContainer" parent="."]
@@ -160,29 +137,30 @@ grow_vertical = 0
 size_flags_vertical = 3
 alignment = 1
 
-[node name="0" parent="Bench" instance=ExtResource("5_wq1or")]
+[node name="0" parent="Bench" instance=ExtResource("5_p14wy")]
 layout_mode = 2
 
-[node name="1" parent="Bench" instance=ExtResource("5_wq1or")]
+[node name="1" parent="Bench" instance=ExtResource("5_p14wy")]
 layout_mode = 2
 
-[node name="2" parent="Bench" instance=ExtResource("5_wq1or")]
+[node name="2" parent="Bench" instance=ExtResource("5_p14wy")]
 layout_mode = 2
 
-[node name="Cancel" type="Button" parent="."]
+[node name="Cancel" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 59.0
-offset_top = -92.0
-offset_right = 367.0
-offset_bottom = -20.0
+offset_left = 48.0
+offset_top = -123.0
+offset_right = 143.0
+offset_bottom = -28.0
 grow_vertical = 0
-text = "TR_B_UI_CANCEL"
-icon = ExtResource("6_nl7ji")
-flat = true
-alignment = 0
+texture_normal = ExtResource("6_nl7ji")
+texture_pressed = ExtResource("6_nl7ji")
+texture_hover = ExtResource("7_dr30f")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -190,3 +168,8 @@ libraries = {
 }
 
 [connection signal="pressed" from="Party/0" to="." method="CharacterSelected" binds= ["Party", 0]]
+[connection signal="pressed" from="Party/1" to="." method="CharacterSelected" binds= ["Party", 1]]
+[connection signal="pressed" from="Party/2" to="." method="CharacterSelected" binds= ["Party", 2]]
+[connection signal="pressed" from="Bench/0" to="." method="CharacterSelected" binds= ["Bench", 0]]
+[connection signal="pressed" from="Bench/1" to="." method="CharacterSelected" binds= ["Bench", 1]]
+[connection signal="pressed" from="Bench/2" to="." method="CharacterSelected" binds= ["Bench", 2]]

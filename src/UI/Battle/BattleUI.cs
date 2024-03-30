@@ -107,6 +107,19 @@ public partial class BattleUI : Control
             }
         }
     }
+
+    public void UpdateCharacterBar(BattleCharacter character)
+    {
+        foreach (CharacterBar bar in partyNode.GetChildren().Cast<CharacterBar>())       
+        {
+            if (bar.Who == character.Who)
+            {
+                bar.Update(character);
+                break;
+            }
+        }
+    }
+
     public void SwapCharacterModel(BattleCharacter selectedCharacter)
     {
         characterModels.ShowCharacter(selectedCharacter.Who);

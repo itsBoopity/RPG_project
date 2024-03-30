@@ -18,9 +18,9 @@ public partial class SkillPrecisionNeedle: BattleSkillData
     {
         int damage;
         
-        if (bI.appendageCoef >= 1.2f) damage = 5;
-        else if (bI.appendageCoef >= 1.0f) damage = 3;
-        else if (bI.appendageCoef >= 0.6f) damage = 2;
+        if (bI.FloatValue >= 1.2f) damage = 5;
+        else if (bI.FloatValue >= 1.0f) damage = 3;
+        else if (bI.FloatValue >= 0.6f) damage = 2;
         else damage = 1;
 
         bI.target.SustainDamage(bI.user, damage);

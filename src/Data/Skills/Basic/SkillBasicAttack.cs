@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class SkillBasicAttack: BattleSkillData
+public partial class SkillBasicAttack : BattleSkillData
 {
     public SkillBasicAttack(): base(
         SkillId.BasicAttack,
@@ -34,7 +34,7 @@ public partial class SkillBasicAttack: BattleSkillData
             damageStat = bI.user.GetStrength();
         }
 
-        bI.target.SustainDamage(bI.user, CalculationFormula.BasicDamage(damageStat, bI.target.GetDefense(), bI.target.GetAffinity(bI.user.Element), bI.appendageCoef));
+        bI.target.SustainDamage(bI.user, CalculationFormula.BasicDamage(damageStat, bI.target.GetDefense(), bI.target.GetAffinity(bI.user.Element), bI.FloatValue));
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

@@ -58,9 +58,9 @@ public class BattleSkill
     {
         if (IsUsable(bI.user) == SkillUsableResult.USABLE)
         {
+            data.Execute(bF, bI);
             bI.user.ChangeStack(-data.Cost);
             CurrentCooldown = data.Cooldown;
-            data.Execute(bF, bI);
             return true;
         }
         return false;

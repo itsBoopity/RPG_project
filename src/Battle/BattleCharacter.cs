@@ -8,6 +8,9 @@ public partial class BattleCharacter: BattleActor
     [Signal]
     new public delegate void TookDamageEventHandler(BattleCharacter who, BattleActor damageDealer, int damage);
 
+    [Signal]
+    new public delegate void StatsChangedEventHandler(BattleCharacter who);
+
     public CharacterEnum Who { get; private set; }
 
     public BattleCharacter(CharacterStats characterStats)

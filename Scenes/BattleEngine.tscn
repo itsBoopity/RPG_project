@@ -789,6 +789,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Log" type="ColorRect" parent="UI/Filmbar"]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -982,17 +983,20 @@ mouse_filter = 2
 
 [node name="0" parent="UI/PartyBar" instance=ExtResource("1")]
 layout_mode = 0
+focus_mode = 0
 
 [node name="1" parent="UI/PartyBar" instance=ExtResource("1")]
 layout_mode = 0
 offset_left = 415.0
 offset_right = 859.0
+focus_mode = 0
 index = 1
 
 [node name="2" parent="UI/PartyBar" instance=ExtResource("1")]
 layout_mode = 0
 offset_left = 832.0
 offset_right = 1276.0
+focus_mode = 0
 index = 2
 
 [node name="Skills" type="HBoxContainer" parent="UI"]
@@ -1016,21 +1020,26 @@ alignment = 1
 
 [node name="0" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
+focus_mode = 0
 
 [node name="1" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
+focus_mode = 0
 index = 1
 
 [node name="2" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
+focus_mode = 0
 index = 2
 
 [node name="3" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
+focus_mode = 0
 index = 3
 
 [node name="4" parent="UI/Skills" instance=ExtResource("6")]
 layout_mode = 2
+focus_mode = 0
 index = 4
 
 [node name="BasicSkills" type="HBoxContainer" parent="UI"]
@@ -1315,6 +1324,7 @@ libraries = {
 }
 
 [connection signal="timeout" from="TurnTimer" to="." method="OutOfTime"]
+[connection signal="CharacterRackChanged" from="Party" to="." method="CharacterBarChanged"]
 [connection signal="ActionDetailHidden" from="UI" to="MonstersAnchor/Monsters" method="HideEstimateAll"]
 [connection signal="SelectCharacter" from="UI/PartyBar/0" to="." method="SelectCharacter"]
 [connection signal="SelectCharacter" from="UI/PartyBar/1" to="." method="SelectCharacter"]

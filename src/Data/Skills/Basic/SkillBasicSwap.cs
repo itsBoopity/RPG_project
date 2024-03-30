@@ -17,11 +17,21 @@ public partial class SkillBasicSwap: BattleSkillData
 
     public override void Execute(BattleFieldData bF, BattleInteractionData bI)
     {
-        bF.bench.Remove((BattleCharacter)bI.target);
-        bF.party.SwapOut((BattleCharacter)bI.user, (BattleCharacter)bI.target);
-        bF.bench.Add((BattleCharacter)bI.user);
-        bI.target.TurnActive = false;
-        bI.target.ChangeStack(1);
+        if (bF.party.ContainsBattleCharacter((BattleCharacter)bI.target))
+        {
+            bF.party.Swap((BattleCharacter)bI.user, (BattleCharacter)bI.target);
+        }
+        else
+        {
+            int benchPosition = bI.target.GetIndex();
+            bF.bench.Remove((BattleCharacter)bI.target);
+            bF.party.Replace((BattleCharacter)bI.user, (BattleCharacter)bI.target);
+            bF.bench.Add((BattleCharacter)bI.user);
+            bF.bench.MoveChild((BattleCharacter)bI.user, benchPosition);
+            bI.target.TurnActive = false;
+        }
+
+        bI.target.ChangeStack(2);
     }
 
     public override int EstimateDamage(BattleActor user, BattleActor target)

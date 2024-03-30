@@ -1,26 +1,26 @@
-public partial class SkillTemplate : BattleSkillData
+using Godot;
+using System;
+
+public partial class SkillGemBurst : BattleSkillData
 {
-    public SkillTemplate(): base(
-        SkillId.Null,
-        "T_SKL_TEMPLATE_TITLE",
-        SkillType.BASIC,
-        SkillElement.NONE,
+    public SkillGemBurst(): base(
+        SkillId.GemBurst,
+        "T_SKL_GEMBURST_TITLE",
+        SkillType.OFFENSIVE,
+        SkillElement.BLUNT,
         TargettingType.NONE,
-        false,
+        true,
         0,
         0,
         false
     ) {}
-
-    // If skill needs to setup at start of battle.
-    // public override void Initialize()
-    // {
-    
-    // }
     
     public override void Execute(BattleFieldData bF, BattleInteractionData bI)
     {
-    
+		foreach(BattleActor target in bI.targets)
+		{
+			target.SustainDamage(bI.user, CalculationFormula.BasicDamage(bI.user.GetStrength(), target.GetDefense(), target.GetAffinity(Element)));
+		}
     }
     public override int EstimateDamage(BattleActor user, BattleActor target)
     {
@@ -28,7 +28,7 @@ public partial class SkillTemplate : BattleSkillData
     }
     public override string Description(BattleFieldData bF, BattleCharacter user)
     {
-        return "T_SKL_TEMPLATE_DESC";
+        return "T_SKL_GEMBURST_DESC";
     }
 
 }

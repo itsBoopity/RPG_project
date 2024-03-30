@@ -62,7 +62,7 @@ public partial class BattleMonster: BattleActor
     {
         if (LoadedSkill != null)
         {
-            BattleInteractionData bI = new(this, bF.party[PartyTarget], 1.0f);
+            BattleInteractionData bI = new BattleInteractionData(this, bF.party[PartyTarget]).AddFloatValue(1.0f);
             LoadedSkill.Use(bF, bI);
             EmitSignal( SignalName.DisplayCenterMessage,
                         String.Format(Tr("{0} uses {1} on {2}!"), DisplayName, LoadedSkill.DisplayName, bF.party[PartyTarget].DisplayName));

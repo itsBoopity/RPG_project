@@ -45,12 +45,12 @@ public partial class SkillBoxUI : Control
 
         if (!secondRow)
         {
-            GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_skill" + index)[0].AsText();
+            GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_skill" + index)[0].AsText().TrimSuffix(" (Physical)");
         }
         else
         {
             {
-            GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_basicskill" + index)[0].AsText();
+            GetNode<Label>("RootTexture/Hotkey").Text = InputMap.ActionGetEvents("battle_basicskill" + index)[0].AsText().TrimSuffix(" (Physical)");
         }
         }
     }

@@ -1,8 +1,14 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://c1fnwe1e3famb"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://c1fnwe1e3famb"]
 
-[ext_resource type="Resource" uid="uid://ct4k3xr7p0rnq" path="res://Resources/Skills/Offensive/FirstStrike.tres" id="1_4ox5v"]
-[ext_resource type="Resource" uid="uid://7y21iwc4ke1" path="res://Resources/Skills/Offensive/PrecisionNeedle.tres" id="2_5dakm"]
+[ext_resource type="Script" path="res://src/Data/Skills/Offensive/Magical/Variable/SkillSimpleMagic.cs" id="1_piq4n"]
+[ext_resource type="Script" path="res://src/Data/Skills/Utility/SkillCalculate.cs" id="2_6ilkv"]
 [ext_resource type="Script" path="res://src/Data/Stats/CharacterStats.cs" id="3_ikk6y"]
+
+[sub_resource type="Resource" id="Resource_e1we0"]
+script = ExtResource("1_piq4n")
+
+[sub_resource type="Resource" id="Resource_p1jn4"]
+script = ExtResource("2_6ilkv")
 
 [resource]
 resource_local_to_scene = true
@@ -13,7 +19,7 @@ Level = 1
 Health = 10
 MaxHealth = 10
 Strength = 2
-Intelligence = 5
+Intelligence = 4
 Defense = 0
 Speed = 9
 Element = 5
@@ -26,4 +32,4 @@ elementalAffinity = {
 "PIERCE": 1.0,
 "SLASH": 1.0
 }
-Skills = Array[Resource]([ExtResource("1_4ox5v"), ExtResource("2_5dakm")])
+Skills = Array[Resource]([SubResource("Resource_e1we0"), SubResource("Resource_p1jn4")])

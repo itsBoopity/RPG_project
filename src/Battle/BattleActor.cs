@@ -5,6 +5,8 @@ public abstract partial class BattleActor: Node2D
 {
     [Signal]
     public delegate void TookDamageEventHandler(BattleActor who, BattleActor damageDealer, int damage);
+    [Signal]
+    public delegate void StatsChangedEventHandler(BattleActor who);
 
     public string DisplayName { get { return Tr(Stats.Name); } }
     public int Level { get { return Stats.Level; } }
@@ -20,10 +22,19 @@ public abstract partial class BattleActor: Node2D
     private int Defense { get { return Stats.Defense; } }
     private int Speed { get { return Stats.Speed; } }
     
-    public bool TurnActive { get; set; } = true;
+    public bool TurnActive
+    {
+        get { return turnActive; }
+        set
+        {
+            turnActive = value;
+            EmitSignal(SignalName.StatsChanged, this);
+        } 
+    }
     public List<BattleSkill> Skills { get; set; }
     public List<int> Statuses { get; }
     private BattleActorStats stats;
+    private bool turnActive = true;
     
 
     [Export]
@@ -89,6 +100,7 @@ public abstract partial class BattleActor: Node2D
         }
         Health -= finalDamage;
         EmitSignal(SignalName.TookDamage, this, damageDealer, finalDamage);
+        EmitSignal(SignalName.StatsChanged, this);
     }
 
     /// <summary>
@@ -106,6 +118,7 @@ public abstract partial class BattleActor: Node2D
     public void ChangeStack(int delta)
     {
         Stack += delta;
+        EmitSignal(SignalName.StatsChanged, this);
     }
 
     /// <summary>

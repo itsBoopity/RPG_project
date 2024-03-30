@@ -23,8 +23,18 @@
 "T_SKL_SWAP_TITLE","Swap","Výměna"
 "T_SKL_SWAP_DESC","- Swap places with another character.
 [if]If[/if] swapping with a character from the bench:
-	- The swap in gains [st][b]+1STA[/b][/st]
+	- The swap in gains [st][b]+2STA[/b][/st]
 	- The swap in's turn is spent.","- Vymění pozici s jinou postavou
 [if]Pokud[/if] se mění s postavou v benči:
-	- Výměna získá [st][b]+1STA[/b][/st]
+	- Výměna získá [st][b]+2STA[/b][/st]
 	- Výměna může aktovat až příští tah."
+"T_SKL_SIMPLEMAGIC_TITLE","Simple Magic","Jednoduchá Magie"
+"T_SKL_SIMPLEMAGIC_DESC","- Do [atk][b]1.5*INT[/b][/atk] damage.
+- Elemental Modulo:
+	- [st][b]STA[/b][/st] % 3 = 0 -> [color=#FF4849]Fire[/color]
+	- [st][b]STA[/b][/st] % 3 = 1 -> [color=#3AB7F9]Ice[/color]
+	- [st][b]STA[/b][/st] % 3 = 2 -> [color=#FFF936]Lightning[/color]","- Způsobí [atk][b]1.5*INT[/b][/atk] poškození.
+- Elementální Modulo:
+	- [st][b]STA[/b][/st] % 3 = 0 -> [color=#FF4849]Oheň[/color]
+	- [st][b]STA[/b][/st] % 3 = 1 -> [color=#3AB7F9]Led[/color]
+	- [st][b]STA[/b][/st] % 3 = 2 -> [color=#FFF936]Blesk[/color]"

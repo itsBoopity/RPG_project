@@ -43,7 +43,10 @@ public partial class BattleEngine : Control
     {
         SetState(ControlState.PLAYER_SKILL_CUSTOMWINDOW_STATE);
         BattleFieldData bF = new(party, bench, monsters);
-        Ui.OpenCustomWindow(selectedSkill.GetWindow(), bF, GetCurrentPartyMember());
+        SkillCustomWindow window = selectedSkill.GetWindow();
+        window.CancelWindow += ExitCurrentMode;
+        window.ReturnData += PlayerExecuteWindowAction;
+        Ui.OpenCustomWindow(window, bF, GetCurrentPartyMember());
     }
 
     private void EnterEnemyTurn()

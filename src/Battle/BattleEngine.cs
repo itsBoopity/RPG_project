@@ -73,49 +73,59 @@ public partial class BattleEngine : Control
         foreach (BattleCharacter character in GameData.Instance.GetBattleParty()) 
         {
             party.Add(character);
-            StartInitializeActor(character);
+            StartInitializeCharacter(character);
             character.TookDamage += CharacterTookDamage;
             character.TookDamage += Ui.CharacterTookDamage;
         }
         foreach (BattleCharacter character in GameData.Instance.GetBattleBench()) 
         {
             bench.Add(character);
-            StartInitializeActor(character);
+            StartInitializeCharacter(character);
             character.TookDamage += CharacterTookDamage;
             character.TookDamage += Ui.CharacterTookDamage;
         }
         foreach (PackedScene m in battleSetup.monsters)
         {
             BattleMonster monster = m.Instantiate<BattleMonster>();
-            StartInitializeActor(monster);
+            StartInitializeMonster(monster);
             monsters.Add(monster);
-            monster.Attacked += PlayerExecuteSelectedSkill;
-            monster.Missed += PlayerMissSkill;
-            monster.TookDamage += MonsterTookDamage;
-            monster.PlayerAttackedVfx += Ui.PlayerAttackedVfx;
-            monster.DisplayCenterMessage += Ui.PrintCenterMessage;
-            monster.FinishedTurn += EnemyTurnPerformStep;
         }
         SelectCharacter(0);
         PlayerTurn();
     }
 
     /// <summary>
-    /// Setup BattleActor stats and effects at the start of battle.
+    /// Setup BattleActor stats and effects at the start of battle; And connect signals to BattleEngine 
     /// </summary>
-    private void StartInitializeActor(BattleActor actor)
+    private void StartInitializeCharacter(BattleCharacter character)
     {
-        actor.ChangeStack(actor.Level);
-        foreach (BattleSkill skill in actor.Skills)
+        character.ChangeStack(character.Level);
+        foreach (BattleSkill skill in character.Skills)
         {
             skill.Initialize();
         }
+        character.StatsChanged += Ui.UpdateCharacterBar;
+    }
+
+    private void StartInitializeMonster(BattleMonster monster)
+    {
+        foreach (BattleSkill skill in monster.Skills)
+        {
+            skill.Initialize();
+        }
+        monster.Attacked += PlayerExecuteEnemyTargetAction;
+        monster.Missed += PlayerMissEnemyTargetAction;
+        monster.TookDamage += MonsterTookDamage;
+        monster.PlayerAttackedVfx += Ui.PlayerAttackedVfx;
+        monster.DisplayCenterMessage += Ui.PrintCenterMessage;
+        monster.FinishedTurn += EnemyTurnPerformStep;
     }
 
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
     private void Finish()
     {
-        GD.Print("[UNFINISHED] Don't forget to code in adding of rewards. - BattleEngine.Finish()");
+        GD.Print("[UNFINISHED] BattleEngine::Finish() Code in adding of rewards.");
+        GD.Print("[UNFINISHED] BattleEngine::Finish() Update party layout if swaps done.");
         timer.CustomStop();
         monsters.Clear();
         GameData data = GameData.Instance;
@@ -179,9 +189,9 @@ public partial class BattleEngine : Control
             }
             else if (ratio > 1.0)
             {
-                speedFactor = Math.Min((ratio - 1.0f) * 10.0f, 10.0f);
+                speedFactor = Math.Min((ratio - 1.0f) * 15.0f, 15.0f);
             }
-            timer.CustomStart(10.0f + speedFactor);
+            timer.CustomStart(15.0f + speedFactor);
         }
     }
 
@@ -207,6 +217,7 @@ public partial class BattleEngine : Control
     private void OutOfTime()
     {
         Ui.PrintCenterMessage("Ran out of time!");
+        Ui.HideActionDetail();
         GetNode<AudioStreamPlayer>("%TimeOutAudio").Play();
         EnemyTurn();
     }
@@ -248,7 +259,7 @@ public partial class BattleEngine : Control
     private void EnemyTurnFinished()
     {
         Ui.StopTurnAnnouncement();
-        Ui.UpdateAll(party, GetCurrentPartyMember()); // TODO: This should instead be animated and updated by each skill
+        Ui.UpdateAll(party, GetCurrentPartyMember());
         PlayerTurn();
     }
 
@@ -272,109 +283,6 @@ public partial class BattleEngine : Control
                 CallDeferred(MethodName.Finish);
             }
         }
-    }
-
-    public void ViewSkill(int index)
-    {
-        if (index < GetCurrentPartyMember().Skills.Count)
-        {
-            ViewAction(GetCurrentPartyMember().Skills[index], index);
-        }
-    }
-    public void ViewBasicSkill(int index)
-    {
-        if (index < basicSkills.Length)
-        {
-            ViewAction(basicSkills[index], index);
-        }
-    }
-    public void ViewAction(BattleSkill action, int index)
-    {
-        Ui.ViewActionDetail(action, index, bF, GetCurrentPartyMember());
-        foreach (BattleMonster monster in monsters.GetAll())
-        {
-            monster.ShowEstimate(action.EstimateDamage(GetCurrentPartyMember(), monster));
-        }
-    }
-
-    public void SelectSkill(int index)
-    {
-        if (index < GetCurrentPartyMember().Skills.Count && GetCurrentPartyMember().TurnActive)
-        {
-            SelectAction(GetCurrentPartyMember().Skills[index], index);
-        }
-    }
-    public void SelectBasicSkill(int index)
-    {
-        if (index < basicSkills.Length && GetCurrentPartyMember().TurnActive)
-        {
-            SelectAction(basicSkills[index], index);
-        }        
-    }
-
-    public void SelectAction(BattleSkill action, int index)
-    {
-        SkillUsableResult isUsable = action.IsUsable(GetCurrentPartyMember());
-        if (isUsable != SkillUsableResult.USABLE)
-        {
-            sfx.ErrorSound();
-            if (isUsable == SkillUsableResult.IN_COOLDOWN)
-            {
-                Ui.PrintCharacterMessage("T_B_MSG_CD");
-            } 
-            else if (isUsable == SkillUsableResult.NOT_ENOUGH_STACKS)
-            {
-                Ui.ShakeStackCount(selectedCharacter);
-                Ui.PrintCharacterMessage("T_B_MSG_NOSTACK");
-            }
-        }
-        else
-        {
-            sfx.RollClickPitchIndex(index);
-            
-            if (action.Targetting == TargettingType.ENEMY_TARGET)
-            {
-                selectedSkill = action;
-                Ui.ViewActionDetail(action, index, bF, GetCurrentPartyMember());
-                EnterTargetMode();
-            }
-            else if (action.Targetting == TargettingType.ALLY_TARGET)
-            {
-                selectedSkill = action;
-                EnterTargetAllyMode();
-            }
-            else if (action.Targetting == TargettingType.CUSTOMWINDOW)
-            {
-                selectedSkill = action;
-                EnterCustomSkillWindowMode();
-            }
-        }
-        
-    }
-
-    private void PlayerExecuteSelectedSkill(BattleMonster monster, float appendageCoef)
-    {
-        BattleInteractionData bI = new(GetCurrentPartyMember(), monster, appendageCoef);
-        selectedSkill.Use(bF, bI);
-
-        Ui.PlayVfx(selectedSkill.Animation, GetGlobalMousePosition());
-
-        if (!selectedSkill.Snap)
-        {
-            UseUpTurn(GetCurrentPartyMember());
-        }
-        
-        Ui.UpdateSkills(GetCurrentPartyMember());
-        ExitCurrentMode();
-    }
-
-    public void PlayerMissSkill(BattleMonster monster)
-    {
-        sfx.FailSound();
-        selectedSkill.Miss(GetCurrentPartyMember(), monster);
-        monster.PlayerMissed();
-        UseUpTurn(GetCurrentPartyMember());
-        ExitCurrentMode();
     }
 
     public void SelectCharacter(int index)
@@ -408,15 +316,16 @@ public partial class BattleEngine : Control
     private void RefreshTurn(BattleCharacter character)
     {
         character.TurnActive = true;
-        Ui.UpdateCharacterBars(party);
         Ui.UpdateSkills(GetCurrentPartyMember());
     }
     private void UseUpTurn(BattleCharacter character)
     {
         character.TurnActive = false;
-        Ui.UpdateCharacterBars(party);
-        Ui.HideCharacterModel();
-        Ui.UpdateSkills(GetCurrentPartyMember());
+        Ui.UpdateSkills(character);
+        if (!GetCurrentPartyMember().TurnActive)
+        {
+            Ui.HideCharacterModel();
+        }
         if (PlayerTurnFinished() && monsters.Count > 0)
         {
             EnemyTurn();

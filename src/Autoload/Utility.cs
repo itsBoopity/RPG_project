@@ -64,6 +64,8 @@ public partial class Utility : Node
                 return "[color=#94705D]Basic[/color]";
             case SkillType.OFFENSIVE:
                 return "[color=#DC5750]Offensive[/color]";
+            case SkillType.UTILITY:
+                return "[color=#3867E5]Utility[/color]";
             default:
                 throw new ArgumentException("Utility.SkillBBName does not contain " + type.ToString());
         }

@@ -2,6 +2,7 @@ public partial class GameSettings
 {
     public bool timerEnabled = true;
     public bool noTimerForAnalysis = false;
+    public bool displayElementalModuloResult = false;
     public bool redoOnGameOver = false;
 
     public int monsterScrollSpeed = 1200;

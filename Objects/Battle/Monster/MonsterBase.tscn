@@ -355,6 +355,7 @@ libraries = {
 offset_top = -128.0
 offset_right = 256.0
 offset_bottom = 128.0
+focus_mode = 0
 theme = ExtResource("7_6eyv2")
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]

@@ -23,14 +23,13 @@ public partial class SkillFirstStrike: BattleSkillData
 
     public override void Execute(BattleFieldData bF, BattleInteractionData bI)
     {
-        GD.Print(first);
         int damage;
         if (first) {
-            damage = CalculationFormula.BasicDamage(bI.user.GetStrength(), bI.target.GetDefense(), bI.target.GetAffinity(Element), bI.appendageCoef, 2.0f);
+            damage = CalculationFormula.BasicDamage(bI.user.GetStrength(), bI.target.GetDefense(), bI.target.GetAffinity(Element), bI.FloatValue, 2.0f);
             first = false;
         }
         else
-            damage = CalculationFormula.BasicDamage(bI.user.GetStrength(), bI.target.GetDefense(), bI.target.GetAffinity(Element), bI.appendageCoef, 1.5f);
+            damage = CalculationFormula.BasicDamage(bI.user.GetStrength(), bI.target.GetDefense(), bI.target.GetAffinity(Element), bI.FloatValue, 1.5f);
 
         bI.target.SustainDamage(bI.user, damage);
     }

@@ -3,9 +3,10 @@ using Godot;
 public abstract partial class SkillCustomWindow : Control
 {
 	[Signal]
-	public delegate void ReturnIntEventHandler(int value);
+	public delegate void CancelWindowEventHandler();
+
 	[Signal]
-	public delegate void ReturnBattleCharacterEventHandler(BattleCharacter character);
+	public delegate void ReturnDataEventHandler(BattleInteractionData data);
 
 	public abstract void Open(BattleFieldData bF, BattleCharacter user);
 
@@ -15,4 +16,9 @@ public abstract partial class SkillCustomWindow : Control
 	}
 
 	protected abstract void CleanUp();
+
+	public void Cancel()
+	{
+		EmitSignal(SignalName.CancelWindow);
+	}
 }

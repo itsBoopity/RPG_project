@@ -26,7 +26,7 @@ public partial class BattleActorStats: Resource
     [Export]
     public SkillElement Element { get; set; }
 
-    [Export(PropertyHint.Enum)]
+    [Export]
     public Dictionary<string, float> elementalAffinity { get; set; } = new() {
         {SkillElement.NONE.ToString(), 1.0f},
         {SkillElement.BLUNT.ToString(), 1.0f},

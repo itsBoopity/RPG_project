@@ -91,4 +91,24 @@ public partial class CharacterRack : Node
 	{
 		return GetChildren().Cast<BattleCharacter>();
 	}
+
+	public List<BattleCharacter> GetAllAsCharacterList()
+	{
+		List<BattleCharacter> output = new();
+		foreach (BattleCharacter character in GetChildren().Cast<BattleCharacter>())
+		{
+			output.Add(character);
+		}
+		return output;
+	}
+
+	public List<BattleActor> GetAllAsActorList()
+	{
+		List<BattleActor> output = new();
+		foreach (BattleCharacter character in GetChildren().Cast<BattleCharacter>())
+		{
+			output.Add(character);
+		}
+		return output;
+	}
 }

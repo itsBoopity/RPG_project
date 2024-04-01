@@ -1,6 +1,6 @@
 using Godot;
-using System;
 
+[GlobalClass]
 public partial class SkillGemBurst : BattleSkillData
 {
     public SkillGemBurst(): base(

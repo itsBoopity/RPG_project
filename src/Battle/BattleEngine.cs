@@ -21,6 +21,7 @@ public partial class BattleEngine : Control
         new(new SkillBasicAttack()),
         new(new SkillBasicDefend()),
         new(new SkillBasicSwap()),
+        new(new SkillBasicAnalyze()),
     };
 
     public override void _Ready()
@@ -34,14 +35,17 @@ public partial class BattleEngine : Control
         enemyTurnSpeed = Global.Settings.enemyTurnSpeed;
         bF = new BattleFieldData(party, bench, monsters);
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (state == ControlState.END_SCREEN)
+        {
+            if (@event.IsActionPressed("battle_clickTarget")) ExitBattle();
+        }
+    }
+
     public override void _UnhandledKeyInput(InputEvent @event)
     {
-        if (state != ControlState.FULLY_DISABLED)
-        {
-            if (@event.IsActionPressed("battle_character0")) SelectCharacter(0);
-            else if (@event.IsActionPressed("battle_character1")) SelectCharacter(1);
-            else if (@event.IsActionPressed("battle_character2")) SelectCharacter(2);
-        }
         if (state == ControlState.PLAYER_DEFAULT)
         {
             if (@event.IsActionPressed("battle_skill0")) SelectSkill(0);
@@ -53,10 +57,22 @@ public partial class BattleEngine : Control
             else if (@event.IsActionPressed("battle_basicskill0")) SelectBasicSkill(0);
             else if (@event.IsActionPressed("battle_basicskill1")) SelectBasicSkill(1);
             else if (@event.IsActionPressed("battle_basicskill2")) SelectBasicSkill(2);
+            else if (@event.IsActionPressed("battle_basicskill3")) SelectBasicSkill(3);
         }
-        if (state != ControlState.ENEMY_TURN)
+        else if (state == ControlState.END_SCREEN)
         {
-            if (@event.IsActionPressed("ui_cancel")) ExitCurrentMode();
+            if (@event.IsActionPressed("ui_accept")) ExitBattle();
+        }
+
+        if (state != ControlState.FULLY_DISABLED)
+        {
+            if (@event.IsActionPressed("battle_character0")) SelectCharacter(0);
+            else if (@event.IsActionPressed("battle_character1")) SelectCharacter(1);
+            else if (@event.IsActionPressed("battle_character2")) SelectCharacter(2);
+        }
+        if (state != ControlState.FULLY_DISABLED && state != ControlState.ENEMY_TURN && state != ControlState.END_SCREEN)
+        {
+            if (@event.IsActionPressed("ui_cancel")) PlayerExitStateIfPossible();
         }
     }
 
@@ -66,6 +82,7 @@ public partial class BattleEngine : Control
     /// <param name="battleSetup">The battle setup that contains enemy data, special effects and win conditions.</param>
     public void Initiate(BattleSetup battleSetup)
     {
+        Ui.Reset();
         selectedCharacter = -1;
         party.Clear();
         bench.Clear();
@@ -116,6 +133,7 @@ public partial class BattleEngine : Control
         monster.Attacked += PlayerExecuteEnemyTargetAction;
         monster.Missed += PlayerMissEnemyTargetAction;
         monster.TookDamage += MonsterTookDamage;
+        monster.Selected += PlayerExecuteEnemySelectAction;
         monster.PlayerAttackedVfx += Ui.PlayerAttackedVfx;
         monster.DisplayCenterMessage += Ui.PrintCenterMessage;
         monster.FinishedTurn += EnemyTurnPerformStep;
@@ -124,8 +142,7 @@ public partial class BattleEngine : Control
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
     private void Finish()
     {
-        GD.Print("[UNFINISHED] BattleEngine::Finish() Code in adding of rewards.");
-        GD.Print("[UNFINISHED] BattleEngine::Finish() Update party layout if swaps done.");
+        sfx.Victory();
         timer.CustomStop();
         monsters.Clear();
         GameData data = GameData.Instance;
@@ -137,6 +154,12 @@ public partial class BattleEngine : Control
         {
             data.UpdateCharacterHealth(i.Who, i.Health);
         }
+        data.UpdatePartyLoadout(party.GetAllAsCharacterList(), bench.GetAllAsCharacterList());
+        SwitchState(ControlState.END_SCREEN);
+    }
+
+    private void ExitBattle()
+    {
         SceneManager.Instance.EndBattle();
     }
 
@@ -199,7 +222,7 @@ public partial class BattleEngine : Control
     {
         // Generate spots for healing/buff/utility
         
-        EnterPlayerDefaultMode();
+        EnterPlayerDefaultState();
 
         foreach (BattleMonster monster in monsters.GetAll())
             monster.LoadUpcomingTurn(bF);
@@ -225,8 +248,7 @@ public partial class BattleEngine : Control
     private async void EnemyTurn()
     {
         timer.CustomStop();
-        ExitCurrentMode(); // First set the player mode and UI back to defaault
-        EnterEnemyTurn(); // Then enter enemy Turn
+        SwitchState(ControlState.ENEMY_TURN, true);
         foreach (BattleMonster monster in monsters.GetAll())
         {
             monster.NextTurn();
@@ -288,7 +310,7 @@ public partial class BattleEngine : Control
     public void SelectCharacter(int index)
     {
         if (index >= party.Count) return;
-        ExitCurrentMode();
+        PlayerExitStateIfPossible();
         if (!GetPartyMember(index).TurnActive && state != ControlState.ENEMY_TURN)
         {
             Ui.PrintCharacterMessage("Character's turn already over.");
@@ -325,10 +347,6 @@ public partial class BattleEngine : Control
         if (!GetCurrentPartyMember().TurnActive)
         {
             Ui.HideCharacterModel();
-        }
-        if (PlayerTurnFinished() && monsters.Count > 0)
-        {
-            EnemyTurn();
         }
     }
 

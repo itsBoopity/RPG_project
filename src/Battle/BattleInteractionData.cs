@@ -27,31 +27,32 @@ public partial class BattleInteractionData: Resource
 	/// </summary>
 	/// <param name="c_user">The initiator of the interaction.</param>
 	/// <param name="c_target">The target of the interaction.</param>
-	public BattleInteractionData(BattleActor c_user, BattleActor c_target)
+	public BattleInteractionData(BattleActor user, BattleActor target)
 	{
 		type = BattleInteractionType.USER_SINGLETARGET;
-		user = c_user;
-		target = c_target;
+		this.user = user;
+		this.target = target;
 	}
 
 	/// <summary>
 	/// Create a BattleInteraction where there is only a user.
 	/// </summary>
 	/// <param name="c_user">The initiator of the interaction.</param>
-	public BattleInteractionData(BattleActor c_user)
+	public BattleInteractionData(BattleActor user)
 	{
 		type = BattleInteractionType.USER_ONLY;
-		user = c_user;
+		this.user = user;
 	}
 
 	/// <summary>
 	/// Create a BattleInteraction where there is a user and multiple targets.
 	/// </summary>
 	/// <param name="c_user">The initiator of the interaction.</param>
-	public BattleInteractionData(BattleActor c_user, List<BattleActor> c_targets)
+	public BattleInteractionData(BattleActor user, List<BattleActor> targets)
 	{
 		type = BattleInteractionType.USER_MULTIPLETARGET;
-		user = c_user;
+		this.user = user;
+		this.targets = targets;
 	}
 
 	/// <summary>

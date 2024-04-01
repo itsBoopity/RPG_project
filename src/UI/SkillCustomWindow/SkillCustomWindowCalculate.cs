@@ -3,11 +3,11 @@ using System;
 
 public partial class SkillCustomWindowCalculate : SkillCustomWindow
 {
-    private BattleCharacter user;
+    private BattleActor user;
     private int value = 0;
-    public override void Open(BattleFieldData bF, BattleCharacter c_user)
+    public override void Open(BattleFieldData bF, BattleInteractionData bI)
     {
-        user = c_user;
+        user = bI.user;
         GetNode<Label>("LeftArrow/Hotkey").Text = InputMap.ActionGetEvents("ui_left")[0].AsText().TrimSuffix(" (Physical)");
         GetNode<Label>("RightArrow/Hotkey").Text = InputMap.ActionGetEvents("ui_right")[0].AsText().TrimSuffix(" (Physical)");
         GetNode<AnimationPlayer>("AnimationPlayer").Play("Open");
@@ -37,7 +37,7 @@ public partial class SkillCustomWindowCalculate : SkillCustomWindow
             GetNode<AudioStreamPlayer>("AudioStreamPlayer").Play();
             value -= 1;
             GetNode<Label>("Number").Text = value.ToString();
-        }        
+        }
     }
 
     private void AdjustRight()
@@ -57,4 +57,5 @@ public partial class SkillCustomWindowCalculate : SkillCustomWindow
 
     protected override void CleanUp() {}
 
+    protected override void CancelCleanUp() {}
 }

@@ -5,7 +5,7 @@ public partial class SkillCalculate : BattleSkillData
 {
     public SkillCalculate(): base(
         SkillId.Calculate,
-        "SKILL_CALCULATE_TITLE",
+        "T_SKL_CALCULATE_TITLE",
         SkillType.UTILITY,
 		SkillElement.NONE,
 		TargettingType.CUSTOMWINDOW,
@@ -26,7 +26,7 @@ public partial class SkillCalculate : BattleSkillData
 
     public override string Description(BattleFieldData bF, BattleCharacter user)
     {
-        return "SKILL_CALCULATE_DESC";
+        return "T_SKL_CALCULATE_DESC";
     }
 
      public override SkillCustomWindow GetCustomWindow()

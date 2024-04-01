@@ -7,8 +7,9 @@
 resource_local_to_scene = true
 script = ExtResource("2_27m40")
 Id = 5
+AnalysisInfo = "T_ANL_RESILIENTSLIME"
 DefaultAppendageCoef = 0.5
-Name = "T_ENE_RESILIENT_SLIME"
+Name = "T_ENE_RESILIENTSLIME"
 Level = 1
 Health = 10
 MaxHealth = 10

@@ -4,6 +4,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Text.Json;
 using System;
+using System.Reflection.Metadata.Ecma335;
+using System.Linq;
 
 
 // Save File Structure:
@@ -91,6 +93,24 @@ public partial class GameData : Node
         return output;
     }
 
+    /// <summary>
+    /// Updates the order of characters in party and bench.
+    /// </summary>
+    /// <param name="newParty">Ordered list of characters in party.</param>
+    /// <param name="newBench">Ordered list of characters in bench.</param>
+    public void UpdatePartyLoadout(List<BattleCharacter> newParty, List<BattleCharacter> newBench)
+    {
+        party.Clear();
+        bench.Clear();
+        foreach (BattleCharacter character in newParty)
+        {
+            party.Add(character.Who);
+        }
+        foreach (BattleCharacter character in newBench)
+        {
+            bench.Add(character.Who);
+        }
+    }
     
     public void Save(string filePath)
     {

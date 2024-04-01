@@ -14,7 +14,18 @@ public partial class BattleEngine : Control
             UseUpTurn(character);
         }
         Ui.UpdateSkills(character);
-        ExitCurrentMode();
+        
+        if (state != ControlState.ENEMY_TURN)
+        {
+            if (PlayerTurnFinished() && monsters.Count > 0)
+            {
+                EnemyTurn();
+            }
+            else
+            {
+                SwitchState(ControlState.PLAYER_DEFAULT);
+            }
+        }
     }
 
     /// <summary>
@@ -45,15 +56,41 @@ public partial class BattleEngine : Control
     }
 
     /// <summary>
-    /// Skills that use custom windows that return BattleActor.
+    /// Skills that require monster select.
+    /// </summary>
+    /// <param name="monster">The selected monster.</param>
+    private void PlayerExecuteEnemySelectAction(BattleMonster monster)
+    {
+        BattleCharacter character = GetCurrentPartyMember();
+        BattleInteractionData bI = new(character, monster);
+
+        foreach (BattleMonster m in monsters.GetAll())
+        {
+            m.DisableTargetting();
+            m.HideEstimate();
+        }
+
+        if (state == ControlState.PLAYER_SELECTING_ENEMY_CUSTOMWINDOW)
+        {
+            Ui.ShowMostUI();
+            Ui.HideActionDetail();
+            EnterCustomSkillWindowState(bI);
+        }
+        else
+        {
+            selectedSkill.Use(bF, bI);
+            Ui.PlayVfx(selectedSkill.Animation, GetGlobalMousePosition());
+            CleanUpAfterPerformingAction(character);
+        }
+    }
+
+    /// <summary>
+    /// Skills that use custom windows.
     /// </summary>
     /// <param name="actor"></param>
     private void PlayerExecuteWindowAction(BattleInteractionData bI)
     {
         selectedSkill.Use(bF, bI);
-
-        // If BattleCharacter, play on status bar, otherwise play on monster position
-        Ui.CloseCustomWindow();
         CleanUpAfterPerformingAction((BattleCharacter)bI.user);
     }
 }

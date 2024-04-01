@@ -40,4 +40,9 @@ public partial class BattleSfx : AudioPoolPlayer
 	{
 		PlayIndex(3);
 	}
+
+	public void Victory()
+	{
+		PlayIndex(4);
+	}
 }

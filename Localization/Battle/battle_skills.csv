@@ -10,12 +10,6 @@
 - Generates [st][b]+1STA[/b][/st]","- Mění svůj Element podle uživatele.
 - Způsobí [atk][b]INT[/b][/atk] poškození.
 - Generuje [st][b]+1STA[/b][/st]"
-"T_SKL_FIRSTSTRIKE_TITLE","First Strike","První Zásah"
-"T_SKL_FIRSTSTRIKE_DESC","- Do [atk][b]2*STR[/b][/atk] damage on first use
-- Do [atk][b]1.5*STR[/b][/atk] the rest of the combat","- Způsobí [atk][b]2*STR[/b][/atk] poškození při prvním použití
-- Pak působí [atk][b]1.5*STR[/b][/atk] poškození do konce bitvy."
-"T_SKL_PRECISIONNEEDLE_TITLE","Precision Needle","Precizní Jehla"
-"T_SKL_PRECISIONNEEDLE_DESC","- Does [atk][b]1-5DMG[/b][/atk](ignoring all effects and DEF) depending on Target Efficiency","- Způsobí [atk][b]1-5DMG[/b][/atk](ignoruje všechny efekty a DEF) podle Efektivity Zaměření"
 "T_SKL_BASICDEFEND_TITLE","Defend","Obrana"
 "T_SKL_BASICDEFEND_DESC","- Reduce all damage taken this turn by 50%
 - Generates [st][b]+2STA[/b][/st]","- Sníží všechna utrpená poškození tenhle tah o 50%
@@ -28,6 +22,15 @@
 [if]Pokud[/if] se mění s postavou v benči:
 	- Výměna získá [st][b]+2STA[/b][/st]
 	- Výměna může aktovat až příští tah."
+"T_SKL_ANALYZE_TITLE","Analyze","Analýza"
+"T_SKL_ANALYZE_DESC","- Analyze an enemy to see its behavior, weaknesses and attacks.","- Analyzuj nepřítele k získání informací o jejich chování, slabin a útoků."
+"T_SKL_FIRSTSTRIKE_TITLE","First Strike","První Zásah"
+"T_SKL_FIRSTSTRIKE_DESC","- Do [atk][b]2*STR[/b][/atk] damage on first use
+- Do [atk][b]1.5*STR[/b][/atk] the rest of the combat","- Způsobí [atk][b]2*STR[/b][/atk] poškození při prvním použití
+- Pak působí [atk][b]1.5*STR[/b][/atk] poškození do konce bitvy."
+"T_SKL_PRECISIONNEEDLE_TITLE","Precision Needle","Precizní Jehla"
+"T_SKL_PRECISIONNEEDLE_DESC","- Does [atk][b]1-5DMG[/b][/atk](ignoring all effects and DEF) depending on Target Efficiency","- Způsobí [atk][b]1-5DMG[/b][/atk](ignoruje všechny efekty a DEF) podle Efektivity Zaměření"
+,,
 "T_SKL_SIMPLEMAGIC_TITLE","Simple Magic","Jednoduchá Magie"
 "T_SKL_SIMPLEMAGIC_DESC","- Do [atk][b]1.5*INT[/b][/atk] damage.
 - Elemental Modulo:
@@ -38,3 +41,7 @@
 	- [st][b]STA[/b][/st] % 3 = 0 -> [color=#FF4849]Oheň[/color]
 	- [st][b]STA[/b][/st] % 3 = 1 -> [color=#3AB7F9]Led[/color]
 	- [st][b]STA[/b][/st] % 3 = 2 -> [color=#FFF936]Blesk[/color]"
+"T_SKL_GEMBURST_TITLE","Gem Burst",
+"T_SKL_GEMBURST_DESC","- Do [atk][b]STR[/b][/atk] damage to all opponents.",
+"T_SKL_CALCULATE_TITLE","Calculate","Kalkulace"
+"T_SKL_CALCULATE_DESC","- Lets you shift your [st][b]STA[/b][/st] up or down by 1.","- Zvyš či sniž [st][b]STA[/b][/st] o 1."

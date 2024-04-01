@@ -381,6 +381,7 @@ autoplay = "Splash"
 libraries = {
 "": SubResource("AnimationLibrary_ckqot")
 }
+script = ExtResource("17_x50g7")
 
 [node name="Splash2" type="Sprite2D" parent="Visuals/Sprite" index="1"]
 position = Vector2(154.545, -52.7273)
@@ -392,6 +393,7 @@ autoplay = "Splash"
 libraries = {
 "": SubResource("AnimationLibrary_p2d4t")
 }
+script = ExtResource("17_x50g7")
 
 [node name="Bottom" type="Sprite2D" parent="Visuals/Sprite" index="2"]
 position = Vector2(167, -51)

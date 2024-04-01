@@ -18,9 +18,17 @@ public partial class SkillDescription : Control
         cooldown = GetNode<RichTextLabel>("NinePatchRect/PropertyCD");
         description = GetNode<RichTextLabel>("NinePatchRect/Description");
         rect = GetNode<NinePatchRect>("NinePatchRect");
+        HideSkill();
         rect.Hide();
-
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseMotion mouse)
+        {
+            rect.Visible = !GetRect().HasPoint(mouse.Position);
+        }
     }
 
     /// <summary>
@@ -57,6 +65,7 @@ public partial class SkillDescription : Control
         description.Text += Tr(skill.GetDescription(bF, owner));
 
         Show();
+        SetProcessInput(true);
         animationPlayer.Stop();
         animationPlayer.Play("PopIn");
     }
@@ -64,15 +73,16 @@ public partial class SkillDescription : Control
     public void HideSkill()
     {
         Hide();
-    }
-
-    public void OnHover()
-    {
+        SetProcessInput(false);
         rect.Hide();
     }
 
-    public void ExitHover()
+
+    /// <summary>
+    /// Resets visuals.
+    /// </summary>
+    public void Reset()
     {
-        rect.Show();
+        HideSkill();
     }
 }

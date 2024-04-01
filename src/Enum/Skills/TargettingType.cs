@@ -1,5 +1,5 @@
 /// <summary>
-/// Enum describing which control UI is used by a skill
+/// Enum describing which control UI is used by each skill.
 /// </summary>
 public enum TargettingType
 {
@@ -15,5 +15,13 @@ public enum TargettingType
     /// </summary>
     ENEMY_TARGET,
     ENEMY_SELECT,
+    /// <summary>
+    /// Lets player select a monster, followed by displaying a custom window to facilitate further input. Finally executes skill.
+    /// </summary>
+    ENEMY_SELECT_CUSTOMWINDOW,
+
+    /// <summary>
+    /// Displays a custom window to facilitate further input.
+    /// </summary>
     CUSTOMWINDOW
 }

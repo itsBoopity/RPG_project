@@ -1,6 +1,7 @@
 "keys","en","cs"
 "T_B_IL_PT","Player Turn","Hráčův Tah"
 "T_B_IL_ET","Enemy Targetting","Míření"
+"T_B_IL_ES","Enemy Select","Výběr Nepřítele"
 "T_B_IL_AT","Ally Targetting","Výběr Člena"
 "T_B_IL_ETU","Enemy Turn","Nepřátelský Tah"
 "T_B_MISS","Miss","Minulo"
@@ -22,3 +23,4 @@
 "T_B_UI_BENCH","Bench","Benč"
 "TR_B_UI_CANCEL","Cancel","Storno"
 "T_B_UI_CALCULATE_PROMPT","Adjust STA by:","Upravit STA o:"
+"T_B_UI_ANALYZE_TITLE","Enemy Analysis","Analýza nepřítele"

@@ -15,7 +15,7 @@ public abstract partial class MonsterStats: BattleActorStats
     public MonsterId Id { get; set; }
 
     [Export]
-    public static string[] AnalysisInfo { get; set; }
+    public string AnalysisInfo { get; set; }
 
     /// <summary>
     /// The default damage modifier that gets used when non targetting offensive skills are used

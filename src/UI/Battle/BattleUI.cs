@@ -58,6 +58,12 @@ public partial class BattleUI : Control
         skillCustomWindow = GetNode<Control>("%SkillCustomWindow");
 	}
 
+    public void Reset()
+    {
+        skillDesc?.Reset();
+        GetNode<Control>("FinishScreen").Hide();
+    }
+
     public void DisplayDamageCharacter(int damage)
     {
         characterDamageCounter.Play(damage);
@@ -195,7 +201,7 @@ public partial class BattleUI : Control
         partyNode.GetChild<CharacterBar>(index).Select();
 
         // Update the currently viewed skill to the one of the new character.
-        if (lastViewedActionBasic != null)
+        if (lastViewedActionBasic != null && skillDesc.Visible)
         {
             ViewActionDetail(lastViewedActionBasic, lastViewedActionIndex, bF, character);
         }
@@ -205,7 +211,7 @@ public partial class BattleUI : Control
             {
                 HideActionDetail();
             }
-            else if (lastViewedActionIndex >= 0)
+            else if (lastViewedActionIndex >= 0  && skillDesc.Visible)
             {
                 ViewActionDetail(character.Skills[lastViewedActionIndex], lastViewedActionIndex, bF, character);
             }
@@ -256,26 +262,39 @@ public partial class BattleUI : Control
         characterModels.Show();
     }
 
-    public void OpenCustomWindow(SkillCustomWindow window, BattleFieldData bF, BattleCharacter user)
+    public void ShowEndScreen()
     {
-        ClearCustomWindow();
-        skillCustomWindow.Show();
-        skillCustomWindow.AddChild(window);
-        window.Open(bF, user);
+        GetNode<AnimationPlayer>("FinishScreen/AnimationPlayer").Play("Open");
     }
 
+    public void OpenCustomWindow(SkillCustomWindow window, BattleFieldData bF, BattleInteractionData bI)
+    {
+        skillCustomWindow.Show();
+        skillCustomWindow.AddChild(window);
+        window.Open(bF, bI);
+    }
+
+    /// <summary>
+    /// Normal closing of custom window after confirming input. See CancelCustomWindow() for cancelled closing.
+    /// </summary>
     public void CloseCustomWindow()
     {
         skillCustomWindow.Hide();
-        ClearCustomWindow();
-    }
-
-    private void ClearCustomWindow()
-    {
         foreach (SkillCustomWindow child in skillCustomWindow.GetChildren().Cast<SkillCustomWindow>())
         {
             child.Close();
-            child.QueueFree();
+        }
+    }
+
+    /// <summary>
+    /// Cancelled closing of custom window, without finishing its input. See CloseCustomWindow() for regular closing.
+    /// </summary>
+    public void CancelCustomWindow()
+    {
+        skillCustomWindow.Hide();
+        foreach (SkillCustomWindow child in skillCustomWindow.GetChildren().Cast<SkillCustomWindow>())
+        {
+            child.Cancel();
         }
     }
 }

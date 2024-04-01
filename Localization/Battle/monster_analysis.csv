@@ -1,0 +1,22 @@
+,"en","cs"
+"T_ANL_SLIME","A weak monster capable of only Basic Attacks.
+
+Targets the leftmost party member on the first turn, then the second on the next turn, then the third. Then repeat.",
+"T_ANL_RESILIENTSLIME","A weak monster capable of only Basic Attacks.
+
+Has stronger resistance against Magical attacks compared to its regular brethren.
+
+Targets the leftmost party member on the first turn, then the second on the next turn, then the third. Then repeat.",
+"T_ANL_STURDYSLIME","A weak monster capable of only Basic Attacks.
+
+Has stronger resistance against Physical attacks compared to its regular brethren.
+
+Targets the leftmost party member on the first turn, then the second on the next turn, then the third. Then repeat.",
+"T_ANL_STACKSPRITE","A strange spark of light resembling a purple flame. Doesn't do anything on its on and is generally harmless.
+
+Defeating it bestows 10 STA to the attacker.
+
+While it is incorporeal and impossible to hit under normal circumstances, it sometimes manifests a red orb as a way to gather the surrounding energy.",
+"T_ANL_RAINBOWSENTRY","A sturdy mysterious being said to guard the entrances to ancient temples. Uses Gem Burst to attack every party member at once.
+
+Attacking its body directly will yield little to no results. To deal proper damage to, aim for the gemstones floating around it, using the corresponding Element as indicated by the gem's color.",

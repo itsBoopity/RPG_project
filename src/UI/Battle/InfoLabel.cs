@@ -37,10 +37,10 @@ public partial class InfoLabel : Control
             icon.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/InfoLabel/targetting.png");
             animationPlayer.Play("Swap");
         }
-        else if (state == ControlState.PLAYER_TARGETTING_ALLY)
+        else if (state == ControlState.PLAYER_SELECTING_ENEMY_CUSTOMWINDOW)
         {
-            label.Text = "T_B_IL_AT";
-            icon.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/InfoLabel/ally.png");
+            label.Text = "T_B_IL_ES";
+            icon.Texture = GD.Load<Texture2D>("res://Images/UI/Battle/InfoLabel/targetting.png");
             animationPlayer.Play("Swap");
         }
         else if (state == ControlState.ENEMY_TURN)

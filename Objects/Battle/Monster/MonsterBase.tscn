@@ -357,6 +357,7 @@ offset_right = 256.0
 offset_bottom = 128.0
 focus_mode = 0
 theme = ExtResource("7_6eyv2")
+flat = true
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_2v4mg")

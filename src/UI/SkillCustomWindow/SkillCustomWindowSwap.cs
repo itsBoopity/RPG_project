@@ -7,8 +7,6 @@ public partial class SkillCustomWindowSwap : SkillCustomWindow
 	private Node partyNode;
 	private Node benchNode;
 
-	private AnimationPlayer animationPlayer;
-
 	private BattleFieldData bF;
 	private BattleCharacter user;
 
@@ -17,17 +15,16 @@ public partial class SkillCustomWindowSwap : SkillCustomWindow
     {
         partyNode = GetNode<Node>("Party");
 		benchNode = GetNode<Node>("Bench");
-		animationPlayer =  GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
-	public override void Open(BattleFieldData bF, BattleCharacter user)
+	public override void Open(BattleFieldData bF, BattleInteractionData bI)
 	{
 		this.bF = bF;
-		this.user = user;
+		this.user = (BattleCharacter)bI.user;
 		LoadParty(bF.party, user);
 		LoadBench(bF.bench);
 		stretchArrow.Enable();
-		animationPlayer.Play("Open");
+		GetNode<AnimationPlayer>("AnimationPlayer").Play("Open");
 	}
 
 	protected override void CleanUp()
@@ -112,4 +109,6 @@ public partial class SkillCustomWindowSwap : SkillCustomWindow
 			EmitSignal(SignalName.ReturnData, new BattleInteractionData(user, bF.bench[index]));
 		}
 	}
+	
+	protected override void CancelCleanUp() {}
 }

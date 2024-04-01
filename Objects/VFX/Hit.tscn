@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://buegjm48g1cpw"]
+[gd_scene load_steps=16 format=3 uid="uid://buegjm48g1cpw"]
 
 [ext_resource type="Script" path="res://Objects/VFX/AnimatedSpriteOneOff.cs" id="1"]
 [ext_resource type="AudioStream" uid="uid://m4h4qocjg271" path="res://Audio/SFX/hit1.wav" id="2"]
@@ -9,11 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://dmevsdywfq3g8" path="res://Images/VFX/Hit/0002.png" id="8"]
 [ext_resource type="Texture2D" uid="uid://b8c8ydglhhc8w" path="res://Images/VFX/Hit/0005.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://1au5jpn16fx2" path="res://Images/VFX/Hit/0004.png" id="10"]
+[ext_resource type="Script" path="res://src/Audio/AudioPoolPlayer.cs" id="10_igdlo"]
 [ext_resource type="Texture2D" uid="uid://7kk67vhcm1s" path="res://Images/VFX/Hit/0001.png" id="11"]
 [ext_resource type="Texture2D" uid="uid://evb80uoyafi8" path="res://Images/VFX/Hit/0007.png" id="12"]
 [ext_resource type="Texture2D" uid="uid://dto5cjy02ciiu" path="res://Images/VFX/Hit/0006.png" id="13"]
 
-[sub_resource type="SpriteFrames" id="10"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_lm0rd"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -49,14 +50,12 @@ animations = [{
 offsets = PackedFloat32Array(0, 0.190372, 1)
 colors = PackedColorArray(0.493211, 0, 0, 1, 0.975206, 0.560134, 0.0194208, 1, 1, 1, 1, 1)
 
-[node name="Hit" type="AnimatedSprite2D"]
-sprite_frames = SubResource("10")
+[node name="Hit" type="Node2D"]
 script = ExtResource("1")
-sfxSrc = [ExtResource("2"), ExtResource("5"), ExtResource("3")]
 
-[node name="Audio" type="AudioStreamPlayer" parent="."]
-autoplay = true
-bus = &"Sfx"
+[node name="Hit" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lm0rd")
+autoplay = "default"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 amount = 5
@@ -70,5 +69,11 @@ scale_amount_min = 0.1
 scale_amount_max = 0.4
 color_ramp = SubResource("Gradient_xunn4")
 hue_variation_max = 0.24
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
+script = ExtResource("10_igdlo")
+AudioSource = Array[AudioStream]([ExtResource("2"), ExtResource("5"), ExtResource("3")])
+autoRandom = true
 
 [connection signal="finished" from="Audio" to="." method="DeleteMe"]

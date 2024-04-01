@@ -60,22 +60,19 @@ public partial class BattleEngine : Control
         else
         {
             sfx.RollClickPitchIndex(index);
-            
+            selectedSkill = action;
+            Ui.ViewActionDetail(action, index, bF, GetCurrentPartyMember());
             if (action.Targetting == TargettingType.ENEMY_TARGET)
             {
-                selectedSkill = action;
-                Ui.ViewActionDetail(action, index, bF, GetCurrentPartyMember());
-                EnterTargetMode();
+                SwitchState(ControlState.PLAYER_TARGETTING_ENEMY);
             }
-            else if (action.Targetting == TargettingType.ALLY_TARGET)
+            else if (action.Targetting == TargettingType.ENEMY_SELECT_CUSTOMWINDOW)
             {
-                selectedSkill = action;
-                EnterTargetAllyMode();
+                SwitchState(ControlState.PLAYER_SELECTING_ENEMY_CUSTOMWINDOW);
             }
             else if (action.Targetting == TargettingType.CUSTOMWINDOW)
             {
-                selectedSkill = action;
-                EnterCustomSkillWindowMode();
+                SwitchState(ControlState.PLAYER_CUSTOMWINDOW);
             }
         }
     }

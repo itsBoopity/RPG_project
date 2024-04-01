@@ -1,6 +1,6 @@
-using System.Threading;
 using Godot;
 
+[GlobalClass]
 public abstract partial class BattleSkillData: Resource
 {
     private string name;
@@ -14,7 +14,6 @@ public abstract partial class BattleSkillData: Resource
     public int Cooldown { get; protected set; }
     public bool Snap { get; protected set; } = false;
 
-    private string animationPath = "res://Objects/VFX/Hit.tscn";
     public BattleSkillData( SkillId id, string name, SkillType skillType, SkillElement element,
                         TargettingType targetting, bool isAoE, int cost, int cooldown, bool snap)
     { 
@@ -33,9 +32,9 @@ public abstract partial class BattleSkillData: Resource
         return GD.Load<Texture2D>($"res://Images/UI/Battle/SkillIcon/{Id}.tres");
     }
 
-    public AnimatedSpriteOneOff GetAnimation()
+    public virtual AnimatedSpriteOneOff GetAnimation()
     {
-        return GD.Load<PackedScene>(animationPath).Instantiate<AnimatedSpriteOneOff>();
+        return GD.Load<PackedScene>("res://Objects/VFX/Hit.tscn").Instantiate<AnimatedSpriteOneOff>();
     }
 
     /// <summary>

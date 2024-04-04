@@ -33,15 +33,6 @@ public partial class DungeonEngine : Control
         if (Global.debugMode) LoadTest();
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        // DungeonCard hotkeys
-        // if (@event.IsActionPressed("dungeon_card" + index) && this.Visible && !this.Disabled)
-        //     EmitSignal(SignalName.Pressed);
-        // GetNode<Label>("CardSprite/Hotkey").Text = InputMap.ActionGetEvents("dungeon_card" + index)[0].AsText();
-
-    }
-
     private void LoadTest()
     {
         GlobalAudio.Instance.PlayMusic("Music/StreamingStreamingEverFlowing.ogg");

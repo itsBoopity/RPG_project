@@ -18,6 +18,7 @@ public partial class Global : Node
     {
         GD.Randomize();
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
+        Settings.Load();
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)

@@ -1,21 +1,9 @@
 using Godot;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Text.Json;
 using System;
-using System.Reflection.Metadata.Ecma335;
-using System.Linq;
+// using Newtonsoft.Json;
 
-
-// Save File Structure:
-// Version Number = helps with conversion of old files
-// currentScene = to see if the player is in dungeon, in the middle of dialogue, or in the village (maybe not all this)
-// data based on currentScene (dungeon state / dialogue file name and line being parsed)
-// CharacterMembers in order
-// Party
-// bench
-// Flags
 public partial class GameData : Node
 {
     private static GameData _instance;
@@ -38,7 +26,7 @@ public partial class GameData : Node
     // remove after adding a proper start menu
     public override void _Ready()
     {
-        newSave();
+        NewSave();
     }
 
     /// <summary>
@@ -114,8 +102,8 @@ public partial class GameData : Node
     
     public void Save(string filePath)
     {
-        Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://save"));
-        FileStream file = File.Open(ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.OpenOrCreate);
+        // Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://save"));
+        // FileStream file = File.Open(ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.OpenOrCreate);
 
         // string oneElement = JsonSerializer.Serialize<CharacterData>(cdClaus)
 
@@ -129,12 +117,12 @@ public partial class GameData : Node
 
 
 
-        file.Close();
+        // file.Close();
     }
     public void Load(string filePath) //filePath is passed to this function through the slot selection
     {
-        BinaryFormatter bF = new BinaryFormatter();
-        FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.Open);
+        // BinaryFormatter bF = new BinaryFormatter();
+        // FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.Open);
 
         //BinaryFormatter is obsolete and dangerous, use something else instead
         // string saveVersion = (string) bF.Deserialize(file);
@@ -143,10 +131,21 @@ public partial class GameData : Node
         // party = (CharacterEnum[]) bF.Deserialize(file);
         //flags = (byte[]) bF.Deserialize(file);
 
-        file.Close();
+        // file.Close();
     }
 
-    public void newSave() // Create New Save
+
+    public partial class SerializeTestClass: Resource
+    {
+        public SerializeTestClass(GameData data)
+        {
+            this.data = data;
+        }
+        [Export]
+        GameData data;
+    }
+
+    public void NewSave() // Create New Save
     {
         csYellam = GD.Load<CharacterStats>("res://Resources/Stats/Character/Yellam.tres");
         csSrinivas = GD.Load<CharacterStats>("res://Resources/Stats/Character/Srinivas.tres");
@@ -154,7 +153,9 @@ public partial class GameData : Node
         csFray = GD.Load<CharacterStats>("res://Resources/Stats/Character/Fray.tres");
         party = new List<CharacterEnum>{CharacterEnum.YELLAM, CharacterEnum.FRAY, CharacterEnum.ISHKE};
         bench = new List<CharacterEnum>{CharacterEnum.SRINIVAS};
-        // flags = new byte[500];
-    }
+        
 
+        // GD.Print(JsonConvert.SerializeObject(csYellam));
+        // new CharacterStatsImporter().Import(new CharacterStatsExporter().Export(csYellam));
+    }
 }

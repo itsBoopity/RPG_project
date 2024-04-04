@@ -36,6 +36,11 @@ public partial class MonsterCard: DungeonCardData
         }
     }
 
+    public override Texture2D GetImage()
+    {
+        return GD.Load<Texture2D>("res://Images/UI/Dungeon/DungeonCard/monster_card.png");
+    }
+
     public override void UseCard()
     {
         EmitSignal(SignalName.StartBattle, Setup);

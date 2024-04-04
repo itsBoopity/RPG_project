@@ -10,33 +10,32 @@ public partial class BattleEngine : Control
     /// </summary>
     private void SetState(ControlState state)
     {
-        GD.Print($"Entering {state}");
         this.state = state;
         Ui.UpdateInfoLabel(state);
     }
     private void EnterState(ControlState newState)
     {
-        if (state == ControlState.PLAYER_DEFAULT)
+        if (newState == ControlState.PLAYER_DEFAULT)
         {
             EnterPlayerDefaultState();
         }
-        if (state == ControlState.PLAYER_TARGETTING_ENEMY)
+        if (newState == ControlState.PLAYER_TARGETTING_ENEMY)
         {
             EnterTargetState();
         }
-        else if (state == ControlState.PLAYER_SELECTING_ENEMY_CUSTOMWINDOW)
+        else if (newState == ControlState.PLAYER_SELECTING_ENEMY_CUSTOMWINDOW)
         {
             EnterEnemySelectCustomSkillWindowState();
         }
-        else if (state == ControlState.PLAYER_CUSTOMWINDOW)
+        else if (newState == ControlState.PLAYER_CUSTOMWINDOW)
         {
             EnterCustomSkillWindowState();
         }
-        else if (state == ControlState.ENEMY_TURN)
+        else if (newState == ControlState.ENEMY_TURN)
         {
             EnterEnemyState();
         }
-        else if (state == ControlState.END_SCREEN)
+        else if (newState == ControlState.END_SCREEN)
         {
             EnterEndScreenState();
         }

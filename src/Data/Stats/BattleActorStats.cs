@@ -1,9 +1,12 @@
 using Godot;
 using Godot.Collections;
+// using Newtonsoft.Json;
 
+// [JsonObject(MemberSerialization.OptIn)]
 public partial class BattleActorStats: Resource
 {
     [Export]
+    // [JsonProperty]
     public string Name { get; set; }
     [Export]
     public int Level { get; set; }
@@ -27,7 +30,7 @@ public partial class BattleActorStats: Resource
     public SkillElement Element { get; set; }
 
     [Export]
-    public Dictionary<string, float> elementalAffinity { get; set; } = new() {
+    public Dictionary<string, float> ElementalAffinity { get; set; } = new() {
         {SkillElement.NONE.ToString(), 1.0f},
         {SkillElement.BLUNT.ToString(), 1.0f},
         {SkillElement.PIERCE.ToString(), 1.0f},
@@ -43,7 +46,7 @@ public partial class BattleActorStats: Resource
     public BattleActorStats() {}
     public float GetAffinity(SkillElement element)
     {
-        return elementalAffinity[element.ToString()];
+        return ElementalAffinity[element.ToString()];
     }
 
     public virtual void OnDefeated(BattleActor damageDealer) {}

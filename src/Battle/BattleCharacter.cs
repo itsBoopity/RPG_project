@@ -15,7 +15,7 @@ public partial class BattleCharacter: BattleActor
 
     public BattleCharacter(CharacterStats characterStats)
     {
-        Who = characterStats.who;
+        Who = characterStats.Who;
         Stats = characterStats;
     }
 }

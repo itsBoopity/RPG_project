@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://efxu6f0ech81"]
+
+[ext_resource type="Texture2D" uid="uid://dnxu4loct6tl5" path="res://Images/UI/back_icon.png" id="1_dntna"]
+[ext_resource type="Texture2D" uid="uid://p4hjg72eec63" path="res://Images/UI/back_icon_hover.png" id="2_v3vc3"]
+
+[node name="Cancel" type="TextureButton"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -123.0
+offset_right = 143.0
+offset_bottom = -28.0
+grow_vertical = 0
+texture_normal = ExtResource("1_dntna")
+texture_pressed = ExtResource("1_dntna")
+texture_hover = ExtResource("2_v3vc3")
+ignore_texture_size = true
+stretch_mode = 0

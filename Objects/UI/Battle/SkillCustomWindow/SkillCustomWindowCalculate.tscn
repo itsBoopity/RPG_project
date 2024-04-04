@@ -1,12 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://3s5cn4c7nijs"]
+[gd_scene load_steps=18 format=3 uid="uid://3s5cn4c7nijs"]
 
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_hovni"]
 [ext_resource type="Texture2D" uid="uid://dtt5wdyist48t" path="res://Images/UI/window.png" id="2_0hxhj"]
 [ext_resource type="Script" path="res://src/UI/SkillCustomWindow/SkillCustomWindowCalculate.cs" id="3_hdkjx"]
 [ext_resource type="Texture2D" uid="uid://fmmwqdfmwlij" path="res://Images/UI/arrow.png" id="5_grfnp"]
-[ext_resource type="Texture2D" uid="uid://p4hjg72eec63" path="res://Images/UI/back_icon_hover.png" id="5_lrjl0"]
 [ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="6_5dpha"]
-[ext_resource type="Texture2D" uid="uid://dnxu4loct6tl5" path="res://Images/UI/back_icon.png" id="6_gc7bh"]
+[ext_resource type="PackedScene" uid="uid://efxu6f0ech81" path="res://Objects/UI/BackButton.tscn" id="7_lo47m"]
 [ext_resource type="Theme" path="res://Font/Theme/InvisibleButton.tres" id="7_oy5wi"]
 [ext_resource type="AudioStream" uid="uid://dcmnty8s5i31p" path="res://Audio/SFX/click2.wav" id="9_8dd8g"]
 [ext_resource type="Texture2D" uid="uid://d3c8svsfk7yyk" path="res://Images/UI/ok_icon.png" id="9_kv5gg"]
@@ -303,21 +302,10 @@ grow_vertical = 2
 theme = ExtResource("7_oy5wi")
 flat = true
 
-[node name="Cancel" type="TextureButton" parent="."]
+[node name="Cancel" parent="." instance=ExtResource("7_lo47m")]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
 offset_left = 37.0
-offset_top = -123.0
 offset_right = 132.0
-offset_bottom = -28.0
-grow_vertical = 0
-texture_normal = ExtResource("6_gc7bh")
-texture_pressed = ExtResource("6_gc7bh")
-texture_hover = ExtResource("5_lrjl0")
-ignore_texture_size = true
-stretch_mode = 0
 
 [node name="Confirm" type="TextureButton" parent="."]
 layout_mode = 1

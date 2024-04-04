@@ -6,7 +6,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("3_ffndb")
-who = 2
+Who = 2
 Name = "Srinivas"
 Level = 1
 Health = 15
@@ -16,7 +16,7 @@ Intelligence = 1
 Defense = 3
 Speed = 6
 Element = 0
-elementalAffinity = {
+ElementalAffinity = {
 "BLUNT": 1.0,
 "FIRE": 1.0,
 "ICE": 1.0,

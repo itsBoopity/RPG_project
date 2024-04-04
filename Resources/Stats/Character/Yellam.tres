@@ -6,7 +6,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("3_oixyo")
-who = 1
+Who = 1
 Name = "Yellam"
 Level = 1
 Health = 11
@@ -16,7 +16,7 @@ Intelligence = 3
 Defense = 1
 Speed = 8
 Element = 2
-elementalAffinity = {
+ElementalAffinity = {
 "BLUNT": 1.0,
 "FIRE": 1.0,
 "ICE": 1.0,

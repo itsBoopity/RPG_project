@@ -1,12 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://dqmxhg3l46nst"]
+[gd_scene load_steps=27 format=3 uid="uid://dqmxhg3l46nst"]
 
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_pp5ie"]
 [ext_resource type="Texture2D" uid="uid://dtt5wdyist48t" path="res://Images/UI/window.png" id="2_mlkqg"]
 [ext_resource type="Script" path="res://src/UI/SkillCustomWindow/SkillCustomWindowAnalyze.cs" id="3_edj00"]
 [ext_resource type="Texture2D" uid="uid://b3nqvb45pxjhp" path="res://Images/MonsterIllustration/RainbowSentry.png" id="4_boin8"]
 [ext_resource type="Theme" uid="uid://d2nrmjx36a1ys" path="res://Font/Theme/PrintedText.tres" id="5_t4k3a"]
-[ext_resource type="Texture2D" uid="uid://dnxu4loct6tl5" path="res://Images/UI/back_icon.png" id="6_1ng5t"]
-[ext_resource type="Texture2D" uid="uid://p4hjg72eec63" path="res://Images/UI/back_icon_hover.png" id="7_qitem"]
+[ext_resource type="PackedScene" uid="uid://efxu6f0ech81" path="res://Objects/UI/BackButton.tscn" id="6_8ml85"]
 [ext_resource type="Script" path="res://src/Audio/AudioPoolPlayer.cs" id="8_vlb3t"]
 [ext_resource type="AudioStream" uid="uid://c6xc14oi7275a" path="res://Audio/SFX/paper1.wav" id="9_6kpp4"]
 [ext_resource type="AudioStream" uid="uid://x5lelqddhxpu" path="res://Audio/SFX/paper2.wav" id="10_3e5kn"]
@@ -399,21 +398,9 @@ Acts like this and this.
 
 Sometimes it also likes to [redacted]"
 
-[node name="Cancel" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 48.0
-offset_top = -123.0
-offset_right = 143.0
-offset_bottom = -28.0
-grow_vertical = 0
-texture_normal = ExtResource("6_1ng5t")
-texture_pressed = ExtResource("6_1ng5t")
-texture_hover = ExtResource("7_qitem")
-ignore_texture_size = true
-stretch_mode = 0
+[node name="Cancel" parent="." instance=ExtResource("6_8ml85")]
+layout_mode = 0
+anchors_preset = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -582,5 +569,3 @@ offset_right = -459.0
 offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 0
-
-[connection signal="pressed" from="Cancel" to="." method="Cancel"]

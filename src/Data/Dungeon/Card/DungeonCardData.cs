@@ -10,5 +10,7 @@ public abstract partial class DungeonCardData: Resource
 
     public abstract string GetName();
     public abstract string GetDescription();
+    public abstract Texture2D GetImage();
+
     public abstract void UseCard();
 }

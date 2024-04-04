@@ -2,36 +2,44 @@ using Godot;
 
 public partial class SidebarButton : Button
 {
-    SidebarHighlight highlight;
     Vector2 originalScale;
     
     public override void _Ready()
     {
-        highlight = GetNode<SidebarHighlight>("../../SidebarHighlight");
         originalScale = Scale;
     }
 
     public void OnFocus()
     {
-        this.GrabFocus();
-        highlight.Focus(this);
+        GetNode<AnimationPlayer>("AnimationPlayer").Play("Highlight");
+        GetNode<AudioStreamPlayer>("AudioStreamPlayer").Play();
+    }
+
+    public void OnUnfocus()
+    {
+        GetNode<AnimationPlayer>("AnimationPlayer").Play("Unhighlight");
     }
 
     public void OnHover()
     {
-        if (!this.HasFocus())
-            OnFocus();
+        if (!HasFocus())
+            GrabFocus();
     }
+    public void OnUnhover()
+    {
+        if (HasFocus())
+            ReleaseFocus();
+    }
+
+
 
     public void ScaleDown()
     {
         this.Scale = new Vector2(originalScale.X * 0.97f , originalScale.Y);
-        highlight.ScaleDown();
     }
 
     public void ScaleBack()
     {
         this.Scale = originalScale;
-        highlight.ScaleBack();
     }
 }

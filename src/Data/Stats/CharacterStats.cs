@@ -1,10 +1,13 @@
 using Godot;
-using Godot.Collections;
+// using Newtonsoft.Json;
 
+// [JsonObject(MemberSerialization.OptIn)]
 public partial class CharacterStats: BattleActorStats
 {
+    
     [Export]
-    public CharacterEnum who;
+    // [JsonProperty]
+    public CharacterEnum Who {get; set;}
 
     public CharacterStats() {}
 

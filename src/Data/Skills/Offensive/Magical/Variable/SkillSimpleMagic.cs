@@ -17,7 +17,7 @@ public partial class SkillSimpleMagic: BattleSkillData
 
     public override SkillElement GetDisplayElement(BattleFieldData bF, BattleCharacter user)
     {
-        if (Global.Settings.displayElementalModuloResult)
+        if (Global.Settings.showElementalModuloResult)
         {
             return CalculateElement(user.Stack);
         }

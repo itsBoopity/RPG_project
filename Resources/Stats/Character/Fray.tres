@@ -5,7 +5,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("3_eiwy0")
-who = 4
+Who = 4
 Name = "Fray"
 Level = 1
 Health = 9
@@ -15,7 +15,7 @@ Intelligence = 4
 Defense = 3
 Speed = 11
 Element = 0
-elementalAffinity = {
+ElementalAffinity = {
 "BLUNT": 1.0,
 "FIRE": 1.0,
 "ICE": 1.0,

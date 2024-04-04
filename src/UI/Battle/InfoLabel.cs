@@ -16,6 +16,8 @@ public partial class InfoLabel : Control
 
     public void UpdateUI(ControlState state)
     {
+        if (state == currentState) return;
+
         if (state == ControlState.PLAYER_DEFAULT)
         {
             label.Text = "T_B_IL_PT";

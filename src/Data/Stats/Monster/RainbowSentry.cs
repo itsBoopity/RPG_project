@@ -119,10 +119,10 @@ public partial class RainbowSentry: MonsterStats
 
     private void SetWeakness(SkillElement element)
     {
-        foreach (String key in elementalAffinity.Keys)
+        foreach (String key in ElementalAffinity.Keys)
         {
-            elementalAffinity[key] = 0.25f;
+            ElementalAffinity[key] = 0.25f;
         }
-        elementalAffinity[element.ToString()] = 2.0f;
+        ElementalAffinity[element.ToString()] = 2.0f;
     }
 }

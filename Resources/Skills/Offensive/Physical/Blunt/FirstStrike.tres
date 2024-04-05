@@ -3,5 +3,4 @@
 [ext_resource type="Script" path="res://src/Data/Skills/Offensive/Physical/Blunt/SkillFirstStrike.cs" id="1_p8aql"]
 
 [resource]
-resource_local_to_scene = true
 script = ExtResource("1_p8aql")

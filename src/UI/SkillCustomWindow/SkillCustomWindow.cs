@@ -1,4 +1,3 @@
-using System.Collections;
 using Godot;
 
 [GlobalClass]
@@ -29,7 +28,7 @@ public abstract partial class SkillCustomWindow : Control
 		CancelCleanUp();
 		CleanUp();
 		QueueFree();
-		EmitSignal(SignalName.CancelWindow, true);
+		EmitSignal(SignalName.CancelWindow);
 	}
 
 	/// <summary>

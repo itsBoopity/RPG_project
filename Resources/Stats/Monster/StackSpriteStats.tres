@@ -17,7 +17,7 @@ Intelligence = 0
 Defense = 0
 Speed = 0
 Element = 0
-elementalAffinity = {
+ElementalAffinity = {
 "BLUNT": 1.0,
 "FIRE": 1.0,
 "ICE": 1.0,
@@ -26,4 +26,4 @@ elementalAffinity = {
 "PIERCE": 1.0,
 "SLASH": 1.0
 }
-Skills = null
+Skills = Array[Object]([])

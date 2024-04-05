@@ -1,6 +1,8 @@
 using Godot;
+using Newtonsoft.Json;
 
 [GlobalClass]
+[JsonConverter(typeof(DungeonCardDataSerializer))]
 public abstract partial class DungeonCardData: Resource
 {
     [Signal]

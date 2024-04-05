@@ -76,10 +76,10 @@ public partial class BattleEngine : Control
     }
 
     /// <summary>
-    /// If player is in control, cancels current input and sets PLAYER_DEFAULT.
+    /// If player is in control, cancels current input and switches PLAYER_DEFAULT.
     /// Otherwise does nothing.
     /// </summary>
-    private void PlayerExitStateIfPossible()
+    private void PlayerSwitchDefaultIfPossible()
     {
         if (state != ControlState.ENEMY_TURN)
         {
@@ -141,7 +141,7 @@ public partial class BattleEngine : Control
         SetState(ControlState.PLAYER_CUSTOMWINDOW);
         data ??= new BattleInteractionData(GetCurrentPartyMember());
         SkillCustomWindow window = selectedSkill.GetWindow();
-        window.CancelWindow += PlayerExitStateIfPossible;
+        window.CancelWindow += PlayerSwitchDefaultIfPossible;
         window.ReturnData += PlayerExecuteWindowAction;
         Ui.OpenCustomWindow(window, bF, data);
     }

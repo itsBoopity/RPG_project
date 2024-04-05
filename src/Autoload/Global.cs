@@ -24,9 +24,29 @@ public partial class Global : Node
     public override void _UnhandledKeyInput(InputEvent @event)
     {
         if (@event.IsActionPressed("fullscreen"))
+        {
             if (GetWindow().Mode == Window.ModeEnum.Fullscreen)
                 GetWindow().Mode = Window.ModeEnum.Windowed;
             else
                 GetWindow().Mode = Window.ModeEnum.Fullscreen;
+        }
+        else if (@event.IsActionPressed("debug_f1"))
+        {
+            Save();
+        }
+        else if (@event.IsActionPressed("debug_f2"))
+        {
+            Load();
+        }
     }
+
+    public static void Save(string fileName = "save0.dat")
+    {
+        new SaveFileExporter().Export(fileName);
+    }
+    public static void Load(string fileName = "save0.dat")
+    {
+        new SaveFileImporter().Import(fileName);
+    }
+
 }

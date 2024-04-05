@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_qccql"]
 script = ExtResource("2_806dw")
-monsters = Array[PackedScene]([ExtResource("1_mcq7t")])
+Monsters = Array[PackedScene]([ExtResource("1_mcq7t")])
 
 [resource]
 script = ExtResource("3_aqwfd")

@@ -21,14 +21,6 @@ public partial class CharacterModel : Node2D
         dialogueSpeed = Global.Settings.dialogueSpeed;
     }
 
-    /// <summary>
-    /// pathToImage is the full path to the outfit
-    /// </summary>
-    public void SetOutfit(string pathToImage)
-    {
-        GetNode<Sprite2D>("Body/Outfit").Texture = GD.Load<ImageTexture>(pathToImage);
-    }
-
     public override void _Process(double delta)
     {
         if (blink) Blink(delta);

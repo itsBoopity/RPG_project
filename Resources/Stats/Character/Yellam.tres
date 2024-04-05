@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://bvtjl6pfhvhue"]
 
-[ext_resource type="Resource" uid="uid://7y21iwc4ke1" path="res://Resources/Skills/Offensive/PrecisionNeedle.tres" id="2_xcqhr"]
+[ext_resource type="Resource" uid="uid://7y21iwc4ke1" path="res://Resources/Skills/Offensive/Physical/Pierce/PrecisionNeedle.tres" id="1_2yq30"]
 [ext_resource type="Script" path="res://src/Data/Stats/CharacterStats.cs" id="3_oixyo"]
 
 [resource]
@@ -25,4 +25,4 @@ ElementalAffinity = {
 "PIERCE": 1.0,
 "SLASH": 1.0
 }
-Skills = Array[Resource]([ExtResource("2_xcqhr")])
+Skills = Array[Resource]([ExtResource("1_2yq30")])

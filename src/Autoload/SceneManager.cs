@@ -7,10 +7,10 @@ public partial class SceneManager : Node
 
 	private static SceneManager _instance;
 	private BattleEngine battleEngine = GD.Load<PackedScene>("res://Scenes/BattleEngine.tscn").Instantiate<BattleEngine>();
-	private Node currentScene = null;
     private Node heldScene = null;
 	private Tween transitionTween;
 	public static SceneManager Instance => _instance;
+    public Node CurrentScene { get; private set; } = null;
 
 	public override void _EnterTree()
     {
@@ -26,7 +26,7 @@ public partial class SceneManager : Node
 
     public override void _Ready()
     {
-        currentScene = GetTree().CurrentScene;
+        CurrentScene = GetTree().CurrentScene;
 		AddChild(battleEngine);
         CallDeferred(MethodName.RemoveChild, battleEngine);
     }
@@ -40,6 +40,11 @@ public partial class SceneManager : Node
 		CallDeferred(MethodName.DeferredChangeScene, path);
 	}
 
+    public static void EnterDungeon(DungeonSetup setup)
+    {
+        _instance.CallDeferred(MethodName.DeferredEnterDungeon, setup);
+    }
+
 	public void StartBattle(BattleSetup setup)
     {
         CallDeferred(MethodName.DeferredStartBattle, setup);
@@ -52,17 +57,26 @@ public partial class SceneManager : Node
 
 	private void DeferredChangeScene(string path)
     {
-		currentScene.QueueFree();
-        currentScene = GD.Load<PackedScene>(path).Instantiate();
-        GetTree().Root.AddChild(currentScene);
+		CurrentScene.QueueFree();
+        CurrentScene = GD.Load<PackedScene>(path).Instantiate();
+        GetTree().Root.AddChild(CurrentScene);
 	}
+
+    private void DeferredEnterDungeon(DungeonSetup setup)
+    {
+        CurrentScene.QueueFree();
+        DungeonEngine dungeonEngine = GD.Load<PackedScene>("res://Scenes/DungeonEngine.tscn").Instantiate<DungeonEngine>();
+        CurrentScene = dungeonEngine;
+        GetTree().Root.AddChild(dungeonEngine);
+        dungeonEngine.Initiate(setup);
+    }
 
     private void DeferredStartBattle(BattleSetup setup)
     {
         GetTree().Root.AddChild(battleEngine);
         heldScene?.QueueFree();
-        heldScene = currentScene;
-        currentScene = battleEngine;
+        heldScene = CurrentScene;
+        CurrentScene = battleEngine;
         battleEngine.Initiate(setup);
 		if (heldScene is CanvasItem canvasScene)
 		{
@@ -84,7 +98,7 @@ public partial class SceneManager : Node
     {
         GetTree().Root.RemoveChild(battleEngine);
         GetTree().Root.AddChild(heldScene);
-        currentScene = heldScene;
+        CurrentScene = heldScene;
         heldScene = null;
         EmitSignal(SignalName.BattleExited);
     }

@@ -50,7 +50,7 @@ public abstract partial class BattleActor: Node2D
             Skills = new();
             foreach (BattleSkillData data in stats.Skills)
             {
-                Skills.Add(new BattleSkill(data));
+                Skills.Add(new BattleSkill((BattleSkillData)data.Duplicate(true)));
             }
         }
     }

@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SkillCalculate" load_steps=2 format=3 uid="uid://o6u1ssfbd1xv"]
+
+[ext_resource type="Script" path="res://src/Data/Skills/Utility/SkillCalculate.cs" id="1_ysp5t"]
+
+[resource]
+script = ExtResource("1_ysp5t")

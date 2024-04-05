@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_13l0g"]
 script = ExtResource("3_ntwr8")
-monsters = Array[PackedScene]([ExtResource("1_4rlhf"), ExtResource("1_4rlhf"), ExtResource("2_2ymh6")])
+Monsters = Array[PackedScene]([ExtResource("1_4rlhf"), ExtResource("2_2ymh6"), ExtResource("1_4rlhf")])
 
 [resource]
 script = ExtResource("1_axgw1")

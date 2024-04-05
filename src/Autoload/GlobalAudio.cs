@@ -32,24 +32,16 @@ public partial class GlobalAudio : Node
     /// <param name="fadeSpeed">
     ///     Coeficient to multiply fading speed by. 1.0 speed is 300ms. Set to 0 for no fade.
     /// </param>
-    public async void PlayMusic(string path, float fadeSpeed = 0.0f, bool loop = true)
+    public async void PlayMusic(AudioStreamOggVorbis audio, float fadeSpeed = 0.0f, bool loop = true)
     {
         musicFade.SpeedScale = fadeSpeed == 0.0f ? 32 : fadeSpeed;
 
         musicFade.Stop();
         musicFade.Play("FadeOut");
         await ToSignal(musicFade, AnimationPlayer.SignalName.AnimationFinished);
-        AudioStreamOggVorbis loadedAudio;
-        if (path.StartsWith("res://"))
-        {
-            loadedAudio = GD.Load<AudioStreamOggVorbis>(path);
-        }
-        else
-        {
-            loadedAudio = GD.Load<AudioStreamOggVorbis>("res://Audio/" + path);
-        }
-        loadedAudio.Loop = loop;
-        music.Stream = loadedAudio;
+
+        audio.Loop = loop;
+        music.Stream = audio;
         musicFade.Play("FadeIn");
     }
 

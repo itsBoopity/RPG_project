@@ -29,7 +29,7 @@ public partial class TimerDisplay : Node
     
     private void Stop()
     {
-        if (tween.IsRunning())
+        if (tween != null && tween.IsRunning())
         {
             tween.Kill();
         }

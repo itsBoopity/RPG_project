@@ -1,17 +1,24 @@
 using Godot;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
 using System;
-// using Newtonsoft.Json;
+using Newtonsoft.Json;
 
+[JsonObject(MemberSerialization.OptIn)]
 public partial class GameData : Node
 {
     private static GameData _instance;
+
+    [JsonProperty]
     private CharacterStats csYellam;
+    [JsonProperty]
     private CharacterStats csSrinivas;
+    [JsonProperty]
     private CharacterStats csIshke;
+    [JsonProperty]
     private CharacterStats csFray;
+    [JsonProperty]
     private List<CharacterEnum> party;
+    [JsonProperty]
     private List<CharacterEnum> bench;
 
     public static GameData Instance => _instance;
@@ -99,50 +106,10 @@ public partial class GameData : Node
             bench.Add(character.Who);
         }
     }
-    
-    public void Save(string filePath)
+
+    public static void Load(GameData data)
     {
-        // Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://save"));
-        // FileStream file = File.Open(ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.OpenOrCreate);
-
-        // string oneElement = JsonSerializer.Serialize<CharacterData>(cdClaus)
-
-        //BinaryFormatter is obsolete and dangerous, use something else instead
-        // bF.Serialize(file, "v0.0.1");
-        // bF.Serialize(file, avaData);
-        // bF.Serialize(file,playerCharacter);
-        // bF.Serialize(file,clausCharacter);
-        // bF.Serialize(file,party);
-         
-
-
-
-        // file.Close();
-    }
-    public void Load(string filePath) //filePath is passed to this function through the slot selection
-    {
-        // BinaryFormatter bF = new BinaryFormatter();
-        // FileStream file = File.Open(Godot.ProjectSettings.GlobalizePath("user://save/" + filePath), FileMode.Open);
-
-        //BinaryFormatter is obsolete and dangerous, use something else instead
-        // string saveVersion = (string) bF.Deserialize(file);
-        // playerCharacter = (Character) bF.Deserialize(file);
-        // clausCharacter = (Character) bF.Deserialize(file);
-        // party = (CharacterEnum[]) bF.Deserialize(file);
-        //flags = (byte[]) bF.Deserialize(file);
-
-        // file.Close();
-    }
-
-
-    public partial class SerializeTestClass: Resource
-    {
-        public SerializeTestClass(GameData data)
-        {
-            this.data = data;
-        }
-        [Export]
-        GameData data;
+        _instance = data;
     }
 
     public void NewSave() // Create New Save
@@ -153,9 +120,5 @@ public partial class GameData : Node
         csFray = GD.Load<CharacterStats>("res://Resources/Stats/Character/Fray.tres");
         party = new List<CharacterEnum>{CharacterEnum.YELLAM, CharacterEnum.FRAY, CharacterEnum.ISHKE};
         bench = new List<CharacterEnum>{CharacterEnum.SRINIVAS};
-        
-
-        // GD.Print(JsonConvert.SerializeObject(csYellam));
-        // new CharacterStatsImporter().Import(new CharacterStatsExporter().Export(csYellam));
     }
 }

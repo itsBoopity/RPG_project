@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using Newtonsoft.Json;
 
 // Class that holds info about a battle, such as monsters, extra conditions, win conditions etc.
 // Inherits from GodotObject so it can be passed in native Godot functions.
@@ -8,10 +9,11 @@ public partial class BattleSetup: Resource
 {
 
     [Export]
-    public Array<PackedScene> monsters { get; set; }
+    [JsonProperty]
+    public Array<PackedScene> Monsters { get; set; }
 
-    private BattleWinCondition winCondition = BattleWinCondition.DEFEAT_ALL;
-    public BattleWinCondition WinCondition { get {return winCondition;} }
+    [JsonProperty]
+    public BattleWinCondition WinCondition { get; } = BattleWinCondition.DEFEAT_ALL;
 
     public BattleSetup() {}
 

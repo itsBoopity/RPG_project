@@ -1,7 +1,9 @@
 using Godot;
+using Newtonsoft.Json;
 
 [GlobalClass]
-public abstract partial class BattleSkillData: Resource
+[JsonConverter(typeof(BattleSkillDataSerializer))]
+public abstract partial class BattleSkillData : Resource
 {
     private string name;
     public SkillId Id { get; protected set; }

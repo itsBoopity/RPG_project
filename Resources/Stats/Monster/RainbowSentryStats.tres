@@ -21,7 +21,7 @@ Intelligence = 10
 Defense = 5
 Speed = 20
 Element = 0
-elementalAffinity = {
+ElementalAffinity = {
 "BLUNT": 1.0,
 "FIRE": 1.0,
 "ICE": 1.0,

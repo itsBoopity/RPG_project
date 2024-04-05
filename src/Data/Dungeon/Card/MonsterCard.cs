@@ -1,13 +1,16 @@
 using Godot;
-using System;
+using Newtonsoft.Json;
+
 
 [GlobalClass]
 public partial class MonsterCard: DungeonCardData
 {
     [Export]
+    [JsonProperty]
     public bool IsBossBattle { get; set; }
 
     [Export]
+    [JsonProperty]
     public BattleSetup Setup { get; set; }
 
     public MonsterCard() {}

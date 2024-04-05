@@ -1,39 +1,27 @@
-[gd_resource type="Resource" script_class="DungeonSetup" load_steps=16 format=3 uid="uid://cspfybcp8mf8i"]
+[gd_resource type="Resource" script_class="DungeonSetup" load_steps=11 format=3 uid="uid://cspfybcp8mf8i"]
 
 [ext_resource type="Script" path="res://src/Data/Dungeon/DungeonSetup.cs" id="1_t8qoc"]
 [ext_resource type="Resource" uid="uid://4p0bqwjaol26" path="res://Resources/Dungeon/Card/Boss/RainbowSentry.tres" id="1_tkvwi"]
 [ext_resource type="Resource" uid="uid://cdoh1lak01kqy" path="res://Resources/Dungeon/Card/Regular/OneSlime.tres" id="2_wn7r4"]
 [ext_resource type="Script" path="res://src/Data/Dungeon/Card/DungeonCardBundle.cs" id="3_viukw"]
 [ext_resource type="Resource" uid="uid://ch0voi2kie6pr" path="res://Resources/Dungeon/Card/Regular/Slime2Sprite1.tres" id="4_nyt8i"]
-[ext_resource type="PackedScene" uid="uid://bs7ombsydf4c4" path="res://Objects/Battle/Monster/Basic/Slime/ResilientSlime.tscn" id="5_ico3h"]
-[ext_resource type="PackedScene" uid="uid://ddtw87gqr8cl5" path="res://Objects/Battle/Monster/Basic/Slime/Slime.tscn" id="6_aivky"]
-[ext_resource type="PackedScene" uid="uid://du5w837sw67ef" path="res://Objects/Battle/Monster/Basic/Slime/SturdySlime.tscn" id="7_gjgkl"]
-[ext_resource type="Script" path="res://src/Data/BattleSetup/BattleSetup.cs" id="8_nbfqc"]
-[ext_resource type="Script" path="res://src/Data/Dungeon/Card/MonsterCard.cs" id="9_t1q25"]
+[ext_resource type="Resource" uid="uid://dqek6e7cf1x0w" path="res://Resources/Dungeon/Card/Regular/SlimeTrio.tres" id="5_mc4uy"]
+[ext_resource type="AudioStream" uid="uid://dwedu8lxk775g" path="res://Audio/Music/StreamingStreamingEverFlowing.ogg" id="10_odc4k"]
 
 [sub_resource type="Resource" id="Resource_81pjn"]
 script = ExtResource("3_viukw")
 Card = ExtResource("2_wn7r4")
-Count = 2
+Count = 4
 
 [sub_resource type="Resource" id="Resource_kphy2"]
 script = ExtResource("3_viukw")
 Card = ExtResource("4_nyt8i")
 Count = 1
 
-[sub_resource type="Resource" id="Resource_wjnna"]
-script = ExtResource("8_nbfqc")
-monsters = Array[PackedScene]([ExtResource("5_ico3h"), ExtResource("6_aivky"), ExtResource("7_gjgkl")])
-
-[sub_resource type="Resource" id="Resource_mp653"]
-script = ExtResource("9_t1q25")
-IsBossBattle = false
-Setup = SubResource("Resource_wjnna")
-
 [sub_resource type="Resource" id="Resource_fnn14"]
 script = ExtResource("3_viukw")
-Card = SubResource("Resource_mp653")
-Count = 1
+Card = ExtResource("5_mc4uy")
+Count = 2
 
 [resource]
 resource_local_to_scene = true
@@ -41,3 +29,4 @@ script = ExtResource("1_t8qoc")
 StartingHandSize = 5
 BossCard = ExtResource("1_tkvwi")
 DeckDefine = Array[Object]([SubResource("Resource_81pjn"), SubResource("Resource_kphy2"), SubResource("Resource_fnn14")])
+Music = ExtResource("10_odc4k")

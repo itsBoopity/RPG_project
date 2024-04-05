@@ -1,15 +1,26 @@
 using Godot;
+using Newtonsoft.Json;
 
-public partial class DungeonEngine : Control
+[JsonObject(MemberSerialization.OptIn)]
+public partial class DungeonEngine : Control, IMainScene
 {
     [Signal]
     public delegate void HandSizeChangedEventHandler(int newSize);
 
+    public MainSceneEnum Type => MainSceneEnum.DUNGEONENGINE;
+    public bool Serializable => true;
+
     private DungeonUI ui;
+    
+    [JsonProperty]
     private DungeonSetup setup;
+
+    [JsonProperty]
+    private DungeonDeck deck;
     private DungeonHand hand;
     
     private PackedScene cardSpawn = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn");
+
     private int HandSize
     {
         get { return handSize; }
@@ -20,6 +31,8 @@ public partial class DungeonEngine : Control
             EmitSignal(SignalName.HandSizeChanged, value);
         }
     }
+
+
     private const int MAXHANDSIZE = 5;
     private int handSize;
     private bool controlLock = false;
@@ -29,26 +42,20 @@ public partial class DungeonEngine : Control
         hand = GetNode<DungeonHand>("%Hand");
         HandSizeChanged += ui.UpdateHandSize;
         SceneManager.Instance.BattleExited += AfterBattle;
-
-        if (Global.debugMode) LoadTest();
-    }
-
-    private void LoadTest()
-    {
-        GlobalAudio.Instance.PlayMusic("Music/StreamingStreamingEverFlowing.ogg");
-        Initiate(GD.Load<DungeonSetup>("res://Resources/Dungeon/Setup/TestSetup.tres"));
     }
 
     public void Initiate(DungeonSetup setup)
     {
+        GlobalAudio.Instance.PlayMusic(setup.Music);
         this.setup = setup;
         handSize = setup.StartingHandSize;
-        controlLock = false;
+        deck = new DungeonDeck(setup.DeckDefine, setup.BossCard);
+        deck.DeckSizeChanged += ui.UpdateCardsLeft;
         hand.Clear();
-        setup.DeckSizeChanged += ui.UpdateCardsLeft;
-        ui.UpdateHandSize(HandSize);
-        ui.UpdateCardsLeft(setup.CardsLeft());
         DrawToFull();
+        ui.UpdateHandSize(HandSize);
+        ui.UpdateCardsLeft(deck.CardsLeft());
+        controlLock = false;
     }
 
     public void StartBattle(BattleSetup setup)
@@ -85,7 +92,7 @@ public partial class DungeonEngine : Control
 
         for (int i=0; i < toDraw; i++)
         {
-            DungeonCardData data = setup.DrawFromDeck();
+            DungeonCardData data = deck.DrawFromDeck();
             if (data != null)
             {
                 DungeonCard card = DungeonCard.InstantiateFromData(data);

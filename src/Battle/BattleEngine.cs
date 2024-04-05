@@ -62,6 +62,7 @@ public partial class BattleEngine : Control
         else if (state == ControlState.END_SCREEN)
         {
             if (@event.IsActionPressed("ui_accept")) ExitBattle();
+            return;
         }
 
         if (state != ControlState.FULLY_DISABLED)
@@ -72,7 +73,17 @@ public partial class BattleEngine : Control
         }
         if (state != ControlState.FULLY_DISABLED && state != ControlState.ENEMY_TURN && state != ControlState.END_SCREEN)
         {
-            if (@event.IsActionPressed("ui_cancel")) PlayerExitStateIfPossible();
+            if (@event.IsActionPressed("ui_cancel"))
+            {
+                if (state == ControlState.PLAYER_CUSTOMWINDOW)
+                {
+                    ExitCustomSkillWindowState(true);
+                }
+                else
+                {
+                    PlayerSwitchDefaultIfPossible();
+                }
+            }
         }
     }
 
@@ -101,7 +112,7 @@ public partial class BattleEngine : Control
             character.TookDamage += CharacterTookDamage;
             character.TookDamage += Ui.CharacterTookDamage;
         }
-        foreach (PackedScene m in battleSetup.monsters)
+        foreach (PackedScene m in battleSetup.Monsters)
         {
             BattleMonster monster = m.Instantiate<BattleMonster>();
             StartInitializeMonster(monster);
@@ -310,7 +321,7 @@ public partial class BattleEngine : Control
     public void SelectCharacter(int index)
     {
         if (index >= party.Count) return;
-        PlayerExitStateIfPossible();
+        PlayerSwitchDefaultIfPossible();
         if (!GetPartyMember(index).TurnActive && state != ControlState.ENEMY_TURN)
         {
             Ui.PrintCharacterMessage("Character's turn already over.");

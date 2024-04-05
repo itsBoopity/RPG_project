@@ -96,10 +96,10 @@ layout_mode = 2
 text = "T_UI_TS_EXIT"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/SideBar"]
-autoplay = "SideBarSpawn"
 libraries = {
 "": SubResource("AnimationLibrary_1xapl")
 }
+autoplay = "SideBarSpawn"
 
 [node name="SettingsWindow" parent="UI" instance=ExtResource("5_km1kg")]
 unique_name_in_owner = true

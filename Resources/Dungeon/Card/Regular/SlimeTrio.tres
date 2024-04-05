@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MonsterCard" load_steps=7 format=3 uid="uid://dqek6e7cf1x0w"]
+
+[ext_resource type="PackedScene" uid="uid://bs7ombsydf4c4" path="res://Objects/Battle/Monster/Basic/Slime/ResilientSlime.tscn" id="1_1w6v3"]
+[ext_resource type="PackedScene" uid="uid://ddtw87gqr8cl5" path="res://Objects/Battle/Monster/Basic/Slime/Slime.tscn" id="2_a4fjt"]
+[ext_resource type="PackedScene" uid="uid://du5w837sw67ef" path="res://Objects/Battle/Monster/Basic/Slime/SturdySlime.tscn" id="3_1b4uo"]
+[ext_resource type="Script" path="res://src/Data/BattleSetup/BattleSetup.cs" id="4_i15yr"]
+[ext_resource type="Script" path="res://src/Data/Dungeon/Card/MonsterCard.cs" id="5_qlxn7"]
+
+[sub_resource type="Resource" id="Resource_13l0g"]
+script = ExtResource("4_i15yr")
+Monsters = Array[PackedScene]([ExtResource("1_1w6v3"), ExtResource("2_a4fjt"), ExtResource("3_1b4uo")])
+
+[resource]
+script = ExtResource("5_qlxn7")
+IsBossBattle = false
+Setup = SubResource("Resource_13l0g")

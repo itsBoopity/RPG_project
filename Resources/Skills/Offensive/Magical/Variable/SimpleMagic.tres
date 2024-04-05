@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="SkillSimpleMagic" load_steps=2 format=3 uid="uid://xglxplcvkghy"]
+
+[ext_resource type="Script" path="res://src/Data/Skills/Offensive/Magical/Variable/SkillSimpleMagic.cs" id="1_pdr6g"]
+
+[resource]
+script = ExtResource("1_pdr6g")

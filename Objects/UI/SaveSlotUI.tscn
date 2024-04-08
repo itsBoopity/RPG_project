@@ -1,0 +1,94 @@
+[gd_scene load_steps=9 format=3 uid="uid://bwbl2y7rkxnh"]
+
+[ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_a6iwr"]
+[ext_resource type="Texture2D" uid="uid://bgjybovr0dftt" path="res://Images/UI/square_window.png" id="1_wss6p"]
+[ext_resource type="FontFile" uid="uid://dilk02vvy7r1y" path="res://Font/Shadower.otf" id="3_ii4d7"]
+[ext_resource type="Script" path="res://src/UI/SaveSlotUI.cs" id="3_ue7l3"]
+[ext_resource type="Script" path="res://src/Audio/AudioPoolPlayer.cs" id="5_fhx05"]
+[ext_resource type="AudioStream" uid="uid://4narnwrod2lx" path="res://Audio/SFX/click1.wav" id="6_euvwc"]
+[ext_resource type="AudioStream" uid="uid://cywqoindf6m4s" path="res://Audio/SFX/click3.wav" id="7_r4xpb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i3cgr"]
+font = ExtResource("3_ii4d7")
+font_size = 64
+outline_size = 16
+outline_color = Color(0.105882, 0.0901961, 0.164706, 1)
+
+[node name="0" type="Button"]
+offset_right = 483.0
+offset_bottom = 669.0
+size_flags_horizontal = 3
+theme = ExtResource("1_a6iwr")
+flat = true
+script = ExtResource("3_ue7l3")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_wss6p")
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+
+[node name="SlotName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 39.0
+offset_bottom = 88.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_i3cgr")
+horizontal_alignment = 1
+
+[node name="EmptyNotice" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 13.0
+offset_top = -24.5
+offset_right = -12.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Date" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -163.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+
+[node name="GameTime" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -106.0
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+
+[node name="Audio" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
+script = ExtResource("5_fhx05")
+AudioSource = Array[AudioStream]([ExtResource("6_euvwc"), ExtResource("7_r4xpb")])
+
+[connection signal="mouse_entered" from="." to="." method="OnHover"]
+[connection signal="mouse_exited" from="." to="." method="OnUnhover"]
+[connection signal="pressed" from="." to="." method="OnPress"]

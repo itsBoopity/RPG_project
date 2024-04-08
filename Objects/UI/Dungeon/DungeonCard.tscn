@@ -1,10 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://cq0oo5l62l4bc"]
+[gd_scene load_steps=19 format=3 uid="uid://cq0oo5l62l4bc"]
 
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="1_yjsvl"]
-[ext_resource type="Script" path="res://src/Data/Dungeon/Card/DungeonCard.cs" id="2_6v5vq"]
 [ext_resource type="Texture2D" uid="uid://bvc8lqnpfmchs" path="res://Images/UI/Dungeon/DungeonCard/card.png" id="3_f6eyt"]
 [ext_resource type="Script" path="res://src/UI/Dungeon/DungeonCardUI.cs" id="4_21pya"]
-[ext_resource type="Texture2D" uid="uid://glpq2hfdqwgq" path="res://Images/UI/Dungeon/DungeonCard/template.png" id="5_24cjn"]
 [ext_resource type="Texture2D" uid="uid://wbm2m2sco3v8" path="res://Images/UI/Dungeon/DungeonCard/cardFrame.png" id="5_affmc"]
 [ext_resource type="Script" path="res://src/Audio/AudioPoolPlayer.cs" id="8_kcbur"]
 [ext_resource type="AudioStream" uid="uid://of3208hxbqa5" path="res://Audio/SFX/cardUse.wav" id="9_lw63q"]
@@ -25,7 +23,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI:z_index")
+tracks/0/path = NodePath("BaseTexture:z_index")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -37,7 +35,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI:scale")
+tracks/1/path = NodePath("BaseTexture:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -46,13 +44,27 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.12, 1.12), Vector2(1.1, 1.1)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Audio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [2],
+"method": &"PlayIndex"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_dmt0n"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI:z_index")
+tracks/0/path = NodePath("BaseTexture:z_index")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -64,7 +76,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI:scale")
+tracks/1/path = NodePath("BaseTexture:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -81,7 +93,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI:z_index")
+tracks/0/path = NodePath("BaseTexture:z_index")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -93,7 +105,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI:scale")
+tracks/1/path = NodePath("BaseTexture:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -116,7 +128,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI:scale")
+tracks/0/path = NodePath("BaseTexture:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -128,7 +140,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI:position:y")
+tracks/1/path = NodePath("BaseTexture:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -140,7 +152,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("UI:modulate")
+tracks/2/path = NodePath("BaseTexture:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -149,6 +161,21 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Audio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("9_lw63q")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="19"]
 length = 0.3
@@ -156,7 +183,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI:scale")
+tracks/0/path = NodePath("BaseTexture:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -168,7 +195,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI:position:y")
+tracks/1/path = NodePath("BaseTexture:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -180,7 +207,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("UI:modulate")
+tracks/2/path = NodePath("BaseTexture:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -192,7 +219,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("UI:scale")
+tracks/3/path = NodePath("BaseTexture:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -201,13 +228,28 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(1.1, 1.1), Vector2(1, 1)]
 }
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Audio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("10_0v0oh")
+}],
+"times": PackedFloat32Array(0.1)
+}
+tracks/4/use_blend = true
 
 [sub_resource type="Animation" id="13"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI:modulate")
+tracks/0/path = NodePath("BaseTexture:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -219,7 +261,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI:scale")
+tracks/1/path = NodePath("BaseTexture:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -231,7 +273,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("UI:position:y")
+tracks/2/path = NodePath("BaseTexture:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -243,7 +285,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("UI:size")
+tracks/3/path = NodePath("BaseTexture:size")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -265,11 +307,12 @@ custom_minimum_size = Vector2(370, 602)
 offset_right = 370.0
 offset_bottom = 602.0
 pivot_offset = Vector2(185, 340)
+focus_mode = 0
 theme = ExtResource("1_yjsvl")
 flat = true
-script = ExtResource("2_6v5vq")
+script = ExtResource("4_21pya")
 
-[node name="UI" type="TextureRect" parent="."]
+[node name="BaseTexture" type="TextureRect" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(370, 602)
 layout_mode = 0
@@ -278,9 +321,8 @@ offset_bottom = 602.0
 pivot_offset = Vector2(185, 337)
 mouse_filter = 2
 texture = ExtResource("3_f6eyt")
-script = ExtResource("4_21pya")
 
-[node name="Title" type="Label" parent="UI"]
+[node name="Title" type="Label" parent="BaseTexture"]
 layout_mode = 0
 offset_left = 23.0
 offset_top = 102.0
@@ -290,7 +332,7 @@ theme_override_font_sizes/font_size = 32
 text = "Card Name"
 horizontal_alignment = 1
 
-[node name="Description" type="Label" parent="UI"]
+[node name="Description" type="Label" parent="BaseTexture"]
 layout_mode = 0
 offset_left = 27.0
 offset_top = 348.0
@@ -303,16 +345,15 @@ text = "- it's time
 label_settings = SubResource("LabelSettings_6181l")
 autowrap_mode = 2
 
-[node name="Illustration" type="TextureRect" parent="UI"]
+[node name="Illustration" type="TextureRect" parent="BaseTexture"]
 layout_mode = 1
 offset_left = 33.0
 offset_top = 141.0
 offset_right = 333.0
 offset_bottom = 341.0
-texture = ExtResource("5_24cjn")
 stretch_mode = 4
 
-[node name="Frame" type="TextureRect" parent="UI"]
+[node name="Frame" type="TextureRect" parent="BaseTexture"]
 layout_mode = 1
 offset_left = 33.0
 offset_top = 141.0
@@ -321,27 +362,24 @@ offset_bottom = 341.0
 texture = ExtResource("5_affmc")
 stretch_mode = 4
 
-[node name="HoverPlayer" type="AnimationPlayer" parent="UI"]
-root_node = NodePath("../..")
+[node name="HoverPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_4iw5t")
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UI"]
-root_node = NodePath("../..")
-autoplay = "RESET"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8eqb1")
 }
+autoplay = "RESET"
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 bus = &"Sfx"
 script = ExtResource("8_kcbur")
 AudioSource = Array[AudioStream]([ExtResource("9_lw63q"), ExtResource("10_0v0oh"), ExtResource("11_he3ti")])
 
-[connection signal="button_down" from="." to="UI" method="OnButtonDown"]
-[connection signal="button_up" from="." to="UI" method="OnButtonUp"]
-[connection signal="mouse_entered" from="." to="UI" method="Hover"]
-[connection signal="mouse_entered" from="." to="Audio" method="PlayIndex" binds= [2]]
-[connection signal="mouse_exited" from="." to="UI" method="Unhover"]
-[connection signal="pressed" from="." to="." method="OnPressed"]
+[connection signal="button_down" from="." to="." method="OnButtonDown"]
+[connection signal="button_up" from="." to="." method="OnButtonUp"]
+[connection signal="mouse_entered" from="." to="." method="OnHover"]
+[connection signal="mouse_exited" from="." to="." method="OnUnhover"]
+[connection signal="pressed" from="." to="." method="Activate"]

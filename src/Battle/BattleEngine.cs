@@ -36,6 +36,11 @@ public partial class BattleEngine : Control
         bF = new BattleFieldData(party, bench, monsters);
     }
 
+    public override void _ExitTree()
+    {
+        sfx.Stop();
+    }
+
     public override void _Input(InputEvent @event)
     {
         if (state == ControlState.END_SCREEN)
@@ -153,7 +158,7 @@ public partial class BattleEngine : Control
     //Called upon finishing the fight. Performs cleanup and finalizing, such as saving character data and giving rewards
     private void Finish()
     {
-        sfx.Victory();
+        GlobalAudio.Instance.PlaySfx(GD.Load<AudioStream>("res://Audio/SFX/victory.wav"));
         timer.CustomStop();
         monsters.Clear();
         GameData data = GameData.Instance;
@@ -171,7 +176,7 @@ public partial class BattleEngine : Control
 
     private void ExitBattle()
     {
-        SceneManager.Instance.EndBattle();
+        SceneManager.EndBattle();
     }
 
     // ---------------------- GETTERS --------------------------------------------------
@@ -309,7 +314,7 @@ public partial class BattleEngine : Control
     {
         if (monster.Health <= 0)
         {
-            Ui.PrintCenterMessage(String.Format(Tr("{0} defeated!"), monster.DisplayName));
+            Ui.PrintCenterMessage(string.Format(Tr("{0} defeated!"), monster.DisplayName));
             monster.Defeated(damageDealer);
             if (monsters.Count == 0)
             {

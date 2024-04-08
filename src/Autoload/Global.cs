@@ -2,11 +2,13 @@ using Godot;
 
 public partial class Global : Node
 {
-    private static Global _instance;
     public readonly static bool debugMode = OS.IsDebugBuild();
+    private static Global _instance;
 
     public static Global Instance => _instance;
     public static GameSettings Settings { get; set; }  = new GameSettings();
+
+    public ulong TimeSinceLastSave { get; private set; } = 0;
 
     public override void _EnterTree()
     {
@@ -43,10 +45,17 @@ public partial class Global : Node
     public static void Save(string fileName = "save0.dat")
     {
         new SaveFileExporter().Export(fileName);
+        ResetTimeSinceLastSave();
     }
     public static void Load(string fileName = "save0.dat")
     {
         new SaveFileImporter().Import(fileName);
+        ResetTimeSinceLastSave();
+    }
+
+    public static void ResetTimeSinceLastSave()
+    {
+        Instance.TimeSinceLastSave = Time.GetTicksMsec();
     }
 
 }

@@ -823,7 +823,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [],
+"args": [0.0],
 "method": &"PlayRandom"
 }]
 }
@@ -1218,10 +1218,10 @@ internal_vertex_count = 6
 metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/BandPolygons" index="2"]
-autoplay = "Flow"
 libraries = {
 "": SubResource("AnimationLibrary_ax7ii")
 }
+autoplay = "Flow"
 script = ExtResource("7_oi265")
 
 [node name="BodyHitbox" type="Sprite2D" parent="Visuals/Sprite/ArmorFront" index="2"]
@@ -1254,10 +1254,10 @@ texture = ExtResource("10_jlk4i")
 offset = Vector2(0, 84)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/Spine" index="0"]
-autoplay = "Rainbow"
 libraries = {
 "": SubResource("AnimationLibrary_pautg")
 }
+autoplay = "Rainbow"
 
 [node name="Brain" type="Sprite2D" parent="Visuals/Sprite/ArmorFront" index="7"]
 show_behind_parent = true
@@ -1270,10 +1270,10 @@ position = Vector2(4, -158)
 texture = ExtResource("12_36dp1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/Eye" index="0"]
-autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_u5db8")
 }
+autoplay = "Idle"
 script = ExtResource("7_oi265")
 
 [node name="GemOrbit" type="Path2D" parent="Visuals/Sprite/ArmorFront" index="9"]
@@ -1315,14 +1315,15 @@ scale_amount_max = 1.2
 scale_amount_curve = SubResource("Curve_2cdwp")
 color_ramp = SubResource("Gradient_lmoni")
 
-[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="2"]
-script = ExtResource("20_j31ja")
-AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
-
-[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="3"]
+[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_prhpu")
 }
+
+[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="3"]
+bus = &"Sfx"
+script = ExtResource("20_j31ja")
+AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
 
 [node name="1" type="PathFollow2D" parent="Visuals/Sprite/ArmorFront/GemOrbit" index="1"]
 position = Vector2(450.169, -26.6481)
@@ -1359,14 +1360,15 @@ scale_amount_max = 1.2
 scale_amount_curve = SubResource("Curve_2cdwp")
 color_ramp = SubResource("Gradient_lmoni")
 
-[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="2"]
-script = ExtResource("20_j31ja")
-AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
-
-[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="3"]
+[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_prhpu")
 }
+
+[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="3"]
+bus = &"Sfx"
+script = ExtResource("20_j31ja")
+AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
 
 [node name="2" type="PathFollow2D" parent="Visuals/Sprite/ArmorFront/GemOrbit" index="2"]
 position = Vector2(-165.878, 330.576)
@@ -1403,34 +1405,35 @@ scale_amount_max = 1.2
 scale_amount_curve = SubResource("Curve_2cdwp")
 color_ramp = SubResource("Gradient_lmoni")
 
-[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="2"]
-script = ExtResource("20_j31ja")
-AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
-
-[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="3"]
+[node name="GemAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="2"]
 libraries = {
 "": SubResource("AnimationLibrary_prhpu")
 }
 
+[node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="3"]
+bus = &"Sfx"
+script = ExtResource("20_j31ja")
+AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
+
 [node name="RotateAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit" index="3"]
-autoplay = "Rotate"
-speed_scale = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_dltww")
 }
+autoplay = "Rotate"
+speed_scale = 0.5
 
 [node name="IdleAnimation" type="AnimationPlayer" parent="Visuals/Sprite/ArmorFront" index="10"]
-autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_r2t18")
 }
+autoplay = "Idle"
 script = ExtResource("7_oi265")
 
 [node name="SpriteAnimation" parent="Visuals/Sprite" index="1"]
-autoplay = "StackSprite/Idle"
 libraries = {
 "": SubResource("AnimationLibrary_f18fp")
 }
+autoplay = "StackSprite/Idle"
 
 [node name="UI" parent="Visuals" index="1"]
 offset_left = 513.0

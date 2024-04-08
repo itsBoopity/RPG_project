@@ -1,52 +1,70 @@
 using Godot;
 
-public partial class DungeonCardUI : Control
+public partial class DungeonCardUI : Button
 {
-	private Control cardSprite;
+    [Signal]
+    public delegate void SelectEventHandler(DungeonCardUI who);
+
+    [Signal]
+    public delegate void StartedAnimationEventHandler(DungeonCardUI who);
+
+    private TextureRect cardSprite;
     private AnimationPlayer hoverPlayer;
     private AnimationPlayer animationPlayer;
 
-	public override void _Ready()
-	{
-		// cardSprite = GetNode<Control>("");
-        hoverPlayer = GetNode<AnimationPlayer>("HoverPlayer");
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-	}
-
-    public void SetCard(DungeonCardData card)
+    public static DungeonCardUI InstantiateFromData(DungeonCard data)
     {
-        GetNode<Label>("Title").Text = card.GetName();
-        GetNode<Label>("Description").Text = card.GetDescription();
+        DungeonCardUI card = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn").Instantiate<DungeonCardUI>();
+        card.SetCard(data);
+        return card;
     }
 
-	public void Hover()
+	public override void _Ready()
+	{
+        cardSprite = GetNode<TextureRect>("BaseTexture");
+        hoverPlayer = GetNode<AnimationPlayer>("HoverPlayer");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        animationPlayer.Play("Draw");
+    }
+
+    public override void _ExitTree()
+    {
+        GetNode<AudioPoolPlayer>("Audio").Stop();
+    }
+
+    public void SetCard(DungeonCard card)
+    {
+        GetNode<Label>("BaseTexture/Title").Text = card.GetName();
+        GetNode<TextureRect>("BaseTexture/Illustration").Texture = card.GetImage();
+        GetNode<Label>("BaseTexture/Description").Text = card.GetDescription();
+    }
+
+	public void OnHover()
 	{
 		hoverPlayer.Play("Hover");
 	}
 
-	public void Unhover()
+	public void OnUnhover()
     {
         hoverPlayer.Play("Unhover");
     }
 
     public void OnButtonUp()
     {
-        this.Scale = Vector2.One;
+        cardSprite.Scale = Vector2.One;
     }
 
 	public void OnButtonDown()
     {
-        this.Scale = new Vector2(0.97f, 0.97f);
+        cardSprite.Scale = new Vector2(0.97f, 0.97f);
     }
 
-    public void DrawCard()
-    {
-        animationPlayer.Play("Draw");
-    }
-
-    public AnimationPlayer Activate()
+    public async void Activate()
     {
         animationPlayer.Play("Activate");
-        return animationPlayer;
+        EmitSignal(SignalName.StartedAnimation, this);
+        await ToSignal(animationPlayer, AnimationPlayer.SignalName.AnimationFinished);
+        QueueFree();
+        EmitSignal(SignalName.Select, this);
     }
 }

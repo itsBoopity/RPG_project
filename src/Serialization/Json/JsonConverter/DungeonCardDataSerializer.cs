@@ -5,16 +5,16 @@ public class DungeonCardDataSerializer : JsonConverter
 {
     public override bool CanConvert(Type objectType)
     {
-        return objectType == typeof(DungeonCardData);
+        return objectType == typeof(DungeonCard);
     }
 
-    public override DungeonCardData ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    public override DungeonCard ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
-        return GD.Load<DungeonCardData>((string)reader.Value);
+        return GD.Load<DungeonCard>((string)reader.Value);
     }
 
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
-        writer.WriteValue(((DungeonCardData)value).ResourcePath);
+        writer.WriteValue(((DungeonCard)value).ResourcePath);
     }
 }

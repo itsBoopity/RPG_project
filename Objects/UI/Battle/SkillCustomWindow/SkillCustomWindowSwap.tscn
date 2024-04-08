@@ -173,3 +173,4 @@ libraries = {
 [connection signal="pressed" from="Bench/0" to="." method="CharacterSelected" binds= ["Bench", 0]]
 [connection signal="pressed" from="Bench/1" to="." method="CharacterSelected" binds= ["Bench", 1]]
 [connection signal="pressed" from="Bench/2" to="." method="CharacterSelected" binds= ["Bench", 2]]
+[connection signal="pressed" from="Cancel" to="." method="Cancel"]

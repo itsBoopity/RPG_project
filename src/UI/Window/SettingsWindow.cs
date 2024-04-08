@@ -9,6 +9,14 @@ public partial class SettingsWindow : Control
         sfx = GetNode<AudioPoolPlayer>("AudioStreamPlayer");
     }
 
+    public override void _UnhandledKeyInput(InputEvent @event)
+    {
+        if(@event.IsActionPressed("ui_cancel"))
+		{
+			Close();
+		}
+    }
+
     /// <summary>
     /// Open and update buttons to match settings data.
     /// </summary>
@@ -19,11 +27,14 @@ public partial class SettingsWindow : Control
 		GetNode<CheckBox>("%ShowMath").ButtonPressed = Global.Settings.showElementalModuloResult;
 		UpdateLanguageOptionButton();
 		GetNode<AnimationPlayer>("AnimationPlayer").Play("Open");
+		GrabFocus();
+		SetProcessUnhandledKeyInput(true);
 	}
 	public void Close()
 	{
         Global.Settings.Save();
 		Hide();
+		SetProcessUnhandledKeyInput(false);
 	}
 
 	public void UpdateLanguageOptionButton()

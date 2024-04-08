@@ -12,12 +12,14 @@ public partial class DungeonDeck : Resource
 	[JsonProperty]
 	public bool BossCardDrawn { get; private set; }  = false;
 	[JsonProperty]
-	public DungeonCardData BossCard { get; private set; }
+	public DungeonCard BossCard { get; private set; }
 	
 	[JsonProperty]
-	public List<DungeonCardData> Deck { get; private set; } = new();
+	public List<DungeonCard> Deck { get; private set; } = new();
 
-	public DungeonDeck(Godot.Collections.Array<DungeonCardBundle> cardBundles, DungeonCardData bossCard)
+	public DungeonDeck() {}
+
+	public DungeonDeck(Godot.Collections.Array<DungeonCardBundle> cardBundles, DungeonCard bossCard)
 	{
 		BossCard = bossCard;
 		LoadFromBundles(cardBundles);
@@ -40,7 +42,7 @@ public partial class DungeonDeck : Resource
 	/// Returns the next drawn card from the pile. Returns null if pile is empty.
 	/// </summary>
 	/// <returns></returns>
-	public DungeonCardData DrawFromDeck()
+	public DungeonCard DrawFromDeck()
 	{
         if (Deck.Count == 0)
         {
@@ -57,7 +59,7 @@ public partial class DungeonDeck : Resource
         }
 		else
 		{
-			DungeonCardData output = Deck.Last();
+			DungeonCard output = Deck.Last();
         	Deck.RemoveAt(Deck.Count - 1);
 			EmitSignal(SignalName.DeckSizeChanged, CardsLeft());
 			return output;
@@ -70,7 +72,7 @@ public partial class DungeonDeck : Resource
         for (int i = n; i > 1; i--)
         {
             int index = (int)(GD.Randi() % n);
-            DungeonCardData endReplaced = Deck[n-1];
+            DungeonCard endReplaced = Deck[n-1];
             Deck[n-1] = Deck[index];
             Deck[index] = endReplaced;          
         }

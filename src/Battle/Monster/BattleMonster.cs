@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class BattleMonster: BattleActor
@@ -85,13 +84,13 @@ public partial class BattleMonster: BattleActor
             {
                 bI = new BattleInteractionData(this, bF.party.GetAllAsActorList()).AddFloatValue(1.0f);
                 EmitSignal( SignalName.DisplayCenterMessage,
-                        String.Format(Tr("T_BM_MONSTERATTACK_MULTI"), DisplayName, LoadedSkill.DisplayName));
+                        string.Format(Tr("T_BM_MONSTERATTACK_MULTI"), DisplayName, LoadedSkill.DisplayName));
             }
             else
             {
                 bI = new BattleInteractionData(this, bF.party[PartyTarget]).AddFloatValue(1.0f);
                 EmitSignal( SignalName.DisplayCenterMessage,
-                        String.Format(Tr("T_BM_MONSTERATTACK_SINGLE"), DisplayName, LoadedSkill.DisplayName, bF.party[PartyTarget].DisplayName));
+                        string.Format(Tr("T_BM_MONSTERATTACK_SINGLE"), DisplayName, LoadedSkill.DisplayName, bF.party[PartyTarget].DisplayName));
             }
 
             LoadedSkill.Use(bF, bI);

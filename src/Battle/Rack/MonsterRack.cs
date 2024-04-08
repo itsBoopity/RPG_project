@@ -123,7 +123,7 @@ public partial class MonsterRack : Node2D
         this.Position = new Vector2(0, this.Position.Y);
         foreach (Node node in GetChildren())
         {
-            if (node.Name != "Tween") node.Free();
+            if (node.Name != "Tween") node.QueueFree();
         }
     }
 

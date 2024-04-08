@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=79 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://c8bqvbiy7a250" path="res://Audio/SFX/failsound.wav" id="7_cg0ne"]
 [ext_resource type="Script" path="res://src/Battle/Rack/CharacterRack.cs" id="7_xhskm"]
 [ext_resource type="Texture2D" uid="uid://c0gvhc76yfr8e" path="res://Images/UI/Battle/skillWindow.png" id="8"]
-[ext_resource type="AudioStream" uid="uid://sdbvq45qiwmr" path="res://Audio/SFX/victory.wav" id="8_a2qh4"]
 [ext_resource type="AudioStream" uid="uid://blir3lp3pkxt4" path="res://Audio/SFX/timeout.wav" id="8_y0ah2"]
 [ext_resource type="Script" path="res://src/Battle/Rack/MonsterRack.cs" id="8_yp80v"]
 [ext_resource type="Script" path="res://src/UI/Battle/CharacterModelRack.cs" id="9"]
@@ -870,12 +869,14 @@ script = ExtResource("2_0hfn6")
 
 [node name="UiSfx" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
+bus = &"Sfx"
 script = ExtResource("3_445sj")
-AudioSource = Array[AudioStream]([ExtResource("16_5l314"), ExtResource("29_r3ion"), ExtResource("30_5us6w"), ExtResource("7_cg0ne"), ExtResource("8_a2qh4")])
+AudioSource = Array[AudioStream]([ExtResource("16_5l314"), ExtResource("29_r3ion"), ExtResource("30_5us6w"), ExtResource("7_cg0ne")])
 
 [node name="TimeOutAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("8_y0ah2")
+bus = &"Sfx"
 
 [node name="Party" type="Node" parent="."]
 unique_name_in_owner = true
@@ -985,6 +986,7 @@ texture = ExtResource("27")
 [node name="InfoLabel" type="Control" parent="UI/Filmbar/FilmbarTop"]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -501.0

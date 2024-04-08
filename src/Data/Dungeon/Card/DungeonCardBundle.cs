@@ -4,7 +4,7 @@ using Godot;
 public partial class DungeonCardBundle: Resource
 {
     [Export]
-    public DungeonCardData Card { get; set; }
+    public DungeonCard Card { get; set; }
 
     [Export]
     public int Count { get; set; }

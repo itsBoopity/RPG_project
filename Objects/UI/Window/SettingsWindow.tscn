@@ -175,6 +175,7 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
 script = ExtResource("6_ipssr")
 AudioSource = Array[AudioStream]([ExtResource("5_43cqb"), ExtResource("8_5ywlg")])
 

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 
 [GlobalClass]
-public partial class MonsterCard: DungeonCardData
+public partial class MonsterCard: DungeonCard
 {
     [Export]
     [JsonProperty]

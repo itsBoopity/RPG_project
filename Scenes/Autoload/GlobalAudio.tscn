@@ -158,3 +158,6 @@ bus = &"Ambient"
 libraries = {
 "": SubResource("AnimationLibrary_jdn07")
 }
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"

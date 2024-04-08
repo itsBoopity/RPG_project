@@ -9,3 +9,7 @@
 "T_UI_CFG_MATH","Show Elemental Modulo Result","Ukaž Výsledek Elementálního Modula"
 "T_UI_CFG_MATH_TOOLTIP","Shows the resulting element in skill description for skills that use Elemental Modulo.","Ukáže výsledný element v popisu pro schopnosti které používají Elementální Modulo."
 "T_UI_CFG_LANGUAGE","Language:","Jazyk:"
+"T_UI_SAVE_TITLE","Select a slot to save to","Vyber slot k uložení"
+"T_UI_SAVESLOT_TITLE","Slot {0}","Slot {0}"
+"T_UI_LOAD_TITLE","Load a save slot","Načíst hru"
+"T_UI_SAVE_EMPTY","Empty","Prázdný"

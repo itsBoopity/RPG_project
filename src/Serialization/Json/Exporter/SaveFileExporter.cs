@@ -1,40 +1,43 @@
-using System.Collections.Generic;
-using System.IO;
 using Godot;
 using Newtonsoft.Json;
 
+/// <summary>
+/// Save file format: Json on each component, separated into each line.
+/// SaveFileHeader
+/// GameData
+/// MainSceneData
+/// </summary>
 public class SaveFileExporter
 {
+
     /// <summary>
-    /// Export game save data into a file.
+    /// Exports the save as an encrypted JSON into a file.
     /// </summary>
     /// <param name="fileName">The filename. File will be saved to "user://save/{filename}"</param>
     /// <returns>True if saved successfully, false if unable to, such as in a scene that shouldn't be saved in the middle of.</returns>
     public bool Export(string fileName)
     {
-        Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://save/"));
-
-
-        if (SceneManager.Instance.CurrentScene is IMainScene scene && scene.Serializable)
+        System.IO.Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://save/"));
+        if (SceneManager.Instance.CurrentScene is IMainScene scene && scene.MainSceneSerializable)
         {
-            GD.Print(JsonConvert.SerializeObject(scene));
+            using (FileAccess file = FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", FileAccess.ModeFlags.Write, (string)ProjectSettings.GetSetting("Custom/save_pass")))
+            {
+                SaveFileHeader header = new() {
+                    date = Time.GetDateStringFromSystem(),
+                    gameTime = (Time.GetTicksMsec() - Global.Instance.TimeSinceLastSave) / 1000,
+                    mainScene = scene.MainSceneType,
+                    mainSceneDescription = scene.MainSceneDescription
+                };
+                file.StoreLine(JsonConvert.SerializeObject(header));
+                file.StoreLine(JsonConvert.SerializeObject(GameData.Instance));
+                file.StoreLine(JsonConvert.SerializeObject(scene));
+            } 
         }
         else
         {
             return false;
         }
 
-        using (StreamWriter file = new(ProjectSettings.GlobalizePath($"user://save/{fileName}")))
-        {
-            file.WriteLine(JsonConvert.SerializeObject(GameData.Instance));
-        }
-
-
         return true;
-    }
-
-    public class Nonme
-    {
-        public int i = 64;
     }
 }

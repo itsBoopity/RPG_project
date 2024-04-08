@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using Newtonsoft.Json;
 
@@ -7,20 +8,26 @@ public partial class DungeonEngine : Control, IMainScene
     [Signal]
     public delegate void HandSizeChangedEventHandler(int newSize);
 
-    public MainSceneEnum Type => MainSceneEnum.DUNGEONENGINE;
-    public bool Serializable => true;
+    public MainSceneEnum MainSceneType => MainSceneEnum.DUNGEONENGINE;
+    public bool MainSceneSerializable => true;
+    public string MainSceneDescription => setup.DungeonName;
 
     private DungeonUI ui;
     
     [JsonProperty]
     private DungeonSetup setup;
-
     [JsonProperty]
     private DungeonDeck deck;
-    private DungeonHand hand;
-    
-    private PackedScene cardSpawn = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn");
+    [JsonProperty]
+    private List<DungeonCard> hand = new();
 
+    private int handSize;
+
+    private DungeonCard currentlyPlayedCard = null;
+    
+    private readonly PackedScene cardSpawn = GD.Load<PackedScene>("res://Objects/UI/Dungeon/DungeonCard.tscn");
+
+    [JsonProperty]
     private int HandSize
     {
         get { return handSize; }
@@ -32,21 +39,15 @@ public partial class DungeonEngine : Control, IMainScene
         }
     }
 
-
     private const int MAXHANDSIZE = 5;
-    private int handSize;
-    private bool controlLock = false;
     public override void _Ready()
     {
         ui = GetNode<DungeonUI>("%UI");
-        hand = GetNode<DungeonHand>("%Hand");
-        HandSizeChanged += ui.UpdateHandSize;
         SceneManager.Instance.BattleExited += AfterBattle;
     }
 
     public void Initiate(DungeonSetup setup)
     {
-        GlobalAudio.Instance.PlayMusic(setup.Music);
         this.setup = setup;
         handSize = setup.StartingHandSize;
         deck = new DungeonDeck(setup.DeckDefine, setup.BossCard);
@@ -55,30 +56,34 @@ public partial class DungeonEngine : Control, IMainScene
         DrawToFull();
         ui.UpdateHandSize(HandSize);
         ui.UpdateCardsLeft(deck.CardsLeft());
-        controlLock = false;
+        GlobalAudio.Instance.PlayMusic(setup.Music);
+    }
+
+    public void Initiate(DungeonEngine dungeon)
+    {
+        setup = dungeon.setup;
+        handSize = dungeon.handSize;
+        deck = dungeon.deck;
+        deck.DeckSizeChanged += ui.UpdateCardsLeft;
+        hand = dungeon.hand;
+        ui.UpdateHand(hand);
+        ui.UpdateHandSize(HandSize);
+        ui.UpdateCardsLeft(deck.CardsLeft());
+        GlobalAudio.Instance.PlayMusic(setup.Music);
     }
 
     public void StartBattle(BattleSetup setup)
     {
-        SceneManager.Instance.StartBattle(setup);
+        SceneManager.StartBattle(setup);
     }
 
-    public void RequestUseCard(DungeonCard card)
+    public void UseCard(int index)
     {
-        if (controlLock == false)
-        {
-            card.Activate();
-            controlLock = true;
-        }
-    }
-
-    public void UseCard(DungeonCard card)
-    {
-        controlLock = false;
-        ConnectCardDataSignals(card.Data);
-        card.Data.UseCard();
-        DisconnectCardDataSignals(card.Data);
-        card.QueueFree();
+        DungeonCard card = hand[index];
+        hand.RemoveAt(index);
+        ConnectCardDataSignals(card);
+        card.UseCard();
+        DisconnectCardDataSignals(card);
     }
 
     public void AfterBattle()
@@ -92,19 +97,17 @@ public partial class DungeonEngine : Control, IMainScene
 
         for (int i=0; i < toDraw; i++)
         {
-            DungeonCardData data = deck.DrawFromDeck();
-            if (data != null)
+            DungeonCard card = deck.DrawFromDeck();
+            if (card != null)
             {
-                DungeonCard card = DungeonCard.InstantiateFromData(data);
                 hand.Add(card);
-                card.RequestActivation += RequestUseCard;
-                card.CardSelected += UseCard;
             }
             else
             {
                 break;
             }
         }
+        ui.UpdateHand(hand);
     }
 
     public void ExpandHandSize(int byHowMuch)
@@ -117,11 +120,16 @@ public partial class DungeonEngine : Control, IMainScene
         DrawToFull();
     }
 
-    private void ConnectCardDataSignals(DungeonCardData card)
+    /// <summary>
+    /// Connect card's signals to self, so that it can interact with DungeonEngine
+    /// by sending signals.
+    /// </summary>
+    /// <param name="card"></param>
+    private void ConnectCardDataSignals(DungeonCard card)
     {
         card.StartBattle += StartBattle;
     }
-    private void DisconnectCardDataSignals(DungeonCardData card)
+    private void DisconnectCardDataSignals(DungeonCard card)
     {
         card.StartBattle -= StartBattle;
     }

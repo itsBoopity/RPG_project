@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class SkillCustomWindowCalculate : SkillCustomWindow
 {
@@ -52,6 +51,7 @@ public partial class SkillCustomWindowCalculate : SkillCustomWindow
 
     private void Confirm()
     {
+        GetNode<AudioStreamPlayer>("AudioStreamPlayer").Play();
         EmitSignal(SignalName.ReturnData, new BattleInteractionData(user).AddIntValue(value));
     }
 

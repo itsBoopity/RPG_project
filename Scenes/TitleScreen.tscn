@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvaw5dhpts00"]
+[gd_scene load_steps=9 format=3 uid="uid://dvaw5dhpts00"]
 
 [ext_resource type="Texture2D" uid="uid://yv4tk3e1wyk1" path="res://Images/UI/sideBar.png" id="1"]
 [ext_resource type="Script" path="res://src/TitleScreen.cs" id="1_x44ef"]
 [ext_resource type="PackedScene" uid="uid://cenr41pyojylw" path="res://Objects/UI/SidebarButton.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://b8ignh72150f7" path="res://Objects/UI/Window/SettingsWindow.tscn" id="5_km1kg"]
 [ext_resource type="Theme" uid="uid://dig05l8sun2sn" path="res://Font/Theme/Main.tres" id="5_masv7"]
+[ext_resource type="PackedScene" uid="uid://biexe5i5fjbca" path="res://Objects/UI/Window/SaveWindow.tscn" id="6_u45lm"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "SideBarSpawn"
@@ -104,8 +105,14 @@ autoplay = "SideBarSpawn"
 [node name="SettingsWindow" parent="UI" instance=ExtResource("5_km1kg")]
 unique_name_in_owner = true
 layout_mode = 1
+focus_mode = 2
+
+[node name="SaveWindow" parent="UI" instance=ExtResource("6_u45lm")]
+unique_name_in_owner = true
+layout_mode = 1
+mode = 1
 
 [connection signal="pressed" from="UI/SideBar/VBoxContainer/NewGame" to="." method="NewGame"]
-[connection signal="pressed" from="UI/SideBar/VBoxContainer/LoadGame" to="." method="LoadGame"]
+[connection signal="pressed" from="UI/SideBar/VBoxContainer/LoadGame" to="." method="OpenLoadWindow"]
 [connection signal="pressed" from="UI/SideBar/VBoxContainer/Settings" to="." method="OpenSettingsWindow"]
 [connection signal="pressed" from="UI/SideBar/VBoxContainer/Exit" to="." method="Exit"]

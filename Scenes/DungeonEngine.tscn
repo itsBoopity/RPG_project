@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://n6xc6gkor2mb"]
+[gd_scene load_steps=12 format=3 uid="uid://n6xc6gkor2mb"]
 
 [ext_resource type="Script" path="res://src/Dungeon/DungeonEngine.cs" id="1"]
 [ext_resource type="Script" path="res://src/UI/Dungeon/DungeonUI.cs" id="2_asjkf"]
@@ -8,7 +8,8 @@
 [ext_resource type="LabelSettings" uid="uid://d1616eib5deav" path="res://Font/LabelSettings/DungeonStats.tres" id="7_32qjl"]
 [ext_resource type="Shader" path="res://src/Shaders/DropShadow.gdshader" id="7_848cc"]
 [ext_resource type="Texture2D" uid="uid://77qk3cnmvm1n" path="res://Images/UI/save_hovered.png" id="8_8qtfb"]
-[ext_resource type="Script" path="res://src/Dungeon/DungeonHand.cs" id="15_y8nqk"]
+[ext_resource type="PackedScene" uid="uid://biexe5i5fjbca" path="res://Objects/UI/Window/SaveWindow.tscn" id="10_a4gjq"]
+[ext_resource type="Script" path="res://src/UI/Dungeon/DungeonHandUI.cs" id="15_y8nqk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xoen"]
 shader = ExtResource("7_848cc")
@@ -139,3 +140,10 @@ texture_pressed = ExtResource("7_7xpst")
 texture_hover = ExtResource("8_8qtfb")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="SaveWindow" parent="UI" instance=ExtResource("10_a4gjq")]
+layout_mode = 1
+
+[connection signal="HandSizeChanged" from="." to="UI" method="UpdateHandSize"]
+[connection signal="CardSelected" from="UI/Hand" to="." method="UseCard"]
+[connection signal="pressed" from="UI/Save" to="UI/SaveWindow" method="Open"]

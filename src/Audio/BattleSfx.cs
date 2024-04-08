@@ -1,5 +1,3 @@
-using Godot;
-
 /// <summary>
 /// Contains the main Sfx elements of BattleEngine UI.
 /// </summary>

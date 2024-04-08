@@ -26,7 +26,8 @@ Count = 2
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_t8qoc")
+DungeonName = "Test Dungeon"
+Music = ExtResource("10_odc4k")
 StartingHandSize = 5
 BossCard = ExtResource("1_tkvwi")
 DeckDefine = Array[Object]([SubResource("Resource_81pjn"), SubResource("Resource_kphy2"), SubResource("Resource_fnn14")])
-Music = ExtResource("10_odc4k")

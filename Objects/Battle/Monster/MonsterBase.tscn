@@ -363,5 +363,6 @@ flat = true
 stream = ExtResource("2_2v4mg")
 volume_db = -10.0
 pitch_scale = 0.65
+bus = &"Sfx"
 
 [connection signal="button_down" from="Visuals/BoundaryBox" to="." method="AppendageMissCheck"]

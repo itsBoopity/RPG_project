@@ -6,9 +6,30 @@ public partial class Global : Node
     private static Global _instance;
 
     public static Global Instance => _instance;
-    public static GameSettings Settings { get; set; }  = new GameSettings();
+    public static GameSettings Settings { get; set; }
 
-    public ulong TimeSinceLastSave { get; private set; } = 0;
+    private ulong _gameTime = 0;
+    private ulong _timeSinceLastSave = 0;
+
+    /// <summary>
+    /// The game time of the current save in seconds.
+    /// </summary>
+    public ulong GameTime
+    {
+        // Update _gameTime and _timeSinceLastSave, then return value.
+        get
+        {
+            _gameTime += (Time.GetTicksMsec() - _timeSinceLastSave) / 1000;
+            _timeSinceLastSave = Time.GetTicksMsec();
+            return _gameTime;
+        }
+        // Sets the _gameTime and updates _timeSinceLastSave to begin tracking time.
+        set
+        {
+            _gameTime = value;
+            _timeSinceLastSave = Time.GetTicksMsec();
+        }
+    }
 
     public override void _EnterTree()
     {
@@ -20,7 +41,7 @@ public partial class Global : Node
     {
         GD.Randomize();
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
-        Settings.Load();
+        Settings = GameSettings.CreateOnStartup();
     }
 
     public override void _UnhandledKeyInput(InputEvent @event)
@@ -32,30 +53,14 @@ public partial class Global : Node
             else
                 GetWindow().Mode = Window.ModeEnum.Fullscreen;
         }
-        else if (@event.IsActionPressed("debug_f1"))
-        {
-            Save();
-        }
-        else if (@event.IsActionPressed("debug_f2"))
-        {
-            Load();
-        }
     }
 
-    public static void Save(string fileName = "save0.dat")
+    public static void Save(string fileName)
     {
         new SaveFileExporter().Export(fileName);
-        ResetTimeSinceLastSave();
     }
-    public static void Load(string fileName = "save0.dat")
+    public static void Load(string fileName)
     {
         new SaveFileImporter().Import(fileName);
-        ResetTimeSinceLastSave();
     }
-
-    public static void ResetTimeSinceLastSave()
-    {
-        Instance.TimeSinceLastSave = Time.GetTicksMsec();
-    }
-
 }

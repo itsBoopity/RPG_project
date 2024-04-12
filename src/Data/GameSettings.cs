@@ -1,7 +1,10 @@
 using Godot;
+using Newtonsoft.Json;
 
-public partial class GameSettings: Resource
+public class GameSettings
 {
+    public string language = TranslationServer.GetLocale();
+
     public bool timerEnabled = true;
     public bool noTimerForAnalysis = false;
     public bool showElementalModuloResult = false;
@@ -18,36 +21,52 @@ public partial class GameSettings: Resource
     // 0.02f slow, 0.01f normal, 0.005f fast
     public float dialogueSpeed = 0.005f;
 
-    public void Load()
+    /// <summary>
+    /// Loads a configuration file if it exists, otherwise it creates one.
+    /// </summary>
+    /// <returns></returns>
+    public static GameSettings CreateOnStartup()
     {
-        ConfigFile config = new();
-        if (config.Load("user://settings.cfg") != Error.Ok)
+        if (System.IO.File.Exists(ProjectSettings.GlobalizePath("user://settings.cfg")))
         {
-            return;
+            return Load();
         }
-        
-        TranslationServer.SetLocale((string)config.GetValue("Main", "language"));
-        timerEnabled = (bool)config.GetValue("Gameplay", "timerEnabled");
-        noTimerForAnalysis = (bool)config.GetValue("Gameplay", "noTimerForAnalysis");
-        showElementalModuloResult = (bool)config.GetValue("Gameplay", "showElementalModuloResult");
-
-        monsterScrollSpeed = (int)config.GetValue("Control", "monsterScrollSpeed");
-        monsterScrollSensitivity = (int)config.GetValue("Control", "monsterScrollSensitivity");
-        monsterScrollSmoothness= (float)config.GetValue("Control", "monsterScrollSmoothness");
+        else
+        {
+            GameSettings settings = new();
+            settings.Save();
+            return settings;
+        }
     }
 
+    /// <summary>
+    /// Loads and returns an instance of GameSettings.
+    /// </summary>
+    /// <returns>The GameSettings loaded from the settings file.</returns>
+    /// <exception cref="System.IO.IOException">Couldn't open file.</exception>
+    public static GameSettings Load()
+    {
+        using FileAccess file = FileAccess.Open($"user://settings.cfg", FileAccess.ModeFlags.Read);
+        if (file == null)
+        {
+            throw new System.IO.IOException("GameSettings::Load() Couldn't open file.");
+        }
+        GameSettings settings = JsonConvert.DeserializeObject<GameSettings>(file.GetLine());
+        TranslationServer.SetLocale(settings.language);
+        return settings;
+    }
+
+    /// <summary>
+    /// Saves this GameSetting as a JSON file at "user://settings.cfg"
+    /// </summary>
+    /// <exception cref="System.IO.IOException"></exception>
     public void Save()
     {
-        ConfigFile config = new();
-        
-        config.SetValue("Main", "language", TranslationServer.GetLocale());
-        config.SetValue("Gameplay", "timerEnabled", timerEnabled);
-        config.SetValue("Gameplay", "noTimerForAnalysis", noTimerForAnalysis);
-        config.SetValue("Gameplay", "showElementalModuloResult", showElementalModuloResult);
-        config.SetValue("Control", "monsterScrollSpeed", monsterScrollSpeed);
-        config.SetValue("Control", "monsterScrollSensitivity", monsterScrollSensitivity);
-        config.SetValue("Control", "monsterScrollSmoothness", monsterScrollSmoothness);
-        
-        config.Save("user://settings.cfg");
+        using FileAccess file = FileAccess.Open($"user://settings.cfg", FileAccess.ModeFlags.Write);
+        if (file == null)
+        {
+            throw new System.IO.IOException("GameSettings::Save() Couldn't access file to write to.");
+        }
+        file.StoreString(JsonConvert.SerializeObject(this));
     }
 }

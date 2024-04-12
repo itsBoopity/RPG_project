@@ -27,6 +27,8 @@ public class SaveFileImporter
         using (Godot.FileAccess file = Godot.FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", Godot.FileAccess.ModeFlags.Read, (string)ProjectSettings.GetSetting("Custom/save_pass")))
         {
             SaveFileHeader header = JsonConvert.DeserializeObject<SaveFileHeader>(file.GetLine());
+            Global.Instance.GameTime = header.gameTime;
+
             GameData.Load(JsonConvert.DeserializeObject<GameData>(file.GetLine()));
 
             if (header.mainScene == MainSceneEnum.DUNGEONENGINE)

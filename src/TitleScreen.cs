@@ -9,7 +9,7 @@ public partial class TitleScreen : Control, IMainScene
 
     public void NewGame()
     {
-        Global.ResetTimeSinceLastSave();
+        Global.Instance.GameTime = 0;
         GameData.Instance.NewSave();
         SceneManager.EnterDungeon(GD.Load<DungeonSetup>("res://Resources/Dungeon/Setup/TestSetup.tres"));
     }

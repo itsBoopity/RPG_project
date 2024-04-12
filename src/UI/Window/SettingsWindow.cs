@@ -63,7 +63,8 @@ public partial class SettingsWindow : Control
 	public void SetLanguage(int index)
 	{
 		sfx.PlayIndex(1);
-		if (index == 0) TranslationServer.SetLocale("en");
-		else if (index == 1) TranslationServer.SetLocale("cs");
+		if (index == 0) Global.Settings.language = "en";
+		else if (index == 1) Global.Settings.language = "cs";
+		TranslationServer.SetLocale(Global.Settings.language);
 	}
 }

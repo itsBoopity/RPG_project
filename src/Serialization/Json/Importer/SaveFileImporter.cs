@@ -13,7 +13,7 @@ public class SaveFileImporter
     {
         try
         {
-            using Godot.FileAccess file = Godot.FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", Godot.FileAccess.ModeFlags.Read, (string)ProjectSettings.GetSetting("Custom/save_pass"));
+            using Godot.FileAccess file = Godot.FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", Godot.FileAccess.ModeFlags.Read, (string)ProjectSettings.GetSetting("custom/save_pass"));
             return JsonConvert.DeserializeObject<SaveFileHeader>(file.GetLine());
         }
         catch
@@ -24,7 +24,7 @@ public class SaveFileImporter
 
     public bool Import(string fileName)
     {
-        using (Godot.FileAccess file = Godot.FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", Godot.FileAccess.ModeFlags.Read, (string)ProjectSettings.GetSetting("Custom/save_pass")))
+        using (Godot.FileAccess file = Godot.FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", Godot.FileAccess.ModeFlags.Read, (string)ProjectSettings.GetSetting("custom/save_pass")))
         {
             SaveFileHeader header = JsonConvert.DeserializeObject<SaveFileHeader>(file.GetLine());
             Global.Instance.GameTime = header.gameTime;

@@ -22,7 +22,7 @@ public class SaveFileExporter
 
         if (SceneManager.Instance.CurrentScene is IMainScene scene && scene.MainSceneSerializable)
         {
-            using (FileAccess file = FileAccess.OpenEncryptedWithPass($"user://save/{fileName}", FileAccess.ModeFlags.Write, (string)ProjectSettings.GetSetting("Custom/save_pass")))
+            using (FileAccess file = FileAccess.OpenEncryptedWithPass($"user://save/{fileName}",FileAccess.ModeFlags.Write, (string)ProjectSettings.GetSetting("custom/save_pass"))) 
             {
                 SaveFileHeader header = new() {
                     date = Time.GetDateStringFromSystem(),

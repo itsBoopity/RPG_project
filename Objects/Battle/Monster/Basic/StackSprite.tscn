@@ -474,10 +474,10 @@ position = Vector2(151, -144)
 texture = ExtResource("3_5te7k")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/MainFlame2" index="0"]
-autoplay = "Hover"
 libraries = {
 "": SubResource("AnimationLibrary_8yaih")
 }
+autoplay = "Hover"
 script = ExtResource("4_mov4d")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals/Sprite" index="2"]
@@ -516,17 +516,17 @@ position = Vector2(278, -137.887)
 texture = ExtResource("3_bdk8v")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Light" index="0"]
-autoplay = "Light"
 libraries = {
 "": SubResource("AnimationLibrary_ghofw")
 }
+autoplay = "Light"
 script = ExtResource("4_mov4d")
 
 [node name="Idle" type="AnimationPlayer" parent="Visuals/Sprite" index="5"]
-autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_72pkh")
 }
+autoplay = "Idle"
 script = ExtResource("4_mov4d")
 
 [node name="UI" parent="Visuals" index="1"]

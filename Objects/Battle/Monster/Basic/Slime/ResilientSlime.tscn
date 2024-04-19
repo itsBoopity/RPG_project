@@ -448,6 +448,7 @@ position = Vector2(5.42355, -18.1592)
 texture = ExtResource("15_k8cn7")
 offset = Vector2(12.3457, -85.1042)
 script = ExtResource("8_asuh0")
+appendageId = 1
 
 [node name="Drip" type="Sprite2D" parent="Visuals/Sprite/Head" index="2"]
 position = Vector2(45.1711, -57.234)

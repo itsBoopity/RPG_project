@@ -1,13 +1,19 @@
 ,"en","cs"
 "T_ANL_SLIME","A weak monster capable of only Basic Attacks.
 
+Aim for its face to deal the most damage.
+
 Targets the leftmost party member on the first turn, then the second on the next turn, then the third. Then repeat.",
 "T_ANL_RESILIENTSLIME","A weak monster capable of only Basic Attacks.
+
+Aim for its face to deal the most damage.
 
 Has stronger resistance against Magical attacks compared to its regular brethren.
 
 Targets the leftmost party member on the first turn, then the second on the next turn, then the third. Then repeat.",
 "T_ANL_STURDYSLIME","A weak monster capable of only Basic Attacks.
+
+Aim for its face to deal the most damage.
 
 Has stronger resistance against Physical attacks compared to its regular brethren.
 

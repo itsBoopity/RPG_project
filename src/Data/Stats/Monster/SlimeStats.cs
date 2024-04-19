@@ -10,7 +10,7 @@ public partial class SlimeStats: MonsterStats
 
     public override void AppendageHit(MonsterAppendage appendage)
     {
-        if (appendage.Name == "Effective")
+        if (appendage.appendageId == 1)
         {
             EmitSignal(SignalName.SignalHitResult, 1.0f);
         }

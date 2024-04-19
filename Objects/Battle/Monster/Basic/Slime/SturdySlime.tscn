@@ -377,10 +377,10 @@ position = Vector2(169, -130)
 texture = ExtResource("4_vnifi")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Splash" index="0"]
-autoplay = "Splash"
 libraries = {
 "": SubResource("AnimationLibrary_ckqot")
 }
+autoplay = "Splash"
 script = ExtResource("17_x50g7")
 
 [node name="Splash2" type="Sprite2D" parent="Visuals/Sprite" index="1"]
@@ -389,10 +389,10 @@ scale = Vector2(0.832793, 0.832793)
 texture = ExtResource("5_6um1a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Visuals/Sprite/Splash2" index="0"]
-autoplay = "Splash"
 libraries = {
 "": SubResource("AnimationLibrary_p2d4t")
 }
+autoplay = "Splash"
 script = ExtResource("17_x50g7")
 
 [node name="Bottom" type="Sprite2D" parent="Visuals/Sprite" index="2"]
@@ -448,6 +448,7 @@ position = Vector2(5.42355, -18.1592)
 texture = ExtResource("15_vr8qq")
 offset = Vector2(12.3457, -85.1042)
 script = ExtResource("8_f37ps")
+appendageId = 1
 
 [node name="Drip" type="Sprite2D" parent="Visuals/Sprite/Head" index="2"]
 position = Vector2(45.1711, -57.234)
@@ -455,16 +456,16 @@ texture = ExtResource("16_wxnp5")
 offset = Vector2(-3.62823, 10.4377)
 
 [node name="SpriteAnimation" parent="Visuals/Sprite" index="6"]
-autoplay = "Slime/Idle"
 libraries = {
 "": SubResource("AnimationLibrary_f18fp")
 }
+autoplay = "Slime/Idle"
 
 [node name="IdlePlayer" type="AnimationPlayer" parent="Visuals/Sprite" index="7"]
-autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_tt3fe")
 }
+autoplay = "Idle"
 script = ExtResource("17_x50g7")
 
 [node name="UI" parent="Visuals" index="1"]

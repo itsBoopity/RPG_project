@@ -1265,30 +1265,30 @@ visible = false
 [node name="AudioStreamPlayer" parent="UI/BasicSkills/1" index="1"]
 bus = &"Master"
 
-[node name="3" parent="UI/BasicSkills" instance=ExtResource("6")]
+[node name="2" parent="UI/BasicSkills" instance=ExtResource("6")]
 layout_mode = 2
-index = 3
+index = 2
 secondRow = true
 
-[node name="RootTexture" parent="UI/BasicSkills/3" index="0"]
+[node name="RootTexture" parent="UI/BasicSkills/2" index="0"]
 texture = ExtResource("17_ifx84")
 
-[node name="Icon" parent="UI/BasicSkills/3/RootTexture/Fill" index="0"]
+[node name="Icon" parent="UI/BasicSkills/2/RootTexture/Fill" index="0"]
 texture = ExtResource("34_k3vj0")
 
-[node name="Countdown" parent="UI/BasicSkills/3/RootTexture" index="1"]
+[node name="Countdown" parent="UI/BasicSkills/2/RootTexture" index="1"]
 visible = false
 
-[node name="SnapIcon" parent="UI/BasicSkills/3/RootTexture" index="2"]
+[node name="SnapIcon" parent="UI/BasicSkills/2/RootTexture" index="2"]
 visible = false
 
-[node name="Cooldown" parent="UI/BasicSkills/3/RootTexture" index="3"]
+[node name="Cooldown" parent="UI/BasicSkills/2/RootTexture" index="3"]
 visible = false
 
-[node name="Cost" parent="UI/BasicSkills/3/RootTexture" index="5"]
+[node name="Cost" parent="UI/BasicSkills/2/RootTexture" index="5"]
 visible = false
 
-[node name="AudioStreamPlayer" parent="UI/BasicSkills/3" index="1"]
+[node name="AudioStreamPlayer" parent="UI/BasicSkills/2" index="1"]
 bus = &"Master"
 
 [node name="SkillDescription" type="Control" parent="UI"]
@@ -1585,10 +1585,10 @@ libraries = {
 [connection signal="HideSkillDetail" from="UI/BasicSkills/1" to="UI" method="HideActionDetail"]
 [connection signal="SelectSkill" from="UI/BasicSkills/1" to="." method="SelectBasicSkill"]
 [connection signal="ShowSkillDetail" from="UI/BasicSkills/1" to="." method="ViewBasicSkill"]
-[connection signal="HideSkillDetail" from="UI/BasicSkills/3" to="UI" method="HideActionDetail"]
-[connection signal="SelectSkill" from="UI/BasicSkills/3" to="." method="SelectBasicSkill"]
-[connection signal="ShowSkillDetail" from="UI/BasicSkills/3" to="." method="ViewBasicSkill"]
+[connection signal="HideSkillDetail" from="UI/BasicSkills/2" to="UI" method="HideActionDetail"]
+[connection signal="SelectSkill" from="UI/BasicSkills/2" to="." method="SelectBasicSkill"]
+[connection signal="ShowSkillDetail" from="UI/BasicSkills/2" to="." method="ViewBasicSkill"]
 
 [editable path="UI/BasicSkills/0"]
 [editable path="UI/BasicSkills/1"]
-[editable path="UI/BasicSkills/3"]
+[editable path="UI/BasicSkills/2"]

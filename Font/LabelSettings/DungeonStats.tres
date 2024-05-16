@@ -1,0 +1,13 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d1616eib5deav"]
+
+[ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="1_7fi6n"]
+
+[resource]
+font = ExtResource("1_7fi6n")
+font_size = 70
+font_color = Color(1, 0.972549, 0.898039, 1)
+outline_size = 20
+outline_color = Color(0.0823529, 0.0352941, 0.0156863, 1)
+shadow_size = 10
+shadow_color = Color(0.607843, 0.321569, 0.164706, 1)
+shadow_offset = Vector2(4, 4)

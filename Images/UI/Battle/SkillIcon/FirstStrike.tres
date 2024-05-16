@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://crvt1ge80pg55"]
+
+[ext_resource type="Texture2D" uid="uid://vacarprkw2x5" path="res://Images/UI/Battle/Atlas/skill_icon_atlas.png" id="1_8psmu"]
+
+[resource]
+atlas = ExtResource("1_8psmu")
+region = Rect2(768, 0, 128, 128)

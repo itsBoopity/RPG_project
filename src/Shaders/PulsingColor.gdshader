@@ -1,3 +1,4 @@
+// Overlays a texture that moves shifts to the right indefinitely.
 shader_type canvas_item;
 
 // The texture to apply over the original image using Color Dodge blend mode.

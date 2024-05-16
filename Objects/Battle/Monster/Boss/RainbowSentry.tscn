@@ -618,9 +618,9 @@ _data = {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_icvnv"]
 shader = ExtResource("9_lbocm")
 shader_parameter/hue = 0.0
-shader_parameter/brightness = 1.0
+shader_parameter/brightness = 1.207
 shader_parameter/contrast = 1.0
-shader_parameter/saturation = 1.0
+shader_parameter/saturation = 2.422
 
 [sub_resource type="Animation" id="Animation_2gs4b"]
 length = 0.001
@@ -1321,7 +1321,6 @@ libraries = {
 }
 
 [node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/0" index="3"]
-bus = &"Sfx"
 script = ExtResource("20_j31ja")
 AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
 
@@ -1366,7 +1365,6 @@ libraries = {
 }
 
 [node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/1" index="3"]
-bus = &"Sfx"
 script = ExtResource("20_j31ja")
 AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
 
@@ -1411,7 +1409,6 @@ libraries = {
 }
 
 [node name="AudioPoolPlayer" type="AudioStreamPlayer" parent="Visuals/Sprite/ArmorFront/GemOrbit/2" index="3"]
-bus = &"Sfx"
 script = ExtResource("20_j31ja")
 AudioSource = Array[AudioStream]([ExtResource("21_cvkr0"), ExtResource("22_idrud"), ExtResource("23_gh6g0")])
 
@@ -1448,6 +1445,9 @@ offset_right = 939.0
 offset_bottom = 368.0
 
 [node name="Timer" type="Timer" parent="Visuals" index="3"]
+
+[node name="Audio" parent="." index="1"]
+bus = &"Master"
 
 [connection signal="Hit" from="Visuals/Sprite/ArmorFront/BodyHitbox" to="." method="AppendageHitCheck"]
 [connection signal="Hit" from="Visuals/Sprite/ArmorFront/GemOrbit/0/Gem/GemHitbox" to="." method="AppendageHitCheck"]

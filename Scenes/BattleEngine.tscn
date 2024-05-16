@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://dn8h7qsdoslo2"]
+[gd_scene load_steps=78 format=3 uid="uid://dn8h7qsdoslo2"]
 
 [ext_resource type="PackedScene" uid="uid://v7ptlwigt0vm" path="res://Objects/UI/Battle/CharacterBar.tscn" id="1"]
 [ext_resource type="Script" path="res://src/Battle/BattleEngine.cs" id="2"]
@@ -18,8 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://8q6jalld2we7" path="res://Images/UI/Battle/timer.png" id="11"]
 [ext_resource type="Script" path="res://src/UI/Battle/DamageCounter.cs" id="11_sbnhs"]
 [ext_resource type="FontFile" uid="uid://j6f75xft4hc" path="res://Font/SpaceMono-BoldItalic.ttf" id="12_jr8c7"]
-[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextAtkColor.gd" id="14"]
-[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextStackColor.gd" id="15"]
+[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextAtkColor.cs" id="14"]
+[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextStackColor.cs" id="15"]
 [ext_resource type="Script" path="res://src/UI/Battle/TimerDisplay.cs" id="15_wy43w"]
 [ext_resource type="AudioStream" uid="uid://cywqoindf6m4s" path="res://Audio/SFX/click3.wav" id="16_5l314"]
 [ext_resource type="Script" path="res://src/UI/Battle/InfoLabel.cs" id="17"]
@@ -35,12 +35,11 @@
 [ext_resource type="Texture2D" uid="uid://ceoubc440y0bd" path="res://Images/UI/filmbarTop.png" id="27"]
 [ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/BasicAttack.tres" id="27_701jy"]
 [ext_resource type="FontFile" uid="uid://dwv40r1mukx3j" path="res://Font/PTSerif-Italic.ttf" id="27_vofdh"]
-[ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/Defend.tres" id="29_23nyu"]
 [ext_resource type="AudioStream" uid="uid://dcmnty8s5i31p" path="res://Audio/SFX/click2.wav" id="29_r3ion"]
 [ext_resource type="AudioStream" uid="uid://c7ljmivjse2v4" path="res://Audio/SFX/error_sound.wav" id="30_5us6w"]
 [ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/Swap.tres" id="32_6rm28"]
 [ext_resource type="Texture2D" path="res://Images/UI/Battle/SkillIcon/Analyze.tres" id="34_k3vj0"]
-[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextIfColor.gd" id="38_hkyy5"]
+[ext_resource type="Script" path="res://Font/RichTextEffect/RichTextIfColor.cs" id="38_hkyy5"]
 [ext_resource type="Shader" path="res://src/Shaders/PulsingColor.gdshader" id="41_nx7mo"]
 [ext_resource type="FontFile" uid="uid://ck5kfefyotv7w" path="res://Font/Merriweather-Bold.ttf" id="42_w2t35"]
 [ext_resource type="LabelSettings" uid="uid://dqfnu0hggq648" path="res://Font/LabelSettings/BasicText.tres" id="43_g3vf2"]
@@ -904,6 +903,7 @@ script = ExtResource("8_yp80v")
 
 [node name="UI" type="Control" parent="."]
 unique_name_in_owner = true
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -916,7 +916,7 @@ script = ExtResource("5_tdtxk")
 [node name="Backdrop" type="ColorRect" parent="UI"]
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0)
-z_index = -1
+z_index = -5
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1056,7 +1056,6 @@ script = ExtResource("9")
 
 [node name="CharacterDamageCounter" type="Control" parent="UI"]
 unique_name_in_owner = true
-z_index = 1
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -1130,26 +1129,25 @@ label_settings = SubResource("LabelSettings_c3guw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PartyBar" type="Control" parent="UI"]
+[node name="PartyBar" type="HBoxContainer" parent="UI"]
 unique_name_in_owner = true
-anchors_preset = 0
+layout_mode = 0
+offset_right = 1093.0
+offset_bottom = 212.0
 mouse_filter = 2
+theme_override_constants/separation = -32
 
 [node name="0" parent="UI/PartyBar" instance=ExtResource("1")]
-layout_mode = 0
+layout_mode = 2
 focus_mode = 0
 
 [node name="1" parent="UI/PartyBar" instance=ExtResource("1")]
-layout_mode = 0
-offset_left = 415.0
-offset_right = 859.0
+layout_mode = 2
 focus_mode = 0
 index = 1
 
 [node name="2" parent="UI/PartyBar" instance=ExtResource("1")]
-layout_mode = 0
-offset_left = 832.0
-offset_right = 1276.0
+layout_mode = 2
 focus_mode = 0
 index = 2
 
@@ -1238,6 +1236,9 @@ visible = false
 [node name="Cost" parent="UI/BasicSkills/0/RootTexture" index="5"]
 visible = false
 
+[node name="AudioStreamPlayer" parent="UI/BasicSkills/0" index="1"]
+bus = &"Master"
+
 [node name="1" parent="UI/BasicSkills" instance=ExtResource("6")]
 layout_mode = 2
 index = 1
@@ -1247,7 +1248,7 @@ secondRow = true
 texture = ExtResource("17_ifx84")
 
 [node name="Icon" parent="UI/BasicSkills/1/RootTexture/Fill" index="0"]
-texture = ExtResource("29_23nyu")
+texture = ExtResource("32_6rm28")
 
 [node name="Countdown" parent="UI/BasicSkills/1/RootTexture" index="1"]
 visible = false
@@ -1261,28 +1262,8 @@ visible = false
 [node name="Cost" parent="UI/BasicSkills/1/RootTexture" index="5"]
 visible = false
 
-[node name="2" parent="UI/BasicSkills" instance=ExtResource("6")]
-layout_mode = 2
-index = 2
-secondRow = true
-
-[node name="RootTexture" parent="UI/BasicSkills/2" index="0"]
-texture = ExtResource("17_ifx84")
-
-[node name="Icon" parent="UI/BasicSkills/2/RootTexture/Fill" index="0"]
-texture = ExtResource("32_6rm28")
-
-[node name="Countdown" parent="UI/BasicSkills/2/RootTexture" index="1"]
-visible = false
-
-[node name="SnapIcon" parent="UI/BasicSkills/2/RootTexture" index="2"]
-visible = false
-
-[node name="Cooldown" parent="UI/BasicSkills/2/RootTexture" index="3"]
-visible = false
-
-[node name="Cost" parent="UI/BasicSkills/2/RootTexture" index="5"]
-visible = false
+[node name="AudioStreamPlayer" parent="UI/BasicSkills/1" index="1"]
+bus = &"Master"
 
 [node name="3" parent="UI/BasicSkills" instance=ExtResource("6")]
 layout_mode = 2
@@ -1306,6 +1287,9 @@ visible = false
 
 [node name="Cost" parent="UI/BasicSkills/3/RootTexture" index="5"]
 visible = false
+
+[node name="AudioStreamPlayer" parent="UI/BasicSkills/3" index="1"]
+bus = &"Master"
 
 [node name="SkillDescription" type="Control" parent="UI"]
 unique_name_in_owner = true
@@ -1601,14 +1585,10 @@ libraries = {
 [connection signal="HideSkillDetail" from="UI/BasicSkills/1" to="UI" method="HideActionDetail"]
 [connection signal="SelectSkill" from="UI/BasicSkills/1" to="." method="SelectBasicSkill"]
 [connection signal="ShowSkillDetail" from="UI/BasicSkills/1" to="." method="ViewBasicSkill"]
-[connection signal="HideSkillDetail" from="UI/BasicSkills/2" to="UI" method="HideActionDetail"]
-[connection signal="SelectSkill" from="UI/BasicSkills/2" to="." method="SelectBasicSkill"]
-[connection signal="ShowSkillDetail" from="UI/BasicSkills/2" to="." method="ViewBasicSkill"]
 [connection signal="HideSkillDetail" from="UI/BasicSkills/3" to="UI" method="HideActionDetail"]
 [connection signal="SelectSkill" from="UI/BasicSkills/3" to="." method="SelectBasicSkill"]
 [connection signal="ShowSkillDetail" from="UI/BasicSkills/3" to="." method="ViewBasicSkill"]
 
 [editable path="UI/BasicSkills/0"]
 [editable path="UI/BasicSkills/1"]
-[editable path="UI/BasicSkills/2"]
 [editable path="UI/BasicSkills/3"]

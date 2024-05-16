@@ -24,11 +24,12 @@ public partial class SaveWindow : ColorRect
 		}
     }
 
-    public override void _UnhandledKeyInput(InputEvent @event)
+    public override void _GuiInput(InputEvent @event)
     {
         if(@event.IsActionPressed("ui_cancel"))
 		{
 			Close();
+			AcceptEvent();
 		}
     }
 

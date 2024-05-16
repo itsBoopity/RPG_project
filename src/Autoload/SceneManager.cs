@@ -15,7 +15,7 @@ public partial class SceneManager : Node
 	public override void _EnterTree()
     {
         if (_instance != null) this.QueueFree();
-        _instance = this;
+        else _instance = this;
     }
 
 	public override void _ExitTree()

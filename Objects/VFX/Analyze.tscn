@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dr0mj1r2oirxx"]
 
 [ext_resource type="Texture2D" uid="uid://bqi1jbgw0u6t4" path="res://Images/VFX/Analyze/magnifying_glass.png" id="5_0ajjt"]
-[ext_resource type="Script" path="res://Objects/VFX/AnimatedSpriteOneOff.cs" id="9_7swy8"]
+[ext_resource type="Script" path="res://src/Animation/AnimatedSpriteOneOff.cs" id="9_7swy8"]
 
 [sub_resource type="SpriteFrames" id="10"]
 animations = [{

@@ -12,7 +12,7 @@ public partial class Utility : Node
     public override void _EnterTree()
     {
         if (_instance != null) this.QueueFree();
-        _instance = this;
+        else _instance = this;
     }
 
     public static int CountChar(ref string text, char character)
@@ -24,9 +24,9 @@ public partial class Utility : Node
         return output;
     }
 
-    public SceneTreeTimer CreateTimer(double timeSec)
+    public static SceneTreeTimer CreateTimer(double timeSec)
     {
-        return GetTree().CreateTimer(timeSec);
+        return _instance.GetTree().CreateTimer(timeSec);
     }
 
     public static Color GetCharacterColor(CharacterEnum who)

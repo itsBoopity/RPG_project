@@ -1,19 +1,32 @@
+// Displays a dropshadow behind texture. 
 shader_type canvas_item;
-render_mode unshaded;
 
-uniform vec2 offset;
-uniform float shadowIntensity: hint_range(0.0, 1.0, 0.1);
-uniform vec4 colorMultiply: source_color;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
+// The offset of the dropshadow from the source texture.
+uniform vec2 offset;
+
+// Makes the dropshadow lighter at the top if shadowPersistence is low, creating a gradient.
+// 1.0 for no gradient.
+uniform float shadowPersistence: hint_range(0.0, 1.0, 0.02);
+
+// The color of the dropshadow.
+uniform vec4 colorMultiply: source_color;
+
 void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	
+	// Obtaining texture from a CanvasGroup Node.
     vec4 c = textureLod(screen_texture, SCREEN_UV, 0.0);
     if (c.a > 0.0001)  c.rgb /= c.a;
 
+	// Get source texture and dropshadow.
 	vec4 sprite = COLOR * c;
 	vec4 drop = textureLod(screen_texture, SCREEN_UV + offset * SCREEN_PIXEL_SIZE, 0.0) * colorMultiply;
-	drop.a *= clamp(UV.y + shadowIntensity, 0.0, 1.0);
+	// Make drop shadow lighter towards the top.
+	drop.a *= clamp(UV.y + shadowPersistence, 0.0, 1.0);
 	
-	COLOR.a = (sprite.a + drop.a * (1.0 - sprite.a));
+	// Standard formula alpha compositing, i.e. adding two image layers with transparency together. 
+	COLOR.a = sprite.a + drop.a * (1.0 - sprite.a);
 	COLOR.rgb = (sprite.rgb * sprite.a + drop.rgb * drop.a * (1.0 - sprite.a)) / COLOR.a;
 }

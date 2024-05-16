@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://buegjm48g1cpw"]
 
-[ext_resource type="Script" path="res://Objects/VFX/AnimatedSpriteOneOff.cs" id="1"]
+[ext_resource type="Script" path="res://src/Animation/AnimatedSpriteOneOff.cs" id="1"]
 [ext_resource type="AudioStream" uid="uid://m4h4qocjg271" path="res://Audio/SFX/hit1.wav" id="2"]
 [ext_resource type="AudioStream" uid="uid://b3jjluf6pfspw" path="res://Audio/SFX/hit3.wav" id="3"]
 [ext_resource type="Texture2D" uid="uid://ch8fb5bqi3ppe" path="res://Images/VFX/Hit/0003.png" id="4"]

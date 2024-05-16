@@ -112,7 +112,7 @@ public partial class RainbowSentry: MonsterStats
     /// </summary>
     private async void RespawnGems()
     {
-        await ToSignal(Utility.Instance.CreateTimer(2.0f), SceneTreeTimer.SignalName.Timeout);
+        await ToSignal(Utility.CreateTimer(2.0f), SceneTreeTimer.SignalName.Timeout);
         RandomizeGems();
     }
 

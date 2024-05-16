@@ -19,7 +19,6 @@ public partial class BattleEngine : Control
 
     private readonly BattleSkill[] basicSkills = { 
         new(new SkillBasicAttack()),
-        new(new SkillBasicDefend()),
         new(new SkillBasicSwap()),
         new(new SkillBasicAnalyze()),
     };
@@ -62,7 +61,6 @@ public partial class BattleEngine : Control
             else if (@event.IsActionPressed("battle_basicskill0")) SelectBasicSkill(0);
             else if (@event.IsActionPressed("battle_basicskill1")) SelectBasicSkill(1);
             else if (@event.IsActionPressed("battle_basicskill2")) SelectBasicSkill(2);
-            else if (@event.IsActionPressed("battle_basicskill3")) SelectBasicSkill(3);
         }
         else if (state == ControlState.END_SCREEN)
         {

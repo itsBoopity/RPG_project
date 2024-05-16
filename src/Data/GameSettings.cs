@@ -6,7 +6,6 @@ public class GameSettings
     public string language = TranslationServer.GetLocale();
 
     public bool timerEnabled = true;
-    public bool noTimerForAnalysis = false;
     public bool showElementalModuloResult = false;
 
     public int monsterScrollSpeed = 1200;
@@ -14,7 +13,7 @@ public class GameSettings
     public float monsterScrollSmoothness= 0.05f;
 
 
-    //How quickly enemy turns play Slider from 0.5 - 3;
+    // How quickly enemy turns play. Slider range: 0.5 - 3;
     public float enemyTurnSpeed = 1f;
 
 

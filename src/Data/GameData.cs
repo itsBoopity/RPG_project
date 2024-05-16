@@ -26,7 +26,7 @@ public partial class GameData : Node
     public override void _EnterTree()
     {
         if (_instance != null) this.QueueFree();
-        _instance = this;
+        else _instance = this;
     }
 
     // TODO: currently required to initialize data when launching directly into dungeon engine scene for texting,

@@ -374,7 +374,6 @@ libraries = {
 autoplay = "RESET"
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
-bus = &"Sfx"
 script = ExtResource("8_kcbur")
 AudioSource = Array[AudioStream]([ExtResource("9_lw63q"), ExtResource("10_0v0oh"), ExtResource("11_he3ti")])
 

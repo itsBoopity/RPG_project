@@ -401,6 +401,7 @@ _data = {
 }
 
 [node name="CharacterBar" type="TextureButton"]
+custom_minimum_size = Vector2(444, 222)
 offset_top = -45.0
 offset_right = 444.0
 offset_bottom = 177.0
@@ -566,10 +567,10 @@ patch_margin_right = 11
 patch_margin_bottom = 12
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Selector"]
-autoplay = "Blink"
 libraries = {
 "": SubResource("AnimationLibrary_yomry")
 }
+autoplay = "Blink"
 
 [node name="SelectPlayer" type="AnimationPlayer" parent="."]
 libraries = {

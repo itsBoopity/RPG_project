@@ -2,55 +2,33 @@ using Godot;
 
 public partial class CharacterModel : Node2D
 {
-    private float blinkSpeed = 5;
-    protected AudioStreamPlayer2D bleep;
-    private AnimationPlayer blinkAnimator;
-    protected AnimationPlayer talkAnimator;
-    private double blinkNext;
     public bool blink = true;
+
+    [Export]
+    public Curve blinkCurve;
+
+    private AnimationPlayer blinkAnimator;
+    private Timer blinkTimer;
 
     private float dialogueSpeed;
 
     public override void _Ready()
     {
-        bleep = GetNode<AudioStreamPlayer2D>("Bleep");
         blinkAnimator = GetNode<AnimationPlayer>("BlinkAnimator");
-        talkAnimator = GetNode<AnimationPlayer>("TalkAnimator");
-        blinkNext = (GD.Randf() + 0.2f) * blinkSpeed;
+        blinkTimer = GetNode<Timer>("BlinkAnimator/BlinkTimer");
+        RefreshBlinkTimer();
 
         dialogueSpeed = Global.Settings.dialogueSpeed;
     }
 
-    public override void _Process(double delta)
+    public void RefreshBlinkTimer()
     {
-        if (blink) Blink(delta);
+        blinkTimer.Start(blinkCurve.Sample(GD.Randf()));
     }
 
-    public void Blink(double delta)
+    public void Blink()
     {
-        if (blinkNext <= 0)
-        {
-            blinkAnimator.Play("Blink");
-            blinkNext = (GD.Randf() + 0.2f) * blinkSpeed;
-        }
-        else
-        {
-            blinkNext -= delta;
-        }
-    }
-
-    virtual public void Talk() 
-    {
-        talkAnimator.GetAnimation("Talk").LoopMode = Animation.LoopModeEnum.Linear;
-        talkAnimator.Play("Talk");
-    }
-    virtual public void StopTalk()
-    {
-        talkAnimator.GetAnimation("Talk").LoopMode = Animation.LoopModeEnum.None;
-    }
-
-    public void ChangeExpression(string expression)
-    {
-        
+        blinkAnimator.Play("Blink");
+        RefreshBlinkTimer();
     }
 }

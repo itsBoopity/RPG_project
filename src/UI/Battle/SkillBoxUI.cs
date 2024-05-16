@@ -110,8 +110,8 @@ public partial class SkillBoxUI : Control
 
     public void Update(BattleCharacter owner, BattleSkill skill)
     {
-        Initiate(skill); // Only necessary if you plan to use the same skillbox for multiple characters/swapping out skillsZ
-
+        Initiate(skill);
+        
         SkillUsableResult result = skill.IsUsable(owner);
         if (result == SkillUsableResult.IN_COOLDOWN)
         {

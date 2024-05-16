@@ -1,21 +1,23 @@
+// This shader combines code for hue shifting and BCS (Brightness/Contrast/Saturation) filters.
+// Hue shift: https://gist.github.com/McSpider/c8c693f1065fdb5ec44c64cb9fdac340
+// BCS: https://github.com/godotengine/godot-demo-projects/blob/master/2d/screen_space_shaders/shaders/BCS.gdshader
 shader_type canvas_item;
-render_mode unshaded;
 
-// https://gist.github.com/McSpider/c8c693f1065fdb5ec44c64cb9fdac340
 uniform float hue: hint_range(0, 1) = 0;
-
-// https://github.com/godotengine/godot-demo-projects/blob/master/2d/screen_space_shaders/shaders/BCS.shader
 uniform float brightness: hint_range(0, 4) = 1;
 uniform float contrast: hint_range(0, 4) = 1;
 uniform float saturation: hint_range(0, 4) = 1;
 
 void fragment() {
-// Input:3
+// Hue shift
+	// Input:3
+	// Get color.
 	vec3 input_color;
 	vec4 texture_color = texture(TEXTURE, UV);
 	input_color = texture_color.rgb;
 
-// VectorFunc:2
+	// VectorFunc:2
+	// Convert color from RGB to HSV (Hue/Saturation/Value)
 	vec3 color_hsv;
 	{
 		vec3 c = input_color;
@@ -26,10 +28,11 @@ void fragment() {
 		float e = 1.0e-10;
 		color_hsv=vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
 	}
-
+	// Shift the Hue value.
 	color_hsv.x = mod((color_hsv.x + hue), 1.0f);
 
-// VectorFunc:5
+	// VectorFunc:5
+	// Convert the HSV color back to RGB.
 	vec3 color_rgb;
 	{
 		vec3 c = color_hsv;
@@ -38,7 +41,8 @@ void fragment() {
 		color_rgb=c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 	}
 
-// Output:0
+	// Output:0
+	// Hue shift complete.
 	vec3 c = color_rgb;
 
 // BCS

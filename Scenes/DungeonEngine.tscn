@@ -14,8 +14,8 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xoen"]
 shader = ExtResource("7_848cc")
 shader_parameter/offset = Vector2(-32, -32)
-shader_parameter/shadowIntensity = 0.0
-shader_parameter/multiplyColor = null
+shader_parameter/shadowPersistence = null
+shader_parameter/colorMultiply = null
 
 [node name="DungeonEngine" type="Control"]
 layout_mode = 3

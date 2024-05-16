@@ -9,11 +9,12 @@ public partial class SettingsWindow : Control
         sfx = GetNode<AudioPoolPlayer>("AudioStreamPlayer");
     }
 
-    public override void _UnhandledKeyInput(InputEvent @event)
+    public override void _GuiInput(InputEvent @event)
     {
         if(@event.IsActionPressed("ui_cancel"))
 		{
 			Close();
+			AcceptEvent();
 		}
     }
 

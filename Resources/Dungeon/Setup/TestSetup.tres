@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://src/Data/Dungeon/Card/DungeonCardBundle.cs" id="3_viukw"]
 [ext_resource type="Resource" uid="uid://ch0voi2kie6pr" path="res://Resources/Dungeon/Card/Regular/Slime2Sprite1.tres" id="4_nyt8i"]
 [ext_resource type="Resource" uid="uid://dqek6e7cf1x0w" path="res://Resources/Dungeon/Card/Regular/SlimeTrio.tres" id="5_mc4uy"]
-[ext_resource type="AudioStream" uid="uid://dwedu8lxk775g" path="res://Audio/Music/StreamingStreamingEverFlowing.ogg" id="10_odc4k"]
+[ext_resource type="AudioStream" uid="uid://n3lsc2u4am41" path="res://Audio/Music/scale_the_stars.ogg" id="6_lvkj7"]
 
 [sub_resource type="Resource" id="Resource_81pjn"]
 script = ExtResource("3_viukw")
@@ -27,7 +27,7 @@ Count = 2
 resource_local_to_scene = true
 script = ExtResource("1_t8qoc")
 DungeonName = "Test Dungeon"
-Music = ExtResource("10_odc4k")
+Music = ExtResource("6_lvkj7")
 StartingHandSize = 5
 BossCard = ExtResource("1_tkvwi")
 DeckDefine = Array[Object]([SubResource("Resource_81pjn"), SubResource("Resource_kphy2"), SubResource("Resource_fnn14")])

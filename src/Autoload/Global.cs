@@ -39,7 +39,6 @@ public partial class Global : Node
 
     public override void _Ready()
     {
-        GD.Print(ProjectSettings.GlobalizePath("user://"));
         GD.Randomize();
         Input.SetCustomMouseCursor(GD.Load("res://Images/UI/Battle/reticle.png"), Input.CursorShape.Cross, new Vector2(128,128));
         Settings = GameSettings.CreateOnStartup();

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b0hju2hm26548"
+
+[deps]
+
+files=["res://Localization/Battle/battle_messages.en.translation", "res://Localization/Battle/battle_messages.cs.translation"]
+
+source_file="res://Localization/Battle/battle_messages.csv"
+dest_files=["res://Localization/Battle/battle_messages.en.translation", "res://Localization/Battle/battle_messages.cs.translation"]
+
+[params]
+
+compress=true
+delimiter=0

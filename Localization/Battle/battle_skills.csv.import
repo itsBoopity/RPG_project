@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://eqg3he78nrty"
+
+[deps]
+
+files=["res://Localization/Battle/battle_skills.en.translation", "res://Localization/Battle/battle_skills.cs.translation"]
+
+source_file="res://Localization/Battle/battle_skills.csv"
+dest_files=["res://Localization/Battle/battle_skills.en.translation", "res://Localization/Battle/battle_skills.cs.translation"]
+
+[params]
+
+compress=true
+delimiter=0
